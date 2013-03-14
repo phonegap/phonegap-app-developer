@@ -2,7 +2,9 @@
 
 > Coming soon to an app store near you!
 
-## PhoneGap CLI
+## Related Projects
 
-[github.com/mwbrooks/phonegap-cli](https://github.com/mwbrooks/phonegap-cli)
+- [phonegap-app-site](https://github.com/nitobi/phonegap-app-site)
+- [phonegap-build-cli](https://github.com/mwbrooks/phonegap-build-cli)
+- [phonegap-cli](https://github.com/mwbrooks/phonegap-cli)
 
