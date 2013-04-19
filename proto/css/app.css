@@ -430,6 +430,7 @@ section form:after {
   height: 65px;
   line-height: 65px;
   opacity: 1;
+  position: relative;
   text-align: center;
   text-decoration: none;
   -webkit-transition: background 0.25s;
@@ -440,21 +441,23 @@ section form:after {
 .bt:active {
   background: rgba(255, 255, 255, 0.2);
 }
-.bt figure {
+.bt:after {
   border-left: 1px solid rgba(255, 255, 255, 0.2);
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 55px;
+  bottom: 10px;
+}
+.bt figure {
   float: right;
   height: 45px;
   line-height: 45px;
   margin: 10px;
-  padding-left: 10px;
   width: 35px;
-}
-.bt figure:before {
   font-size: 38px;
-  text-align: center;
-  display: block;
 }
-.bt figure.icon-spinner:before {
+.bt figure.icon-spinner {
   animation: spin 2s linear;
   -moz-animation: spin 2s infinite linear;
   -webkit-animation: spin 2s infinite linear;
@@ -462,7 +465,7 @@ section form:after {
   -ms-animation: spin 2s infinite linear;
   font-size: 32px;
 }
-.bt figure.icon-buildbot:before {
+.bt figure.icon-buildbot {
   animation: bounce 2s linear;
   -moz-animation: bounce 2s infinite linear;
   -webkit-animation: bounce 2s infinite linear;

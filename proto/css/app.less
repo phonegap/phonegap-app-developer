@@ -110,6 +110,7 @@ section {
     height: @bar-height;
     line-height: @bar-height;
     opacity: 1;
+    position: relative;
     text-align: center;
     text-decoration: none;
     .transition( background );
@@ -118,27 +119,29 @@ section {
         background: rgba(255,255,255,0.2);
     }
 
-    figure {
+    &:after {
         border-left: @default-border;
+        content: '';
+        position: absolute;
+        top: @pad/2; right: @bar-height - @pad/2; bottom: @pad/2;
+    }
+
+    figure {
+        // border-left: @default-border;
         float: right;
         height: @bar-height - 20;
         line-height: @bar-height - 20;
         margin: @pad/2;
-        padding-left: @pad / 2;
+        // padding-left: @pad / 2;
         width: @bar-height - 20 - @pad/2;
+        font-size: 38px;
 
-        &:before {
-            font-size: 38px;
-            text-align: center;
-            display: block;
-        }
-
-        &.icon-spinner:before {
+        &.icon-spinner {
             .animate( spin, 2s );
             font-size: 32px;
         }
 
-        &.icon-buildbot:before {
+        &.icon-buildbot {
             .animate( bounce, 2s );
         }
     }
