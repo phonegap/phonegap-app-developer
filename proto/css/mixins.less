@@ -4,14 +4,14 @@
 
 @text-color: #333;
 @link-color: #4BB3C3;
+
+@bar-height: 68px;
 @pad: 20px;
 
-.transition ( @type: all) {
-    -webkit-transition: @type 0.25s;
-    -moz-transition: @type 0.25s;
-    -0-transition: @type 0.25s;
-    transition: @type 0.25s;
-}
+
+/*---------------------------------------------------
+    Shortcut
+---------------------------------------------------*/
 
 .animate ( @value, @dur: 10s, @type: linear ) {
     animation: @value @dur @type;
@@ -21,6 +21,38 @@
     -ms-animation: @value @dur infinite @type;
 }
 
+.background-size( @value ) {
+    -webkit-background-size: @value;
+    -moz-background-size: @value;
+    -o-background-size: @value;
+    background-size: @value;
+}
+
+.border-radius( @radius: 8px ) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    -o-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.box-shadow( @value: rgba(0,0,0,0.5) 0 2px 8px ) {
+    -webkit-box-shadow: @value;
+    -moz-box-shadow: @value;
+    -o-box-shadow: @value;
+    box-shadow: @value;
+}
+
+.hex-to-rgba( @color, @alpha: 1) {
+    background-color: hsla(hue(@color), saturation(@color), lightness(@color), @alpha);
+}
+
+.transition ( @type: all) {
+    -webkit-transition: @type 0.25s;
+    -moz-transition: @type 0.25s;
+    -0-transition: @type 0.25s;
+    transition: @type 0.25s;
+}
+
 .transform( @value: rotate(90deg) ) {
     -webkit-transform: @value;
     -moz-transform: @value;
@@ -28,6 +60,34 @@
     transform: @value;
 }
 
-.hex-to-rgba( @color, @alpha: 1) {
-    background-color: hsla(hue(@color), saturation(@color), lightness(@color), @alpha);
+
+/*---------------------------------------------------
+    Animation
+---------------------------------------------------*/
+
+.spin() {
+    from { .transform( rotate(0deg) ); }
+    to { .transform( rotate(360deg) ); }
 }
+
+@-webkit-keyframes spin {.spin;}
+@-moz-keyframes spin {.spin;}
+@-ms-keyframes spin {.spin;}
+@-o-keyframes spin {.spin;}
+@keyframes spin {.spin;}
+
+
+.bounce() {
+    0% { .transform( scale(1, 1) ); }
+    10% { .transform( scale(1.3, 1) ); }
+    15% { .transform( scale(1, 1) ); }
+    60% { .transform( scale(1, 1) ); }
+    70% { .transform( scale(1, 1.3) ); }
+    75% { .transform( scale(1, 1) ); }
+}
+
+@-webkit-keyframes bounce {.bounce;}
+@-moz-keyframes bounce {.bounce;}
+@-ms-keyframes bounce {.bounce;}
+@-o-keyframes bounce {.bounce;}
+@keyframes bounce {.bounce;}

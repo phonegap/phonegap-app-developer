@@ -3,105 +3,11 @@
     Mixins
 ---------------------------------------------------*/
 /*---------------------------------------------------
-    Font
+    Shortcut
 ---------------------------------------------------*/
-body,
-h1,
-h2,
-h3,
-h4 {
-  font-size: 1.05em;
-  font-family: 'HelveticaNeue-Light', Helvetica, Arial, sans-serif;
-  font-weight: 300;
-}
 /*---------------------------------------------------
     Animation
 ---------------------------------------------------*/
-@-webkit-keyframes move-background {
-  from {
-    background-position: 0 0;
-  }
-  25% {
-    background-color: #260d23;
-  }
-  75% {
-    background-color: #0b1f0f;
-  }
-  50% {
-    background-color: #261f0d;
-  }
-  to {
-    background-position: -160px -320px;
-  }
-}
-@-moz-keyframes move-background {
-  from {
-    background-position: 0 0;
-  }
-  25% {
-    background-color: #260d23;
-  }
-  75% {
-    background-color: #0b1f0f;
-  }
-  50% {
-    background-color: #261f0d;
-  }
-  to {
-    background-position: -160px -320px;
-  }
-}
-@-ms-keyframes move-background {
-  from {
-    background-position: 0 0;
-  }
-  25% {
-    background-color: #260d23;
-  }
-  75% {
-    background-color: #0b1f0f;
-  }
-  50% {
-    background-color: #261f0d;
-  }
-  to {
-    background-position: -160px -320px;
-  }
-}
-@-o-keyframes move-background {
-  from {
-    background-position: 0 0;
-  }
-  25% {
-    background-color: #260d23;
-  }
-  75% {
-    background-color: #0b1f0f;
-  }
-  50% {
-    background-color: #261f0d;
-  }
-  to {
-    background-position: -160px -320px;
-  }
-}
-@keyframes move-background {
-  from {
-    background-position: 0 0;
-  }
-  25% {
-    background-color: #260d23;
-  }
-  75% {
-    background-color: #0b1f0f;
-  }
-  50% {
-    background-color: #261f0d;
-  }
-  to {
-    background-position: -160px -320px;
-  }
-}
 @-webkit-keyframes spin {
   from {
     -webkit-transform: rotate(0deg);
@@ -363,6 +269,18 @@ h4 {
   }
 }
 /*---------------------------------------------------
+    Font
+---------------------------------------------------*/
+body,
+h1,
+h2,
+h3,
+h4 {
+  font-size: 1.05em;
+  font-family: 'HelveticaNeue-Light', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+/*---------------------------------------------------
     General
 ---------------------------------------------------*/
 * {
@@ -378,12 +296,11 @@ html {
 }
 body {
   font-size: 16px;
-  animation: move-background 10s linear;
-  -moz-animation: move-background 10s infinite linear;
-  -webkit-animation: move-background 10s infinite linear;
-  -o-animation: move-background 10s infinite linear;
-  -ms-animation: move-background 10s infinite linear;
-  background: #0b1922 url(../img/grid.png);
+  background: #0b1922 url(../img/gradient.jpg);
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  background-size: 100% 100%;
   color: #fff;
 }
 a {
@@ -392,42 +309,63 @@ a {
 /*---------------------------------------------------
     Components
 ---------------------------------------------------*/
-section {
-  margin: 0 auto;
+.container {
+  display: table;
+  height: 100%;
   position: absolute;
-  left: 50%;
-  margin-left: -40%;
-  top: 50%;
-  margin-top: -120px;
+  top: 0;
+  right: 10%;
+  bottom: 0;
+  left: 10%;
   width: 80%;
 }
-.bt {
+.container .inner {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+section {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
+  -o-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
+  height: 68px;
+  margin: 20px;
+  -webkit-transition: all 0.25s;
+  -moz-transition: all 0.25s;
+  -0-transition: all 0.25s;
+  transition: all 0.25s;
+}
+section.enlarge {
+  height: 300px;
+}
+.bt {
   display: block;
   font-size: 1.2em;
-  height: 80px;
-  line-height: 80px;
-  margin: 20px;
+  height: 68px;
+  line-height: 68px;
+  opacity: 1;
   text-align: center;
   text-decoration: none;
-  -webkit-transition: background-color 0.25s;
-  -moz-transition: background-color 0.25s;
-  -0-transition: background-color 0.25s;
-  transition: background-color 0.25s;
+  -webkit-transition: background 0.25s;
+  -moz-transition: background 0.25s;
+  -0-transition: background 0.25s;
+  transition: background 0.25s;
 }
 .bt:hover,
 .bt:active {
-  background-color: rgba(75, 179, 195, 0.3);
+  background: rgba(255, 255, 255, 0.2);
 }
 .bt figure {
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   float: right;
-  height: 60px;
-  line-height: 60px;
+  height: 48px;
+  line-height: 48px;
   margin: 10px;
   padding-left: 10px;
-  width: 50px;
+  width: 38px;
 }
 .bt figure:before {
   font-size: 40px;
@@ -448,4 +386,8 @@ section {
   -webkit-animation: bounce 2s infinite linear;
   -o-animation: bounce 2s infinite linear;
   -ms-animation: bounce 2s infinite linear;
+}
+.bt.hide {
+  opacity: 0;
+  height: 0;
 }

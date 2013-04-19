@@ -13,53 +13,6 @@ body, h1, h2, h3, h4 {
 
 
 /*---------------------------------------------------
-    Animation
----------------------------------------------------*/
-
-.move-background() {
-    from {background-position: 0 0;}
-    25% {background-color: darken( #391335, 5%);}
-    75% {background-color: darken( #113218, 5%);}
-    50% {background-color: darken( #392F13, 5%);}
-    to {background-position: -160px -320px;}
-}
-
-@-webkit-keyframes move-background {.move-background;}
-@-moz-keyframes move-background {.move-background;}
-@-ms-keyframes move-background {.move-background;}
-@-o-keyframes move-background {.move-background;}
-@keyframes move-background {.move-background;}
-
-
-.spin() {
-    from { .transform( rotate(0deg) ); }
-    to { .transform( rotate(360deg) ); }
-}
-
-@-webkit-keyframes spin {.spin;}
-@-moz-keyframes spin {.spin;}
-@-ms-keyframes spin {.spin;}
-@-o-keyframes spin {.spin;}
-@keyframes spin {.spin;}
-
-
-.bounce() {
-    0% { .transform( scale(1, 1) ); }
-    10% { .transform( scale(1.3, 1) ); }
-    15% { .transform( scale(1, 1) ); }
-    60% { .transform( scale(1, 1) ); }
-    70% { .transform( scale(1, 1.3) ); }
-    75% { .transform( scale(1, 1) ); }
-}
-
-@-webkit-keyframes bounce {.bounce;}
-@-moz-keyframes bounce {.bounce;}
-@-ms-keyframes bounce {.bounce;}
-@-o-keyframes bounce {.bounce;}
-@keyframes bounce {.bounce;}
-
-
-/*---------------------------------------------------
     General
 ---------------------------------------------------*/
 
@@ -78,8 +31,8 @@ body, html {
 
 body {
     font-size: 16px;
-    .animate(move-background);
-    background: #0B1922 url(../img/grid.png);
+    background: #0B1922 url(../img/gradient.jpg);
+    .background-size(100% 100%);
     color: #fff;
 }
 
@@ -91,40 +44,55 @@ a {
     Components
 ---------------------------------------------------*/
 
-section {
-    margin: 0 auto;
+.container {
+    display: table;
+    height: 100%;
     position: absolute;
-    left: 50%;
-    margin-left: -40%;
-    top: 50%;
-    margin-top: -80px - @pad*2;
+    top: 0; right: 10%; bottom: 0; left: 10%;
     width: 80%;
+
+    .inner {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+}
+
+section {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    .box-shadow;
+    height: @bar-height;
+    margin: @pad;
+    .transition;
+
+    &.enlarge {
+        height: 300px;
+    }
 }
 
 .bt {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
     display: block;
     font-size: 1.2em;
-    height: 80px;
-    line-height: 80px;
-    margin: @pad;
+    height: @bar-height;
+    line-height: @bar-height;
+    opacity: 1;
     text-align: center;
     text-decoration: none;
-    .transition( background-color );
+    .transition( background );
 
     &:hover, &:active {
-        .hex-to-rgba(@link-color, 0.3);
+        background: rgba(255,255,255,0.2);
     }
 
     figure {
         border-left: 1px solid rgba(255,255,255,0.2);
         float: right;
-        height: 60px;
-        line-height: 60px;
+        height: @bar-height - 20;
+        line-height: @bar-height - 20;
         margin: @pad/2;
         padding-left: @pad / 2;
-        width: 60px - @pad/2;
+        width: @bar-height - 20 - @pad/2;
 
         &:before {
             font-size: 40px;
@@ -141,18 +109,12 @@ section {
             .animate( bounce, 2s );
         }
     }
+
+    &.hide {
+        opacity: 0;
+        height: 0;
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

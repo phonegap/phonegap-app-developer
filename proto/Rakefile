@@ -16,6 +16,7 @@ task :less do
 end
 
 task :server do 
+  require 'em/pure_ruby'
   require 'rack'
   require 'rack-rewrite'
   require 'thin'
