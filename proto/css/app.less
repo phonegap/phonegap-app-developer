@@ -44,7 +44,7 @@ a {
 
 
 /*---------------------------------------------------
-    Components I
+    Layout
 ---------------------------------------------------*/
 
 .container {
@@ -70,7 +70,7 @@ a {
 
 
 /*---------------------------------------------------
-    Components II
+    UI - Accordion
 ---------------------------------------------------*/
 
 section {
@@ -82,12 +82,11 @@ section {
     overflow: hidden;
     .transition;
 
-    &.enlarge {
+    &.open {
         height: 300px;
     }
 
     form {
-        // border-top: @default-border;
         margin: 0 @pad/2;
         overflow: hidden;
         padding: @pad 0;
@@ -127,17 +126,15 @@ section {
     }
 
     figure {
-        // border-left: @default-border;
         float: right;
         height: @bar-height - 20;
         line-height: @bar-height - 20;
         margin: @pad/2;
-        // padding-left: @pad / 2;
         width: @bar-height - 20 - @pad/2;
         font-size: 38px;
 
         &.icon-spinner {
-            .animate( spin, 2s );
+            .animate( spin, 3s );
             font-size: 32px;
         }
 
@@ -149,6 +146,38 @@ section {
     &.hide {
         opacity: 0;
         height: 0;
+    }
+}
+
+/*---------------------------------------------------
+    UI - Spinner Modal
+---------------------------------------------------*/
+
+dialog {
+    background: rgba(0,0,0,0.7);
+    border: none;
+    color: #fff;
+    display: block;
+    opacity: 0;
+    position: fixed;
+    top: 0; right: 0; left: 0; bottom: 0;
+    text-align: center;
+    .transition( opacity );
+
+    figure, label {
+        position: absolute;
+        right: 0; left: 0;
+        top: 50%;
+    }
+
+    figure {
+        margin-top: -20px;
+        font-size: 40px;
+        .animate( spin, 1s );
+    }
+
+    label {
+        margin-top: 25px;
     }
 }
 

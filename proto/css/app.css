@@ -306,6 +306,9 @@ body {
 a {
   color: #fff;
 }
+/*---------------------------------------------------
+    UI - Form
+---------------------------------------------------*/
 ::-webkit-input-placeholder {
   color: rgba(0, 0, 0, 0.2);
 }
@@ -362,12 +365,11 @@ input[type="submit"] {
   -0-transition: background 0.25s;
   transition: background 0.25s;
 }
-input[type="submit"]:hover,
 input[type="submit"]:active {
   background: rgba(255, 255, 255, 0.3);
 }
 /*---------------------------------------------------
-    Components I
+    Layout
 ---------------------------------------------------*/
 .container {
   display: table;
@@ -385,7 +387,7 @@ input[type="submit"]:active {
   vertical-align: middle;
 }
 /*---------------------------------------------------
-    Components II
+    UI - Accordion
 ---------------------------------------------------*/
 section {
   background: rgba(255, 255, 255, 0.1);
@@ -402,7 +404,7 @@ section {
   -0-transition: all 0.25s;
   transition: all 0.25s;
 }
-section.enlarge {
+section.open {
   height: 300px;
 }
 section form {
@@ -458,11 +460,11 @@ section form:after {
   font-size: 38px;
 }
 .bt figure.icon-spinner {
-  animation: spin 2s linear;
-  -moz-animation: spin 2s infinite linear;
-  -webkit-animation: spin 2s infinite linear;
-  -o-animation: spin 2s infinite linear;
-  -ms-animation: spin 2s infinite linear;
+  animation: spin 3s linear;
+  -moz-animation: spin 3s infinite linear;
+  -webkit-animation: spin 3s infinite linear;
+  -o-animation: spin 3s infinite linear;
+  -ms-animation: spin 3s infinite linear;
   font-size: 32px;
 }
 .bt figure.icon-buildbot {
@@ -475,6 +477,45 @@ section form:after {
 .bt.hide {
   opacity: 0;
   height: 0;
+}
+/*---------------------------------------------------
+    UI - Spinner Modal
+---------------------------------------------------*/
+dialog {
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: #fff;
+  display: block;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  -webkit-transition: opacity 0.25s;
+  -moz-transition: opacity 0.25s;
+  -0-transition: opacity 0.25s;
+  transition: opacity 0.25s;
+}
+dialog figure,
+dialog label {
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 50%;
+}
+dialog figure {
+  margin-top: -20px;
+  font-size: 40px;
+  animation: spin 1s linear;
+  -moz-animation: spin 1s infinite linear;
+  -webkit-animation: spin 1s infinite linear;
+  -o-animation: spin 1s infinite linear;
+  -ms-animation: spin 1s infinite linear;
+}
+dialog label {
+  margin-top: 25px;
 }
 /*---------------------------------------------------
     Responsive
