@@ -4,8 +4,14 @@
 
 @text-color: #333;
 @link-color: #4BB3C3;
+@border-color: rgba(255,255,255,0.2);
 
-@bar-height: 68px;
+@default-border: 1px solid @border-color;
+
+@bar-height: 65px;
+@input-font-size: 16px;
+@input-height: 36px;
+@input-pad: 8px;
 @pad: 20px;
 
 
@@ -42,8 +48,25 @@
     box-shadow: @value;
 }
 
-.hex-to-rgba( @color, @alpha: 1) {
-    background-color: hsla(hue(@color), saturation(@color), lightness(@color), @alpha);
+.box-sizing( @value: border-box ) {
+    -webkit-box-sizing: @value;
+    -moz-box-sizing: @value;
+    box-sizing: @value;
+}
+
+.placeholder( @color ) {
+    ::-webkit-input-placeholder {
+        color: @color;
+    }
+    :-moz-placeholder {
+        color: @color;
+    }
+    ::-moz-placeholder {
+        color: @color;
+    }
+    :-ms-input-placeholder {
+        color: @color
+    }
 }
 
 .transition ( @type: all) {
@@ -91,3 +114,5 @@
 @-ms-keyframes bounce {.bounce;}
 @-o-keyframes bounce {.bounce;}
 @keyframes bounce {.bounce;}
+
+

@@ -1,0 +1,42 @@
+.placeholder( rgba(0,0,0,0.2) );
+
+input {
+    border: @default-border;
+    .border-radius( 0 );
+    display: block;
+    font-size: @input-font-size;
+    height: @input-height;
+    margin: @pad auto;
+    padding: @input-pad;
+    width: 80%;
+    -webkit-appearance: none;
+}
+
+input[type="text"], input[type="password"], input[type="number"] {
+    background: rgba(255,255,255,0.5);
+    .box-sizing;
+    .transition( background );
+
+    &:focus {
+        background: #fff;
+    }
+}
+
+input[type="submit"] {
+    background: rgba(255,255,255,0.1);
+    .box-shadow;
+    color: #fff;
+    min-width: 100px;
+    .transition( background );
+
+    &:hover, &:active {
+        background: rgba(255,255,255,0.3);
+    }
+}
+
+
+.narrow-screen() {
+    input {
+        width: 90%;
+    }
+}

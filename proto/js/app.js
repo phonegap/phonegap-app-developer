@@ -14,6 +14,9 @@ function onBtBuild() {
 
 function showSection( type ) {
     $('.enlarge').removeClass('enlarge');
-    // $('.bt:not[#bt-' + type +' ]').addClass('hide');
     $('#' + type).addClass('enlarge');
+
+    setTimeout(function() {
+        $('#' + type + ' input').first().focus().click();
+    }, 200);
 }

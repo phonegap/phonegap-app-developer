@@ -306,8 +306,68 @@ body {
 a {
   color: #fff;
 }
+::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+:-moz-placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+input {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  display: block;
+  font-size: 16px;
+  height: 36px;
+  margin: 20px auto;
+  padding: 8px;
+  width: 80%;
+  -webkit-appearance: none;
+}
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: background 0.25s;
+  -moz-transition: background 0.25s;
+  -0-transition: background 0.25s;
+  transition: background 0.25s;
+}
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+  background: #fff;
+}
+input[type="submit"] {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
+  -o-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
+  color: #fff;
+  min-width: 100px;
+  -webkit-transition: background 0.25s;
+  -moz-transition: background 0.25s;
+  -0-transition: background 0.25s;
+  transition: background 0.25s;
+}
+input[type="submit"]:hover,
+input[type="submit"]:active {
+  background: rgba(255, 255, 255, 0.3);
+}
 /*---------------------------------------------------
-    Components
+    Components I
 ---------------------------------------------------*/
 .container {
   display: table;
@@ -324,6 +384,9 @@ a {
   text-align: center;
   vertical-align: middle;
 }
+/*---------------------------------------------------
+    Components II
+---------------------------------------------------*/
 section {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -331,8 +394,9 @@ section {
   -moz-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
   -o-box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 2px 8px;
-  height: 68px;
+  height: 65px;
   margin: 20px;
+  overflow: hidden;
   -webkit-transition: all 0.25s;
   -moz-transition: all 0.25s;
   -0-transition: all 0.25s;
@@ -341,11 +405,30 @@ section {
 section.enlarge {
   height: 300px;
 }
+section form {
+  margin: 0 10px;
+  overflow: hidden;
+  padding: 20px 0;
+  position: relative;
+  text-align: center;
+}
+section form:after {
+  -webkit-box-shadow: #000000 0 0 16px;
+  -moz-box-shadow: #000000 0 0 16px;
+  -o-box-shadow: #000000 0 0 16px;
+  box-shadow: #000000 0 0 16px;
+  content: '';
+  position: absolute;
+  height: 2px ;
+  top: -3px;
+  right: 5px;
+  left: 5px;
+}
 .bt {
   display: block;
   font-size: 1.2em;
-  height: 68px;
-  line-height: 68px;
+  height: 65px;
+  line-height: 65px;
   opacity: 1;
   text-align: center;
   text-decoration: none;
@@ -354,21 +437,20 @@ section.enlarge {
   -0-transition: background 0.25s;
   transition: background 0.25s;
 }
-.bt:hover,
 .bt:active {
   background: rgba(255, 255, 255, 0.2);
 }
 .bt figure {
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   float: right;
-  height: 48px;
-  line-height: 48px;
+  height: 45px;
+  line-height: 45px;
   margin: 10px;
   padding-left: 10px;
-  width: 38px;
+  width: 35px;
 }
 .bt figure:before {
-  font-size: 40px;
+  font-size: 38px;
   text-align: center;
   display: block;
 }
@@ -378,7 +460,7 @@ section.enlarge {
   -webkit-animation: spin 2s infinite linear;
   -o-animation: spin 2s infinite linear;
   -ms-animation: spin 2s infinite linear;
-  font-size: 36px;
+  font-size: 32px;
 }
 .bt figure.icon-buildbot:before {
   animation: bounce 2s linear;
@@ -390,4 +472,17 @@ section.enlarge {
 .bt.hide {
   opacity: 0;
   height: 0;
+}
+/*---------------------------------------------------
+    Responsive
+---------------------------------------------------*/
+@media all and (max-width: 400px) {
+  input {
+    width: 90%;
+  }
+  .container {
+    right: 2%;
+    left: 2%;
+    width: 96%;
+  }
 }

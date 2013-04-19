@@ -32,7 +32,7 @@ body, html {
 body {
     font-size: 16px;
     background: #0B1922 url(../img/gradient.jpg);
-    .background-size(100% 100%);
+    .background-size( 100% 100% );
     color: #fff;
 }
 
@@ -40,8 +40,11 @@ a {
     color: #fff;
 }
 
+@import "form";
+
+
 /*---------------------------------------------------
-    Components
+    Components I
 ---------------------------------------------------*/
 
 .container {
@@ -58,16 +61,46 @@ a {
     }
 }
 
+.narrow-screen() {
+    .container {
+        right: 2%; left: 2%;
+        width: 96%;
+    }
+}
+
+
+/*---------------------------------------------------
+    Components II
+---------------------------------------------------*/
+
 section {
     background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
+    border: @default-border;
     .box-shadow;
     height: @bar-height;
     margin: @pad;
+    overflow: hidden;
     .transition;
 
     &.enlarge {
         height: 300px;
+    }
+
+    form {
+        // border-top: @default-border;
+        margin: 0 @pad/2;
+        overflow: hidden;
+        padding: @pad 0;
+        position: relative;
+        text-align: center;
+
+        &:after {
+            .box-shadow( #000 0 0 16px );
+            content: '';
+            position: absolute;
+            height: 2px ;
+            top: -3px; right: 5px; left: 5px;
+        }
     }
 }
 
@@ -81,12 +114,12 @@ section {
     text-decoration: none;
     .transition( background );
 
-    &:hover, &:active {
+    &:active {
         background: rgba(255,255,255,0.2);
     }
 
     figure {
-        border-left: 1px solid rgba(255,255,255,0.2);
+        border-left: @default-border;
         float: right;
         height: @bar-height - 20;
         line-height: @bar-height - 20;
@@ -95,14 +128,14 @@ section {
         width: @bar-height - 20 - @pad/2;
 
         &:before {
-            font-size: 40px;
+            font-size: 38px;
             text-align: center;
             display: block;
         }
 
         &.icon-spinner:before {
             .animate( spin, 2s );
-            font-size: 36px;
+            font-size: 32px;
         }
 
         &.icon-buildbot:before {
@@ -117,4 +150,11 @@ section {
 }
 
 
+/*---------------------------------------------------
+    Responsive
+---------------------------------------------------*/
+
+@media all and (max-width:400px) {
+    .narrow-screen;
+}
 
