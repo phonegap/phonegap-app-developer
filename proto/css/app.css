@@ -520,6 +520,12 @@ dialog label {
 /*---------------------------------------------------
     Responsive
 ---------------------------------------------------*/
+@media all and (min-width: 900px) {
+  .container {
+    width: 700px;
+    margin: 0 auto;
+  }
+}
 @media all and (max-width: 400px) {
   input {
     width: 90%;

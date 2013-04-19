@@ -73,7 +73,7 @@ function openSection(type) {
 
 function syncSubmit() {
     var ip = $('#sync-ip').attr('value');
-    showSpinnerModal('Looking for ' + ip);
+    showSpinnerModal('Looking for IP');
     return false;
 }
 

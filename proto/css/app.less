@@ -61,6 +61,14 @@ a {
     }
 }
 
+.wide-screen() {
+
+    .container {
+        width: 700px;
+        margin: 0 auto;
+    }
+}
+
 .narrow-screen() {
     .container {
         right: 2%; left: 2%;
@@ -185,6 +193,10 @@ dialog {
 /*---------------------------------------------------
     Responsive
 ---------------------------------------------------*/
+
+@media all and (min-width:900px) {
+    .wide-screen;
+}
 
 @media all and (max-width:400px) {
     .narrow-screen;
