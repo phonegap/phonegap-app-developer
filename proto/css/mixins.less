@@ -1,0 +1,33 @@
+/*---------------------------------------------------
+    Mixins
+---------------------------------------------------*/
+
+@text-color: #333;
+@link-color: #4BB3C3;
+@pad: 20px;
+
+.transition ( @type: all) {
+    -webkit-transition: @type 0.25s;
+    -moz-transition: @type 0.25s;
+    -0-transition: @type 0.25s;
+    transition: @type 0.25s;
+}
+
+.animate ( @value, @dur: 10s, @type: linear ) {
+    animation: @value @dur @type;
+    -moz-animation: @value @dur infinite @type;
+    -webkit-animation: @value @dur infinite @type;
+    -o-animation: @value @dur infinite @type;
+    -ms-animation: @value @dur infinite @type;
+}
+
+.transform( @value: rotate(90deg) ) {
+    -webkit-transform: @value;
+    -moz-transform: @value;
+    -o-transform: @value;
+    transform: @value;
+}
+
+.hex-to-rgba( @color, @alpha: 1) {
+    background-color: hsla(hue(@color), saturation(@color), lightness(@color), @alpha);
+}

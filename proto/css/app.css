@@ -1,0 +1,451 @@
+@import "icons.css";
+/*---------------------------------------------------
+    Mixins
+---------------------------------------------------*/
+/*---------------------------------------------------
+    Font
+---------------------------------------------------*/
+body,
+h1,
+h2,
+h3,
+h4 {
+  font-size: 1.05em;
+  font-family: 'HelveticaNeue-Light', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+/*---------------------------------------------------
+    Animation
+---------------------------------------------------*/
+@-webkit-keyframes move-background {
+  from {
+    background-position: 0 0;
+  }
+  25% {
+    background-color: #260d23;
+  }
+  75% {
+    background-color: #0b1f0f;
+  }
+  50% {
+    background-color: #261f0d;
+  }
+  to {
+    background-position: -160px -320px;
+  }
+}
+@-moz-keyframes move-background {
+  from {
+    background-position: 0 0;
+  }
+  25% {
+    background-color: #260d23;
+  }
+  75% {
+    background-color: #0b1f0f;
+  }
+  50% {
+    background-color: #261f0d;
+  }
+  to {
+    background-position: -160px -320px;
+  }
+}
+@-ms-keyframes move-background {
+  from {
+    background-position: 0 0;
+  }
+  25% {
+    background-color: #260d23;
+  }
+  75% {
+    background-color: #0b1f0f;
+  }
+  50% {
+    background-color: #261f0d;
+  }
+  to {
+    background-position: -160px -320px;
+  }
+}
+@-o-keyframes move-background {
+  from {
+    background-position: 0 0;
+  }
+  25% {
+    background-color: #260d23;
+  }
+  75% {
+    background-color: #0b1f0f;
+  }
+  50% {
+    background-color: #261f0d;
+  }
+  to {
+    background-position: -160px -320px;
+  }
+}
+@keyframes move-background {
+  from {
+    background-position: 0 0;
+  }
+  25% {
+    background-color: #260d23;
+  }
+  75% {
+    background-color: #0b1f0f;
+  }
+  50% {
+    background-color: #261f0d;
+  }
+  to {
+    background-position: -160px -320px;
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-ms-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes bounce {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  10% {
+    -webkit-transform: scale(1.3, 1);
+    -moz-transform: scale(1.3, 1);
+    -o-transform: scale(1.3, 1);
+    transform: scale(1.3, 1);
+  }
+  15% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  60% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  70% {
+    -webkit-transform: scale(1, 1.3);
+    -moz-transform: scale(1, 1.3);
+    -o-transform: scale(1, 1.3);
+    transform: scale(1, 1.3);
+  }
+  75% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-moz-keyframes bounce {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  10% {
+    -webkit-transform: scale(1.3, 1);
+    -moz-transform: scale(1.3, 1);
+    -o-transform: scale(1.3, 1);
+    transform: scale(1.3, 1);
+  }
+  15% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  60% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  70% {
+    -webkit-transform: scale(1, 1.3);
+    -moz-transform: scale(1, 1.3);
+    -o-transform: scale(1, 1.3);
+    transform: scale(1, 1.3);
+  }
+  75% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-ms-keyframes bounce {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  10% {
+    -webkit-transform: scale(1.3, 1);
+    -moz-transform: scale(1.3, 1);
+    -o-transform: scale(1.3, 1);
+    transform: scale(1.3, 1);
+  }
+  15% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  60% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  70% {
+    -webkit-transform: scale(1, 1.3);
+    -moz-transform: scale(1, 1.3);
+    -o-transform: scale(1, 1.3);
+    transform: scale(1, 1.3);
+  }
+  75% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@-o-keyframes bounce {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  10% {
+    -webkit-transform: scale(1.3, 1);
+    -moz-transform: scale(1.3, 1);
+    -o-transform: scale(1.3, 1);
+    transform: scale(1.3, 1);
+  }
+  15% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  60% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  70% {
+    -webkit-transform: scale(1, 1.3);
+    -moz-transform: scale(1, 1.3);
+    -o-transform: scale(1, 1.3);
+    transform: scale(1, 1.3);
+  }
+  75% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+@keyframes bounce {
+  0% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  10% {
+    -webkit-transform: scale(1.3, 1);
+    -moz-transform: scale(1.3, 1);
+    -o-transform: scale(1.3, 1);
+    transform: scale(1.3, 1);
+  }
+  15% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  60% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+  70% {
+    -webkit-transform: scale(1, 1.3);
+    -moz-transform: scale(1, 1.3);
+    -o-transform: scale(1, 1.3);
+    transform: scale(1, 1.3);
+  }
+  75% {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+/*---------------------------------------------------
+    General
+---------------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body,
+html {
+  height: 100%;
+}
+body {
+  font-size: 16px;
+  animation: move-background 10s linear;
+  -moz-animation: move-background 10s infinite linear;
+  -webkit-animation: move-background 10s infinite linear;
+  -o-animation: move-background 10s infinite linear;
+  -ms-animation: move-background 10s infinite linear;
+  background: #0b1922 url(../img/grid.png);
+  color: #fff;
+}
+a {
+  color: #fff;
+}
+/*---------------------------------------------------
+    Components
+---------------------------------------------------*/
+section {
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  margin-left: -40%;
+  top: 50%;
+  margin-top: -120px;
+  width: 80%;
+}
+.bt {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  font-size: 1.2em;
+  height: 80px;
+  line-height: 80px;
+  margin: 20px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-transition: background-color 0.25s;
+  -moz-transition: background-color 0.25s;
+  -0-transition: background-color 0.25s;
+  transition: background-color 0.25s;
+}
+.bt:hover,
+.bt:active {
+  background-color: rgba(75, 179, 195, 0.3);
+}
+.bt figure {
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  float: right;
+  height: 60px;
+  line-height: 60px;
+  margin: 10px;
+  padding-left: 10px;
+  width: 50px;
+}
+.bt figure:before {
+  font-size: 40px;
+  text-align: center;
+  display: block;
+}
+.bt figure.icon-spinner:before {
+  animation: spin 2s linear;
+  -moz-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -ms-animation: spin 2s infinite linear;
+  font-size: 36px;
+}
+.bt figure.icon-buildbot:before {
+  animation: bounce 2s linear;
+  -moz-animation: bounce 2s infinite linear;
+  -webkit-animation: bounce 2s infinite linear;
+  -o-animation: bounce 2s infinite linear;
+  -ms-animation: bounce 2s infinite linear;
+}
