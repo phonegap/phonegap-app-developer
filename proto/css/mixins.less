@@ -1,12 +1,17 @@
 /*---------------------------------------------------
-    Mixins
+    Theme
 ---------------------------------------------------*/
 
-@text-color: #333;
-@link-color: #4BB3C3;
+@background-image: url(../img/gradient.jpg);
 @border-color: rgba(255,255,255,0.2);
 
-@default-border: 1px solid @border-color;
+@link-color: #4BB3C3;
+@text-color: #333;
+
+
+/*---------------------------------------------------
+    Layout Variables + Shortcut
+---------------------------------------------------*/
 
 @bar-height: 65px;
 @input-font-size: 16px;
@@ -14,12 +19,14 @@
 @input-pad: 8px;
 @pad: 20px;
 
+@default-border: 1px solid @border-color;
+
 
 /*---------------------------------------------------
-    Shortcut
+    Mixins
 ---------------------------------------------------*/
 
-.animate ( @value, @dur: 10s, @type: linear ) {
+.animate( @value, @dur: 10s, @type: linear ) {
     animation: @value @dur @type;
     -moz-animation: @value @dur infinite @type;
     -webkit-animation: @value @dur infinite @type;
@@ -69,7 +76,7 @@
     }
 }
 
-.transition ( @type: all) {
+.transition( @type: all) {
     -webkit-transition: @type 0.25s;
     -moz-transition: @type 0.25s;
     -0-transition: @type 0.25s;

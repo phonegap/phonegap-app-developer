@@ -11,7 +11,7 @@ task :watch do
 end
 
 task :less do
-  system "lessc css/app.less > css/app.css"
+  system "lessc -x css/app.less > css/app.css"
   puts "compled less"
 end
 
