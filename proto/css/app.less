@@ -30,10 +30,19 @@ body, html {
 }
 
 body {
-    font-size: 16px;
-    background: #000 @background-image;
+    background: @default-color @background-image;
     .background-size( 100% 100% );
     color: #fff;
+    font-size: 16px;
+    .transition( background-color );
+
+    &.type-sync {
+        background-color: @sync-color;
+    }
+
+    &.type-build {
+        background-color: @build-color;
+    }
 }
 
 a {

@@ -55,9 +55,11 @@ function openBuild() {
 function openSection(type) {
     var isOpen = $('#' + type).hasClass('open');
     $('.open').removeClass('open');
+    $('body').removeClass('type-sync').removeClass('type-build');
 
     if (!isOpen) {
         $('#' + type).addClass('open');
+        $('body').addClass('type-' + type);
 
         setTimeout(function() {
             $('#' + type + ' input').first().focus().click();
