@@ -66,24 +66,39 @@
 
             .core {
                 .box-shadow( inset #333 0 0 5px );
-                background: rgb(192,229,244); /* Old browsers */
-                background: -moz-linear-gradient(-45deg,  rgba(192,229,244,1) 0%, rgba(60,176,226,1) 50%, rgba(26,148,200,1) 51%, rgba(138,214,246,1) 100%); /* FF3.6+ */
-                background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(192,229,244,1)), color-stop(50%,rgba(60,176,226,1)), color-stop(51%,rgba(26,148,200,1)), color-stop(100%,rgba(138,214,246,1))); /* Chrome,Safari4+ */
-                background: -webkit-linear-gradient(-45deg,  rgba(192,229,244,1) 0%,rgba(60,176,226,1) 50%,rgba(26,148,200,1) 51%,rgba(138,214,246,1) 100%); /* Chrome10+,Safari5.1+ */
-                background: -o-linear-gradient(-45deg,  rgba(192,229,244,1) 0%,rgba(60,176,226,1) 50%,rgba(26,148,200,1) 51%,rgba(138,214,246,1) 100%); /* Opera 11.10+ */
-                background: -ms-linear-gradient(-45deg,  rgba(192,229,244,1) 0%,rgba(60,176,226,1) 50%,rgba(26,148,200,1) 51%,rgba(138,214,246,1) 100%); /* IE10+ */
-                background: linear-gradient(135deg,  rgba(192,229,244,1) 0%,rgba(60,176,226,1) 50%,rgba(26,148,200,1) 51%,rgba(138,214,246,1) 100%); /* W3C */
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c0e5f4', endColorstr='#8ad6f6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
                 .circle(10px);
                 z-index: 4;
+                background: #efc5ca; /* Old browsers */
+                background: -moz-linear-gradient(-45deg,  #efc5ca 0%, #d24b5a 50%, #ba2737 51%, #f18e99 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#efc5ca), color-stop(50%,#d24b5a), color-stop(51%,#ba2737), color-stop(100%,#f18e99)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(-45deg,  #efc5ca 0%,#d24b5a 50%,#ba2737 51%,#f18e99 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(-45deg,  #efc5ca 0%,#d24b5a 50%,#ba2737 51%,#f18e99 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(-45deg,  #efc5ca 0%,#d24b5a 50%,#ba2737 51%,#f18e99 100%); /* IE10+ */
+                background: linear-gradient(135deg,  #efc5ca 0%,#d24b5a 50%,#ba2737 51%,#f18e99 100%); /* W3C */
 
                 .glow {
-                    .box-shadow( #1a94c8 0 0 5px);
-                    background: rgba(192,229,244,0.2);
+                    .box-shadow( #efc5ca 0 0 5px);
+                    background: rgba(255,79,72,0.2);
                     .circle(10px);
-                    .animate( glow, 0.8s );
+                    /*.animate( glow, 0.8s );*/
                 }
+
+                &.unlocked {
+                    background: rgb(192,229,244); /* Old browsers */
+                    background: -moz-linear-gradient(-45deg,  rgba(192,229,244,1) 0%, rgba(60,176,226,1) 50%, rgba(26,148,200,1) 51%, rgba(138,214,246,1) 100%); /* FF3.6+ */
+                    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(192,229,244,1)), color-stop(50%,rgba(60,176,226,1)), color-stop(51%,rgba(26,148,200,1)), color-stop(100%,rgba(138,214,246,1))); /* Chrome,Safari4+ */
+                    background: -webkit-linear-gradient(-45deg,  rgba(192,229,244,1) 0%,rgba(60,176,226,1) 50%,rgba(26,148,200,1) 51%,rgba(138,214,246,1) 100%); /* Chrome10+,Safari5.1+ */
+                    background: -o-linear-gradient(-45deg,  rgba(192,229,244,1) 0%,rgba(60,176,226,1) 50%,rgba(26,148,200,1) 51%,rgba(138,214,246,1) 100%); /* Opera 11.10+ */
+                    background: -ms-linear-gradient(-45deg,  rgba(192,229,244,1) 0%,rgba(60,176,226,1) 50%,rgba(26,148,200,1) 51%,rgba(138,214,246,1) 100%); /* IE10+ */
+                    background: linear-gradient(135deg,  rgba(192,229,244,1) 0%,rgba(60,176,226,1) 50%,rgba(26,148,200,1) 51%,rgba(138,214,246,1) 100%); /* W3C */
+
+                    .glow {
+                        .box-shadow( #1a94c8 0 0 5px);
+                        background: rgba(192,229,244,0.2);
+                    }
+                }
+
+
             }
         }
 

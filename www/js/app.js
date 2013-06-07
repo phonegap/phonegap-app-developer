@@ -10,7 +10,11 @@ $().ready(function() {
 
     setTimeout( function() {
         $('.lock').removeClass('locked');
-    }, 500)
+    }, 500);
+
+    setTimeout( function() {
+        $('.core').addClass('unlocked');
+    }, 900);
 
     setTimeout( function() {
         $('.shutter').removeClass('closed');
