@@ -7,7 +7,7 @@
 @sync-color: #914226;
 
 @background-image: url(../img/radial.png);
-@border-color: rgba(255,255,255,0.2);
+@border-color: #fff;
 
 @link-color: #4BB3C3;
 @text-color: #333;
@@ -65,6 +65,26 @@
     box-sizing: @value;
 }
 
+.circle( @radius, @offset: 0 ) {
+    position: absolute;
+    .border-radius( @radius);
+    height: @radius * 2 + @offset;
+    width: @radius * 2 + @offset;
+    top: 50%;
+    left: 50%;
+    margin: -@radius 0 0 -@radius; 
+}
+
+.gradient-simple( @color1, @color2 ) {
+    background: @color1; /* Old browsers */
+    background: -moz-linear-gradient(top,  @color1 0%, @color2 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@color1), color-stop(100%,@color2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  @color1 0%,@color2 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  @color1 0%,@color2 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  @color1 0%,@color2 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  @color1 0%,@color2 100%); /* W3C */
+}
+
 .placeholder( @color ) {
     ::-webkit-input-placeholder {
         color: @color;
@@ -80,11 +100,11 @@
     }
 }
 
-.transition( @type: all) {
-    -webkit-transition: @type 0.25s;
-    -moz-transition: @type 0.25s;
-    -0-transition: @type 0.25s;
-    transition: @type 0.25s;
+.transition( @type: all, @dur: 0.25s ) {
+    -webkit-transition: @type @dur;
+    -moz-transition: @type @dur;
+    -0-transition: @type @dur;
+    transition: @type @dur;
 }
 
 .transform( @value: rotate(90deg) ) {
@@ -125,5 +145,17 @@
 @-ms-keyframes bounce {.bounce;}
 @-o-keyframes bounce {.bounce;}
 @keyframes bounce {.bounce;}
+
+.glow() {
+    from { opacity: 0; }
+    50% { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@-webkit-keyframes glow {.glow;}
+@-moz-keyframes glow {.glow;}
+@-ms-keyframes glow {.glow;}
+@-o-keyframes glow {.glow;}
+@keyframes glow {.glow;}
 
 

@@ -11,26 +11,27 @@
     <div class="container">
         <div class="inner">
 
-            <section id="sync" class="enlarge">
-                <a href="#" class="bt"><figure class="icon-spinner"></figure>Live Sync</a>
+            <section id="build" class="open">
+                <div class="shutter left closed"> </div>
+                <div class="shutter right closed"> 
+                    <div class="lock locked">
+                        <div class="screws"></div>
+                        <div class="cap">
+                            <div class="core">
+                                <div class="glow"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <form>
-                    <br/>
-                    <input id="sync-ip" type="number" placeholder="IP"></input>
-                    <input type="submit" value="Sync"></input>
-                </form>
-            </section>
-
-            <section id="build">
-                <a href="#" class="bt"><figure class="icon-buildbot"></figure>Sign in to Build</a>
-                <form>
-                    <input type="text" placeholder="Username"></input>
-                    <input type="password" placeholder="Password"></input>
-                    <input type="submit" value="Go"></input>
+                    <input type="text" placeholder="Username" class="offset"></input>
+                    <input type="password" placeholder="Password" class="offset"></input>
+                    <input type="submit" value="Go" class="offset"></input>
                 </form>
             </section>
 
         </div>
-    </section>
+    </div>
 
     <script src="js/zepto.min.js"></script>
     <script src="js/app.js"></script>

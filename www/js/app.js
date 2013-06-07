@@ -5,11 +5,20 @@
 $().ready(function() {
 
     // Add Events
-    $('#sync .bt').on('click', openSync);    
-    $('#build .bt').on('click', openBuild);
-
-    $('#sync form').submit(syncSubmit);
     $('#build form').submit(buildSubmit);
+
+
+    setTimeout( function() {
+        $('.lock').removeClass('locked');
+    }, 500)
+
+    setTimeout( function() {
+        $('.shutter').removeClass('closed');
+    }, 1250);
+
+    setTimeout( function() {
+        $('.shutter').remove();
+    }, 1750);
 });
 
 
@@ -41,43 +50,8 @@ function hideSpinnerModal() {
 
 
 /*---------------------------------------------------
-    UI - Accordion
----------------------------------------------------*/
-
-function openSync() {
-    openSection('sync');
-}
-
-function openBuild() {
-    openSection('build');
-}
-
-function openSection(type) {
-    var isOpen = $('#' + type).hasClass('open');
-    $('.open').removeClass('open');
-    $('body').removeClass('type-sync').removeClass('type-build');
-
-    if (!isOpen) {
-        $('#' + type).addClass('open');
-        $('body').addClass('type-' + type);
-
-        setTimeout(function() {
-            $('#' + type + ' input').first().focus().click();
-            // This does not work properly on iOS
-        }, 200);
-    }
-}
-
-
-/*---------------------------------------------------
     UI - Form
 ---------------------------------------------------*/
-
-function syncSubmit() {
-    var ip = $('#sync-ip').attr('value');
-    showSpinnerModal('Looking for IP');
-    return false;
-}
 
 function buildSubmit() {
     showSpinnerModal('Signing in');

@@ -30,23 +30,19 @@ body, html {
 }
 
 body {
-    background: @default-color @background-image;
-    .background-size( 100% 100% );
+    background: #ccc;
     color: #fff;
     font-size: 16px;
-    .transition( background-color );
-
-    &.type-sync {
-        background-color: @sync-color;
-    }
-
-    &.type-build {
-        background-color: @build-color;
-    }
 }
 
 a {
     color: #fff;
+}
+
+hr {
+    border: none;
+    border-top: #ddd 1px solid;
+    border-bottom: #fff 1px solid;
 }
 
 @import "form";
@@ -60,8 +56,8 @@ a {
     display: table;
     height: 100%;
     position: absolute;
-    top: 0; right: 10%; bottom: 0; left: 10%;
-    width: 80%;
+    top: 0; right: 0%; bottom: 0; left: 0%;
+    width: 100%;
 
     .inner {
         display: table-cell;
@@ -80,91 +76,28 @@ a {
 
 .narrow-screen() {
     .container {
-        right: 2%; left: 2%;
-        width: 96%;
     }
 }
 
-
-/*---------------------------------------------------
-    UI - Accordion
----------------------------------------------------*/
-
 section {
-    background: rgba(255,255,255,0.1);
-    border: @default-border;
-    .box-shadow;
-    height: @bar-height;
-    margin: @pad;
+    padding-top: 4px;
+    background: #eee;
+    position: relative;
+    height: auto;
     overflow: hidden;
-    .transition;
-
-    &.open {
-        height: 300px;
-    }
 
     form {
-        margin: 0 @pad/2;
         overflow: hidden;
         padding: @pad 0;
         position: relative;
         text-align: center;
 
-        &:after {
-            .box-shadow( #000 0 0 16px );
-            content: '';
-            position: absolute;
-            height: 2px ;
-            top: -3px; right: 5px; left: 5px;
-        }
     }
+
 }
 
-.bt {
-    display: block;
-    font-size: 1.2em;
-    height: @bar-height;
-    line-height: @bar-height;
-    opacity: 1;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    .transition( background );
 
-    &:active {
-        background: rgba(255,255,255,0.2);
-    }
-
-    &:after {
-        border-left: @default-border;
-        content: '';
-        position: absolute;
-        top: @pad/2; right: @bar-height - @pad/2; bottom: @pad/2;
-    }
-
-    figure {
-        float: right;
-        height: @bar-height - 20;
-        line-height: @bar-height - 20;
-        margin: @pad/2;
-        width: @bar-height - 20 - @pad/2;
-        font-size: 38px;
-
-        &.icon-spinner {
-            .animate( spin, 3s );
-            font-size: 32px;
-        }
-
-        &.icon-buildbot {
-            .animate( bounce, 2s );
-        }
-    }
-
-    &.hide {
-        opacity: 0;
-        height: 0;
-    }
-}
+@import "shutter";
 
 /*---------------------------------------------------
     UI - Spinner Modal
