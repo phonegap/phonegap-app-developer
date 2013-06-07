@@ -1,20 +1,29 @@
 .shutter {
-    background: #ccc;
+    background: #bfbfbf;
+    background: -moz-linear-gradient(-45deg,  #bfbfbf 0%, #c3c3c3 12%, #c8c8c8 25%, #bdbdbd 39%, #b3b3b3 50%, #a9a9a9 60%, #b3b3b3 76%, #adadad 91%, #aaaaaa 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#bfbfbf), color-stop(12%,#c3c3c3), color-stop(25%,#c8c8c8), color-stop(39%,#bdbdbd), color-stop(50%,#b3b3b3), color-stop(60%,#a9a9a9), color-stop(76%,#b3b3b3), color-stop(91%,#adadad), color-stop(100%,#aaaaaa)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  #bfbfbf 0%,#c3c3c3 12%,#c8c8c8 25%,#bdbdbd 39%,#b3b3b3 50%,#a9a9a9 60%,#b3b3b3 76%,#adadad 91%,#aaaaaa 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  #bfbfbf 0%,#c3c3c3 12%,#c8c8c8 25%,#bdbdbd 39%,#b3b3b3 50%,#a9a9a9 60%,#b3b3b3 76%,#adadad 91%,#aaaaaa 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  #bfbfbf 0%,#c3c3c3 12%,#c8c8c8 25%,#bdbdbd 39%,#b3b3b3 50%,#a9a9a9 60%,#b3b3b3 76%,#adadad 91%,#aaaaaa 100%); /* IE10+ */
+    background: linear-gradient(135deg,  #bfbfbf 0%,#c3c3c3 12%,#c8c8c8 25%,#bdbdbd 39%,#b3b3b3 50%,#a9a9a9 60%,#b3b3b3 76%,#adadad 91%,#aaaaaa 100%); /* W3C */
+
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #999;
+    .box-shadow( #888 0 1px 4px );
     position: absolute;
-    top: 4px;
-    bottom: 4px;
+    top: 10px;
+    bottom: 10px;
     left: 0;
     z-index: 3;
     width: 0;
     .transition( all, 0.5s );
 
     &.left {
-        border-right: 4px solid #eee;
         left: -50px;
     }
 
     &.right {
-        border-left: 4px solid #eee;
+        border-left: 1px solid #eee;
         left: auto;
         right: -50px;
     }
@@ -28,8 +37,9 @@
             right: 0;
         }
     }
+}
 
-    .lock {
+.lock {
         position: absolute;
         top: 50%;
         margin: -31px 0 0 -31px;
@@ -41,7 +51,7 @@
             .border-radius( 29px);
             height: 58px;
             width: 58px;
-            .box-shadow( #666 2px 4px 8px);
+            .box-shadow( #555 1px 4px 8px);
             .gradient-simple( #eee, #aaa);
             z-index: 3;
             .transition;
@@ -83,7 +93,7 @@
             top: 50%;
             .transition( all, 0.5s );
             &:after, &:before {
-                .box-shadow( #666 0 0 3px);
+                .box-shadow( #555 0 0 3px);
                 .gradient-simple( #fff, #999);
                 border-left: 1px solid #eee;
                 border-right: 1px solid #eee;
@@ -108,4 +118,3 @@
             }
         }
     }
-}

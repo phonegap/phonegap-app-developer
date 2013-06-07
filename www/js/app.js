@@ -17,7 +17,7 @@ $().ready(function() {
     }, 1250);
 
     setTimeout( function() {
-        $('.shutter').remove();
+        // $('.shutter').remove();
     }, 1750);
 });
 
