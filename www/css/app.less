@@ -30,7 +30,7 @@ body, html {
 }
 
 body {
-    background: #eee;
+    .gradient-simple( #e7e7e7, #b0afb0 );
     color: #333;
     font-size: 16px;
 }
@@ -80,58 +80,7 @@ hr {
     }
 }
 
-section {
-    padding: 30px 0;
-    /*background: #eee;*/
-    /*position: relative;*/
-    height: auto;
-    overflow: hidden;
-
-    form {
-        overflow: hidden;
-        padding: @pad 0;
-        position: relative;
-        text-align: center;
-
-    }
-
-}
-
-
-@import "shutter";
-
-/*---------------------------------------------------
-    UI - Spinner Modal
----------------------------------------------------*/
-
-dialog {
-    background: rgba(0,0,0,0.7);
-    border: none;
-    color: #fff;
-    display: block;
-    opacity: 0;
-    position: fixed;
-    top: 0; right: 0; left: 0; bottom: 0;
-    text-align: center;
-    .transition( opacity );
-
-    figure, label {
-        position: absolute;
-        right: 0; left: 0;
-        top: 50%;
-    }
-
-    figure {
-        margin-top: -20px;
-        font-size: 40px;
-        .animate( spin, 1s );
-    }
-
-    label {
-        margin-top: 25px;
-    }
-}
-
+@import "bot";
 
 /*---------------------------------------------------
     Responsive

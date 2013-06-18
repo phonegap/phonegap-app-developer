@@ -12,6 +12,9 @@
 @link-color: #4BB3C3;
 @text-color: #333;
 
+@terminal-color: #52c9f4;
+@terminal-background: #08213a;
+
 
 /*---------------------------------------------------
     Layout Variables + Shortcut
@@ -24,6 +27,11 @@
 @pad: 20px;
 
 @default-border: 1px solid @border-color;
+
+@sprite-image: url(../img/sprite.png);
+@sprite-size: 600px 600px;
+
+
 
 
 /*---------------------------------------------------
@@ -83,6 +91,16 @@
     background: -o-linear-gradient(top,  @color1 0%,@color2 100%); /* Opera 11.10+ */
     background: -ms-linear-gradient(top,  @color1 0%,@color2 100%); /* IE10+ */
     background: linear-gradient(to bottom,  @color1 0%,@color2 100%); /* W3C */
+}
+
+.gradient-angled( @color1,  @color2 ) {
+    background: @color1; /* Old browsers */
+    background: -moz-linear-gradient(-45deg,  @color1 0%, @color2 99%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,@color1), color-stop(99%,@color2)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(-45deg,  @color1 0%,@color2 99%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(-45deg,  @color1 0%,@color2 99%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(-45deg,  @color1 0%,@color2 99%); /* IE10+ */
+    background: linear-gradient(135deg,  @color1 0%,@color2 99%); /* W3C */
 }
 
 .placeholder( @color ) {
@@ -158,4 +176,17 @@
 @-o-keyframes glow {.glow;}
 @keyframes glow {.glow;}
 
+.flash() {
+    from {  background-color: transparent; }
+    40% {   background-color: transparent;}
+    50% {   background-color: rgba(255,255,255,0.1); }
+    60% {   background-color: transparent; }
+    to {    background-color: transparent }
+}
+
+@-webkit-keyframes flash {.flash;}
+@-moz-keyframes flash {.flash;}
+@-ms-keyframes flash {.flash;}
+@-o-keyframes flash {.flash;}
+@keyframes flash {.flash;}
 

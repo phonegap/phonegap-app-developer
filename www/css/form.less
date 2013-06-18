@@ -2,43 +2,48 @@
     UI - Form
 ---------------------------------------------------*/
 
-.placeholder( rgba(0,0,0,0.2) );
+/*.placeholder( rgba(0,0,0,0.2) );*/
 
-input {
-    border: none;
-    .border-radius( 0 );
-    display: block;
-    font-size: @input-font-size;
-    height: @input-height;
-    margin: @pad auto;
-    padding: @input-pad;
-    width: 80%;
-    -webkit-appearance: none;
-}
-
-input[type="text"], input[type="password"], input[type="number"] {
-    background: #fff;
-    padding: @input-pad + 8 @input-pad + 4;
-    border: 4px solid #ccc;
-    .box-sizing;
-
-    &:focus {
-        background: #EAF7FF;
+form {
+    label {
+        color: @terminal-color;
+        text-align: left;
+        font-size: 13px;
+        display: block;
     }
 }
 
+input {
+    background: none;
+    border: @terminal-color 1px solid;
+    .border-radius( 4px );
+    color: @terminal-color;
+    font-family: Monaco, Courier New, monospace;
+    padding: 5px 8px;
+    margin: 2px 0 8px;
+    -webkit-appearance: none;
+    font-size: 14px;
+}
+
+input[type="text"], input[type="password"], input[type="number"] {
+    width: @monitor-width - @monitor-padding * 2 - 2 - 16;
+}
+
 input[type="submit"] {
-    background: #bbb;
-    color: #fff;
+    background: @terminal-color;
+    border: none;
+    color: @terminal-background;
+    font-weight: 600;
+    margin-top: 12px;
     min-width: 100px;
     &:active {
-        background: #ddd;
+        background: lighten( @terminal-color, 10% );
     }
 }
 
 
 .narrow-screen() {
     input {
-        width: 90%;
+        /*width: 90%;*/
     }
 }

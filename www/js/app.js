@@ -9,20 +9,9 @@ $().ready(function() {
 
 
     setTimeout( function() {
-        $('.lock').removeClass('locked');
+        $('.panel.top').addClass('open');
     }, 500);
 
-    setTimeout( function() {
-        $('.core').addClass('unlocked');
-    }, 900);
-
-    setTimeout( function() {
-        $('.shutter').removeClass('closed');
-    }, 1250);
-
-    setTimeout( function() {
-        // $('.shutter').remove();
-    }, 1750);
 });
 
 
