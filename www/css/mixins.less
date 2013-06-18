@@ -12,8 +12,13 @@
 @link-color: #4BB3C3;
 @text-color: #333;
 
-@terminal-color: #52c9f4;
+@terminal-color: #adecff;
 @terminal-background: #08213a;
+@terminal-glow: #00bff3;
+
+@alert-color: #f69fa5;
+@alert-background: #340000;
+@alert-glow: #ed1c24;
 
 
 /*---------------------------------------------------
@@ -189,4 +194,38 @@
 @-ms-keyframes flash {.flash;}
 @-o-keyframes flash {.flash;}
 @keyframes flash {.flash;}
+
+.pulse() {
+    from { opacity: 1; }
+    50% { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+@-webkit-keyframes pulse {.pulse;}
+@-moz-keyframes pulse {.pulse;}
+@-ms-keyframes pulse {.pulse;}
+@-o-keyframes pulse {.pulse;}
+@keyframes pulse {.pulse;}
+
+.fade-out() {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@-webkit-keyframes fade-out {.fade-out;}
+@-moz-keyframes fade-out {.fade-out;}
+@-ms-keyframes fade-out {.fade-out;}
+@-o-keyframes fade-out {.fade-out;}
+@keyframes fade-out {.fade-out;}
+
+.fade-in() {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@-webkit-keyframes fade-in {.fade-in;}
+@-moz-keyframes fade-in {.fade-in;}
+@-ms-keyframes fade-in {.fade-in;}
+@-o-keyframes fade-in {.fade-in;}
+@keyframes fade-in {.fade-in;}
 

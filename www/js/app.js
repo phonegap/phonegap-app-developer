@@ -9,8 +9,15 @@ $().ready(function() {
 
 
     setTimeout( function() {
+        $('.alert').removeClass('alert');
+        $('.visor').removeClass('pulse');
+        $('.visor label').html('Hi!');
+    }, 2000);
+
+    setTimeout( function() {
         $('.panel.top').addClass('open');
-    }, 500);
+        &('.visor').addClass('fade-out');
+    }, 2750);
 
 });
 

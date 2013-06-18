@@ -6,11 +6,15 @@
 
 form {
     label {
-        color: @terminal-color;
         text-align: left;
         font-size: 13px;
         display: block;
     }
+}
+
+label, input {
+    color: @terminal-color;
+    text-shadow: @terminal-glow 0 0 5px;
 }
 
 input {
@@ -27,17 +31,32 @@ input {
 
 input[type="text"], input[type="password"], input[type="number"] {
     width: @monitor-width - @monitor-padding * 2 - 2 - 16;
+
 }
 
 input[type="submit"] {
     background: @terminal-color;
     border: none;
     color: @terminal-background;
+    text-shadow: none;
+    .box-shadow( @terminal-glow 0 0 5px );
     font-weight: 600;
     margin-top: 12px;
     min-width: 100px;
     &:active {
         background: lighten( @terminal-color, 10% );
+    }
+}
+
+.alert {
+    label, input {
+        color: @alert-color;
+        text-shadow: @alert-glow 0 0 5px;
+    }
+    input[type="submit"] {
+        color: @alert-background;
+        text-shadow: none;
+        .box-shadow( @alert-glow 0 0 5px );
     }
 }
 
