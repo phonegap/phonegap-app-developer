@@ -5,7 +5,7 @@
 $().ready(function() {
 
     // Add Events
-    $('#build form').submit(buildSubmit);
+    $('#login-form').submit(buildSubmit);
 
 
     setTimeout( function() {
@@ -14,10 +14,7 @@ $().ready(function() {
         $('.visor label').html('Hi!');
     }, 2000);
 
-    setTimeout( function() {
-        $('.panel.top').addClass('open');
-        &('.visor').addClass('fade-out');
-    }, 2750);
+    setTimeout( openBot, 2750);
 
 });
 
@@ -26,26 +23,46 @@ $().ready(function() {
     UI - General
 ---------------------------------------------------*/
 
-function showSpinnerModal(label) {
-    var el = $('<dialog>')
-        .append($('<figure>', {'class':'icon-spinner'}))
-        .append($('<label>', {text:label}));
-    $('body').append(el);
-    setTimeout(function() {
-        el.css({opacity:1});
+function openBot() {
+    $('.monitor form').removeClass('hidden');
+    setTimeout( function() {
+        $('.panel.top').addClass('open');
+        $('.visor').addClass('fade-out');
+        $('.monitor form').removeClass('faded');
+        setTimeout( function() {
+            $('.visor').addClass('hidden');
+        }, 550);
     }, 50);
-
-    // For demo purpose, hide after 2 seconds
-    setTimeout(function() {
-        hideSpinnerModal();
-    }, 2000);
 }
 
-function hideSpinnerModal() {
-    $('dialog').css({opacity:0})
-    setTimeout(function() {
-        $('dialog').remove();
-    }, 500);
+function closeBot() {
+    $('.visor').removeClass('hidden');
+    setTimeout( function() {
+        $('.panel.top').removeClass('open');
+        $('.visor').removeClass('fade-out');
+        $('.monitor form').addClass('faded');
+        setTimeout( function() {
+            $('.monitor form').addClass('hidden')
+        }, 50);
+    }, 50);
+}
+
+
+// Note that the bot needs to be closed to be able to view this
+function updateMessage( msg ) {
+    $('.visor').removeClass('pulse');
+    $('.visor label').html(msg);
+}
+
+function errorMessage( msg ) {
+    updateMessage( msg );
+    $('.visor').removeClass('pulse');
+    $('.monitor').addClass('alert');
+}
+
+function pulsingMessage( msg ) {
+    updateMessage( msg );
+    $('.visor').addClass('pulse');
 }
 
 
@@ -54,8 +71,31 @@ function hideSpinnerModal() {
 ---------------------------------------------------*/
 
 function buildSubmit() {
-    showSpinnerModal('Signing in');
+    closeBot();
+    updateMessage('');
+    setTimeout(function() {
+        pulsingMessage( 'Signing in...' );
+    }, 500);
+
+    // Placeholder
+    setTimeout(onBuildSubmitError,2000);
     return false;
+}
+
+function onBuildSubmitSuccess() {
+    updateMessage( 'Success!' );
+    setTimeout( function() {
+        // Proceed to next step
+    }, 1000 );
+}
+
+function onBuildSubmitError() {
+    errorMessage( 'Error!' );
+    setTimeout( function() {
+        $('.monitor').removeClass('alert');
+        updateMessage('');
+        openBot();
+    }, 1000 );
 }
 
 

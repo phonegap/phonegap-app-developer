@@ -2,11 +2,6 @@
     Theme
 ---------------------------------------------------*/
 
-@default-color: #434a4e;
-@build-color: #0880bd;
-@sync-color: #914226;
-
-@background-image: url(../img/radial.png);
 @border-color: #fff;
 
 @link-color: #4BB3C3;
@@ -22,21 +17,16 @@
 
 
 /*---------------------------------------------------
-    Layout Variables + Shortcut
+    Shortcut
 ---------------------------------------------------*/
-
-@bar-height: 65px;
-@input-font-size: 16px;
-@input-height: 36px;
-@input-pad: 8px;
-@pad: 20px;
-
-@default-border: 1px solid @border-color;
 
 @sprite-image: url(../img/sprite.png);
 @sprite-size: 600px 600px;
 
-
+.sprite {
+    background: transparent @sprite-image 0 0 no-repeat;
+    .background-size( @sprite-size );
+}
 
 
 /*---------------------------------------------------
@@ -142,45 +132,6 @@
     Animation
 ---------------------------------------------------*/
 
-.spin() {
-    from { .transform( rotate(0deg) ); }
-    to { .transform( rotate(360deg) ); }
-}
-
-@-webkit-keyframes spin {.spin;}
-@-moz-keyframes spin {.spin;}
-@-ms-keyframes spin {.spin;}
-@-o-keyframes spin {.spin;}
-@keyframes spin {.spin;}
-
-
-.bounce() {
-    0% { .transform( scale(1, 1) ); }
-    10% { .transform( scale(1.3, 1) ); }
-    15% { .transform( scale(1, 1) ); }
-    60% { .transform( scale(1, 1) ); }
-    70% { .transform( scale(1, 1.3) ); }
-    75% { .transform( scale(1, 1) ); }
-}
-
-@-webkit-keyframes bounce {.bounce;}
-@-moz-keyframes bounce {.bounce;}
-@-ms-keyframes bounce {.bounce;}
-@-o-keyframes bounce {.bounce;}
-@keyframes bounce {.bounce;}
-
-.glow() {
-    from { opacity: 0; }
-    50% { opacity: 1; }
-    to { opacity: 0; }
-}
-
-@-webkit-keyframes glow {.glow;}
-@-moz-keyframes glow {.glow;}
-@-ms-keyframes glow {.glow;}
-@-o-keyframes glow {.glow;}
-@keyframes glow {.glow;}
-
 .flash() {
     from {  background-color: transparent; }
     40% {   background-color: transparent;}
@@ -206,26 +157,3 @@
 @-ms-keyframes pulse {.pulse;}
 @-o-keyframes pulse {.pulse;}
 @keyframes pulse {.pulse;}
-
-.fade-out() {
-    from { opacity: 1; }
-    to { opacity: 0; }
-}
-
-@-webkit-keyframes fade-out {.fade-out;}
-@-moz-keyframes fade-out {.fade-out;}
-@-ms-keyframes fade-out {.fade-out;}
-@-o-keyframes fade-out {.fade-out;}
-@keyframes fade-out {.fade-out;}
-
-.fade-in() {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@-webkit-keyframes fade-in {.fade-in;}
-@-moz-keyframes fade-in {.fade-in;}
-@-ms-keyframes fade-in {.fade-in;}
-@-o-keyframes fade-in {.fade-in;}
-@keyframes fade-in {.fade-in;}
-

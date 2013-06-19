@@ -52,8 +52,11 @@ input[type="submit"] {
     label, input {
         color: @alert-color;
         text-shadow: @alert-glow 0 0 5px;
+        border-color: @alert-color;
     }
     input[type="submit"] {
+        border: none;
+        background: @alert-color;
         color: @alert-background;
         text-shadow: none;
         .box-shadow( @alert-glow 0 0 5px );

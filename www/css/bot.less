@@ -2,15 +2,11 @@
 @monitor-height: 205px;
 @monitor-padding: 25px;
 
-.sprite {
-	background: transparent @sprite-image 0 0 no-repeat;
-	.background-size( @sprite-size );
-}
-
 #bot {
 	display: inline-block;
 	text-align: center;
 	position: relative;
+	margin-top: 60px;
 	width: @monitor-width + 10;
 
 	.shadow {
@@ -19,7 +15,7 @@
 		width: 320px;
 		height: 40px;
 		position: absolute;
-		bottom: -75px;
+		bottom: -65px;
 		left: -(320 - @monitor-width) / 2 + 4;
 	}
 
@@ -44,12 +40,18 @@
 			width: @monitor-width - @monitor-padding * 2;
 			top: @monitor-padding;
 			left: @monitor-padding;
+			.transition( opacity, 0.5s );
+
+			&.faded {
+				opacity: 0;
+			}
 		}
 
 		.visor {
 			position: absolute;
 			top: 70px;
 			left: 50%;
+			.transition( opacity, 0.5s );
 
 			.eye {
 				position: absolute;
@@ -70,7 +72,7 @@
 			label {
 				position: absolute;
 				left: -50px;
-				top: 22px;
+				top: 25px;
 				width: 100px;
 				font-size: 12px;
 			}
@@ -79,6 +81,10 @@
 				.eye {
 					.animate( pulse, 0.5s );
 				}
+			}
+
+			&.fade-out {
+				opacity: 0;
 			}
 		}
 
@@ -104,7 +110,7 @@
 			left: -1px;
 			right: -1px;
 			bottom: -121px;
-			height: 80px;
+			height: 70px;
 			.transition( bottom, 0.5s );
 		}
 		&.top {
@@ -113,16 +119,16 @@
 			height: @monitor-height + 10 - 120;
 
 			&.open {
-				top: -@monitor-height - 11 + 37;
+				top: -@monitor-height + 37;
 
 				.visor-cover {
-					bottom: -84px;
+					bottom: -73px;
 				}
 			}
 		}
 		&.bottom {
-			height: 50px;
-			bottom: -50px;
+			height: 40px;
+			bottom: -40px;
 		}
 	}
 
