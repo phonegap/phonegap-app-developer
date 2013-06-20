@@ -12,9 +12,13 @@ $().ready(function() {
         $('.alert').removeClass('alert');
         $('.visor').removeClass('pulse');
         $('.visor label').html('Hi!');
+        $('.visor .eye').removeClass('faded');
     }, 2000);
 
     setTimeout( openBot, 2750);
+    setTimeout( function() {
+        $('.visor .eye').addClass('hidden');
+    }, 3300 );
 
 });
 
@@ -43,7 +47,7 @@ function closeBot() {
         $('.monitor form').addClass('faded');
         setTimeout( function() {
             $('.monitor form').addClass('hidden')
-        }, 50);
+        }, 550);
     }, 50);
 }
 
@@ -51,7 +55,7 @@ function closeBot() {
 // Note that the bot needs to be closed to be able to view this
 function updateMessage( msg ) {
     $('.visor').removeClass('pulse');
-    $('.visor label').html(msg);
+    $('.visor label').html( msg.toUpperCase() );
 }
 
 function errorMessage( msg ) {

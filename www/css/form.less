@@ -6,6 +6,7 @@
 
 form {
     label {
+        height: 16px;
         text-align: left;
         font-size: 13px;
         display: block;
@@ -22,7 +23,7 @@ input {
     border: @terminal-color 1px solid;
     .border-radius( 4px );
     color: @terminal-color;
-    font-family: Monaco, Courier New, monospace;
+    font-family: @terminal-font;
     padding: 5px 8px;
     margin: 2px 0 8px;
     -webkit-appearance: none;
@@ -43,6 +44,7 @@ input[type="submit"] {
     font-weight: 600;
     margin-top: 12px;
     min-width: 100px;
+    padding: 8px 12px;
     &:active {
         background: lighten( @terminal-color, 10% );
     }

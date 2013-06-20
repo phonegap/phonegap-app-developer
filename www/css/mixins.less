@@ -11,6 +11,8 @@
 @terminal-background: #08213a;
 @terminal-glow: #00bff3;
 
+@terminal-font: Monaco, Courier New, monospace;
+
 @alert-color: #f69fa5;
 @alert-background: #340000;
 @alert-glow: #ed1c24;
@@ -21,7 +23,7 @@
 ---------------------------------------------------*/
 
 @sprite-image: url(../img/sprite.png);
-@sprite-size: 600px 600px;
+@sprite-size: 350px 350px;
 
 .sprite {
     background: transparent @sprite-image 0 0 no-repeat;
@@ -66,6 +68,15 @@
     -webkit-box-sizing: @value;
     -moz-box-sizing: @value;
     box-sizing: @value;
+}
+
+.border-image( @image, @thickness ) {
+    border-style: solid;
+    border-width: ( @thickness*1px ) / 2;
+    -moz-border-image: @image @thickness stretch;
+    -webkit-border-image: @image @thickness stretch;
+    -o-border-image: @image @thickness stretch;
+    border-image: @image @thickness fill stretch;
 }
 
 .circle( @radius, @offset: 0 ) {
