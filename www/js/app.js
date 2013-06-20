@@ -7,7 +7,6 @@ $().ready(function() {
     // Add Events
     $('#login-form').submit(buildSubmit);
 
-
     setTimeout( function() {
         $('.alert').removeClass('alert');
         $('.visor').removeClass('pulse');

@@ -26,6 +26,7 @@
 		.gradient-simple( @terminal-background, #0e151d );
 		position: relative;
 		font-family: @terminal-font;
+			border-left: 1px solid #ccc;
 
 
 		.cover {
@@ -120,6 +121,7 @@
 			bottom: -131px;
 			height: 75px;
 			.transition( bottom, 0.5s );
+			z-index: 3;
 		}
 		&.top {
 			top: -14px;
@@ -137,6 +139,20 @@
 		&.bottom {
 			height: 24px;
 			bottom: -24px;
+			z-index: 4;
+		}
+
+		&.top, &.visor-cover {
+			&:after {
+				content: '';
+				.sprite;
+				background-position: 50% -24px;
+				height: 10px;
+				position: absolute;
+				bottom: -11px;
+				left: 5px;
+				right: 5px;
+			}
 		}
 	}
 
