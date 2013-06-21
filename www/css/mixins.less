@@ -30,6 +30,11 @@
     .background-size( @sprite-size );
 }
 
+.scan-line {
+    background: transparent url(../img/scanline.png) 0 0 repeat;
+    .background-size( 260px 189px );
+}
+
 
 /*---------------------------------------------------
     Mixins
@@ -157,6 +162,7 @@
 @-o-keyframes flash {.flash;}
 @keyframes flash {.flash;}
 
+
 .pulse() {
     from { opacity: 1; }
     50% { opacity: 0.5; }
@@ -167,4 +173,16 @@
 @-moz-keyframes pulse {.pulse;}
 @-ms-keyframes pulse {.pulse;}
 @-o-keyframes pulse {.pulse;}
-@keyframes pulse {.pulse;}
+
+
+.scroll() {
+    from { background-position: 0 0; }
+    50% { background-position: 13000px 189px; }
+    to { background-position: 26000px 378px; }
+}
+
+@-webkit-keyframes scroll {.scroll;}
+@-moz-keyframes scroll {.scroll;}
+@-ms-keyframes scroll {.scroll;}
+@-o-keyframes scroll {.scroll;}
+@keyframes scroll {.scroll;}

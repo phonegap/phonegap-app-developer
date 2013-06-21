@@ -36,7 +36,10 @@
 			right: 0;
 			top: 0;
 			.border-image( url(../img/frame.png), 90 );
-			.animate( flash, 2s );
+			/* unfortunately, both these slow down performance due to large redraw area */
+			/*.animate( flash, 2s );*/
+			/*.scan-line;*/
+			/*.animate( scroll, 20s );*/
 		}
 
 		form {
