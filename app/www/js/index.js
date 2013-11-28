@@ -19,15 +19,8 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        var loader = document.getElementById('url_button');
-        loader.onclick = function(){
-            var url_input = document.getElementById('url_input').value;
-            console.log(url_input);
-            window.location = url_input;
-        }
-        
-        var socket = io.connect('http://localhost:8000');
-        socket.on('wat', function (data) {
+        var socket = io.connect('http://127.0.0.1:3000');
+        socket.on('refresh', function (data) {
             console.log('sup dawg');
             document.location.reload();
         });
@@ -46,8 +39,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-
-        
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
