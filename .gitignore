@@ -1,6 +1,9 @@
 # Mac
 .DS_Store
 
+# Node
+npm-debug.log
+
 # iOS
 platforms/ios/build
 platforms/ios/www
