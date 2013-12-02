@@ -1,2 +1,6 @@
 # Mac
 .DS_Store
+
+# iOS
+platforms/ios/build
+platforms/ios/www
