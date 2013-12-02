@@ -7,3 +7,9 @@ npm-debug.log
 # iOS
 platforms/ios/build
 platforms/ios/www
+
+# android
+platforms/android/AndroidManifest.xml
+platforms/android/assets/www
+platforms/android/bin
+platforms/android/gen
