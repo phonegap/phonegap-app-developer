@@ -13,3 +13,8 @@ platforms/android/assets/www
 platforms/android/bin
 platforms/android/gen
 platforms/android/local.properties
+
+# wp8
+platforms/wp8/bin
+platforms/wp8/obj
+platforms/wp8/www
