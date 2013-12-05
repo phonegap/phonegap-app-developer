@@ -19,36 +19,11 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        var socket = io.connect('http://127.0.0.1:3000');
-        socket.on('refresh', function (data) {
-            console.log('sup dawg');
-            document.location.reload();
-        });
-        //this.bindEvents();
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicity call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+        var loader = document.getElementById('url_button');
+        loader.onclick = function(){
+            var url_input = document.getElementById('url_input').value;
+            console.log(url_input);
+            window.location = url_input;
+        }
     }
 };
