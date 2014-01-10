@@ -7,6 +7,12 @@ $().ready(function() {
     // Add Events
     $('#login-form').submit(buildSubmit);
 
+    // Set default address as saved address
+    var address = window.localStorage.getItem('address');
+    if (address) {
+        $('#address').attr('placeholder', address);
+    }
+
     setTimeout( function() {
         $('.alert').removeClass('alert');
         $('.visor').removeClass('pulse');
@@ -45,7 +51,7 @@ function closeBot() {
         $('.visor').removeClass('fade-out');
         $('.monitor form').addClass('faded');
         setTimeout( function() {
-            $('.monitor form').addClass('hidden')
+            $('.monitor form').addClass('hidden');
         }, 550);
     }, 50);
 }
@@ -90,6 +96,7 @@ function onBuildSubmitSuccess() {
     updateMessage( 'Success!' );
     setTimeout( function() {
         // Proceed to next step
+        window.localStorage.setItem('address', getRemoteAddressRAW());
         window.location = getRemoteAddress();
     }, 1000 );
 }
@@ -118,9 +125,13 @@ function pingRemoteApp() {
     });
 }
 
-function getRemoteAddress() {
+function getRemoteAddressRAW() {
     var $address = $('#address'),
         address = $address.val() || $address.attr('placeholder');
 
-    return 'http://' + address + '/index.html';
+    return address;
+}
+
+function getRemoteAddress() {
+    return 'http://' + getRemoteAddressRAW() + '/index.html';
 }
