@@ -3,6 +3,7 @@
 
 # Node
 npm-debug.log
+node_modules
 
 # iOS
 platforms/ios/build
