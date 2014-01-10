@@ -1,0 +1,162 @@
+@monitor-width: 270px;
+@monitor-height: 220px;
+@monitor-padding: 25px;
+
+#bot {
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	margin-top: 60px;
+	width: @monitor-width + 10;
+
+	.shadow {
+		.sprite;
+		background-position: 0 -10px;
+		width: 320px;
+		height: 40px;
+		position: absolute;
+		bottom: -50px;
+		left: -(320 - @monitor-width) / 2 + 4;
+	}
+
+	.monitor {
+		margin-left: 5px;
+		width: @monitor-width;
+		height: @monitor-height;
+		.gradient-simple( @terminal-background, #0e151d );
+		position: relative;
+		font-family: @terminal-font;
+			border-left: 1px solid #ccc;
+
+
+		.cover {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			top: 0;
+			.border-image( url(../img/frame.png), 90 );
+			/* unfortunately, both these slow down performance due to large redraw area */
+			/*.animate( flash, 2s );*/
+			/*.scan-line;*/
+			/*.animate( scroll, 20s );*/
+		}
+
+		form {
+			position: absolute;
+			width: @monitor-width - @monitor-padding * 2;
+			top: @monitor-padding * 1.2;
+			left: @monitor-padding;
+			.transition( opacity, 0.5s );
+
+			&.faded {
+				opacity: 0;
+			}
+		}
+
+		.visor {
+			position: absolute;
+			top: @monitor-height - 135;
+			left: 50%;
+			.transition( opacity, 0.5s );
+
+			.eye {
+				position: absolute;
+				.sprite;
+				background-position: 0 -70px;
+				top: 0;
+				width: 40px;
+				height: 50px;
+				.transition( opacity, 0.5s );
+
+				&.left {
+					left: -100px;
+				}
+
+				&.right {
+					right: -100px;
+				}
+				&.faded {
+					opacity: 0;
+				}
+			}
+			label {
+				position: absolute;
+				left: -75px;
+				top: 20px;
+				width: 150px;
+				font-size: 16px;
+				text-transform: uppercase;
+			}
+
+			&.pulse {
+				label {
+					.animate( pulse, 0.5s );
+				}
+			}
+
+			&.fade-out {
+				opacity: 0;
+			}
+		}
+
+		&.alert {
+			background: @alert-background;
+
+			.visor .eye {
+				background-position: 0 -120px;
+			}
+		}
+	}
+
+	.panel {
+		border: 1px solid #fff;
+		border-right-color: #acabab;
+		border-bottom-color: #acabab;
+		.gradient-angled( #eee, #ccc );
+		position: absolute;
+		left: 0;
+		right: 0;
+
+		&.visor-cover {
+			left: -1px;
+			right: -1px;
+			bottom: -131px;
+			height: 75px;
+			.transition( bottom, 0.5s );
+			z-index: 3;
+		}
+		&.top {
+			top: -14px;
+			.transition( top, 0.5s );
+			height: @monitor-height + 10 - 130;
+
+			&.open {
+				top: -@monitor-height + 49;
+
+				.visor-cover {
+					bottom: -73px;
+				}
+			}
+		}
+		&.bottom {
+			height: 24px;
+			bottom: -24px;
+			z-index: 4;
+		}
+
+		&.top, &.visor-cover {
+			&:after {
+				content: '';
+				.sprite;
+				background-position: 50% -24px;
+				height: 10px;
+				position: absolute;
+				bottom: -11px;
+				left: 5px;
+				right: 5px;
+			}
+		}
+	}
+
+}

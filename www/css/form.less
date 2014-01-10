@@ -1,0 +1,73 @@
+/*---------------------------------------------------
+    UI - Form
+---------------------------------------------------*/
+
+/*.placeholder( rgba(0,0,0,0.2) );*/
+
+form {
+    label {
+        height: 16px;
+        text-align: left;
+        font-size: 13px;
+        display: block;
+    }
+}
+
+label, input {
+    color: @terminal-color;
+    text-shadow: @terminal-glow 0 0 5px;
+}
+
+input {
+    background: none;
+    border: @terminal-color 1px solid;
+    .border-radius( 4px );
+    color: @terminal-color;
+    font-family: @terminal-font;
+    padding: 5px 8px;
+    margin: 2px 0 8px;
+    -webkit-appearance: none;
+    font-size: 14px;
+}
+
+input[type="text"], input[type="password"], input[type="number"] {
+    width: @monitor-width - @monitor-padding * 2 - 2 - 16;
+
+}
+
+input[type="submit"] {
+    background: @terminal-color;
+    border: none;
+    color: @terminal-background;
+    text-shadow: none;
+    .box-shadow( @terminal-glow 0 0 5px );
+    font-weight: 600;
+    margin-top: 12px;
+    min-width: 100px;
+    padding: 8px 12px;
+    &:active {
+        background: lighten( @terminal-color, 10% );
+    }
+}
+
+.alert {
+    label, input {
+        color: @alert-color;
+        text-shadow: @alert-glow 0 0 5px;
+        border-color: @alert-color;
+    }
+    input[type="submit"] {
+        border: none;
+        background: @alert-color;
+        color: @alert-background;
+        text-shadow: none;
+        .box-shadow( @alert-glow 0 0 5px );
+    }
+}
+
+
+.narrow-screen() {
+    input {
+        /*width: 90%;*/
+    }
+}
