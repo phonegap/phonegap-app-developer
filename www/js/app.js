@@ -15,9 +15,9 @@ $().ready(function() {
     }, 2000);
 
     setTimeout( openBot, 2750);
-    //setTimeout( function() {
-    //    $('.visor .eye').addClass('hidden');
-    //}, 3300 );
+    setTimeout( function() {
+        $('.visor .eye').addClass('hidden');
+    }, 3300 );
 
 });
 
@@ -77,11 +77,12 @@ function buildSubmit() {
     closeBot();
     updateMessage('');
     setTimeout(function() {
-        pulsingMessage( 'Signing in...' );
+        pulsingMessage( 'Connecting...' );
+        pingRemoteApp();
     }, 500);
 
     // Placeholder
-    setTimeout(onBuildSubmitError,2000);
+    //setTimeout(onBuildSubmitError,2000);
     return false;
 }
 
@@ -89,6 +90,7 @@ function onBuildSubmitSuccess() {
     updateMessage( 'Success!' );
     setTimeout( function() {
         // Proceed to next step
+        window.location = getRemoteAddress();
     }, 1000 );
 }
 
@@ -101,4 +103,24 @@ function onBuildSubmitError() {
     }, 1000 );
 }
 
+function pingRemoteApp() {
+    $.ajax({
+        type: 'GET',
+        url: getRemoteAddress(),
+        dataType: 'text',
+        timeout: 300,
+        success: function(data) {
+            onBuildSubmitSuccess();
+        },
+        error: function(xhr, type) {
+            onBuildSubmitError();
+        }
+    });
+}
 
+function getRemoteAddress() {
+    var $address = $('#address'),
+        address = $address.val() || $address.attr('placeholder');
+
+    return 'http://' + address + '/index.html';
+}
