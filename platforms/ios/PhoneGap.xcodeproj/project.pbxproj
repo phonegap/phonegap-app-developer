@@ -483,6 +483,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
+				PROVISIONING_PROFILE = "4A310BEB-DD4B-445F-AC0D-34BB86A04732";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -515,6 +516,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
+				PROVISIONING_PROFILE = "3515CE1E-363D-45C0-86F0-A6D8A106DA4C";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
