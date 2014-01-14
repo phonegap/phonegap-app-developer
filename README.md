@@ -24,5 +24,5 @@
     1. Select the latest app archive
     1. Click Distribute
     1. Select the Ad Hoc provisioning profile
-    1. Save the IPA
+    1. Save the IPA to `res/release/ios/PhoneGap-x.x.x.ipa`
 1. Upload the IPA in TestFlight
