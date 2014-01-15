@@ -6,8 +6,8 @@ npm-debug.log
 node_modules
 
 # iOS
-platforms/ios/build
-platforms/ios/www
+platforms/ios/build/
+platforms/ios/www/
 
 # android
 platforms/android/assets/www
