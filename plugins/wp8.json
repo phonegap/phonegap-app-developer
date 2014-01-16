@@ -1,1 +1,1 @@
-{"prepare_queue":{"installed":[],"uninstalled":[]},"config_munge":{},"installed_plugins":{},"dependent_plugins":{}}
+{"prepare_queue":{"installed":[],"uninstalled":[]},"config_munge":{"config.xml":{"/*":{"<feature name=\"File\"><param name=\"wp-package\" value=\"File\" /></feature>":1}}},"installed_plugins":{"org.apache.cordova.file":{"PACKAGE_NAME":"{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"}},"dependent_plugins":{}}

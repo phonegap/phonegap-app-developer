@@ -50,4 +50,7 @@
     <gap:splash gap:platform="winphone" src="res/screen/windows-phone/screen-portrait.jpg" />
     <access origin="http://127.0.0.1*" />
     <content src="index.html" />
+    <feature name="File">
+        <param name="wp-package" value="File" />
+    </feature>
 </widget>
