@@ -1,32 +1,139 @@
 /*---------------------------------------------------
+    Globals
+---------------------------------------------------*/
+
+var config = {};
+
+/*---------------------------------------------------
     General
 ---------------------------------------------------*/
 
 $().ready(function() {
-
     // Add Events
     $('#login-form').submit(buildSubmit);
-
-    // Set default address as saved address
-    var address = window.localStorage.getItem('address');
-    if (address) {
-        $('#address').attr('placeholder', address);
-    }
-
-    setTimeout( function() {
-        $('.alert').removeClass('alert');
-        $('.visor').removeClass('pulse');
-        $('.visor label').html('Hi!');
-        $('.visor .eye').removeClass('faded');
-    }, 2000);
-
-    setTimeout( openBot, 2750);
-    setTimeout( function() {
-        $('.visor .eye').addClass('hidden');
-    }, 3300 );
-
 });
 
+$(document).on('deviceready', function() {
+    // Load configuration
+    loadConfig(function() {
+        setTimeout( function() {
+            $('.alert').removeClass('alert');
+            $('.visor').removeClass('pulse');
+            $('.visor label').html('Hi!');
+            $('.visor .eye').removeClass('faded');
+        }, 1750);
+
+        setTimeout( openBot, 2750);
+        setTimeout( function() {
+            $('.visor .eye').addClass('hidden');
+        }, 3300 );
+    });
+});
+
+/*---------------------------------------------------
+    App - Configuration
+---------------------------------------------------*/
+
+function loadConfig(callback) {
+    readFile('config.json', function(e, text) {
+        config = parseAsJSON(text);
+
+        // load server address
+        if (config.address) {
+            $('#address').attr('placeholder', config.address);
+        }
+
+        callback();
+    });
+}
+
+function saveConfig(callback) {
+    // this URL
+    config.URL = document.URL;
+
+    // server address
+    config.address = getRemoteAddressRAW();
+
+    // save config
+    saveFile('config.json', config, function(e) {
+        callback();
+    });
+}
+
+function readFile(filepath, callback) {
+    window.requestFileSystem(
+        LocalFileSystem.PERSISTENT,
+        0,
+        function(fileSystem) {
+            fileSystem.root.getFile(
+                filepath,
+                null,
+                function gotFileEntry(fileEntry) {
+                    fileEntry.file(
+                        function gotFile(file){
+                            var reader = new FileReader();
+                            reader.onloadend = function(evt) {
+                                callback(null, evt.target.result); // text
+                            };
+                            reader.readAsText(file);
+                        },
+                        function(error) {
+                            callback(error);
+                        }
+                    );
+                },
+                function(error) {
+                    callback(error);
+                }
+            );
+        },
+        function(error) {
+            callback(error);
+        }
+    );
+}
+
+function saveFile(filepath, data, callback) {
+    data = (typeof data === 'string') ? data : JSON.stringify(data);
+
+    window.requestFileSystem(
+        LocalFileSystem.PERSISTENT,
+        0,
+        function(fileSystem) {
+            fileSystem.root.getFile(
+                filepath,
+                { create: true, exclusive: false },
+                function(fileEntry) {
+                    fileEntry.createWriter(
+                        function(writer) {
+                            writer.onwriteend = function(evt) {
+                                callback();
+                            };
+                            writer.write(data);
+                        },
+                        function(e) {
+                            callback(e);
+                        }
+                    );
+                },
+                function(e) {
+                    callback(e);
+                }
+            );
+        },
+        function(e) {
+            callback(e);
+        }
+    );
+}
+
+function parseAsJSON(text) {
+    try {
+        return JSON.parse(text);
+    } catch(e) {
+        return {};
+    }
+}
 
 /*---------------------------------------------------
     UI - General
@@ -94,11 +201,11 @@ function buildSubmit() {
 
 function onBuildSubmitSuccess() {
     updateMessage( 'Success!' );
-    setTimeout( function() {
-        // Proceed to next step
-        window.localStorage.setItem('address', getRemoteAddressRAW());
-        window.location = getRemoteAddress();
-    }, 1000 );
+    saveConfig(function() {
+        setTimeout( function() {
+            window.location = getRemoteAddress();
+        }, 1000 );
+    });
 }
 
 function onBuildSubmitError() {
