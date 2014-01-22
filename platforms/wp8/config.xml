@@ -71,4 +71,7 @@
     <feature name="Contacts">
         <param name="wp-package" value="Contacts" />
     </feature>
+    <feature name="Device">
+        <param name="wp-package" value="Device" />
+    </feature>
 </widget>

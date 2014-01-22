@@ -311,6 +311,13 @@ module.exports = [
         "clobbers": [
             "ContactOrganization"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -322,7 +329,8 @@ module.exports.metadata =
     "org.apache.cordova.media-capture": "0.2.6",
     "org.apache.cordova.device-orientation": "0.3.4",
     "org.apache.cordova.network-information": "0.2.6",
-    "org.apache.cordova.contacts": "0.2.7"
+    "org.apache.cordova.contacts": "0.2.7",
+    "org.apache.cordova.device": "0.2.7"
 }
 // BOTTOM OF METADATA
 });

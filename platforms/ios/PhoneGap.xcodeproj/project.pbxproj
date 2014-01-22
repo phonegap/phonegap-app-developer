@@ -55,6 +55,7 @@
 		84522B454A854F639E1FA99C /* CDVContact.m in Sources */ = {isa = PBXBuildFile; fileRef = D785191AEBF346D29B3A8ED7 /* CDVContact.m */; };
 		2C55ECAE8F514BD7B8961390 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D993850595C45E6BB359987 /* AddressBook.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8285F71C6E87402E9C9369F4 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D93BA6E3C88F4433942E5AC8 /* AddressBookUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		FA7AD4D1721A49DDB7C2AB1D /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 295DF13C79084DBA9A6B04EF /* CDVDevice.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,8 @@
 		A28DB46C2DEE4E1981A9A4BB /* CDVContact.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVContact.h"; path = "org.apache.cordova.contacts/CDVContact.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		4D993850595C45E6BB359987 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AddressBook.framework"; path = "System/Library/Frameworks/AddressBook.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		D93BA6E3C88F4433942E5AC8 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AddressBookUI.framework"; path = "System/Library/Frameworks/AddressBookUI.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		295DF13C79084DBA9A6B04EF /* CDVDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVDevice.m"; path = "org.apache.cordova.device/CDVDevice.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		F75D8C4A5E77400CB7582990 /* CDVDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVDevice.h"; path = "org.apache.cordova.device/CDVDevice.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +296,8 @@
 				D785191AEBF346D29B3A8ED7 /* CDVContact.m */,
 				A9AF3A8D262F49BF8C388AA1 /* CDVContacts.h */,
 				A28DB46C2DEE4E1981A9A4BB /* CDVContact.h */,
+				295DF13C79084DBA9A6B04EF /* CDVDevice.m */,
+				F75D8C4A5E77400CB7582990 /* CDVDevice.h */,
 			);
 			name = Plugins;
 			path = PhoneGap/Plugins;
@@ -494,6 +499,7 @@
 				B21B6D3CEF3D4926847E7F5D /* CDVReachability.m in Sources */,
 				C9BEE986F4334392A8FDA3F8 /* CDVContacts.m in Sources */,
 				84522B454A854F639E1FA99C /* CDVContact.m in Sources */,
+				FA7AD4D1721A49DDB7C2AB1D /* CDVDevice.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
