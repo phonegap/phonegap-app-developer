@@ -74,4 +74,7 @@
     <feature name="Device">
         <param name="wp-package" value="Device" />
     </feature>
+    <feature name="Battery">
+        <param name="wp-package" value="Battery" />
+    </feature>
 </widget>

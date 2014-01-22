@@ -318,6 +318,13 @@ module.exports = [
         "clobbers": [
             "device"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.battery-status/www/battery.js",
+        "id": "org.apache.cordova.battery-status.battery",
+        "clobbers": [
+            "navigator.battery"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -330,7 +337,8 @@ module.exports.metadata =
     "org.apache.cordova.device-orientation": "0.3.4",
     "org.apache.cordova.network-information": "0.2.6",
     "org.apache.cordova.contacts": "0.2.7",
-    "org.apache.cordova.device": "0.2.7"
+    "org.apache.cordova.device": "0.2.7",
+    "org.apache.cordova.battery-status": "0.2.5"
 }
 // BOTTOM OF METADATA
 });
