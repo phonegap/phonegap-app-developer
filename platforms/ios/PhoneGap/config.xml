@@ -110,4 +110,8 @@
     <feature name="Vibration">
         <param name="ios-package" value="CDVVibration" />
     </feature>
+    <feature name="SplashScreen">
+        <param name="ios-package" value="CDVSplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
 </widget>

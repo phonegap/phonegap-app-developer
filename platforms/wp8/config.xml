@@ -89,4 +89,7 @@
     <feature name="Vibration">
         <param name="wp-package" value="Vibration" />
     </feature>
+    <feature name="SplashScreen">
+        <param name="wp-package" value="SplashScreen" />
+    </feature>
 </widget>

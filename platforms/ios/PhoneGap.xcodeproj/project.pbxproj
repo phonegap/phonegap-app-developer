@@ -64,6 +64,7 @@
 		C022FE8EFCD54F7B90B78ED7 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41F4B378F1CA4FD9A1F0AAC7 /* CDVNotification.bundle */; };
 		014E234FC03E4150B5681EC9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		376779F5DFD942B9879DED0C /* CDVVibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 84930931012843E1B5A38C56 /* CDVVibration.m */; };
+		4843E78355224C079030832C /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = B44C07D89290448AA2354D09 /* CDVSplashScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,8 @@
 		F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		84930931012843E1B5A38C56 /* CDVVibration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVVibration.m"; path = "org.apache.cordova.vibration/CDVVibration.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		7CF48787AB744844B8563E91 /* CDVVibration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVVibration.h"; path = "org.apache.cordova.vibration/CDVVibration.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		B44C07D89290448AA2354D09 /* CDVSplashScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVSplashScreen.m"; path = "org.apache.cordova.splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		219204B266B342AFA1482F1D /* CDVSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVSplashScreen.h"; path = "org.apache.cordova.splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +338,8 @@
 				2B1DA7D86D4245FB9743CD80 /* CDVNotification.h */,
 				84930931012843E1B5A38C56 /* CDVVibration.m */,
 				7CF48787AB744844B8563E91 /* CDVVibration.h */,
+				B44C07D89290448AA2354D09 /* CDVSplashScreen.m */,
+				219204B266B342AFA1482F1D /* CDVSplashScreen.h */,
 			);
 			name = Plugins;
 			path = PhoneGap/Plugins;
@@ -544,6 +549,7 @@
 				4EF1DCA1BEAA413F88409C2C /* CDVSound.m in Sources */,
 				99627E893C8F4ADF96F26A9F /* CDVNotification.m in Sources */,
 				376779F5DFD942B9879DED0C /* CDVVibration.m in Sources */,
+				4843E78355224C079030832C /* CDVSplashScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
