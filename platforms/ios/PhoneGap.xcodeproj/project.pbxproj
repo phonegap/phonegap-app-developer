@@ -63,6 +63,7 @@
 		99627E893C8F4ADF96F26A9F /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3A61628F0E4EECA79055A4 /* CDVNotification.m */; };
 		C022FE8EFCD54F7B90B78ED7 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 41F4B378F1CA4FD9A1F0AAC7 /* CDVNotification.bundle */; };
 		014E234FC03E4150B5681EC9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		376779F5DFD942B9879DED0C /* CDVVibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 84930931012843E1B5A38C56 /* CDVVibration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,8 @@
 		2B1DA7D86D4245FB9743CD80 /* CDVNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVNotification.h"; path = "org.apache.cordova.dialogs/CDVNotification.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		41F4B378F1CA4FD9A1F0AAC7 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "CDVNotification.bundle"; path = "CDVNotification.bundle"; sourceTree = "<group>"; };
 		F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		84930931012843E1B5A38C56 /* CDVVibration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVVibration.m"; path = "org.apache.cordova.vibration/CDVVibration.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		7CF48787AB744844B8563E91 /* CDVVibration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVVibration.h"; path = "org.apache.cordova.vibration/CDVVibration.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +333,8 @@
 				21B7C2521C8D45A9883CAB3F /* CDVSound.h */,
 				3B3A61628F0E4EECA79055A4 /* CDVNotification.m */,
 				2B1DA7D86D4245FB9743CD80 /* CDVNotification.h */,
+				84930931012843E1B5A38C56 /* CDVVibration.m */,
+				7CF48787AB744844B8563E91 /* CDVVibration.h */,
 			);
 			name = Plugins;
 			path = PhoneGap/Plugins;
@@ -538,6 +543,7 @@
 				E59D6127C1FB491BA7BEF2D2 /* CDVGlobalization.m in Sources */,
 				4EF1DCA1BEAA413F88409C2C /* CDVSound.m in Sources */,
 				99627E893C8F4ADF96F26A9F /* CDVNotification.m in Sources */,
+				376779F5DFD942B9879DED0C /* CDVVibration.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

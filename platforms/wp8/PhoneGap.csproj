@@ -454,6 +454,9 @@
         <Content Include="Plugins\org.apache.cordova.dialogs\notification-beep.wav" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.vibration\Vibration.cs" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
     </ItemGroup>
     <ItemGroup>
@@ -605,6 +608,9 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.dialogs\www\notification.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.vibration\www\vibration.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\cordova_plugins.js" />

@@ -1,0 +1,12 @@
+{
+    "version": "0.3.6",
+    "name": "org.apache.cordova.vibration",
+    "cordova_name": "Vibration",
+    "description": "Cordova Vibration Plugin",
+    "license": "Apache 2.0",
+    "keywords": [
+        "cordova",
+        "vibration"
+    ],
+    "engines": []
+}

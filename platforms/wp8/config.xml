@@ -86,4 +86,7 @@
     <feature name="Notification">
         <param name="wp-package" value="Notification" />
     </feature>
+    <feature name="Vibration">
+        <param name="wp-package" value="Vibration" />
+    </feature>
 </widget>
