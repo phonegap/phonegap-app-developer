@@ -77,4 +77,7 @@
     <feature name="Battery">
         <param name="wp-package" value="Battery" />
     </feature>
+    <feature name="Globalization">
+        <param name="wp-package" value="Globalization" />
+    </feature>
 </widget>
