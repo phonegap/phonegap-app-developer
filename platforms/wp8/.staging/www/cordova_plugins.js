@@ -338,7 +338,8 @@ module.exports.metadata =
     "org.apache.cordova.network-information": "0.2.6",
     "org.apache.cordova.contacts": "0.2.7",
     "org.apache.cordova.device": "0.2.7",
-    "org.apache.cordova.battery-status": "0.2.5"
+    "org.apache.cordova.battery-status": "0.2.5",
+    "org.apache.cordova.geolocation": "0.3.5"
 }
 // BOTTOM OF METADATA
 });

@@ -1,0 +1,12 @@
+{
+    "version": "0.3.5",
+    "name": "org.apache.cordova.geolocation",
+    "cordova_name": "Geolocation",
+    "description": "Cordova Geolocation Plugin",
+    "license": "Apache 2.0",
+    "keywords": [
+        "cordova",
+        "geolocation"
+    ],
+    "engines": []
+}
