@@ -83,4 +83,7 @@
     <feature name="Media">
         <param name="wp-package" value="Media" />
     </feature>
+    <feature name="Notification">
+        <param name="wp-package" value="Notification" />
+    </feature>
 </widget>

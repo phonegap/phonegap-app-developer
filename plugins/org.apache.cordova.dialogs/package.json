@@ -1,0 +1,12 @@
+{
+    "version": "0.2.5",
+    "name": "org.apache.cordova.dialogs",
+    "cordova_name": "Notification",
+    "description": "Cordova Notification Plugin",
+    "license": "Apache 2.0",
+    "keywords": [
+        "cordova",
+        "notification"
+    ],
+    "engines": []
+}

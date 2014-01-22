@@ -135,6 +135,10 @@
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
         </Page>
+        <Page Include="Plugins\org.apache.cordova.dialogs\NotificationBox.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Include="App.xaml">
@@ -438,6 +442,18 @@
         <Compile Include="Plugins\org.apache.cordova.media\AudioPlayer.cs" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.dialogs\Notification.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.dialogs\NotificationBox.xaml.cs">
+            <DependentUpon>NotificationBox.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <Content Include="Plugins\org.apache.cordova.dialogs\notification-beep.wav" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
     </ItemGroup>
     <ItemGroup>
@@ -586,6 +602,9 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.media\www\Media.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.dialogs\www\notification.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\cordova_plugins.js" />

@@ -353,6 +353,13 @@ module.exports = [
         "clobbers": [
             "window.Media"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
+        "id": "org.apache.cordova.dialogs.notification",
+        "merges": [
+            "navigator.notification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -369,7 +376,8 @@ module.exports.metadata =
     "org.apache.cordova.battery-status": "0.2.5",
     "org.apache.cordova.geolocation": "0.3.5",
     "org.apache.cordova.globalization": "0.2.5",
-    "org.apache.cordova.media": "0.2.7"
+    "org.apache.cordova.media": "0.2.7",
+    "org.apache.cordova.dialogs": "0.2.5"
 }
 // BOTTOM OF METADATA
 });
