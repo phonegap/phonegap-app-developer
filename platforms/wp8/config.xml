@@ -53,4 +53,7 @@
     <feature name="File">
         <param name="wp-package" value="File" />
     </feature>
+    <feature name="Accelerometer">
+        <param name="wp-package" value="Accelerometer" />
+    </feature>
 </widget>
