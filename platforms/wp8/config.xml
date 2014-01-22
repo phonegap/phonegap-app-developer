@@ -59,4 +59,7 @@
     <feature name="Camera">
         <param name="wp-package" value="Camera" />
     </feature>
+    <feature name="Capture">
+        <param name="wp-package" value="Capture" />
+    </feature>
 </widget>

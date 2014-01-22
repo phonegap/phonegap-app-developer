@@ -1,0 +1,13 @@
+{
+    "version": "0.2.6",
+    "name": "org.apache.cordova.media-capture",
+    "cordova_name": "Capture",
+    "description": "Cordova Media Capture Plugin",
+    "license": "Apache 2.0",
+    "keywords": [
+        "cordova",
+        "media",
+        "capture"
+    ],
+    "engines": []
+}
