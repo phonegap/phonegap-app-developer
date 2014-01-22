@@ -59,6 +59,7 @@
 		73E130246F864407A891A60B /* CDVBattery.m in Sources */ = {isa = PBXBuildFile; fileRef = 925F3A1B43DC42E8B8556832 /* CDVBattery.m */; };
 		81EACB56E7644ABAB9172B31 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E902134A7FA45CF99E8B267 /* CDVLocation.m */; };
 		E59D6127C1FB491BA7BEF2D2 /* CDVGlobalization.m in Sources */ = {isa = PBXBuildFile; fileRef = 049AE8E5FAD844C692C2582A /* CDVGlobalization.m */; };
+		4EF1DCA1BEAA413F88409C2C /* CDVSound.m in Sources */ = {isa = PBXBuildFile; fileRef = DC5F4D0A39624B13904FF5DA /* CDVSound.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +156,8 @@
 		F2F2A86E21DC4E3AA8305993 /* CDVLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLocation.h"; path = "org.apache.cordova.geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		049AE8E5FAD844C692C2582A /* CDVGlobalization.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVGlobalization.m"; path = "org.apache.cordova.globalization/CDVGlobalization.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		BEBD03C3808C4CCF8CBCE9E7 /* CDVGlobalization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVGlobalization.h"; path = "org.apache.cordova.globalization/CDVGlobalization.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		DC5F4D0A39624B13904FF5DA /* CDVSound.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVSound.m"; path = "org.apache.cordova.media/CDVSound.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		21B7C2521C8D45A9883CAB3F /* CDVSound.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVSound.h"; path = "org.apache.cordova.media/CDVSound.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +316,8 @@
 				F2F2A86E21DC4E3AA8305993 /* CDVLocation.h */,
 				049AE8E5FAD844C692C2582A /* CDVGlobalization.m */,
 				BEBD03C3808C4CCF8CBCE9E7 /* CDVGlobalization.h */,
+				DC5F4D0A39624B13904FF5DA /* CDVSound.m */,
+				21B7C2521C8D45A9883CAB3F /* CDVSound.h */,
 			);
 			name = Plugins;
 			path = PhoneGap/Plugins;
@@ -518,6 +523,7 @@
 				73E130246F864407A891A60B /* CDVBattery.m in Sources */,
 				81EACB56E7644ABAB9172B31 /* CDVLocation.m in Sources */,
 				E59D6127C1FB491BA7BEF2D2 /* CDVGlobalization.m in Sources */,
+				4EF1DCA1BEAA413F88409C2C /* CDVSound.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

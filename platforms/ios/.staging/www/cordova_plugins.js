@@ -381,6 +381,20 @@ module.exports = [
         "clobbers": [
             "navigator.globalization"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.media/www/MediaError.js",
+        "id": "org.apache.cordova.media.MediaError",
+        "clobbers": [
+            "window.MediaError"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.media/www/Media.js",
+        "id": "org.apache.cordova.media.Media",
+        "clobbers": [
+            "window.Media"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -396,7 +410,8 @@ module.exports.metadata =
     "org.apache.cordova.device": "0.2.7",
     "org.apache.cordova.battery-status": "0.2.5",
     "org.apache.cordova.geolocation": "0.3.5",
-    "org.apache.cordova.globalization": "0.2.5"
+    "org.apache.cordova.globalization": "0.2.5",
+    "org.apache.cordova.media": "0.2.7"
 }
 // BOTTOM OF METADATA
 });

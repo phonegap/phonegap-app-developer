@@ -432,6 +432,12 @@
         <Compile Include="Plugins\org.apache.cordova.globalization\Globalization.cs" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.media\Media.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.media\AudioPlayer.cs" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
     </ItemGroup>
     <ItemGroup>
@@ -574,6 +580,12 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.globalization\www\globalization.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media\www\MediaError.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media\www\Media.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\cordova_plugins.js" />

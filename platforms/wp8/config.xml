@@ -80,4 +80,7 @@
     <feature name="Globalization">
         <param name="wp-package" value="Globalization" />
     </feature>
+    <feature name="Media">
+        <param name="wp-package" value="Media" />
+    </feature>
 </widget>
