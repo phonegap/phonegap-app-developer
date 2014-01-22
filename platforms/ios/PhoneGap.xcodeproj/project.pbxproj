@@ -309,6 +309,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 500;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = D42HQMA488;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "PhoneGap" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -464,7 +469,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Andre Charland (Q4M88E4HWU)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -489,7 +494,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "BA3CE026-3E0E-4008-A396-20BB21DEEAC5";
+				PROVISIONING_PROFILE = "1D1E0FD8-6768-4EFF-B253-68780FA42592";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -499,7 +504,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Nitobi Software Inc (D42HQMA488)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nitobi Software Inc (D42HQMA488)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -523,7 +528,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "34491EB9-FE11-421A-9B55-87E4415EE76E";
+				PROVISIONING_PROFILE = "C1AB5AFE-7C45-49DA-8B9E-AEF44CEB8DBE";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
