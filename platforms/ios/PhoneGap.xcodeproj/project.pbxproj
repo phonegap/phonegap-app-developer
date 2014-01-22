@@ -47,6 +47,7 @@
 		04075CD61BF9493388163066 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD132BA2B764B47BEE06ACB /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		619A51916D3A48C390ABF421 /* CDVCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A5C7A8C32842D5B52B6387 /* CDVCapture.m */; };
 		F62EA4E262AC4FF0BA38439B /* CDVCapture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F14790EEB5E04004AA77C076 /* CDVCapture.bundle */; };
+		4E6DBCE4D2E94EF094D38A2E /* CDVCompass.m in Sources */ = {isa = PBXBuildFile; fileRef = A16478A7EE2D4E0F9A135E16 /* CDVCompass.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,8 @@
 		27A5C7A8C32842D5B52B6387 /* CDVCapture.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVCapture.m"; path = "org.apache.cordova.media-capture/CDVCapture.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		5F7757CB29384D8A9A22A53B /* CDVCapture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVCapture.h"; path = "org.apache.cordova.media-capture/CDVCapture.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		F14790EEB5E04004AA77C076 /* CDVCapture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "CDVCapture.bundle"; path = "CDVCapture.bundle"; sourceTree = "<group>"; };
+		A16478A7EE2D4E0F9A135E16 /* CDVCompass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVCompass.m"; path = "org.apache.cordova.device-orientation/CDVCompass.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		5333B17FBFC44EED8D69F3F3 /* CDVCompass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVCompass.h"; path = "org.apache.cordova.device-orientation/CDVCompass.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +259,8 @@
 				CD7BBE57744649A393B85893 /* CDVExif.h */,
 				27A5C7A8C32842D5B52B6387 /* CDVCapture.m */,
 				5F7757CB29384D8A9A22A53B /* CDVCapture.h */,
+				A16478A7EE2D4E0F9A135E16 /* CDVCompass.m */,
+				5333B17FBFC44EED8D69F3F3 /* CDVCompass.h */,
 			);
 			name = Plugins;
 			path = PhoneGap/Plugins;
@@ -452,6 +457,7 @@
 				CD901E9ECD284842888FD418 /* CDVCamera.m in Sources */,
 				C34DF289F963487BBA7CDB5D /* CDVJpegHeaderWriter.m in Sources */,
 				619A51916D3A48C390ABF421 /* CDVCapture.m in Sources */,
+				4E6DBCE4D2E94EF094D38A2E /* CDVCompass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -62,4 +62,7 @@
     <feature name="Capture">
         <param name="wp-package" value="Capture" />
     </feature>
+    <feature name="Compass">
+        <param name="wp-package" value="Compass" />
+    </feature>
 </widget>
