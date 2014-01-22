@@ -248,6 +248,62 @@ module.exports = [
         "clobbers": [
             "Connection"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.contacts/www/contacts.js",
+        "id": "org.apache.cordova.contacts.contacts",
+        "clobbers": [
+            "navigator.contacts"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.contacts/www/Contact.js",
+        "id": "org.apache.cordova.contacts.Contact",
+        "clobbers": [
+            "Contact"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.contacts/www/ContactAddress.js",
+        "id": "org.apache.cordova.contacts.ContactAddress",
+        "clobbers": [
+            "ContactAddress"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.contacts/www/ContactError.js",
+        "id": "org.apache.cordova.contacts.ContactError",
+        "clobbers": [
+            "ContactError"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.contacts/www/ContactField.js",
+        "id": "org.apache.cordova.contacts.ContactField",
+        "clobbers": [
+            "ContactField"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.contacts/www/ContactFindOptions.js",
+        "id": "org.apache.cordova.contacts.ContactFindOptions",
+        "clobbers": [
+            "ContactFindOptions"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.contacts/www/ContactName.js",
+        "id": "org.apache.cordova.contacts.ContactName",
+        "clobbers": [
+            "ContactName"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.contacts/www/ContactOrganization.js",
+        "id": "org.apache.cordova.contacts.ContactOrganization",
+        "clobbers": [
+            "ContactOrganization"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -258,7 +314,8 @@ module.exports.metadata =
     "org.apache.cordova.camera": "0.2.6",
     "org.apache.cordova.media-capture": "0.2.6",
     "org.apache.cordova.device-orientation": "0.3.4",
-    "org.apache.cordova.network-information": "0.2.6"
+    "org.apache.cordova.network-information": "0.2.6",
+    "org.apache.cordova.contacts": "0.2.7"
 }
 // BOTTOM OF METADATA
 });

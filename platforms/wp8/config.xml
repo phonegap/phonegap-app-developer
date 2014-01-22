@@ -68,4 +68,7 @@
     <feature name="NetworkStatus">
         <param name="wp-package" value="NetworkStatus" />
     </feature>
+    <feature name="Contacts">
+        <param name="wp-package" value="Contacts" />
+    </feature>
 </widget>

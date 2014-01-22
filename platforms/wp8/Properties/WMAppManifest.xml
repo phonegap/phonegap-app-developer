@@ -15,6 +15,7 @@
             <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
             <Capability Name="ID_CAP_MICROPHONE" />
             <Capability Name="ID_CAP_NETWORKING" />
+            <Capability Name="ID_CAP_CONTACTS" />
         </Capabilities>
         <Tasks>
             <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
