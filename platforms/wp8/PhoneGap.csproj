@@ -414,6 +414,9 @@
         <Compile Include="Plugins\org.apache.cordova.device-orientation\Compass.cs" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.network-information\NetworkStatus.cs" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
     </ItemGroup>
     <ItemGroup>
@@ -514,6 +517,12 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.device-orientation\www\compass.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.network-information\www\network.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.network-information\www\Connection.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\cordova_plugins.js" />

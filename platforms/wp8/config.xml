@@ -65,4 +65,7 @@
     <feature name="Compass">
         <param name="wp-package" value="Compass" />
     </feature>
+    <feature name="NetworkStatus">
+        <param name="wp-package" value="NetworkStatus" />
+    </feature>
 </widget>

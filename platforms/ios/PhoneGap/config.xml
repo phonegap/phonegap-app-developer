@@ -83,4 +83,7 @@
     <feature name="Compass">
         <param name="ios-package" value="CDVCompass" />
     </feature>
+    <feature name="NetworkStatus">
+        <param name="ios-package" value="CDVConnection" />
+    </feature>
 </widget>
