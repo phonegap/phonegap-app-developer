@@ -11,6 +11,13 @@ var config = {};
 $().ready(function() {
     // Add Events
     $('#login-form').submit(buildSubmit);
+
+    // Bug workaround #27:
+    // When input box is selected, the soft-keyboard is shown
+    // but the input box focus is in the incorrect position.
+    $('#address').on('touchstart', function() {
+        $('#address').focus();
+    });
 });
 
 $(document).on('deviceready', function() {
