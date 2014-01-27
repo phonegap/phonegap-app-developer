@@ -1,3 +1,5 @@
+(function() {
+
 /*---------------------------------------------------
     Globals
 ---------------------------------------------------*/
@@ -12,7 +14,7 @@ $().ready(function() {
     // Add Events
     $('#login-form').submit(buildSubmit);
 
-    // Bug workaround #27:
+    // Issue #27
     // When input box is selected, the soft-keyboard is shown
     // but the input box focus is in the incorrect position.
     $('#address').on('touchstart', function() {
@@ -170,7 +172,6 @@ function closeBot() {
     }, 50);
 }
 
-
 // Note that the bot needs to be closed to be able to view this
 function updateMessage( msg ) {
     $('.visor').removeClass('pulse');
@@ -187,7 +188,6 @@ function pulsingMessage( msg ) {
     updateMessage( msg );
     $('.visor').addClass('pulse');
 }
-
 
 /*---------------------------------------------------
     UI - Form
@@ -249,3 +249,5 @@ function getRemoteAddressRAW() {
 function getRemoteAddress() {
     return 'http://' + getRemoteAddressRAW() + '/index.html';
 }
+
+})();
