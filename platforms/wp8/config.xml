@@ -92,4 +92,7 @@
     <feature name="SplashScreen">
         <param name="wp-package" value="SplashScreen" />
     </feature>
+    <feature name="InAppBrowser">
+        <param name="wp-package" value="InAppBrowser" />
+    </feature>
 </widget>
