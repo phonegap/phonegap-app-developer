@@ -61,7 +61,7 @@ function saveConfig(callback) {
     config.URL = document.URL;
 
     // server address
-    config.address = getRemoteAddressRAW();
+    config.address = getAddressField();
 
     // save config
     saveFile('config.json', config, function(e) {
@@ -210,7 +210,7 @@ function onBuildSubmitSuccess() {
     updateMessage( 'Success!' );
     saveConfig(function() {
         setTimeout( function() {
-            window.location = getRemoteAddress();
+            window.location = getAddress();
         }, 1000 );
     });
 }
@@ -227,7 +227,7 @@ function onBuildSubmitError() {
 function pingRemoteApp() {
     $.ajax({
         type: 'GET',
-        url: getRemoteAddress(),
+        url: getAddress(),
         dataType: 'text',
         timeout: 1000 * 5,
         success: function(data) {
@@ -239,15 +239,15 @@ function pingRemoteApp() {
     });
 }
 
-function getRemoteAddressRAW() {
+function getAddressField() {
     var $address = $('#address'),
         address = $address.val() || $address.attr('placeholder');
 
     return address;
 }
 
-function getRemoteAddress() {
-    var address = getRemoteAddressRAW();
+function getAddress() {
+    var address = getAddressField();
 
     // default to http:// when no protocol exists
     address = (address.match(/^(.*:\/\/)/)) ? address : 'http://' + address;
