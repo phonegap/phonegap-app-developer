@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="org.apache.cordova.inappbrowser"
+      version="0.3.0">
+
+    <name>InAppBrowser</name>
+    <description>Cordova InAppBrowser Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,in,app,browser,inappbrowser</keywords>
+    <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git</repo>
+    <issue>https://issues.apache.org/jira/browse/CB/component/12320641</issue>
+
+    <engines>
+      <engine name="cordova" version=">=3.1.0" /><!-- Needs cordova/urlutil -->
+    </engines>
+
+    <js-module src="www/InAppBrowser.js" name="InAppBrowser">
+        <clobbers target="window.open" />
+    </js-module>
+    
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="InAppBrowser"> 
+                <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/InAppBrowser.java" target-dir="src/org/apache/cordova/inappbrowser" />
+        <source-file src="src/android/InAppChromeClient.java" target-dir="src/org/apache/cordova/inappbrowser" />
+    </platform>
+    
+    <!-- amazon-fireos -->
+    <platform name="amazon-fireos">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="InAppBrowser"> 
+                <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/amazon/InAppBrowser.java" target-dir="src/org/apache/cordova/inappbrowser" />
+        <source-file src="src/amazon/InAppChromeClient.java" target-dir="src/org/apache/cordova/inappbrowser" />
+    </platform>
+
+    <!-- ubuntu -->
+    <platform name="ubuntu">
+        <header-file src="src/ubuntu/inappbrowser.h" />
+        <source-file src="src/ubuntu/inappbrowser.cpp" />
+        <resource-file src="src/ubuntu/InAppBrowser.qml" />
+        <resource-file src="src/ubuntu/close.png" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">    
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppBrowser">
+                <param name="ios-package" value="CDVInAppBrowser" /> 
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/CDVInAppBrowser.h" />
+	    <source-file src="src/ios/CDVInAppBrowser.m" />
+	    
+	    <framework src="CoreGraphics.framework" />
+    </platform>
+
+    <!-- blackberry10 -->
+<!--    <platform name="blackberry10">
+        <config-file target="www/config.xml" parent="/widget">
+            <feature name="InAppBrowser" value="InAppBrowser"/>
+        </config-file>
+    </platform>
+-->
+    <!-- wp7 -->
+    <platform name="wp7">
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppBrowser">
+                <param name="wp-package" value="InAppBrowser"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/wp/InAppBrowser.cs" />
+    </platform>
+
+    <!-- wp8 -->
+    <platform name="wp8">
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppBrowser">
+                <param name="wp-package" value="InAppBrowser"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/wp/InAppBrowser.cs" />
+    </platform>
+
+    <!-- windows8 -->
+    <platform name="windows8">
+        <js-module src="www/windows8/InAppBrowserProxy.js" name="InAppBrowserProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
+        
+
+</plugin>
