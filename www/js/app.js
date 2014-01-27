@@ -215,13 +215,17 @@ function onBuildSubmitSuccess() {
     });
 }
 
-function onBuildSubmitError() {
-    errorMessage( 'Error!' );
-    setTimeout( function() {
+function onBuildSubmitError(message) {
+    errorMessage('Error!');
+    setTimeout(function() {
+        errorMessage('Timed out!');
+    }, 1500);
+
+    setTimeout(function() {
         $('.monitor').removeClass('alert');
         updateMessage('');
         openBot();
-    }, 1000 );
+    }, 3500);
 }
 
 function pingRemoteApp() {
