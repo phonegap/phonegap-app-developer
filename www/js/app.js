@@ -247,7 +247,12 @@ function getRemoteAddressRAW() {
 }
 
 function getRemoteAddress() {
-    return 'http://' + getRemoteAddressRAW() + '/index.html';
+    var address = getRemoteAddressRAW();
+
+    // default to http:// when no protocol exists
+    address = (address.match(/^(.*:\/\/)/)) ? address : 'http://' + address;
+
+    return address;
 }
 
 })();
