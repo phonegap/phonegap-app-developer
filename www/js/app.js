@@ -11,7 +11,7 @@ var config = {};
 ---------------------------------------------------*/
 
 $().ready(function() {
-    // Add Events
+    // Add events
     $('#login-form').submit(buildSubmit);
 
     // Issue #27
@@ -23,20 +23,26 @@ $().ready(function() {
 });
 
 $(document).on('deviceready', function() {
-    // Load configuration
-    loadConfig(function() {
-        setTimeout( function() {
-            $('.alert').removeClass('alert');
-            $('.visor').removeClass('pulse');
-            $('.visor label').html('Hi!');
-            $('.visor .eye').removeClass('faded');
-        }, 1750);
+    // Add slight delay to allow DOM rendering to finish.
+    // Avoids flicker on slower devices.
+    setTimeout(function() {
+        navigator.splashscreen.hide();
 
-        setTimeout( openBot, 2750);
-        setTimeout( function() {
-            $('.visor .eye').addClass('hidden');
-        }, 3300 );
-    });
+        // Load configuration
+        loadConfig(function() {
+            setTimeout( function() {
+                $('.alert').removeClass('alert');
+                $('.visor').removeClass('pulse');
+                $('.visor label').html('Hi!');
+                $('.visor .eye').removeClass('faded');
+            }, 1750);
+
+            setTimeout( openBot, 2750);
+            setTimeout( function() {
+                $('.visor .eye').addClass('hidden');
+            }, 3350 );
+        });
+    }, 350);
 });
 
 /*---------------------------------------------------
