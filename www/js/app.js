@@ -239,7 +239,7 @@ function pingRemoteApp() {
         type: 'GET',
         url: getAddress(),
         dataType: 'text',
-        timeout: 1000 * 5,
+        timeout: 1000 * 10,
         success: function(data) {
             onBuildSubmitSuccess();
         },
