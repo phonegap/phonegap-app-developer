@@ -88,6 +88,29 @@ hr {
     }
 }
 
+/*---------------------------------------------------
+    Footer
+---------------------------------------------------*/
+
+.footer {
+    bottom: -60px;
+    color: rgba(0,0,0,0.5);
+    font-size: 13px;
+    position: absolute;
+    text-shadow: 0px 1px 0px #e7e7e7;
+    text-transform: uppercase;
+    width: 100%;
+    .transition( opacity, 0.5s );
+
+    &.faded {
+        opacity: 0;
+    }
+
+    a, a:active, a:hover, a:visited {
+        color: rgba(0,0,0,0.5);
+    }
+}
+
 @import "bot";
 
 /*---------------------------------------------------
