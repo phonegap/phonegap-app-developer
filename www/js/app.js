@@ -13,6 +13,10 @@ var config = {};
 $().ready(function() {
     // Add events
     $('#login-form').submit(buildSubmit);
+    $('a[target="_system"]').on('click', function(e) {
+        e.preventDefault();
+        window.open($(this).attr('href'), '_system');
+    });
 
     // Issue #27
     // When input box is selected, the soft-keyboard is shown
@@ -27,6 +31,7 @@ $(document).on('deviceready', function() {
     // Avoids flicker on slower devices.
     setTimeout(function() {
         navigator.splashscreen.hide();
+        $('.footer').removeClass('faded');
 
         // Load configuration
         loadConfig(function() {
