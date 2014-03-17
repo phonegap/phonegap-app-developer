@@ -11,6 +11,7 @@
 
 ### App
 
+    $ npm install -g phonegap@3.2.0-0.17.1
     $ phonegap run <platform>
 
 ## Release: iOS
