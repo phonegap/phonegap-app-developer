@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		014E234FC03E4150B5681EC9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		04075CD61BF9493388163066 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD132BA2B764B47BEE06ACB /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -670,7 +671,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "BDCF52B8-0B64-4E71-80B8-C54CDBB574DA";
+				PROVISIONING_PROFILE = "9ED41B4B-AA86-4E29-B8E3-793445E96870";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
