@@ -33,8 +33,10 @@ module.exports.get_target = function() {
         return target.split('=')[1].replace('\n', '').replace('\r', '').replace(' ', '');
     } else if (fs.existsSync(path.join(ROOT, 'project.properties'))) {
         // if no target found, we're probably in a project and project.properties is in ROOT.
-        var target = shell.grep(/target=android-[\d+]/, path.join(ROOT, 'project.properties'));
-        return target.split('=')[1].replace('\n', '').replace('\r', '').replace(' ', '');
+        // this is called on the project itself, and can support Google APIs AND Vanilla Android
+        var target = shell.grep(/target=android-[\d+]/, path.join(ROOT, 'project.properties')) ||
+          shell.grep(/target=Google Inc.:Google APIs:[\d+]/, path.join(ROOT, 'project.properties'));
+        return target.split('=')[1].replace('\n', '').replace('\r', '');
     }
 }
 
@@ -50,16 +52,18 @@ module.exports.check_ant = function() {
 
 // Returns a promise.
 module.exports.check_java = function() {
-    if(process.env.JAVA_HOME) {
-        var d = Q.defer();
-        child_process.exec('java -version', function(err, stdout, stderr) {
-            if(err) d.reject(new Error('ERROR : executing command \'java\', make sure you java environment is set up. Including your JDK and JRE.' + err));
-            else d.resolve();
-        });
-        return d.promise;
-    } else {
-        return Q.reject(new Error('ERROR : Make sure JAVA_HOME is set, as well as paths to your JDK and JRE for java.'));
-    }
+    var d = Q.defer();
+    child_process.exec('java -version', function(err, stdout, stderr) {
+        if(err) {
+            var msg =
+                'Failed to run \'java -version\', make sure your java environment is set up\n' +
+                'including JDK and JRE.\n' +
+                'Your JAVA_HOME variable is ' + process.env.JAVA_HOME + '\n';
+            d.reject(new Error(msg + err));
+        }
+        else d.resolve();
+    });
+    return d.promise;
 }
 
 // Returns a promise.
@@ -87,8 +91,6 @@ module.exports.check_android = function() {
 
 // Returns a promise.
 module.exports.run = function() {
-    return Q.all([this.check_ant(), this.check_java(), this.check_android()]).then(function() {
-        console.log('Looks like your environment fully supports cordova-android development!');
-    });
+    return Q.all([this.check_ant(), this.check_java(), this.check_android()]);
 }
 
