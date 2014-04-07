@@ -2,6 +2,12 @@
 
 > Coming soon to an app store near you!
 
+## Targets
+
+- Android `>=4.1.x`
+  - See #61 for details on why
+- iOS `5.1.1`
+
 ## Build
 
 ### LESS / CSS
