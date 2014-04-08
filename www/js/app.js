@@ -24,6 +24,9 @@ $().ready(function() {
     $('#address').on('touchstart', function() {
         $('#address').focus();
     });
+
+    // Work around CSS browser issues.
+    supportBrowserQuirks();
 });
 
 $(document).on('deviceready', function() {
@@ -268,6 +271,32 @@ function getAddress() {
     address = (address.match(/^(.*:\/\/)/)) ? address : 'http://' + address;
 
     return address;
+}
+
+/*---------------------------------------------------
+    Browser - Quirks
+---------------------------------------------------*/
+
+function supportBrowserQuirks() {
+    // Issue #51
+    // Windows Phone 8 does not support border-image
+    if (/IEMobile\/10/.test(window.navigator.userAgent)) {
+        var element = document.createElement('style');
+        element.setAttribute('type', 'text/css');
+        element.innerHTML = [
+            '#bot .monitor {',
+            '    background-image: url(img/monitor-wp8.png);',
+            '    background-color: none;',
+            '    background-position: 0px 0px;',
+            '    backgronud-repeat: no-repeat;',
+            '    background-size: 270px 220px;',
+            '}',
+            '#bot .monitor .cover {',
+            '    border: none;',
+            '}'
+        ].join('\n');
+        document.body.appendChild(element);
+    }
 }
 
 })();
