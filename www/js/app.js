@@ -284,20 +284,11 @@ function supportBrowserQuirks() {
         var element = document.createElement('style');
         element.setAttribute('type', 'text/css');
         element.innerHTML = [
-            '#bot .monitor {',
-            '    background-image: url(img/monitor-wp8.png);',
-            '    background-position: 0px 0px;',
-            '    background-repeat: no-repeat;',
-            '    background-size: 270px 220px;',
-            '}',
-            '#bot .monitor.alert {',
-            '    background-image: url(img/monitor-alert-wp8.png);',
-            '    background-position: 0px 0px;',
-            '    background-repeat: no-repeat;',
-            '    background-size: 270px 220px;',
-            '}',
             '#bot .monitor .cover {',
-            '    border: none;',
+            '   background-image: url(img/frame.png);',
+            '   background-size: 270px 220px;',
+            '   background-repeat: no-repeat;',
+            '   border: none;',
             '}'
         ].join('\n');
         document.body.appendChild(element);
