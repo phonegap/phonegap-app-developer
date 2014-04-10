@@ -123,8 +123,14 @@ hr {
 
 @media all and (max-width:400px) {
     .narrow-screen;
-    
-    @-ms-viewport{
-        width:320px;
-    }
+}
+
+/**
+ * Issue #65 and #68
+ * Fixes device width on WP8 devices that do not support the meta viewport tag.
+ * Fixes pixel-shifting during CSS animations.
+ * Reference: http://mattstow.com/responsive-design-in-ie10-on-windows-phone-8.html#the-fix
+ */
+@-ms-viewport{
+    width: device-width;
 }
