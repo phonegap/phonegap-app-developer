@@ -96,7 +96,13 @@ function readFile(filepath, callback) {
                         function gotFile(file){
                             var reader = new FileReader();
                             reader.onloadend = function(evt) {
-                                callback(null, evt.target.result); // text
+                                // #72 - Fix WP8 loading of config.json
+                                // On WP8, `evt.target.result` is returned as an object instead
+                                // of a string. Since WP8 is using a newer version of the File API
+                                // this may be a platform quirk or an API update.
+                                var text = evt.target.result;
+                                text = (typeof text === 'object') ? JSON.stringify(text) : text;
+                                callback(null, text); // text is a string
                             };
                             reader.readAsText(file);
                         },
