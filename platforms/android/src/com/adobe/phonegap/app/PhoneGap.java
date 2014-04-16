@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.phonegap.app;
+package com.adobe.phonegap.app;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
