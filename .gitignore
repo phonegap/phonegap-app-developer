@@ -19,6 +19,8 @@ platforms/android/local.properties
 platforms/android/ant-build
 platforms/android/ant-gen
 platforms/android/CordovaLib/ant-build
+platforms/android/CordovaLib/bin
+platforms/android/CordovaLib/gen
 
 # wp8
 platforms/wp8/bin
