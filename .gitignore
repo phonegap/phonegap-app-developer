@@ -26,3 +26,6 @@ platforms/android/CordovaLib/gen
 platforms/wp8/bin
 platforms/wp8/obj
 platforms/wp8/www
+
+# res
+res/signing/android/*.keystore
