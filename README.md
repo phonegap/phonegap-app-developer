@@ -1,35 +1,49 @@
-# The PhoneGap Application
+# PhoneGap Developer App
 
-> Coming soon to an app store near you!
+> Available in an app store near you!
 
-## Targets
+## Overview
 
-- Android `>=4.1.x`
-  - See #61 for details on why
-- iOS `5.1.1`
+The PhoneGap Developer app is a testing utility for web developers and designers
+using the PhoneGap framework. After installing the PhoneGap Developer app you
+can connect to your PhoneGap desktop app to instantly view and test your project
+on the device.
 
-## Build
+For more information, see [app.phonegap.com][3].
 
-### LESS / CSS
+## Download
+
+- [Android Google Play][1]
+- [Apple AppStore][2]
+
+## Platform support
+
+- Android 4.1.0+
+  - `cordova@3.4.0-0.1.3`
+- iOS 5.1.1+
+  - `phonegap@3.2.0-0.17.1`
+- Windows Phone 8.0+
+  - `cordova@3.4.0-0.1.3`
+
+## Dependencies
+
+The PhoneGap Developer app is tightly coupled to the following libraries:
+
+- [connect-phonegap][4]
+- [phonegap-cli][5]
+
+## Development
+
+### Compiling LESS / CSS
+
+When making changes to the CSS styling, remember to compile the LESS files:
 
     $ npm install
     $ npm run less
 
-### App
+[1]: https://play.google.com/store/apps/details?id=com.adobe.phonegap.app
+[2]: https://itunes.apple.com/app/id843536693
+[3]: http://app.phonegap.com
+[4]: http://github.com/phonegap/connect-phonegap
+[5]: http://github.com/phonegap/phonegap-cli
 
-    $ npm install -g phonegap@3.2.0-0.17.1
-    $ phonegap run <platform>
-
-## Release: iOS
-
-1. Increment the version in `www/config.xml`
-1. Build the project with `phonegap build ios`
-1. Open the Xcode project
-1. Set the target as your device (top-left corner)
-1. Select Project -> Archive
-1. In the Organizer window
-    1. Select the latest app archive
-    1. Click Distribute
-    1. Select the Ad Hoc provisioning profile
-    1. Save the IPA to `res/release/ios/PhoneGap-x.x.x.ipa`
-1. Upload the IPA in TestFlight
