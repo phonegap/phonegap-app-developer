@@ -41,9 +41,14 @@ When making changes to the CSS styling, remember to compile the LESS files:
     $ npm install
     $ npm run less
 
+### Commits, Tags, and Releases
+
+See the [CONTRIBUTING.md][6] file for details.
+
 [1]: https://play.google.com/store/apps/details?id=com.adobe.phonegap.app
 [2]: https://itunes.apple.com/app/id843536693
 [3]: http://app.phonegap.com
 [4]: http://github.com/phonegap/connect-phonegap
 [5]: http://github.com/phonegap/phonegap-cli
+[6]: https://github.com/phonegap/phonegap-app/blob/master/CONTRIBUTING.md
 

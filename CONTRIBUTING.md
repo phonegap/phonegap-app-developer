@@ -29,5 +29,21 @@ When no issue is exists, then prefix each commit with the root directory or topi
 - `[www] Fix button style.`
 - `[ios] Update icon name in plist.`
 
+## Tags
+
+When a tag affects all platforms, use an ordinary semver tag:
+
+- 0.0.1
+- 0.1.0
+- 0.1.1
+- 0.2.0
+- 1.0.0
+
+Platform releases should individually tagged as:
+
+- 1.0.0-android-rc.1
+- 1.0.0-android-release
+- 1.0.0-ios-release
+
   [issue-url]: https://github.com/phonegap/phonegap-app/issues
   [filter-url]: https://github.com/phonegap/phonegap-app/issues?labels=discussion&page=1&state=open
