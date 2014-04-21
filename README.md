@@ -50,5 +50,5 @@ See the [CONTRIBUTING.md][6] file for details.
 [3]: http://app.phonegap.com
 [4]: http://github.com/phonegap/connect-phonegap
 [5]: http://github.com/phonegap/phonegap-cli
-[6]: https://github.com/phonegap/phonegap-app/blob/master/CONTRIBUTING.md
+[6]: https://github.com/phonegap/phonegap-app-developer/blob/master/CONTRIBUTING.md
 

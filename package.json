@@ -1,10 +1,10 @@
 {
-    "name": "phonegap-app",
+    "name": "phonegap-app-developer",
     "description": "PhoneGap Developer app.",
-    "homepage": "http://github.com/phonegap/phonegap-app",
+    "homepage": "http://app.phonegap.com",
     "repository": {
         "type": "git",
-        "url": "git://github.com/phonegap/phonegap-app.git"
+        "url": "git://github.com/phonegap/phonegap-app-developer.git"
     },
     "preferGlobal": "false",
     "private": "true",
