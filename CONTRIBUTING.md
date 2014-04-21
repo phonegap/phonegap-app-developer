@@ -2,8 +2,8 @@
 
 ## Get the Source
 
-    $ git clone https://github.com/phonegap/phonegap-app.git
-    $ cd phonegap-app/
+    $ git clone https://github.com/phonegap/phonegap-app-developer.git
+    $ cd phonegap-app-developer/
 
 ## Join the Discussion
 
@@ -45,5 +45,5 @@ Platform releases should individually tagged as:
 - 1.0.0-android-release
 - 1.0.0-ios-release
 
-  [issue-url]: https://github.com/phonegap/phonegap-app/issues
-  [filter-url]: https://github.com/phonegap/phonegap-app/issues?labels=discussion&page=1&state=open
+  [issue-url]: https://github.com/phonegap/phonegap-app-developer/issues
+  [filter-url]: https://github.com/phonegap/phonegap-app-developer/issues?labels=discussion&page=1&state=open
