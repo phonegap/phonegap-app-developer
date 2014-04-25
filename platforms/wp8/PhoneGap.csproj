@@ -316,6 +316,9 @@
         <Content Include="www\img\frame.png" />
     </ItemGroup>
     <ItemGroup>
+        <Content Include="www\img\monitor-alert-wp8.png" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\img\monitor-wp8.png" />
     </ItemGroup>
     <ItemGroup>
@@ -329,6 +332,9 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\js\app.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\js\ms-viewport.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\js\zepto.min.js" />
