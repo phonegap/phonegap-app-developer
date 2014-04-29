@@ -24,20 +24,19 @@
         </Tasks>
         <Tokens>
             <PrimaryToken TaskName="_default" TokenID="PhoneGapToken">
-                <TemplateFlip>
-                    <SmallImageURI IsRelative="true" IsResource="false">Background.png</SmallImageURI>
-                    <Count>0</Count>
-                    <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+                <TemplateIconic>
+                    <SmallImageURI IsRelative="true" IsResource="false">TileSmall.png</SmallImageURI>
+                    <Count></Count>
+                    <IconImageURI IsRelative="true" IsResource="false">TileMedium.png</IconImageURI>
                     <Title>PhoneGap</Title>
-                    <BackContent />
-                    <BackBackgroundImageURI />
-                    <BackTitle />
-                    <LargeBackgroundImageURI />
-                    <LargeBackContent />
-                    <LargeBackBackgroundImageURI />
-                    <DeviceLockImageURI />
-                    <HasLarge>false</HasLarge>
-                </TemplateFlip>
+                    <Message />
+                    <BackgroundColor />
+                    <HasLarge>True</HasLarge>
+                    <LargeContent1>PhoneGap Developer App</LargeContent1>
+                    <LargeContent2>A testing utility for the</LargeContent2>
+                    <LargeContent3>PhoneGap framework</LargeContent3>
+                    <DeviceLockImageURI IsRelative="true" IsResource="false" />
+                </TemplateIconic>
             </PrimaryToken>
         </Tokens>
         <ScreenResolutions>
