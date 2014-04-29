@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		014E234FC03E4150B5681EC9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		04075CD61BF9493388163066 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACD132BA2B764B47BEE06ACB /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -54,6 +55,8 @@
 		84522B454A854F639E1FA99C /* CDVContact.m in Sources */ = {isa = PBXBuildFile; fileRef = D785191AEBF346D29B3A8ED7 /* CDVContact.m */; };
 		84A1AB5D52AC44F886CA5EAD /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 057F5322C2334429B13C7B4E /* CDVFile.m */; };
 		99627E893C8F4ADF96F26A9F /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B3A61628F0E4EECA79055A4 /* CDVNotification.m */; };
+		AC0EDB61191024200011CD32 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = AC0EDB5F191024200011CD32 /* Default-Landscape@2x~ipad.png */; };
+		AC0EDB62191024200011CD32 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = AC0EDB60191024200011CD32 /* Default-Landscape~ipad.png */; };
 		AC21E4DC18EA17C7004D58B6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AC21E4DA18EA17C7004D58B6 /* Default.png */; };
 		AC21E4DE18EA17FA004D58B6 /* Default@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = AC21E4DD18EA17FA004D58B6 /* Default@2x~ipad.png */; };
 		B21B6D3CEF3D4926847E7F5D /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 20BEADEF8C2944B5B4C2E692 /* CDVReachability.m */; };
@@ -152,6 +155,8 @@
 		A28DB46C2DEE4E1981A9A4BB /* CDVContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVContact.h; path = org.apache.cordova.contacts/CDVContact.h; sourceTree = "<group>"; };
 		A3411C91DEDE44008453EF7B /* CoreMotion.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A9AF3A8D262F49BF8C388AA1 /* CDVContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVContacts.h; path = org.apache.cordova.contacts/CDVContacts.h; sourceTree = "<group>"; };
+		AC0EDB5F191024200011CD32 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		AC0EDB60191024200011CD32 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		AC21E4DA18EA17C7004D58B6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		AC21E4DD18EA17FA004D58B6 /* Default@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~ipad.png"; sourceTree = "<group>"; };
 		ACD132BA2B764B47BEE06ACB /* ImageIO.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -374,6 +379,8 @@
 		308D05311370CCF300D202BF /* splash */ = {
 			isa = PBXGroup;
 			children = (
+				AC0EDB5F191024200011CD32 /* Default-Landscape@2x~ipad.png */,
+				AC0EDB60191024200011CD32 /* Default-Landscape~ipad.png */,
 				AC21E4DD18EA17FA004D58B6 /* Default@2x~ipad.png */,
 				AC21E4DA18EA17C7004D58B6 /* Default.png */,
 				D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */,
@@ -482,7 +489,9 @@
 			files = (
 				F840E1F1165FE0F500CFE078 /* config.xml in Resources */,
 				7E7966E41810823500FA85AD /* icon-76.png in Resources */,
+				AC0EDB62191024200011CD32 /* Default-Landscape~ipad.png in Resources */,
 				7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */,
+				AC0EDB61191024200011CD32 /* Default-Landscape@2x~ipad.png in Resources */,
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
