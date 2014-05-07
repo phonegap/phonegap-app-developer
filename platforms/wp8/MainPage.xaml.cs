@@ -34,7 +34,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 
 
-namespace com.phonegap.app
+namespace com.phonegap.app.developer
 {
     public partial class MainPage : PhoneApplicationPage
     {

@@ -36,6 +36,7 @@ body {
     .gradient-simple( #e7e7e7, #b0afb0 );
     color: #333;
     font-size: 16px;
+    -ms-touch-action: none; /* disable wp8 zoom on double-tap */
 }
 
 a {
@@ -78,7 +79,6 @@ hr {
 .wide-screen() {
 
     .container {
-        width: 700px;
         margin: 0 auto;
     }
 }
@@ -125,3 +125,12 @@ hr {
     .narrow-screen;
 }
 
+/**
+ * Issue #65 and #68
+ * Fixes device width on WP8 devices that do not support the meta viewport tag.
+ * Fixes pixel-shifting during CSS animations.
+ * Reference: http://mattstow.com/responsive-design-in-ie10-on-windows-phone-8.html#the-fix
+ */
+@-ms-viewport{
+    width: device-width;
+}
