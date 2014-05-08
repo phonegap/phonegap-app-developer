@@ -15,6 +15,7 @@ For more information, see [app.phonegap.com][3].
 
 - [Android Google Play][1]
 - [Apple AppStore][2]
+- [Windows Phone store][7]
 
 ## Platform support
 
@@ -51,4 +52,5 @@ See the [CONTRIBUTING.md][6] file for details.
 [4]: http://github.com/phonegap/connect-phonegap
 [5]: http://github.com/phonegap/phonegap-cli
 [6]: https://github.com/phonegap/phonegap-app-developer/blob/master/CONTRIBUTING.md
+[7]: http://www.windowsphone.com/en-us/store/app/phonegap-developer/5c6a2d1e-4fad-4bf8-aaf7-71380cc84fe3
 
