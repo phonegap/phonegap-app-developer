@@ -23,17 +23,25 @@
 #import "CDVViewController.h"
 #import "CDVCommandDelegateImpl.h"
 
+// Parse JS on the main thread if it's shorter than this.
+static const NSInteger JSON_SIZE_FOR_MAIN_THREAD = 4 * 1024; // Chosen arbitrarily.
+// Execute multiple commands in one go until this many seconds have passed.
+static const double MAX_EXECUTION_TIME = .008; // Half of a 60fps frame.
+
 @interface CDVCommandQueue () {
     NSInteger _lastCommandQueueFlushRequestId;
     __weak CDVViewController* _viewController;
     NSMutableArray* _queue;
-    BOOL _currentlyExecuting;
+    NSTimeInterval _startExecutionTime;
 }
 @end
 
 @implementation CDVCommandQueue
 
-@synthesize currentlyExecuting = _currentlyExecuting;
+- (BOOL)currentlyExecuting
+{
+    return _startExecutionTime > 0;
+}
 
 - (id)initWithViewController:(CDVViewController*)viewController
 {
@@ -56,15 +64,26 @@
     _lastCommandQueueFlushRequestId = 0;
 }
 
-- (void)enqueCommandBatch:(NSString*)batchJSON
+- (void)enqueueCommandBatch:(NSString*)batchJSON
 {
     if ([batchJSON length] > 0) {
-        [_queue addObject:batchJSON];
-        [self executePending];
+        NSMutableArray* commandBatchHolder = [[NSMutableArray alloc] init];
+        [_queue addObject:commandBatchHolder];
+        if ([batchJSON length] < JSON_SIZE_FOR_MAIN_THREAD) {
+            [commandBatchHolder addObject:[batchJSON JSONObject]];
+        } else {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^() {
+                    NSMutableArray* result = [batchJSON JSONObject];
+                    @synchronized(commandBatchHolder) {
+                        [commandBatchHolder addObject:result];
+                    }
+                    [self performSelectorOnMainThread:@selector(executePending) withObject:nil waitUntilDone:NO];
+                });
+        }
     }
 }
 
-- (void)maybeFetchCommandsFromJs:(NSNumber*)requestId
+- (void)processXhrExecBridgePoke:(NSNumber*)requestId
 {
     NSInteger rid = [requestId integerValue];
 
@@ -84,6 +103,7 @@
     if (rid > _lastCommandQueueFlushRequestId) {
         _lastCommandQueueFlushRequestId = [requestId integerValue];
         [self fetchCommandsFromJs];
+        [self executePending];
     }
 }
 
@@ -94,25 +114,36 @@
         @"cordova.require('cordova/exec').nativeFetchMessages()"];
 
     CDV_EXEC_LOG(@"Exec: Flushed JS->native queue (hadCommands=%d).", [queuedCommandsJSON length] > 0);
-    [self enqueCommandBatch:queuedCommandsJSON];
+    [self enqueueCommandBatch:queuedCommandsJSON];
 }
 
 - (void)executePending
 {
     // Make us re-entrant-safe.
-    if (_currentlyExecuting) {
+    if (_startExecutionTime > 0) {
         return;
     }
     @try {
-        _currentlyExecuting = YES;
+        _startExecutionTime = [NSDate timeIntervalSinceReferenceDate];
 
-        for (NSUInteger i = 0; i < [_queue count]; ++i) {
-            // Parse the returned JSON array.
-            NSArray* commandBatch = [[_queue objectAtIndex:i] JSONObject];
+        while ([_queue count] > 0) {
+            NSMutableArray* commandBatchHolder = _queue[0];
+            NSMutableArray* commandBatch = nil;
+            @synchronized(commandBatchHolder) {
+                // If the next-up command is still being decoded, wait for it.
+                if ([commandBatchHolder count] == 0) {
+                    break;
+                }
+                commandBatch = commandBatchHolder[0];
+            }
 
-            // Iterate over and execute all of the commands.
-            for (NSArray* jsonEntry in commandBatch) {
+            while ([commandBatch count] > 0) {
                 @autoreleasepool {
+                    // Execute the commands one-at-a-time.
+                    NSArray* jsonEntry = [commandBatch dequeue];
+                    if ([commandBatch count] == 0) {
+                        [_queue removeObjectAtIndex:0];
+                    }
                     CDVInvokedUrlCommand* command = [CDVInvokedUrlCommand commandFromJson:jsonEntry];
                     CDV_EXEC_LOG(@"Exec(%@): Calling %@.%@", command.callbackId, command.className, command.methodName);
 
@@ -128,13 +159,17 @@
 #endif
                     }
                 }
+
+                // Yield if we're taking too long.
+                if (([_queue count] > 0) && ([NSDate timeIntervalSinceReferenceDate] - _startExecutionTime > MAX_EXECUTION_TIME)) {
+                    [self performSelector:@selector(executePending) withObject:nil afterDelay:0];
+                    return;
+                }
             }
         }
-
-        [_queue removeAllObjects];
     } @finally
     {
-        _currentlyExecuting = NO;
+        _startExecutionTime = 0;
     }
 }
 
@@ -159,7 +194,7 @@
     SEL normalSelector = NSSelectorFromString(methodName);
     if ([obj respondsToSelector:normalSelector]) {
         // [obj performSelector:normalSelector withObject:command];
-        objc_msgSend(obj, normalSelector, command);
+        ((void (*)(id, SEL, id))objc_msgSend)(obj, normalSelector, command);
     } else {
         // There's no method to call, so throw an error.
         NSLog(@"ERROR: Method '%@' not defined in Plugin '%@'", methodName, command.className);
