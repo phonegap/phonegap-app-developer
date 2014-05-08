@@ -17,23 +17,19 @@ For more information, see [app.phonegap.com][3].
 - [Apple AppStore][2]
 - [Windows Phone store][7]
 
-## Platform support
-
-- Android 4.1.0+
-  - `cordova@3.4.0-0.1.3`
-- iOS 5.1.1+
-  - `phonegap@3.2.0-0.17.1`
-- Windows Phone 8.0+
-  - `cordova@3.4.0-0.1.3`
-
-## Dependencies
-
-The PhoneGap Developer app is tightly coupled to the following libraries:
-
-- [connect-phonegap][4]
-- [phonegap-cli][5]
-
 ## Development
+
+### Compile the Application
+
+    $ npm install -g phonegap@3.4.0-0.19.21
+    $ phonegap run ios
+    $ phonegap run android
+    $ phonegap run wp8
+
+For developers wishing to use the platform SDKs (Xcode, Eclipse, Visual Studio),
+please build once with the CLI to correctly populate the platform assets:
+
+    $ phonegap build <platform>
 
 ### Compiling LESS / CSS
 
