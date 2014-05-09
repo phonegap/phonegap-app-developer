@@ -21,7 +21,36 @@ if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
     };
     fs.createReadStream(config.www).pipe(fs.createWriteStream(config.test));
 
+    // update tests to support our app config.xml
+    updateTestSuite(dir.test);
+
     // swap the test and www directories
     fs.renameSync(dir.www, dir.backup);
     fs.renameSync(dir.test, dir.www);
+}
+
+//
+// Update the Test Suite
+//
+function updateTestSuite(testpath) {
+    var filepath = path.join(testpath, 'main.js'),
+        data = fs.readFileSync(filepath, 'utf8');
+
+    // Update tests/main.js to hide splash screen due to our config.xml setting
+    var injectString = [
+        '',
+        '//',
+        '// phonegap-app-developer support',
+        '//',
+        '',
+        'document.addEventListener(\'deviceready\', function() {',
+        '    navigator.splashscreen.hide();',
+        '}, false);'
+    ].join('\n');
+
+
+    if (data.indexOf(injectString) < 0) {
+        data += injectString;
+        fs.writeFileSync(filepath, data, 'utf8');
+    }
 }
