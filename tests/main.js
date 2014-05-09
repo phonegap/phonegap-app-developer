@@ -20,7 +20,6 @@
 */
 
 var deviceInfo = function() {
-    navigator.splashscreen.hide();
     document.getElementById("cordova").innerHTML = cordova.version;
     document.getElementById("platform").innerHTML = device.platform;
     document.getElementById("version").innerHTML = device.version;
