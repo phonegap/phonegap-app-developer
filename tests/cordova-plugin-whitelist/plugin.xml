@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
+           id="org.apache.cordova.test.whitelist"
+      version="0.1.0">
+    <name>Whitelist</name>
+
+    <js-module src="www/whitelist.js" name="whitelist">
+        <clobbers target="cordova.whitelist" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="WhitelistAPI" >
+                <param name="android-package" value="org.apache.cordova.test.WhitelistAPI"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/WhitelistAPI.java" target-dir="src/org/apache/cordova/test" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="WhitelistAPI">
+                <param name="ios-package" value="CDVWhitelistAPI"/>
+            </feature>
+        </config-file>
+        
+        <header-file src="src/ios/CDVWhitelistAPI.h" />
+        <source-file src="src/ios/CDVWhitelistAPI.m" />
+    </platform>
+
+</plugin>
