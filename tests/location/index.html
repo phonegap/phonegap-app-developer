@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!--
+
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+
+-->
+
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,maximum-scale=1.0,initial-scale=1.0" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"> <!-- ISO-8859-1 -->
+    <title>Cordova Mobile Spec</title>
+    <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <script type="text/javascript" charset="utf-8" src="../cordova-incl.js"></script>      
+
+      
+<script type="text/javascript" charset="utf-8">
+
+    var origGeolocation = null;
+    var newGeolocation = null;
+
+    //-------------------------------------------------------------------------
+    // Location
+    //-------------------------------------------------------------------------
+    var watchLocationId = null;
+
+    /**
+     * Start watching location
+     */
+    var watchLocation = function(usePlugin) {
+        var geo = usePlugin ? newGeolocation : origGeolocation;
+        if (!geo) {
+            alert('geolocation object is missing. usePlugin = ' + usePlugin);
+            return;
+        }
+
+        // Success callback
+        var success = function(p){
+              console.log('watch location success');
+              setLocationDetails(p);
+        };
+
+        // Fail callback
+        var fail = function(e){
+            console.log("watchLocation fail callback with error code "+e);
+            stopLocation(geo);
+        };
+
+        // Get location
+        watchLocationId = geo.watchPosition(success, fail, {enableHighAccuracy: true});
+        setLocationStatus("Running");
+    };
+
+    /**
+     * Stop watching the location
+     */
+    var stopLocation = function(usePlugin) {
+        var geo = usePlugin ? newGeolocation : origGeolocation;
+        if (!geo) {
+            alert('geolocation object is missing. usePlugin = ' + usePlugin);
+            return;
+        }
+        setLocationStatus("Stopped");
+        if (watchLocationId) {
+            geo.clearWatch(watchLocationId);
+            watchLocationId = null;
+        }
+    };
+
+    /**
+     * Get current location
+     */
+    var getLocation = function(usePlugin, opts) {
+        var geo = usePlugin ? newGeolocation : origGeolocation;
+        if (!geo) {
+            alert('geolocation object is missing. usePlugin = ' + usePlugin);
+            return;
+        }
+
+        // Stop location if running
+        stopLocation(geo);
+
+        // Success callback
+        var success = function(p){
+            console.log('get location success');
+            setLocationDetails(p);
+            setLocationStatus("Done");
+        };
+
+        // Fail callback
+        var fail = function(e){
+            console.log("getLocation fail callback with error code "+e.code);
+            setLocationStatus("Error: "+e.code);
+        };
+
+        setLocationStatus("Retrieving location...");
+
+        // Get location
+        geo.getCurrentPosition(success, fail, opts || {enableHighAccuracy: true}); //, {timeout: 10000});
+
+    };
+
+    /**
+     * Set location status
+     */
+    var setLocationStatus = function(status) {
+        document.getElementById('location_status').innerHTML = status;
+    };
+var setLocationDetails = function(p) {
+var date = (new Date(p.timestamp));
+            document.getElementById('latitude').innerHTML = p.coords.latitude;
+            document.getElementById('longitude').innerHTML = p.coords.longitude;
+            document.getElementById('altitude').innerHTML = p.coords.altitude;
+            document.getElementById('accuracy').innerHTML = p.coords.accuracy;
+            document.getElementById('heading').innerHTML = p.coords.heading;
+            document.getElementById('speed').innerHTML = p.coords.speed;
+            document.getElementById('altitude_accuracy').innerHTML = p.coords.altitudeAccuracy;
+            document.getElementById('timestamp').innerHTML =  date.toDateString() + " " + date.toTimeString();
+    }
+    
+    /**
+     * Function called when page has finished loading.
+     */
+    function init() {
+        document.addEventListener("deviceready", function() {
+            newGeolocation = navigator.geolocation;
+            origGeolocation = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.geolocation');
+            if (!origGeolocation) {
+                origGeolocation = newGeolocation;
+                newGeolocation = null;
+            }
+        }, false);
+    }
+
+</script>
+
+  </head>
+  <body onload="init();" id="stage" class="theme">
+  
+    <h1>Location</h1>
+    <div id="info">
+        <b>Status:</b> <span id="location_status">Stopped</span>
+        <table width="100%">
+            <tr>
+                <td><b>Latitude:</b></td>
+                <td id="latitude">&nbsp;</td>
+                <td>(decimal degrees) geographic coordinate [<a href="http://dev.w3.org/geo/api/spec-source.html#lat">#ref]</a></td>
+            </tr>
+            <tr>
+                <td><b>Longitude:</b></td>
+                <td id="longitude">&nbsp;</td>
+                <td>(decimal degrees) geographic coordinate [<a href="http://dev.w3.org/geo/api/spec-source.html#lat">#ref]</a></td>
+            </tr>
+            <tr>
+                <td><b>Altitude:</b></td>
+                <td id="altitude">&nbsp;</td>
+                <td>null if not supported;<br>
+                    (meters) height above the [<a href="http://dev.w3.org/geo/api/spec-source.html#ref-wgs">WGS84</a>] ellipsoid. [<a href="http://dev.w3.org/geo/api/spec-source.html#altitude">#ref]</a></td>
+            </tr>
+            <tr>
+                <td><b>Accuracy:</b></td>
+                <td id="accuracy">&nbsp;</td>
+                <td>(meters; non-negative; 95% confidence level) the accuracy level of the latitude and longitude coordinates. [<a href="http://dev.w3.org/geo/api/spec-source.html#accuracy">#ref]</a></td>
+            </tr>
+            <tr>
+                <td><b>Heading:</b></td>
+                <td id="heading">&nbsp;</td>
+                <td>null if not supported;<br>
+                    NaN if speed == 0;<br>
+                    (degrees; 0° ≤ heading < 360°) direction of travel of the hosting device- counting clockwise relative to the true north. [<a href="http://dev.w3.org/geo/api/spec-source.html#heading">#ref]</a></td>
+            </tr>
+            <tr>
+                <td><b>Speed:</b></td>
+                <td id="speed">&nbsp;</td>
+                <td>null if not supported;<br>
+                    (meters per second; non-negative) magnitude of the horizontal component of the hosting device's current velocity. [<a href="http://dev.w3.org/geo/api/spec-source.html#speed">#ref]</a></td>
+            </tr>
+            <tr>
+                <td><b>Altitude Accuracy:</b></td>
+                <td id="altitude_accuracy">&nbsp;</td>
+                <td>null if not supported;<br>(meters; non-negative; 95% confidence level) the accuracy level of the altitude. [<a href="http://dev.w3.org/geo/api/spec-source.html#altitude-accuracy">#ref]</a></td>
+            </tr>
+            <tr>
+                <td><b>Time:</b></td>
+                <td id="timestamp">&nbsp;</td>
+                <td>(DOMTimeStamp) when the position was acquired [<a href="http://dev.w3.org/geo/api/spec-source.html#timestamp">#ref]</a></td>
+            </tr>
+        </table>
+    </div>
+    <h2>Action</h2>
+    <h3>Use Built-in WebView navigator.geolocation</h3>
+    <a href="javascript:" class="btn large" onclick="getLocation(false);">Get Location</a>
+    <a href="javascript:" class="btn large" onclick="watchLocation(false);">Start Watching Location</a>
+    <a href="javascript:" class="btn large" onclick="stopLocation(false);">Stop Watching Location</a>
+    <a href="javascript:" class="btn large" onclick="getLocation(false, {maximumAge:30000});">Get Location Up to 30 Seconds Old</a>
+    <h3>Use Cordova Geolocation Plugin</h3>
+    <a href="javascript:" class="btn large" onclick="getLocation(true);">Get Location</a>
+    <a href="javascript:" class="btn large" onclick="watchLocation(true);">Start Watching Location</a>
+    <a href="javascript:" class="btn large" onclick="stopLocation(true);">Stop Watching Location</a>
+    <a href="javascript:" class="btn large" onclick="getLocation(true, {maximumAge:30000});">Get Location Up to 30 Seconds Old</a>
+    <h2>&nbsp;</h2><a href="javascript:" class="backBtn" onclick="backHome();">Back</a>    
+  </body>
+</html>      
