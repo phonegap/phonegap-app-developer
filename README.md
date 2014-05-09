@@ -19,7 +19,7 @@ For more information, see [app.phonegap.com][3].
 
 ## Development
 
-### Compile the Application
+### Compile and Run the Application
 
     $ npm install -g phonegap@3.4.0-0.19.21
     $ phonegap run ios
@@ -37,6 +37,26 @@ When making changes to the CSS styling, remember to compile the LESS files:
 
     $ npm install
     $ npm run less
+
+### Running the Tests
+
+We use the mobile-spec test suite to ensure that each API is correctly installed.
+You can kick up the test suite with any of the following commands:
+
+    $ phonegap run android --test
+    $ phonegap run ios --test
+    $ phonegap run wp8 --test
+
+### Updating the Tests
+
+It's as easy as a copy and paste.
+
+1. Copy all content of `cordova-mobile-spec`
+2. Paste the content into `tests/`
+
+On your first run of the tests, you may see some modified files. This is expected
+because the test runner invoked by `--test` modifies certain files to support
+our app's configuration.
 
 ### Commits, Tags, and Releases
 
