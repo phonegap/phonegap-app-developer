@@ -23,22 +23,37 @@ var fileUtils = require('./BB10Utils'),
     FileError = require('./FileError'),
     FileSystem = require('./BB10FileSystem');
 
+if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) { callback(); };
+}
+
 module.exports = function (type, size, success, fail) {
     var cordovaFs,
         cordovaFsRoot;
     if (size >= 1000000000000000) {
-        fail(new FileError(FileError.QUOTA_EXCEEDED_ERR));
+        if (typeof fail === "function") {
+            fail(new FileError(FileError.QUOTA_EXCEEDED_ERR));
+        }
     } else if (type !== 1 && type !== 0) {
-        fail(new FileError(FileError.SYNTAX_ERR));
+        if (typeof fail === "function") {
+            fail(new FileError(FileError.SYNTAX_ERR));
+        }
     } else {
-        window.webkitRequestFileSystem(type, size, function (fs) {
-            cordovaFsRoot = fileUtils.createEntry(fs.root);
-            cordovaFs = new FileSystem(fileUtils.getFileSystemName(fs), cordovaFsRoot);
-            cordovaFsRoot.filesystem = cordovaFs;
-            cordovaFs._size = size;
-            success(cordovaFs);
-        }, function (error) {
-            fail(new FileError(error));
-        });
+        cordova.exec(function () {
+            window.requestAnimationFrame(function () {
+                window.webkitRequestFileSystem(type, size, function (fs) {
+                    cordovaFsRoot = fileUtils.createEntry(fs.root);
+                    cordovaFs = new FileSystem(fileUtils.getFileSystemName(fs), cordovaFsRoot);
+                    cordovaFsRoot.filesystem = cordovaFs;
+                    cordovaFs._size = size;
+                    success(cordovaFs);
+                }, function (error) {
+                    if (typeof fail === "function") {
+                        fail(new FileError(error));
+                    }
+                });
+            });
+        }, fail, "org.apache.cordova.file", "setSandbox", [true]);
+
     }
 };

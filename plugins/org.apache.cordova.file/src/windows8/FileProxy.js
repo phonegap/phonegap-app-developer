@@ -1,4 +1,4 @@
-/*
+﻿/*
  *
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
@@ -133,29 +133,34 @@ module.exports = {
     },
 
     readAsText:function(win,fail,args) {
-        var fileName = args[0];
-        var enc = args[1];
+        var fileName = args[0],
+            enc = args[1],
+            startPos = args[2],
+            endPos = args[3];
+        
+        var encoding = Windows.Storage.Streams.UnicodeEncoding.utf8;
+        if (enc == 'Utf16LE' || enc == 'utf16LE') {
+            encoding = Windows.Storage.Streams.UnicodeEncoding.utf16LE;
+        } else if (enc == 'Utf16BE' || enc == 'utf16BE') {
+            encoding = Windows.Storage.Streams.UnicodeEncoding.utf16BE;
+        }
 
-        Windows.Storage.StorageFile.getFileFromPathAsync(fileName).done(
-            function (storageFile) {
-                var value = Windows.Storage.Streams.UnicodeEncoding.utf8;
-                if (enc == 'Utf16LE' || enc == 'utf16LE') {
-                    value = Windows.Storage.Streams.UnicodeEncoding.utf16LE;
-                }else if (enc == 'Utf16BE' || enc == 'utf16BE') {
-                    value = Windows.Storage.Streams.UnicodeEncoding.utf16BE;
-                }
-                Windows.Storage.FileIO.readTextAsync(storageFile, value).done(
-                    function (fileContent) {
-                        win(fileContent);
-                    },
-                    function () {
-                        fail && fail(FileError.ENCODING_ERR);
-                    }
-                );
-            }, function () {
+        Windows.Storage.StorageFile.getFileFromPathAsync(fileName).then(function(file) {
+                return file.openReadAsync();
+            }).then(function (stream) {
+                startPos = (startPos < 0) ? Math.max(stream.size + startPos, 0) : Math.min(stream.size, startPos);
+                endPos = (endPos < 0) ? Math.max(endPos + stream.size, 0) : Math.min(stream.size, endPos);
+                stream.seek(startPos);
+                
+                var readSize = endPos - startPos,
+                    buffer = new Windows.Storage.Streams.Buffer(readSize);
+
+                return stream.readAsync(buffer, readSize, Windows.Storage.Streams.InputStreamOptions.none);
+            }).done(function(buffer) {
+                win(Windows.Security.Cryptography.CryptographicBuffer.convertBinaryToString(encoding, buffer));
+            },function() {
                 fail && fail(FileError.NOT_FOUND_ERR);
-            }
-        );
+            });
     },
 
     readAsDataURL:function(win,fail,args) {
@@ -194,6 +199,10 @@ module.exports = {
             flag = new Flags(false, false);
         }
 
+        if (path !== null) {
+            path = path.replace("/", "\\");
+        }
+
         Windows.Storage.StorageFolder.getFolderFromPathAsync(fullPath).then(
             function (storageFolder) {
                 if (flag.create === true && flag.exclusive === true) {
@@ -222,7 +231,13 @@ module.exports = {
                         function (storageFolder) {
                             win(new DirectoryEntry(storageFolder.name, storageFolder.path));
                         }, function () {
-                            fail && fail(FileError.NOT_FOUND_ERR);
+                            // check if path actually points to a file
+                            storageFolder.getFileAsync(path).done(
+                                function () {
+                                    fail && fail(FileError.TYPE_MISMATCH_ERR);
+                                }, function() {
+                                    fail && fail(FileError.NOT_FOUND_ERR);
+                                });
                         }
                     );
                 }
@@ -399,7 +414,13 @@ module.exports = {
                         function (storageFile) {
                             win(new FileEntry(storageFile.name, storageFile.path));
                         }, function () {
-                            fail && fail(FileError.NOT_FOUND_ERR);
+                            // check if path actually points to a folder
+                            storageFolder.getFolderAsync(path).done(
+                                function () {
+                                    fail && fail(FileError.TYPE_MISMATCH_ERR);
+                                }, function () {
+                                    fail && fail(FileError.NOT_FOUND_ERR);
+                                });
                         }
                     );
                 }
@@ -427,7 +448,7 @@ module.exports = {
             promiseArr[index++] = storageFolder.createFolderQuery().getFoldersAsync().then(function (folderList) {
                 if (folderList !== null) {
                     for (var j = 0; j < folderList.length; j++) {
-                        result.push(new FileEntry(folderList[j].name, folderList[j].path));
+                        result.push(new DirectoryEntry(folderList[j].name, folderList[j].path));
                     }
                 }
             });
@@ -439,23 +460,44 @@ module.exports = {
     },
 
     write:function(win,fail,args) {
-        var fileName = args[0];
-        var text = args[1];
-        var position = args[2];
+        var fileName = args[0],
+            data = args[1],
+            position = args[2],
+            isBinary = args[3];
 
-        Windows.Storage.StorageFile.getFileFromPathAsync(fileName).done(
-            function (storageFile) {
-                Windows.Storage.FileIO.writeTextAsync(storageFile,text,Windows.Storage.Streams.UnicodeEncoding.utf8).done(
-                    function() {
-                        win(String(text).length);
-                    }, function () {
+        if (data instanceof ArrayBuffer) {
+            data = Array.apply(null, new Uint8Array(data));
+        }
+        
+        var writePromise = isBinary ? Windows.Storage.FileIO.writeBytesAsync : Windows.Storage.FileIO.writeTextAsync;
+
+        
+        fileName = fileName.split("/").join("\\");
+
+
+        // split path to folder and file name
+        var path = fileName.substring(0, fileName.lastIndexOf('\\')),
+            file = fileName.split('\\').pop();
+        
+
+        Windows.Storage.StorageFolder.getFolderFromPathAsync(path).done(
+            function(storageFolder) {
+                storageFolder.createFileAsync(file, Windows.Storage.CreationCollisionOption.openIfExists).done(
+                    function(storageFile) {
+                        writePromise(storageFile, data).
+                            done(function () {
+                                win(data.length);
+                            }, function () {
+                                fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                            });
+                    }, function() {
                         fail && fail(FileError.INVALID_MODIFICATION_ERR);
                     }
                 );
+                
             }, function() {
                 fail && fail(FileError.NOT_FOUND_ERR);
-            }
-        );
+            });
     },
 
     truncate:function(win,fail,args) { // ["fileName","size"]
@@ -581,8 +623,10 @@ module.exports = {
                                     for (var i = 0; i < fileListTop.length; i++) {
                                         filePromiseArr.push(fileListTop[i].copyAsync(targetStorageFolder));
                                     }
-                                    WinJS.Promise.join(filePromiseArr).then(function () {
+                                    WinJS.Promise.join(filePromiseArr).done(function () {
                                         coreCopy(storageFolderTop, complete);
+                                    }, function() {
+                                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
                                     });
                                 });
                             });
@@ -809,37 +853,35 @@ module.exports = {
 
         // support for special path start with file:///
         if (path.substr(0, 8) == "file:///") {
-            path = Windows.Storage.ApplicationData.current.localFolder.path + "\\" + String(path).substr(8).split("/").join("\\");
-            Windows.Storage.StorageFile.getFileFromPathAsync(path).then(
-                function (storageFile) {
-                    success(new FileEntry(storageFile.name, storageFile.path));
-                }, function () {
-                    Windows.Storage.StorageFolder.getFolderFromPathAsync(path).then(
-                        function (storageFolder) {
-                            success(new DirectoryEntry(storageFolder.name, storageFolder.path));
-                        }, function () {
-                            fail && fail(FileError.NOT_FOUND_ERR);
-                        }
-                    );
-                }
-            );
+            path = Windows.Storage.ApplicationData.current.localFolder.path + "\\" + String(path).substr(8);
         } else {
-            Windows.Storage.StorageFile.getFileFromPathAsync(path).then(
-                function (storageFile) {
-                    success(new FileEntry(storageFile.name, storageFile.path));
-                }, function () {
-                    Windows.Storage.StorageFolder.getFolderFromPathAsync(path).then(
-                        function (storageFolder) {
-                            success(new DirectoryEntry(storageFolder.name, storageFolder.path));
-                        }, function () {
-                            fail && fail(FileError.ENCODING_ERR);
-                        }
-                    );
-                }
-            );
+            // method should not let read files outside of the [APP HASH]/Local or [APP HASH]/temp folders
+            if (path.indexOf(Windows.Storage.ApplicationData.current.temporaryFolder.path) != 0 &&
+                path.indexOf(Windows.Storage.ApplicationData.current.localFolder.path) != 0) {
+                fail && fail(FileError.ENCODING_ERR);
+                return;
+            }
         }
+        
+        // refine path format to make sure it is correct
+        path = path.split("/").join("\\");
+
+        Windows.Storage.StorageFile.getFileFromPathAsync(path).then(
+            function (storageFile) {
+                success(new FileEntry(storageFile.name, storageFile.path));
+            }, function () {
+                Windows.Storage.StorageFolder.getFolderFromPathAsync(path).then(
+                    function (storageFolder) {
+                        success(new DirectoryEntry(storageFolder.name, storageFolder.path));
+                    }, function () {
+                        fail && fail(FileError.NOT_FOUND_ERR);
+                    }
+                );
+            }
+        );
     }
+    
 
 };
 
-require("cordova/windows8/commandProxy").add("File",module.exports);
+require("cordova/exec/proxy").add("File",module.exports);

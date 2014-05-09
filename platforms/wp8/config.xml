@@ -1,16 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.phonegap.app.developer" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <feature name="File">
-        <param name="wp-package" value="File" />
-    </feature>
     <feature name="Accelerometer">
         <param name="wp-package" value="Accelerometer" />
     </feature>
     <feature name="Camera">
         <param name="wp-package" value="Camera" />
-    </feature>
-    <feature name="Capture">
-        <param name="wp-package" value="Capture" />
     </feature>
     <feature name="Compass">
         <param name="wp-package" value="Compass" />
@@ -76,4 +70,13 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="File">
+        <param name="wp-package" value="File" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="wp-package" value="FileTransfer" />
+    </feature>
+    <feature name="Capture">
+        <param name="wp-package" value="Capture" />
+    </feature>
 </widget>

@@ -92,11 +92,7 @@ Entry.prototype.copyTo = function(parent, newName, successCallback, errorCallbac
 };
 
 Entry.prototype.toURL = function() {
-    var nativeURI = this.nativeEntry.toURL();
-    if (nativeURI.charAt(nativeURI.length - 1) === '/') {
-        return nativeURI.slice(0, -1);
-    }
-    return nativeURI;
+    return "file://" + this.nativeEntry.fullPath; 
 };
 
 Entry.prototype.toURI = function(mimeType) {

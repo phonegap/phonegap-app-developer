@@ -23,10 +23,8 @@
  * FileUploadResult
  * @constructor
  */
-var FileUploadResult = function() {
-    this.bytesSent = 0;
-    this.responseCode = null;
-    this.response = null;
-};
-
-module.exports = FileUploadResult;
+module.exports = function FileUploadResult(size, code, content) {
+	this.bytesSent = size;
+	this.responseCode = code;
+	this.response = content;
+ };

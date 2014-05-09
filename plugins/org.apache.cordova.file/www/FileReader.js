@@ -39,7 +39,7 @@ var FileReader = function() {
     this._readyState = 0;
     this._error = null;
     this._result = null;
-    this._fileName = '';
+    this._localURL = '';
     this._realReader = origFileReader ? new origFileReader() : {};
 };
 
@@ -49,15 +49,15 @@ FileReader.LOADING = 1;
 FileReader.DONE = 2;
 
 utils.defineGetter(FileReader.prototype, 'readyState', function() {
-    return this._fileName ? this._readyState : this._realReader.readyState;
+    return this._localURL ? this._readyState : this._realReader.readyState;
 });
 
 utils.defineGetter(FileReader.prototype, 'error', function() {
-    return this._fileName ? this._error: this._realReader.error;
+    return this._localURL ? this._error: this._realReader.error;
 });
 
 utils.defineGetter(FileReader.prototype, 'result', function() {
-    return this._fileName ? this._result: this._realReader.result;
+    return this._localURL ? this._result: this._realReader.result;
 });
 
 function defineEvent(eventName) {
@@ -84,10 +84,10 @@ function initRead(reader, file) {
     reader._error = null;
     reader._readyState = FileReader.LOADING;
 
-    if (typeof file.fullPath == 'string') {
-        reader._fileName = file.fullPath;
+    if (typeof file.localURL == 'string') {
+        reader._localURL = file.localURL;
     } else {
-        reader._fileName = '';
+        reader._localURL = '';
         return true;
     }
 
@@ -98,7 +98,7 @@ function initRead(reader, file) {
  * Abort reading file.
  */
 FileReader.prototype.abort = function() {
-    if (origFileReader && !this._fileName) {
+    if (origFileReader && !this._localURL) {
         return this._realReader.abort();
     }
     this._result = null;
@@ -133,7 +133,7 @@ FileReader.prototype.readAsText = function(file, encoding) {
     // Default encoding is UTF-8
     var enc = encoding ? encoding : "UTF-8";
     var me = this;
-    var execArgs = [this._fileName, enc, file.start, file.end];
+    var execArgs = [this._localURL, enc, file.start, file.end];
 
     // Read file
     exec(
@@ -202,7 +202,7 @@ FileReader.prototype.readAsDataURL = function(file) {
     }
 
     var me = this;
-    var execArgs = [this._fileName, file.start, file.end];
+    var execArgs = [this._localURL, file.start, file.end];
 
     // Read file
     exec(
@@ -267,7 +267,7 @@ FileReader.prototype.readAsBinaryString = function(file) {
     }
 
     var me = this;
-    var execArgs = [this._fileName, file.start, file.end];
+    var execArgs = [this._localURL, file.start, file.end];
 
     // Read file
     exec(
@@ -331,7 +331,7 @@ FileReader.prototype.readAsArrayBuffer = function(file) {
     }
 
     var me = this;
-    var execArgs = [this._fileName, file.start, file.end];
+    var execArgs = [this._localURL, file.start, file.end];
 
     // Read file
     exec(

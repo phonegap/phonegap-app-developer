@@ -4,51 +4,130 @@
         "uninstalled": []
     },
     "config_munge": {
-        "config.xml": {
-            "/*": {
-                "<feature name=\"File\"><param name=\"wp-package\" value=\"File\" /></feature>": 1,
-                "<feature name=\"Accelerometer\"><param name=\"wp-package\" value=\"Accelerometer\" /></feature>": 1,
-                "<feature name=\"Camera\"><param name=\"wp-package\" value=\"Camera\" /></feature>": 1,
-                "<feature name=\"Capture\"><param name=\"wp-package\" value=\"Capture\" /></feature>": 1,
-                "<feature name=\"Compass\"><param name=\"wp-package\" value=\"Compass\" /></feature>": 1,
-                "<feature name=\"NetworkStatus\"><param name=\"wp-package\" value=\"NetworkStatus\" /></feature>": 1,
-                "<feature name=\"Contacts\"><param name=\"wp-package\" value=\"Contacts\" /></feature>": 1,
-                "<feature name=\"Device\"><param name=\"wp-package\" value=\"Device\" /></feature>": 1,
-                "<feature name=\"Battery\"><param name=\"wp-package\" value=\"Battery\" /></feature>": 1,
-                "<feature name=\"Globalization\"><param name=\"wp-package\" value=\"Globalization\" /></feature>": 1,
-                "<feature name=\"Media\"><param name=\"wp-package\" value=\"Media\" /></feature>": 1,
-                "<feature name=\"Notification\"><param name=\"wp-package\" value=\"Notification\" /></feature>": 1,
-                "<feature name=\"Vibration\"><param name=\"wp-package\" value=\"Vibration\" /></feature>": 1,
-                "<feature name=\"SplashScreen\"><param name=\"wp-package\" value=\"SplashScreen\" /></feature>": 1,
-                "<feature name=\"InAppBrowser\"><param name=\"wp-package\" value=\"InAppBrowser\" /></feature>": 1
-            }
-        },
-        "Properties/WMAppManifest.xml": {
-            "/Deployment/App/Capabilities": {
-                "<Capability Name=\"ID_CAP_SENSORS\" />": 2,
-                "<Capability Name=\"ID_CAP_ISV_CAMERA\" />": 2,
-                "<Capability Name=\"ID_CAP_MEDIALIB_PHOTO\" />": 2,
-                "<Capability Name=\"ID_CAP_MEDIALIB_AUDIO\" />": 2,
-                "<Capability Name=\"ID_CAP_MEDIALIB_PLAYBACK\" />": 2,
-                "<Capability Name=\"ID_CAP_MICROPHONE\" />": 2,
-                "<Capability Name=\"ID_CAP_NETWORKING\" />": 1,
-                "<Capability Name=\"ID_CAP_CONTACTS\" />": 1,
-                "<Capability Name=\"ID_CAP_IDENTITY_DEVICE\" />": 1,
-                "<Capability Name=\"ID_CAP_LOCATION\" />": 1
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Accelerometer\"><param name=\"wp-package\" value=\"Accelerometer\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"wp-package\" value=\"Camera\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Compass\"><param name=\"wp-package\" value=\"Compass\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"wp-package\" value=\"NetworkStatus\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Contacts\"><param name=\"wp-package\" value=\"Contacts\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"wp-package\" value=\"Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Battery\"><param name=\"wp-package\" value=\"Battery\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Globalization\"><param name=\"wp-package\" value=\"Globalization\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Media\"><param name=\"wp-package\" value=\"Media\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"wp-package\" value=\"Notification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Vibration\"><param name=\"wp-package\" value=\"Vibration\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"wp-package\" value=\"SplashScreen\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"wp-package\" value=\"InAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"wp-package\" value=\"File\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FileTransfer\"><param name=\"wp-package\" value=\"FileTransfer\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Capture\"><param name=\"wp-package\" value=\"Capture\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "Properties/WMAppManifest.xml": {
+                "parents": {
+                    "/Deployment/App/Capabilities": [
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_SENSORS\" />",
+                            "count": 4
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_ISV_CAMERA\" />",
+                            "count": 4
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_MEDIALIB_PHOTO\" />",
+                            "count": 4
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_MEDIALIB_AUDIO\" />",
+                            "count": 4
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_MEDIALIB_PLAYBACK\" />",
+                            "count": 4
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_MICROPHONE\" />",
+                            "count": 4
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_NETWORKING\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_CONTACTS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_IDENTITY_DEVICE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_LOCATION\" />",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
-        },
         "org.apache.cordova.device-motion": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
         "org.apache.cordova.camera": {
-            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
-        },
-        "org.apache.cordova.media-capture": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
         "org.apache.cordova.device-orientation": {
@@ -85,6 +164,15 @@
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
         "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
+        },
+        "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
+        },
+        "org.apache.cordova.media-capture": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         }
     },

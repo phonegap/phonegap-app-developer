@@ -31,7 +31,7 @@ var argscheck = require('cordova/argscheck'),
  * @param successCallback  invoked with Entry object corresponding to URI
  * @param errorCallback    invoked if error occurs retrieving file system entry
  */
-module.exports = function(uri, successCallback, errorCallback) {
+module.exports.resolveLocalFileSystemURL = function(uri, successCallback, errorCallback) {
     argscheck.checkArgs('sFF', 'resolveLocalFileSystemURI', arguments);
     // error callback
     var fail = function(error) {
@@ -46,11 +46,12 @@ module.exports = function(uri, successCallback, errorCallback) {
     }
     // if successful, return either a file or directory entry
     var success = function(entry) {
-        var result;
         if (entry) {
             if (successCallback) {
                 // create appropriate Entry object
-                result = (entry.isDirectory) ? new DirectoryEntry(entry.name, entry.fullPath) : new FileEntry(entry.name, entry.fullPath);
+                var fsName = entry.filesystemName || (entry.filesystem == window.PERSISTENT ? 'persistent' : 'temporary');
+                var fs = new FileSystem(fsName, {name:"", fullPath:"/"});
+                var result = (entry.isDirectory) ? new DirectoryEntry(entry.name, entry.fullPath, fs, entry.nativeURL) : new FileEntry(entry.name, entry.fullPath, fs, entry.nativeURL);
                 successCallback(result);
             }
         }
@@ -61,4 +62,8 @@ module.exports = function(uri, successCallback, errorCallback) {
     };
 
     exec(success, fail, "File", "resolveLocalFileSystemURI", [uri]);
+};
+module.exports.resolveLocalFileSystemURI = function() {
+    console.log("resolveLocalFileSystemURI is deprecated. Please call resolveLocalFileSystemURL instead.");
+    module.exports.resolveLocalFileSystemURL.apply(this, arguments);
 };

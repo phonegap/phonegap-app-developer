@@ -38,7 +38,7 @@ module.exports = {
     createFile: function (file) {
         var cordovaFile = new File(file.name, file.fullPath, file.type, file.lastModifiedDate, file.size);
         cordovaFile.nativeFile = file;
-        cordovaFile.fullPath = file.name;
+        cordovaFile.fullPath = file.fullPath;
         return cordovaFile;
     },
 
@@ -47,6 +47,6 @@ module.exports = {
     },
 
     isOutsideSandbox: function (path) {
-        return (path.indexOf("accounts/1000/") === 0 || path.indexOf("/accounts/1000/") === 0);
+        return (path.indexOf("accounts/1000") !== -1);
     }
 };

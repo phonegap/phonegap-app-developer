@@ -45,6 +45,14 @@ function capture(action, options, result, webview) {
                 }, fail);
             }, fail);
         },
+        onAudioCaptured = function (response) {
+            window.qnx.webplatform.getApplication().invocation.removeEventListener("childCardClosed", onAudioCaptured);
+            if (response.data && response.data !== "") {
+                onCaptured(response.data);
+            } else {
+                result.callbackError({code: NO_MEDIA_FILES_ERROR_CODE });
+            }
+        }
         onCancelled = function () {
             result.callbackError({code: NO_MEDIA_FILES_ERROR_CODE });
         },
@@ -56,6 +64,20 @@ function capture(action, options, result, webview) {
 
     if (limit < 0) {
         result.error({code: INVALID_ARGUMENT_ERROR_CODE});
+    } else if (action === "audio") {
+        window.qnx.webplatform.getApplication().invocation.invoke(
+            { 
+                target: "sys.apps.audiorecorder",
+                action: "bb.action.CAPTURE"
+            },
+            function (error) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    window.qnx.webplatform.getApplication().invocation.addEventListener("childCardClosed", onAudioCaptured);
+                }
+            });
+        result.noResult(true);
     } else {
         window.qnx.webplatform.getApplication().cards.camera.open(action, onCaptured, onCancelled, onInvoked);
         result.noResult(true);
@@ -89,6 +111,6 @@ module.exports = {
     },
     captureAudio: function (win, fail, args, env) {
         var result = new PluginResult(args, env);
-        result.error({code: NOT_SUPPORTED_ERROR_CODE});
+        capture("audio", {}, result, env.webview);
     }
 };
