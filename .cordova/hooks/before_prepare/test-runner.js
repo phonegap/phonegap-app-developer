@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
-if (/--test/.test(process.env.CORDOVA_CMDLINE)) {
+//
+// Parse the flag --test or --tests
+//
+if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
     var fs = require('fs'),
         path = require('path');
 

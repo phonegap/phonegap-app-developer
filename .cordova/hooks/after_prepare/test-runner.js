@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-if (/--test/.test(process.env.CORDOVA_CMDLINE)) {
+if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
     var fs = require('fs'),
         path = require('path');
 
