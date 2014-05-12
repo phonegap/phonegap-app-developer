@@ -53,7 +53,7 @@ function updateTestSuite(dir) {
         '}, false);'
     ].join('\n');
 
-    if (data.indexOf(injectString) < 0) {
+    if (data.indexOf('// phonegap-app-developer support') < 0) {
         data += injectString;
         fs.writeFileSync(filePath, data, 'utf8');
     }
