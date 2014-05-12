@@ -19,7 +19,7 @@ if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
         www: path.join(dir.www, 'config.xml'),
         test: path.join(dir.test, 'config.xml')
     };
-    fs.createReadStream(config.www).pipe(fs.createWriteStream(config.test));
+    fs.writeFileSync(config.test, fs.readFileSync(config.www));
 
     // update tests to support our app config.xml
     updateTestSuite(dir.test);
