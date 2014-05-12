@@ -165,11 +165,11 @@ if (args.Count() > 0) {
         Usage();
         WScript.Quit(2);
     }
-    else if (args.Count() > 1) {
-        Log("Error: Too many arguments.", true);
-        Usage();
-        WScript.Quit(2);
-    }
+    //else if (args.Count() > 1) {
+    //    Log("Error: Too many arguments.", true);
+    //    Usage();
+    //    WScript.Quit(2);
+    //}
     else if (fso.FolderExists(ROOT)) {
         if (!is_cordova_project(ROOT)) {
             Log('Error: .csproj file not found in ' + ROOT, true);
@@ -184,9 +184,9 @@ if (args.Count() > 0) {
             build_xap_release(ROOT);
         }
         else {
-            Log("Error: \"" + args(0) + "\" is not recognized as a build option", true);
-            Usage();
-            WScript.Quit(2);
+        //    Log("Error: \"" + args(0) + "\" is not recognized as a build option", true);
+        //    Usage();
+        //    WScript.Quit(2);
         }
     }
     else {
