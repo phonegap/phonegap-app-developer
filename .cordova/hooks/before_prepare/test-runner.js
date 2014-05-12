@@ -26,6 +26,7 @@ if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
 //
 function updateTestSuite(dir) {
     // 1. Update config.xml with app config.xml
+    //
     // we do this because we want to ensure our config is setup correctly.
     var config = {
         www: path.join(dir.www, 'config.xml'),
@@ -36,6 +37,7 @@ function updateTestSuite(dir) {
     fs.writeFileSync(config.test, fs.readFileSync(config.www));
 
     // 2. Hide Splash Screen after test suite loads
+    //
     // we do this because the app-level config.xml disables auto-hiding of the
     // splash screen
     var filePath = path.join(dir.test, 'main.js'),
@@ -57,4 +59,12 @@ function updateTestSuite(dir) {
         data += injectString;
         fs.writeFileSync(filePath, data, 'utf8');
     }
+
+    // 3. Remove ?paramShouldBeIgnored from tests/cordova-incl.js
+    //
+    // The parameter causes WP8 to not load cordova.js
+    filePath = path.join(dir.test, 'cordova-incl.js');
+    data = fs.readFileSync(filePath, 'utf8');
+    data = data.replace('?paramShouldBeIgnored', '');
+    fs.writeFileSync(filePath, data, 'utf8');
 }
