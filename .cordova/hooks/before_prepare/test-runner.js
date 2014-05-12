@@ -13,16 +13,8 @@ if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
         backup: path.join(process.cwd(), 'www-backup')
     };
 
-    // replace the test config.xml with the app config.xml
-    // we do this because we want to ensure our config is setup correctly.
-    var config = {
-        www: path.join(dir.www, 'config.xml'),
-        test: path.join(dir.test, 'config.xml')
-    };
-    fs.writeFileSync(config.test, fs.readFileSync(config.www));
-
-    // update tests to support our app config.xml
-    updateTestSuite(dir.test);
+    // update tests to load with out app-level config.xml
+    updateTestSuite(dir);
 
     // swap the test and www directories
     fs.renameSync(dir.www, dir.backup);
@@ -32,9 +24,22 @@ if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
 //
 // Update the Test Suite
 //
-function updateTestSuite(testpath) {
-    var filepath = path.join(testpath, 'main.js'),
-        data = fs.readFileSync(filepath, 'utf8');
+function updateTestSuite(dir) {
+    // 1. Update config.xml with app config.xml
+    // we do this because we want to ensure our config is setup correctly.
+    var config = {
+        www: path.join(dir.www, 'config.xml'),
+        test: path.join(dir.test, 'config.xml')
+    };
+
+    // [#119] cannot use streams because of async issues on Windows
+    fs.writeFileSync(config.test, fs.readFileSync(config.www));
+
+    // 2. Hide Splash Screen after test suite loads
+    // we do this because the app-level config.xml disables auto-hiding of the
+    // splash screen
+    var filePath = path.join(dir.test, 'main.js'),
+        data = fs.readFileSync(filePath, 'utf8');
 
     // Update tests/main.js to hide splash screen due to our config.xml setting
     var injectString = [
@@ -48,9 +53,8 @@ function updateTestSuite(testpath) {
         '}, false);'
     ].join('\n');
 
-
     if (data.indexOf(injectString) < 0) {
         data += injectString;
-        fs.writeFileSync(filepath, data, 'utf8');
+        fs.writeFileSync(filePath, data, 'utf8');
     }
 }
