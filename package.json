@@ -9,7 +9,7 @@
     "preferGlobal": "false",
     "private": "true",
     "scripts": {
-        "less": "lessc -x www/css/app.less > www/css/app.css"
+        "less": "lessc -x resources/less/app.less > www/css/app.css"
     },
     "dependencies": {
     },
