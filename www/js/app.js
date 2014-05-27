@@ -237,7 +237,7 @@ function buildSubmit() {
     updateMessage('');
     setTimeout(function() {
         pulsingMessage( 'Connecting...' );
-        pingRemoteApp();
+        registerWithServer();
     }, 500);
 
     // Placeholder
@@ -267,11 +267,15 @@ function onBuildSubmitError(message) {
     }, 3500);
 }
 
-function pingRemoteApp() {
+function registerWithServer() {
     $.ajax({
-        type: 'GET',
-        url: getAddress(),
-        dataType: 'text',
+        type: 'POST',
+        url: getAddress('/__api__/register'),
+        dataType: 'json',
+        data: {
+            platform: device.platform,
+            version: device.cordova
+        },
         timeout: 1000 * 10,
         success: function(data) {
             onBuildSubmitSuccess();
@@ -289,11 +293,20 @@ function getAddressField() {
     return address;
 }
 
-function getAddress() {
+function getAddress(path) {
     var address = getAddressField();
 
     // default to http:// when no protocol exists
     address = (address.match(/^(.*:\/\/)/)) ? address : 'http://' + address;
+
+    // append an optional path
+    if (path) {
+        address += '/' + path;
+
+        // replace double forward slashes with a single forward-slash
+        // except after the protocol (://)
+        address = address.replace(/([^:])\/\//g, '$1/');
+    }
 
     return address;
 }
