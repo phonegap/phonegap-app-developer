@@ -6,7 +6,7 @@ if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
 
     var dir = {
         www: path.join(process.cwd(), 'www'),
-        test: path.join(process.cwd(), 'tests'),
+        test: path.join(process.cwd(), 'tests/www'),
         backup: path.join(process.cwd(), 'www-backup')
     };
 
