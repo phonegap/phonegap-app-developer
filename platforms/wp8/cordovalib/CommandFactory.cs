@@ -52,7 +52,10 @@ namespace WPCordovaClassLib.Cordova
         /// </summary>
         /// <param name="service">Command class name, for example Device or Notification</param>
         /// <returns>Command class instance or null</returns>
-        public static BaseCommand CreateByServiceName(string service)
+        /// alias can be used as a namespace which is resolved + service
+        /// or it can be the fully qualified classname
+        /// or the classname in the current assembly
+        public static BaseCommand CreateByServiceName(string service, string alias="")
         {
 
             if (string.IsNullOrEmpty(service))
@@ -62,8 +65,22 @@ namespace WPCordovaClassLib.Cordova
 
             if (!commandMap.ContainsKey(service))
             {
-
                 Type t = Type.GetType(BaseCommandNamespacePrefix + service);
+
+                if (t == null && !string.IsNullOrEmpty(alias))
+                {
+                    t = Type.GetType(alias);
+
+                    if (t == null)
+                    {
+                        t = Type.GetType(BaseCommandNamespacePrefix + alias);
+                    }
+
+                    if (t == null)
+                    {
+                        t = Type.GetType(alias + "." + service);
+                    }
+                }
 
                 // custom plugin could be defined in own namespace and assembly
                 if (t == null)
@@ -85,7 +102,6 @@ namespace WPCordovaClassLib.Cordova
                             break;
                         }
                     }
-
                 }
 
                 // unknown command, still didn't find it

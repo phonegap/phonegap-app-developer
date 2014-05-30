@@ -12,31 +12,20 @@
     limitations under the License.
 */
 
+using System.Globalization;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
-using System.IO.IsolatedStorage;
-using System.Windows.Resources;
-using System.Windows.Interop;
-using System.Runtime.Serialization.Json;
-using System.IO;
-using System.ComponentModel;
-using System.Xml.Linq;
-using WPCordovaClassLib.Cordova.Commands;
-using System.Diagnostics;
-using System.Text;
 using WPCordovaClassLib.Cordova;
-using System.Threading;
-using Microsoft.Phone.Shell;
 using WPCordovaClassLib.Cordova.JSON;
 using WPCordovaClassLib.CordovaLib;
 
@@ -76,6 +65,8 @@ namespace WPCordovaClassLib
         protected BrowserMouseHelper bmHelper;
 
         private ConfigHandler configHandler;
+
+        protected bool IsExiting = false;
 
         private Dictionary<string, IBrowserDecorator> browserDecorators;
 
@@ -182,8 +173,29 @@ namespace WPCordovaClassLib
             nativeExecution = new NativeExecution(ref this.CordovaBrowser);
             bmHelper = new BrowserMouseHelper(ref this.CordovaBrowser);
 
+            ApplyConfigurationPreferences();
 
             CreateDecorators();
+        }
+
+        /// <summary>
+        /// Applies configuration preferences. Only BackgroundColor+fullscreen is currently supported.
+        /// </summary>
+        private void ApplyConfigurationPreferences()
+        {
+            string bgColor = configHandler.GetPreference("backgroundcolor");
+
+            if (!String.IsNullOrEmpty(bgColor))
+            {
+                try
+                {
+                    Browser.Background = new SolidColorBrush(ColorFromHex(bgColor));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Unable to parse BackgroundColor value '{0}'. Error: {1}", bgColor, ex.Message);
+                }
+            }
         }
 
         /*
@@ -214,8 +226,7 @@ namespace WPCordovaClassLib
 
         void AppDeactivated(object sender, DeactivatedEventArgs e)
         {
-            Debug.WriteLine("INFO: AppDeactivated");
-
+            Debug.WriteLine("INFO: AppDeactivated because " + e.Reason);
             try
             {
                 CordovaBrowser.InvokeScript("eval", new string[] { "cordova.fireDocumentEvent('pause');" });
@@ -246,6 +257,7 @@ namespace WPCordovaClassLib
 
         void CordovaBrowser_Loaded(object sender, RoutedEventArgs e)
         {
+
             this.bmHelper.ScrollDisabled = this.DisableBouncyScrolling;
 
             if (DesignerProperties.IsInDesignTool)
@@ -287,67 +299,6 @@ namespace WPCordovaClassLib
                     }
                 }
 
-                /*
-                 * 11/08/12 Ruslan Kokorev
-                 * Copying files to isolated storage is no more required in WP8. WebBrowser control now works with files located in XAP.
-                */
-
-                //StreamResourceInfo streamInfo = Application.GetResourceStream(new Uri("CordovaSourceDictionary.xml", UriKind.Relative));
-
-                //if (streamInfo != null)
-                //{
-                //    StreamReader sr = new StreamReader(streamInfo.Stream);
-                //    //This will Read Keys Collection for the xml file
-
-                //    XDocument document = XDocument.Parse(sr.ReadToEnd());
-
-                //    var files = from results in document.Descendants("FilePath")
-                //                select new
-                //                {
-                //                    path = (string)results.Attribute("Value")
-                //                };
-                //    StreamResourceInfo fileResourceStreamInfo;
-
-                //    using (IsolatedStorageFile appStorage = IsolatedStorageFile.GetUserStoreForApplication())
-                //    {
-
-                //        foreach (var file in files)
-                //        {
-                //            fileResourceStreamInfo = Application.GetResourceStream(new Uri(file.path, UriKind.Relative));
-
-                //            if (fileResourceStreamInfo != null)
-                //            {
-                //                using (BinaryReader br = new BinaryReader(fileResourceStreamInfo.Stream))
-                //                {
-                //                    byte[] data = br.ReadBytes((int)fileResourceStreamInfo.Stream.Length);
-
-                //                    string strBaseDir = AppRoot + file.path.Substring(0, file.path.LastIndexOf(System.IO.Path.DirectorySeparatorChar));
-
-                //                    if (!appStorage.DirectoryExists(strBaseDir))
-                //                    {
-                //                        Debug.WriteLine("INFO: Creating Directory :: " + strBaseDir);
-                //                        appStorage.CreateDirectory(strBaseDir);
-                //                    }
-
-                //                    // This will truncate/overwrite an existing file, or
-                //                    using (IsolatedStorageFileStream outFile = appStorage.OpenFile(AppRoot + file.path, FileMode.Create))
-                //                    {
-                //                        Debug.WriteLine("INFO: Writing data for " + AppRoot + file.path + " and length = " + data.Length);
-                //                        using (var writer = new BinaryWriter(outFile))
-                //                        {
-                //                            writer.Write(data);
-                //                        }
-                //                    }
-                //                }
-                //            }
-                //            else
-                //            {
-                //                Debug.WriteLine("ERROR: Failed to write file :: " + file.path + " did you forget to add it to the project?");
-                //            }
-                //        }
-                //    }
-                //}
-
                 CordovaBrowser.Navigate(StartPageUri);
                 IsBrowserInitialized = true;
                 AttachHardwareButtonHandlers();
@@ -368,6 +319,13 @@ namespace WPCordovaClassLib
                 if (page != null)
                 {
                     page.BackKeyPress += new EventHandler<CancelEventArgs>(page_BackKeyPress);
+                    // CB-2347 -jm
+                    string fullscreen = configHandler.GetPreference("fullscreen");
+                    bool bFullScreen = false;
+                    if (bool.TryParse(fullscreen, out bFullScreen) && bFullScreen)
+                    {
+                        SystemTray.SetIsVisible(page, false);
+                    }
                 }
             }
         }
@@ -384,7 +342,7 @@ namespace WPCordovaClassLib
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Exception while invoking backbutton into cordova view: " + ex.Message);
+                    Debug.WriteLine("Exception while invoking backbutton into cordova view: " + ex.Message);
                 }
             }
             else
@@ -410,6 +368,14 @@ namespace WPCordovaClassLib
 
         void CordovaBrowser_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
+            if (IsExiting)
+            {
+                // Special case, we navigate to about:blank when we are about to exit.
+                IsolatedStorageSettings.ApplicationSettings.Save();
+                Application.Current.Terminate();
+                return;
+            }
+
             Debug.WriteLine("CordovaBrowser_LoadCompleted");
             string[] autoloadPlugs = this.configHandler.AutoloadPlugins;
             foreach (string plugName in autoloadPlugs)
@@ -417,8 +383,8 @@ namespace WPCordovaClassLib
                 //nativeExecution.ProcessCommand(commandCallParams);
             }
 
+            // send js code to fire ready event
             string nativeReady = "(function(){ cordova.require('cordova/channel').onNativeReady.fire()})();";
-
             try
             {
                 CordovaBrowser.InvokeScript("execScript", new string[] { nativeReady });
@@ -426,6 +392,16 @@ namespace WPCordovaClassLib
             catch (Exception /*ex*/)
             {
                 Debug.WriteLine("Error calling js to fire nativeReady event. Did you include cordova.js in your html script tag?");
+            }
+            // attach js code to dispatch exitApp 
+            string appExitHandler = "(function(){navigator.app = navigator.app || {}; navigator.app.exitApp= function(){cordova.exec(null,null,'CoreEvents','__exitApp',[]); }})();";
+            try
+            {
+                CordovaBrowser.InvokeScript("execScript", new string[] { appExitHandler });
+            }
+            catch (Exception /*ex*/)
+            {
+                Debug.WriteLine("Error calling js to add appExit funtion.");
             }
 
             if (this.CordovaBrowser.Opacity < 1)
@@ -484,12 +460,24 @@ namespace WPCordovaClassLib
                         string arg0 = JsonHelper.Deserialize<string[]>(commandCallParams.Args)[0];
                         this.OverrideBackButton = (arg0 != null && arg0.Length > 0 && arg0.ToLower() == "true");
                         break;
+                    case "__exitapp":
+                        Debug.WriteLine("Received exitApp command from javascript, app will now exit.");
+                        CordovaBrowser.InvokeScript("eval", new string[] { "cordova.fireDocumentEvent('pause');" });
+                        CordovaBrowser.InvokeScript("eval", new string[] { "setTimeout(function(){ cordova.fireDocumentEvent('exit'); cordova.exec(null,null,'CoreEvents','__finalexit',[]); },0);" });
+                        break;
+                    case "__finalexit":
+                        IsExiting = true;
+                        // hide the browser to prevent white flashes, since about:blank seems to always be white
+                        CordovaBrowser.Opacity = 0d; 
+                        CordovaBrowser.Navigate(new Uri("about:blank", UriKind.Absolute));
+                        break;
                 }
             }
             else
             {
                 if (configHandler.IsPluginAllowed(commandCallParams.Service))
                 {
+                    commandCallParams.Namespace = configHandler.GetNamespaceForCommand(commandCallParams.Service);
                     nativeExecution.ProcessCommand(commandCallParams);
                 }
                 else
@@ -529,6 +517,29 @@ namespace WPCordovaClassLib
            }
         }
 
-
+        /// <summary>
+        /// Converts hex color string to a new System.Windows.Media.Color structure.
+        /// If the hex is only rgb, it will be full opacity.
+        /// </summary>
+        protected Color ColorFromHex(string hexString)
+        {
+            string cleanHex = hexString.Replace("#", "").Replace("0x", "");
+            // turn #FFF into #FFFFFF
+            if (cleanHex.Length == 3)
+            {
+                cleanHex = "" + cleanHex[0] + cleanHex[0] + cleanHex[1] + cleanHex[1] + cleanHex[2] + cleanHex[2];
+            }
+            // add an alpha 100% if it is missing
+            if (cleanHex.Length == 6)
+            {
+                cleanHex = "FF" + cleanHex;
+            }
+            int argb = Int32.Parse(cleanHex, NumberStyles.HexNumber);
+            Color clr = Color.FromArgb((byte)((argb & 0xff000000) >> 0x18),
+                              (byte)((argb & 0xff0000) >> 0x10),
+                              (byte)((argb & 0xff00) >> 8),
+                              (byte)(argb & 0xff));
+            return clr;
+        }
     }
 }

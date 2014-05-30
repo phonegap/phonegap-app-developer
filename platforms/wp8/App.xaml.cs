@@ -14,7 +14,7 @@
  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  KIND, either express or implied.  See the License for the
  specific language governing permissions and limitations
- under the License. 
+ under the License.
 */
 
 using System;
@@ -47,7 +47,7 @@ namespace com.phonegap.app.developer
         /// </summary>
         public App()
         {
-            // Global handler for uncaught exceptions. 
+            // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
             // Show graphics profiling information while debugging.
@@ -59,7 +59,7 @@ namespace com.phonegap.app.developer
                 // Show the areas of the app that are being redrawn in each frame.
                 //Application.Current.Host.Settings.EnableRedrawRegions = true;
 
-                // Enable non-production analysis visualization mode, 
+                // Enable non-production analysis visualization mode,
                 // which shows areas of a page that are being GPU accelerated with a colored overlay.
                 //Application.Current.Host.Settings.EnableCacheVisualization = true;
             }
@@ -75,6 +75,11 @@ namespace com.phonegap.app.developer
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                // Avoid screen locks while debugging.
+                PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)

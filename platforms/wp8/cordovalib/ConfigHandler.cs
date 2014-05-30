@@ -15,13 +15,15 @@ namespace WPCordovaClassLib.CordovaLib
     {
         public class PluginConfig
         {
-            public PluginConfig(string name, bool autoLoad = false)
+            public PluginConfig(string name, bool autoLoad = false, string className = "")
             {
                 Name = name;
                 isAutoLoad = autoLoad;
+                ClassName = className;
             }
             public string Name;
             public bool isAutoLoad;
+            public string ClassName;
         }
 
         protected Dictionary<string, PluginConfig> AllowedPlugins;
@@ -42,7 +44,7 @@ namespace WPCordovaClassLib.CordovaLib
 
         public string GetPreference(string key)
         {
-            return Preferences[key];
+            return Preferences.ContainsKey(key.ToLowerInvariant()) ? Preferences[key.ToLowerInvariant()] : null;
         }
 
         protected static string[] AllowedSchemes = { "http", "https", "ftp", "ftps" };
@@ -73,7 +75,7 @@ namespace WPCordovaClassLib.CordovaLib
                 Uri uri = new Uri(origin.Replace("*", "replaced-text"), UriKind.Absolute);
 
                 string tempHostName = uri.Host.Replace("replaced-text", "*");
-                //if (uri.HostNameType == UriHostNameType.Dns){}        
+                //if (uri.HostNameType == UriHostNameType.Dns){}
                 // starts with wildcard match - we make the first '.' optional (so '*.org.apache.cordova' will match 'org.apache.cordova')
                 if (tempHostName.StartsWith("*."))
                 {    //"(\\s{0}|*.)"
@@ -96,15 +98,15 @@ namespace WPCordovaClassLib.CordovaLib
 
         }
 
-        /**   
-         
+        /**
+
          An access request is granted for a given URI if there exists an item inside the access-request list such that:
 
             - The URI's scheme component is the same as scheme; and
             - if subdomains is false or if the URI's host component is not a domain name (as defined in [RFC1034]), the URI's host component is the same as host; or
             - if subdomains is true, the URI's host component is either the same as host, or is a subdomain of host (as defined in [RFC1034]); and
             - the URI's port component is the same as port.
-         
+
          **/
 
         public bool URLIsAllowed(string url)
@@ -151,6 +153,16 @@ namespace WPCordovaClassLib.CordovaLib
             return false;
         }
 
+        public string GetNamespaceForCommand(string key)
+        {
+            if(AllowedPlugins.Keys.Contains(key))
+            {
+                return AllowedPlugins[key].Name;
+            }
+            
+            return "";
+        }
+
         public bool IsPluginAllowed(string key)
         {
             return AllowAllPlugins || AllowedPlugins.Keys.Contains(key);
@@ -176,19 +188,20 @@ namespace WPCordovaClassLib.CordovaLib
 
             foreach (var feature in features)
             {
-                var name = feature.Attribute("name");
+                string name = (string)feature.Attribute("name");
                 var values = from results in feature.Descendants()
                              where results.Name.LocalName == "param" && ((string)results.Attribute("name") == "wp-package")
                              select results;
 
                 var value = values.FirstOrDefault();
-                if(value != null)
+                if (value != null)
                 {
                     string key = (string)value.Attribute("value");
                     Debug.WriteLine("Adding feature.value=" + key);
                     var onload = value.Attribute("onload");
-                    PluginConfig pConfig = new PluginConfig(key,onload != null && onload.Value == "true");
-                    AllowedPlugins[key] = pConfig;
+                  
+                    PluginConfig pConfig = new PluginConfig(key, onload != null && onload.Value == "true");
+                    AllowedPlugins[name] = pConfig;
                 }
             }
         }
@@ -215,8 +228,7 @@ namespace WPCordovaClassLib.CordovaLib
 
                 foreach (var pref in preferences)
                 {
-                    Preferences[pref.name] = pref.value;
-                    Debug.WriteLine("pref" + pref.name + ", " + pref.value);
+                    Preferences[pref.name.ToLowerInvariant()] = pref.value;
                 }
 
                 var accessList = from results in document.Descendants()

@@ -36,6 +36,7 @@ namespace WPCordovaClassLib.Cordova
         public String Action { get; private set; }
         public String CallbackId { get; private set; }
         public String Args { get; private set; }
+        public String Namespace { get; set; }
 
         /// <summary>
         /// Retrieves command call parameters and creates wrapper for them
@@ -60,6 +61,7 @@ namespace WPCordovaClassLib.Cordova
             commandCallParameters.Service = split[0];
             commandCallParameters.Action = split[1];
             commandCallParameters.CallbackId = split[2];
+            commandCallParameters.Namespace = String.Empty; 
 
             try
             {
@@ -74,7 +76,7 @@ namespace WPCordovaClassLib.Cordova
             }
             catch (Exception)
             {
-                return null; 
+                return null;
             }
             // sanity check for illegal names
             // was failing with ::

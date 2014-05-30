@@ -321,9 +321,9 @@ if (args.Count() > 0) {
                 WScript.Quit(2);
             }
             else {
-                //Log('Error: \"' + args(0) + '\" is not recognized as a deploy option', true);
-                //Usage();
-                //WScript.Quit(2);
+                Log('Error: \"' + args(0) + '\" is not recognized as a deploy option', true);
+                Usage();
+                WScript.Quit(2);
             }
         }
     }

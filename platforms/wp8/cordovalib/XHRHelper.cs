@@ -95,6 +95,16 @@ namespace WPCordovaClassLib.CordovaLib
                                 return this.wrappedXHR.responseXML;
                             }
                         });
+                        Object.defineProperty(this, 'response', {
+                            get: function() {
+                                return this.wrappedXHR.response;
+                            }
+                        });
+                        Object.defineProperty(this, 'responseType', {
+                            set: function(val) {
+                                return this.wrappedXHR.responseType = val;
+                            }
+                        });
                         this.getResponseHeader = function(header) {
                             return this.wrappedXHR.getResponseHeader(header);
                         };
@@ -118,10 +128,28 @@ namespace WPCordovaClassLib.CordovaLib
             changeReadyState: function(newState) {
                 this.readyState = newState;
                 if (this.onreadystatechange) {
-                    this.onreadystatechange();
+                    // mimic simple 'readystatechange' event which should be passed as per spec
+                    var evt = {type: 'readystatechange', target: this, timeStamp: new Date().getTime()};
+                    this.onreadystatechange(evt);
                 }
                 if (this.readyState == XHRShim.DONE){
                     this.onload && this.onload();
+                }
+            },
+            addEventListener: function (type, listener, useCapture){
+                if (this.wrappedXHR) {
+                    this.wrappedXHR.addEventListener(type, listener, useCapture);
+                } else {
+                    this['on' + type] = listener;
+                }
+            },
+            removeEventListener: function (type, listener, useCapture){
+                if (this.wrappedXHR) {
+                    this.wrappedXHR.removeEventListener(type, listener, useCapture);
+                } else {
+                    if (this['on' + type] == listener) { // if listener is currently used
+                        delete this['on' + type];
+                    }
                 }
             },
             setRequestHeader: function(header, value) {
@@ -169,14 +197,17 @@ namespace WPCordovaClassLib.CordovaLib
                     var root = window.location.href.split('#')[0];   // remove hash
                     var basePath = root.substr(0,root.lastIndexOf('/')) + '/';
 
-                    var resolvedUrl = this._url.split('//').join('/').split('#')[0]; // remove hash
+                    //console.log( 'Stripping protocol if present and removing leading / characters' );
+                    var resolvedUrl =
+                            // remove protocol from the beginning of the url if present
+                            ( this._url.indexOf( window.location.protocol ) === 0 ?
+                                this._url.substring( window.location.protocol.length ) :
+                                this._url )
+                            // get rid of all the starting slashes
+                            .replace(/^[/]*/, '')
+                            .split('#')[0]; // remove hash
 
                     var wwwFolderPath = navigator.userAgent.indexOf('MSIE 9.0') > -1 ? 'app/www/' : 'www/';
-
-                    if(resolvedUrl.indexOf('/') == 0) {
-                        //console.log('removing leading /');
-                        resolvedUrl = resolvedUrl.substr(1);
-                    }
 
                     // handle special case where url is of form app/www but we are loaded just from /www
                     if( resolvedUrl.indexOf('app/www') == 0 ) {
@@ -195,6 +226,11 @@ namespace WPCordovaClassLib.CordovaLib
                             alias.status = responseCode;
                             if (responseCode == '200') {
                                 alias.responseText = responseText;
+                                Object.defineProperty(alias, 'responseXML', {
+                                    get: function () {
+                                        return new DOMParser().parseFromString(this.responseText, 'text/xml');
+                                    }
+                                });
                             }
                             else {
                                 alias.onerror && alias.onerror(responseCode);

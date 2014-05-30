@@ -19,6 +19,6 @@
 # under the License.
 #
 -->
-<widget>
+<widget xmlns="http://www.w3.org/ns/widgets">
     <access origin="*"/>
 </widget>

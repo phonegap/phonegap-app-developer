@@ -85,7 +85,7 @@ namespace WPCordovaClassLib.Cordova
 
             try
             {
-                BaseCommand bc = CommandFactory.CreateByServiceName(commandCallParams.Service);
+                BaseCommand bc = CommandFactory.CreateByServiceName(commandCallParams.Service, commandCallParams.Namespace);
 
                 if (bc == null)
                 {
@@ -119,7 +119,7 @@ namespace WPCordovaClassLib.Cordova
                 {
                     try
                     {
-                        bc.InvokeMethodNamed(commandCallParams.CallbackId,commandCallParams.Action, commandCallParams.Args);
+                        bc.InvokeMethodNamed(commandCallParams.CallbackId, commandCallParams.Action, commandCallParams.Args);
                     }
                     catch (Exception ex)
                     {

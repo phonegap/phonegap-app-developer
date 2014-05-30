@@ -32,6 +32,7 @@ using System.Globalization;
 using Microsoft.SmartDevice.Connectivity;
 using Microsoft.SmartDevice.Connectivity.Interface;
 using Microsoft.SmartDevice.MultiTargeting.Connectivity;
+using System.Threading;
 
 
 namespace CordovaDeploy
@@ -42,10 +43,11 @@ namespace CordovaDeploy
 
         static void Usage()
         {
-            Log("Usage: CordovaDeploy [ -devices  BuildOutputPath -d:DeviceIndex ]");
+            Log("Usage: CordovaDeploy [ -devices  BuildOutputPath -d:DeviceIndex -uninstall ]");
             Log("    -devices : lists the devices and exits");
             Log("    BuildOutputPath : path to the built application, typically Bin/Debug/ or Bin/Release/");
-            Log("    -d : index of the device to deploy, default is 0 ");
+            Log("    -d         : index of the device to deploy, default is 0 ");
+            Log("    -uninstall : will uninstall the application before re-installing it, removing all app documents and temp files"); 
             Log("examples:");
             Log("  CordovaDeploy -devices");
             Log("  CordovaDeploy Bin/Debug");
@@ -56,11 +58,11 @@ namespace CordovaDeploy
         {
             // This is used when running in Visual Studio, the Command Window is created at launch, and disappears at the 
             // end of the program run, this let's us see the output before the window is closed.
-
-            /*
-            Console.WriteLine("\nPress ENTER to continue...");
-            Console.Read();
-            */
+            //if (Debugger.IsAttached)
+            //{
+            //    Console.WriteLine("\nPress ENTER to continue...");
+            //    Console.Read();
+            //}
         }
 
         static void Log(string msg, bool error = false)
@@ -129,6 +131,7 @@ namespace CordovaDeploy
             string iconFilePath = "";
             string xapFilePath = "";
             Guid appID = Guid.Empty;
+            bool uninstallFirst = false;
 
             string root = Directory.GetCurrentDirectory();
 
@@ -138,7 +141,7 @@ namespace CordovaDeploy
                 ReadWait();
                 return;
             }
-            else if (args[0] == "-devices")
+            else if (args.Contains("-devices"))
             {
                 ListDevices();
                 ReadWait();
@@ -147,6 +150,11 @@ namespace CordovaDeploy
             else if (args.Length > 1 && args[1].StartsWith("-d:"))
             {
                 deviceIndex = int.Parse(args[1].Substring(3));
+            }
+
+            if (args.Contains("-uninstall"))
+            {
+                uninstallFirst = true;
             }
 
 
@@ -173,12 +181,18 @@ namespace CordovaDeploy
                 return;
             }
 
-            try {
+            try 
+            {
                 xapFilePath = Directory.GetFiles(root + @"\Bin\Debug", "*.xap").FirstOrDefault();
-            } catch (DirectoryNotFoundException e) {
-                try {
+            } 
+            catch (DirectoryNotFoundException) 
+            {
+                try 
+                {
                     xapFilePath = Directory.GetFiles(root + @"\Bin\Release", "*.xap").FirstOrDefault();
-                } catch (DirectoryNotFoundException ex) {
+                } 
+                catch (DirectoryNotFoundException) 
+                {
                     Log(string.Format("Error: could not find project build directoy in {0}", root), true);
                     Log("make sure your app has been successfully built before deploying.", true);
                 }
@@ -199,16 +213,89 @@ namespace CordovaDeploy
                 IRemoteApplication app = null;
                 if (device.IsApplicationInstalled(appID))
                 {
-                    Log("Uninstalling XAP from " + deviceConn.Name);
                     app = device.GetApplication(appID);
-                    app.Uninstall();
+                    if (uninstallFirst)
+                    {
+                        Log("Uninstalling app on " + deviceConn.Name);
+                        app.Uninstall();
+                        Log("Installing app on " + deviceConn.Name);
+                        app = device.InstallApplication(appID, appID, "NormalApp", iconFilePath, xapFilePath);
+                    }
+                    else
+                    {
+                        Log("Updating app on " + deviceConn.Name);
+                        app.UpdateApplication("NormalApp", iconFilePath, xapFilePath);
+                    }
+                    
                 }
-
-                Log("Installing app on " + deviceConn.Name);
-                app = device.InstallApplication(appID, appID, "NormalApp", iconFilePath, xapFilePath);
+                else
+                {
+                    Log("Installing app on " + deviceConn.Name);
+                    app = device.InstallApplication(appID, appID, "NormalApp", iconFilePath, xapFilePath);
+                }
 
                 Log("Launching app on " + deviceConn.Name);
                 app.Launch();
+
+                // wait for the app to launch
+                Thread.Sleep(4000);
+
+                bool isExiting = false;
+
+                string tempFileName = Path.GetTempFileName();
+
+                try
+                {
+                    IRemoteIsolatedStorageFile isoFile = app.GetIsolatedStore();
+                    int index = 0;
+                    while (!isExiting) //app.IsRunning()) // not implemented ... wtf?
+                    {
+
+                        char[] buffer = new char[1000];
+
+                        isoFile.ReceiveFile((object)Path.DirectorySeparatorChar + "debugOutput.txt", tempFileName, true);
+                        using (StreamReader reader = System.IO.File.OpenText(tempFileName))
+                        {
+                            try
+                            {
+                                int newLinesRead = 0;
+                                for (int lineNum = 0;; lineNum++)
+                                {
+                                    if (reader.Peek() > -1)
+                                    {
+                                        string str = reader.ReadLine();
+                                        if (lineNum >= index)
+                                        {
+                                            newLinesRead++;
+                                            if (str == "EXIT")
+                                            {
+                                                isExiting = true;
+                                            }
+                                            Log(str);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                index += newLinesRead;
+                            }
+                            catch (Exception ex)
+                            {
+                                // at end of stream most likely, no worries, ... move along.
+                            }
+                        }
+
+                        Thread.Sleep(1000);
+                    }
+
+                    System.IO.File.Delete(tempFileName);
+                }
+                catch (Exception ex)
+                {
+                    Log(ex.Message);
+                }
 
                 // To Stop :
                 //app.TerminateRunningInstances();
