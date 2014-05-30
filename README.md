@@ -47,12 +47,17 @@ You can kick up the test suite with any of the following commands:
     $ phonegap run ios --test
     $ phonegap run wp8 --test
 
+or 
+
+    $ cd tests
+    $ phonegap serve
+    
 ### Updating the Tests
 
 It's as easy as a copy and paste.
 
 1. Copy all content of `cordova-mobile-spec`
-2. Paste the content into `tests/`
+2. Paste the content into `tests/www`
 
 On your first run of the tests, you may see some modified files. This is expected
 because the test runner invoked by `--test` modifies certain files to support
