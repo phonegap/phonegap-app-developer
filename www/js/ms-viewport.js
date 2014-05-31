@@ -1,7 +1,7 @@
 /**
  * Issue #65 and #68
  * Reference: http://mattstow.com/responsive-design-in-ie10-on-windows-phone-8.html#the-fix
- * Usage: must be included in <heade> to apply before rendering the page.
+ * Usage: must be included in <head> to apply before rendering the page.
  */
 (function() {
     if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
