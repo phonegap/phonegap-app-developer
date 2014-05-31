@@ -24,8 +24,17 @@
  *
  * {Date} modificationTime (readonly)
  */
-var Metadata = function(time) {
-    this.modificationTime = (typeof time != 'undefined'?new Date(time):null);
+var Metadata = function(metadata) {
+    if (typeof metadata == "object") {
+        this.modificationTime = new Date(metadata.modificationTime);
+        this.size = metadata.size || 0;
+    } else if (typeof metadata == "undefined") {
+        this.modificationTime = null;
+        this.size = 0;
+    } else {
+        /* Backwards compatiblity with platforms that only return a timestamp */
+        this.modificationTime = new Date(metadata);
+    }
 };
 
 module.exports = Metadata;

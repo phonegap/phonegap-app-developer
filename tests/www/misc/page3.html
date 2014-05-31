@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+
+-->
+
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,maximum-scale=1.0,initial-scale=1.0" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Cordova Mobile Spec</title>
+    <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <script>
+      console.log('Changing hash #1.');
+      if (location.search.indexOf('hash1') != -1) {
+        location.hash = 'a';
+      } else if (location.search.indexOf('hash2') != -1) {
+        location.replace('#replaced');
+      }
+      var hashCount = 0;
+      function changeHash() {
+        hashCount += 1;
+        if (hashCount % 1) {
+          location.hash = hashCount;
+        } else {
+          location.replace('#' + hashCount);
+        }
+      }
+      if (location.search.indexOf('changeURL') != -1) {
+        history.replaceState(null, null, 'fakepage.html');
+      }
+      function loadFrame() {
+        var ifr = document.createElement('iframe');
+        ifr.src="data:text/html;base64,PGh0bWw+";
+        document.body.appendChild(ifr);
+      }
+      function reload() {
+        // Test that iOS CDVWebViewDelegate doesn't ignore changes when URL doesn't change.
+        location.reload();
+      }
+    </script>
+    <script type="text/javascript" charset="utf-8" src="../cordova-incl.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../main.js"></script>
+  </head>
+  <body onload="init();" id="stage" class="theme">
+    <h1>Page2 App</h1>
+    <h2>This is page 2 of a Apache Cordova app</h2>
+    <div id="info">
+      loading...
+     </div>
+    <div id="info2">
+     </div>
+     <script>
+      if (location.search.indexOf('iframe') != -1) {
+        document.write('<iframe src="' + location.href.replace('iframe','hash1') + '"></iframe>');
+      }
+     </script>
+     <div><button onclick="changeHash()">changeHash()</button></div>
+     <div><button onclick="loadFrame()">loadFrame()</button></div>
+     <div><button onclick="reload()">reload()</button></div>
+     <div><button class="backBtn" onclick="backHome();">Back</button></div>
+  </body>
+  <script>
+    setInterval(function() {
+      document.getElementById('info2').textContent = location.href;
+    }, 300);
+
+    document.addEventListener("deviceready", function() {
+        document.getElementById('info').innerHTML += '<br>Device is ready.';
+        console.log('device ready');
+    }, false);
+    window.onload = function() {
+        document.getElementById('info').innerHTML += '<br>got load event.';
+        console.log('got onload');
+    }
+  </script>
+  <script>
+    document.getElementById('info').innerHTML += '<br>Changing hash #2.';
+    console.log('Changing hash #2');
+    if (location.search.indexOf('hash1') != -1) {
+      location.hash = 'b';
+    } else if (location.search.indexOf('hash2') != -1) {
+      location.replace('#replaced2');
+    }
+    var hashCount = 0;
+    function changeHash() {
+      hashCount += 1;
+      if (hashCount % 1) {
+        location.hash = hashCount;
+      } else {
+        location.replace('#' + hashCount);
+      }
+    }
+  </script>
+</html>

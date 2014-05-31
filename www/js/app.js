@@ -24,6 +24,25 @@ $().ready(function() {
     $('#address').on('touchstart', function() {
         $('#address').focus();
     });
+
+    // On input selection, backup the current address.
+    $('#address').on('focus', function() {
+        $('#address').attr('currentValue', getAddressField());
+    });
+
+    // On input de-selection, restore backup if there is no content.
+    $('#address').on('blur', function() {
+        var $address = $('#address'),
+            whitespaceRegex = /^\s*$/;
+
+        if (whitespaceRegex.test(getAddressField())) {
+            $address.val($address.attr('currentValue'));
+        }
+        $address.attr('currentValue', '');
+    });
+
+    // Work around CSS browser issues.
+    supportBrowserQuirks();
 });
 
 $(document).on('deviceready', function() {
@@ -58,9 +77,12 @@ function loadConfig(callback) {
     readFile('config.json', function(e, text) {
         config = parseAsJSON(text);
 
+        // load defaults
+        config.address = config.address || '127.0.0.1:3000';
+
         // load server address
         if (config.address) {
-            $('#address').attr('placeholder', config.address);
+            $('#address').val(config.address);
         }
 
         callback();
@@ -93,7 +115,13 @@ function readFile(filepath, callback) {
                         function gotFile(file){
                             var reader = new FileReader();
                             reader.onloadend = function(evt) {
-                                callback(null, evt.target.result); // text
+                                // #72 - Fix WP8 loading of config.json
+                                // On WP8, `evt.target.result` is returned as an object instead
+                                // of a string. Since WP8 is using a newer version of the File API
+                                // this may be a platform quirk or an API update.
+                                var text = evt.target.result;
+                                text = (typeof text === 'object') ? JSON.stringify(text) : text;
+                                callback(null, text); // text is a string
                             };
                             reader.readAsText(file);
                         },
@@ -209,7 +237,7 @@ function buildSubmit() {
     updateMessage('');
     setTimeout(function() {
         pulsingMessage( 'Connecting...' );
-        pingRemoteApp();
+        registerWithServer();
     }, 500);
 
     // Placeholder
@@ -239,11 +267,15 @@ function onBuildSubmitError(message) {
     }, 3500);
 }
 
-function pingRemoteApp() {
+function registerWithServer() {
     $.ajax({
-        type: 'GET',
-        url: getAddress(),
-        dataType: 'text',
+        type: 'POST',
+        url: getAddress('/__api__/register'),
+        dataType: 'json',
+        data: {
+            platform: device.platform,
+            version: device.cordova
+        },
         timeout: 1000 * 10,
         success: function(data) {
             onBuildSubmitSuccess();
@@ -261,13 +293,44 @@ function getAddressField() {
     return address;
 }
 
-function getAddress() {
+function getAddress(path) {
     var address = getAddressField();
 
     // default to http:// when no protocol exists
     address = (address.match(/^(.*:\/\/)/)) ? address : 'http://' + address;
 
+    // append an optional path
+    if (path) {
+        address += '/' + path;
+
+        // replace double forward slashes with a single forward-slash
+        // except after the protocol (://)
+        address = address.replace(/([^:])\/\//g, '$1/');
+    }
+
     return address;
+}
+
+/*---------------------------------------------------
+    Browser - Quirks
+---------------------------------------------------*/
+
+function supportBrowserQuirks() {
+    // Issue #51
+    // Windows Phone 8 does not support border-image
+    if (/IEMobile\/10/.test(window.navigator.userAgent)) {
+        var element = document.createElement('style');
+        element.setAttribute('type', 'text/css');
+        element.innerHTML = [
+            '#bot .monitor .cover {',
+            '   background-image: url(img/frame.png);',
+            '   background-size: 270px 220px;',
+            '   background-repeat: no-repeat;',
+            '   border: none;',
+            '}'
+        ].join('\n');
+        document.body.appendChild(element);
+    }
 }
 
 })();

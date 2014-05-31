@@ -37,6 +37,9 @@ function _capture(type, successCallback, errorCallback, options) {
         for (i = 0; i < pluginResult.length; i++) {
             var mediaFile = new MediaFile();
             mediaFile.name = pluginResult[i].name;
+
+            // Backwards compatibility
+            mediaFile.localURL = pluginResult[i].localURL || pluginResult[i].fullPath;
             mediaFile.fullPath = pluginResult[i].fullPath;
             mediaFile.type = pluginResult[i].type;
             mediaFile.lastModifiedDate = pluginResult[i].lastModifiedDate;

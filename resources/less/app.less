@@ -1,0 +1,136 @@
+@import "mixins";
+
+/*---------------------------------------------------
+    Font
+---------------------------------------------------*/
+
+body, h1, h2, h3, h4 {
+    font-size: 1.05em;
+    font-family: 'HelveticaNeue-Light', Helvetica, Arial, sans-serif;
+    font-weight: 300;
+}
+
+
+/*---------------------------------------------------
+    General
+---------------------------------------------------*/
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-select: none;
+}
+
+input {
+    -webkit-user-select: auto;
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    .gradient-simple( #e7e7e7, #b0afb0 );
+    color: #333;
+    font-size: 16px;
+    -ms-touch-action: none; /* disable wp8 zoom on double-tap */
+}
+
+a {
+    color: #fff;
+}
+
+hr {
+    border: none;
+    border-top: #ddd 1px solid;
+    border-bottom: #fff 1px solid;
+}
+
+.hidden {
+    display: none;
+}
+
+
+@import "form";
+
+
+/*---------------------------------------------------
+    Layout
+---------------------------------------------------*/
+
+.container {
+    display: table;
+    height: 100%;
+    position: absolute;
+    top: 0; right: 0%; bottom: 0; left: 0%;
+    width: 100%;
+    overflow: hidden;
+
+    .inner {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+}
+
+.wide-screen() {
+
+    .container {
+        margin: 0 auto;
+    }
+}
+
+.narrow-screen() {
+    .container {
+    }
+}
+
+/*---------------------------------------------------
+    Footer
+---------------------------------------------------*/
+
+.footer {
+    bottom: -60px;
+    color: rgba(0,0,0,0.5);
+    font-size: 13px;
+    position: absolute;
+    text-shadow: 0px 1px 0px #e7e7e7;
+    text-transform: uppercase;
+    width: 100%;
+    .transition( opacity, 0.5s );
+
+    &.faded {
+        opacity: 0;
+    }
+
+    a, a:active, a:hover, a:visited {
+        color: rgba(0,0,0,0.5);
+    }
+}
+
+@import "bot";
+
+/*---------------------------------------------------
+    Responsive
+---------------------------------------------------*/
+
+@media all and (min-width:900px) {
+    .wide-screen;
+}
+
+@media all and (max-width:400px) {
+    .narrow-screen;
+}
+
+/**
+ * Issue #65 and #68
+ * Fixes device width on WP8 devices that do not support the meta viewport tag.
+ * Fixes pixel-shifting during CSS animations.
+ * Reference: http://mattstow.com/responsive-design-in-ie10-on-windows-phone-8.html#the-fix
+ */
+@-ms-viewport{
+    width: device-width;
+}

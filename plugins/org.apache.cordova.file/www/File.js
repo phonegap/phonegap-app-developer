@@ -28,9 +28,9 @@
  * size {Number} size of the file in bytes
  */
 
-var File = function(name, fullPath, type, lastModifiedDate, size){
+var File = function(name, localURL, type, lastModifiedDate, size){
     this.name = name || '';
-    this.fullPath = fullPath || null;
+    this.localURL = localURL || null;
     this.type = type || null;
     this.lastModifiedDate = lastModifiedDate || null;
     this.size = size || 0;
@@ -67,7 +67,7 @@ File.prototype.slice = function(start, end) {
         }
     }
 
-    var newFile = new File(this.name, this.fullPath, this.type, this.lastModifiedData, this.size);
+    var newFile = new File(this.name, this.localURL, this.type, this.lastModifiedData, this.size);
     newFile.start = this.start + newStart;
     newFile.end = this.start + newEnd;
     return newFile;

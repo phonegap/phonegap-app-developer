@@ -25,6 +25,9 @@ import java.io.OutputStream;
 
 import android.os.Build;
 
+import org.apache.cordova.file.FileUtils;
+import org.apache.cordova.file.LocalFilesystemURL;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.LOG;
@@ -201,15 +204,8 @@ public class Capture extends CordovaPlugin {
     private String getTempDirectoryPath() {
         File cache = null;
 
-        // SD Card Mounted
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            cache = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    "/Android/data/" + cordova.getActivity().getPackageName() + "/cache/");
-        }
         // Use internal storage
-        else {
-            cache = cordova.getActivity().getCacheDir();
-        }
+        cache = cordova.getActivity().getCacheDir();
 
         // Create the cache directory if it doesn't exist
         cache.mkdirs();
@@ -346,8 +342,19 @@ public class Capture extends CordovaPlugin {
 
                     @Override
                     public void run() {
-                        // Get the uri of the video clip
-                        Uri data = intent.getData();
+                    
+                        Uri data = null;
+                        
+                        if (intent != null){
+                            // Get the uri of the video clip
+                            data = intent.getData();
+                        }
+                        
+                        if( data == null){
+                           File movie = new File(getTempDirectoryPath(), "Capture.avi");
+                           data = Uri.fromFile(movie);
+                        }
+                        
                         // create a file object from the uri
                         if(data == null)
                         {
@@ -405,10 +412,16 @@ public class Capture extends CordovaPlugin {
         File fp = webView.getResourceApi().mapUriToFile(data);
         JSONObject obj = new JSONObject();
 
+        FileUtils filePlugin = (FileUtils)webView.pluginManager.getPlugin("File");
+        LocalFilesystemURL url = filePlugin.filesystemURLforLocalPath(fp.getAbsolutePath());
+
         try {
             // File properties
             obj.put("name", fp.getName());
             obj.put("fullPath", fp.toURI().toString());
+            if (url != null) {
+                obj.put("localURL", url.toString());
+            }
             // Because of an issue with MimeTypeMap.getMimeTypeFromExtension() all .3gpp files
             // are reported as video/3gpp. I'm doing this hacky check of the URI to see if it
             // is stored in the audio or video content store.
@@ -428,7 +441,6 @@ public class Capture extends CordovaPlugin {
             // this will never happen
             e.printStackTrace();
         }
-
         return obj;
     }
 

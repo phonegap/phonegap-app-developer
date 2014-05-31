@@ -31,6 +31,7 @@
     if (self != nil) {
         _viewController = viewController;
         _commandQueue = _viewController.commandQueue;
+        _callbackIdPattern = nil;
     }
     return self;
 }
@@ -53,6 +54,13 @@
     return [mainBundle pathForResource:filename ofType:@"" inDirectory:directoryStr];
 }
 
+- (void)flushCommandQueueWithDelayedJs
+{
+    _delayResponses = YES;
+    [_commandQueue executePending];
+    _delayResponses = NO;
+}
+
 - (void)evalJsHelper2:(NSString*)js
 {
     CDV_EXEC_LOG(@"Exec: evalling: %@", [js substringToIndex:MIN([js length], 160)]);
@@ -61,23 +69,49 @@
         CDV_EXEC_LOG(@"Exec: Retrieved new exec messages by chaining.");
     }
 
-    [_commandQueue enqueCommandBatch:commandsJSON];
+    [_commandQueue enqueueCommandBatch:commandsJSON];
+    [_commandQueue executePending];
 }
 
 - (void)evalJsHelper:(NSString*)js
 {
     // Cycle the run-loop before executing the JS.
-    // This works around a bug where sometimes alerts() within callbacks can cause
-    // dead-lock.
-    // If the commandQueue is currently executing, then we know that it is safe to
-    // execute the callback immediately.
-    // Using    (dispatch_get_main_queue()) does *not* fix deadlocks for some reaon,
+    // For _delayResponses -
+    //    This ensures that we don't eval JS during the middle of an existing JS
+    //    function (possible since UIWebViewDelegate callbacks can be synchronous).
+    // For !isMainThread -
+    //    It's a hard error to eval on the non-UI thread.
+    // For !_commandQueue.currentlyExecuting -
+    //     This works around a bug where sometimes alerts() within callbacks can cause
+    //     dead-lock.
+    //     If the commandQueue is currently executing, then we know that it is safe to
+    //     execute the callback immediately.
+    // Using    (dispatch_get_main_queue()) does *not* fix deadlocks for some reason,
     // but performSelectorOnMainThread: does.
-    if (![NSThread isMainThread] || !_commandQueue.currentlyExecuting) {
+    if (_delayResponses || ![NSThread isMainThread] || !_commandQueue.currentlyExecuting) {
         [self performSelectorOnMainThread:@selector(evalJsHelper2:) withObject:js waitUntilDone:NO];
     } else {
         [self evalJsHelper2:js];
     }
+}
+
+- (BOOL)isValidCallbackId:(NSString *)callbackId
+{
+    NSError *err = nil;
+    // Initialize on first use
+    if (_callbackIdPattern == nil) {
+        // Catch any invalid characters in the callback id.
+        _callbackIdPattern = [NSRegularExpression regularExpressionWithPattern:@"[^A-Za-z0-9._-]" options:0 error:&err];
+        if (err != nil) {
+            // Couldn't initialize Regex; No is safer than Yes.
+            return NO;
+        }
+    }
+    // Disallow if too long or if any invalid characters were found.
+    if (([callbackId length] > 100) || [_callbackIdPattern firstMatchInString:callbackId options:0 range:NSMakeRange(0, [callbackId length])]) {
+        return NO;
+    }
+    return YES;
 }
 
 - (void)sendPluginResult:(CDVPluginResult*)result callbackId:(NSString*)callbackId
@@ -85,6 +119,11 @@
     CDV_EXEC_LOG(@"Exec(%@): Sending result. Status=%@", callbackId, result.status);
     // This occurs when there is are no win/fail callbacks for the call.
     if ([@"INVALID" isEqualToString : callbackId]) {
+        return;
+    }
+    // This occurs when the callback id is malformed.
+    if (![self isValidCallbackId:callbackId]) {
+        NSLog(@"Invalid callback id received by sendPluginResult");
         return;
     }
     int status = [result.status intValue];

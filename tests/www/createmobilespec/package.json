@@ -1,0 +1,16 @@
+{ "name": "createmobilespec",
+  "version": "1.2.0",
+  "description": "Create the mobilespec project and populate it.",
+  "homepage": "http://cordova.apache.org",
+  "bugs": { "url": "https://issues.apache.org/jira/browse/CB" },
+  "license": "Apache-2.0",
+  "main": "./createmobilespec",
+  "bin": {"createmobilespec": "./createmobilespec" },
+  "repository": {
+     "type": "git", 
+     "url": "https://git-wip-us.apache.org/repos/asf/cordova-mobile-spec.git"},
+  "dependencies": { 
+    "shelljs": "0.2.6",
+    "optimist": "0.6.1" },
+  "private": true
+}

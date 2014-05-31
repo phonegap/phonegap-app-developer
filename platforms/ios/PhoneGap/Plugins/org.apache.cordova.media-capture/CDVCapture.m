@@ -18,6 +18,7 @@
  */
 
 #import "CDVCapture.h"
+#import "CDVFile.h"
 #import <Cordova/CDVJSON.h>
 #import <Cordova/CDVAvailability.h>
 
@@ -440,7 +441,7 @@
         // NSLog(@"getFormatData: %@", [formatData description]);
     }
     if (bError) {
-        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:errorCode];
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:(int)errorCode];
     }
     if (result) {
         [self.commandDelegate sendPluginResult:result callbackId:callbackId];
@@ -452,8 +453,20 @@
     NSFileManager* fileMgr = [[NSFileManager alloc] init];
     NSMutableDictionary* fileDict = [NSMutableDictionary dictionaryWithCapacity:5];
 
+    CDVFile *fs = [self.commandDelegate getCommandInstance:@"File"];
+
+    // Get canonical version of localPath
+    NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@", fullPath]];
+    NSURL *resolvedFileURL = [fileURL URLByResolvingSymlinksInPath];
+    NSString *path = [resolvedFileURL path];
+
+    CDVFilesystemURL *url = [fs fileSystemURLforLocalPath:path];
+
     [fileDict setObject:[fullPath lastPathComponent] forKey:@"name"];
     [fileDict setObject:fullPath forKey:@"fullPath"];
+    if (url) {
+        [fileDict setObject:[url absoluteURL] forKey:@"localURL"];
+    }
     // determine type
     if (!type) {
         id command = [self.commandDelegate getCommandInstance:@"File"];
@@ -842,7 +855,7 @@
 
     if (!self.pluginResult) {
         // return error
-        self.pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:self.errorCode];
+        self.pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageToErrorObject:(int)self.errorCode];
     }
 
     self.avRecorder = nil;

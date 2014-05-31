@@ -60,7 +60,7 @@ FileReader.prototype.abort = function() {
 
 function read(method, context, file, encoding) {
     if (file.fullPath) {
-         resolveLocalFileSystemURI("filesystem:local:///persistent/" + file.fullPath, function (entry) {
+         resolveLocalFileSystemURI(file.fullPath, function (entry) {
             entry.nativeEntry.file(function (nativeFile) {
                 context.nativeReader[method].call(context.nativeReader, nativeFile, encoding);
             }, context.onerror);

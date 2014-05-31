@@ -131,11 +131,6 @@ code.
     // start audio capture
     navigator.device.capture.captureAudio(captureSuccess, captureError, {limit:2});
 
-
-### BlackBerry 10 Quirks
-
-- Cordova for BlackBerry 10 attempts to launch the __Voice Notes Recorder__ application, provided by RIM, to capture audio recordings. The app receives a `CaptureError.CAPTURE_NOT_SUPPORTED` error code if the application is not installed on the device.
-
 ### iOS Quirks
 
 - iOS does not have a default audio recording application, so a simple user interface is provided.
@@ -172,6 +167,7 @@ code.
 ### BlackBerry 10 Quirks
 
 - The `duration` parameter is not supported.  Recording lengths can't be limited programmatically.
+- The `limit` parameter is not supported, so only one recording can be created for each invocation.
 
 ### iOS Quirks
 

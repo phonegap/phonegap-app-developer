@@ -4,7 +4,7 @@
     <Languages xmlns="">
         <Language code="en-US" />
     </Languages>
-    <App Author="PhoneGap author" BitsPerPixel="32" Description="Apache Cordova for Windows Phone" Genre="apps.normal" ProductID="{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}" Publisher="PhoneGap" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="PhoneGap" Version="1.0.0" xmlns="">
+    <App Author="Adobe PhoneGap Team" BitsPerPixel="32" Description="The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework." Genre="apps.normal" ProductID="{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}" Publisher="Adobe" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="PhoneGap Developer" Version="1.0.0" xmlns="">
         <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
         <Capabilities>
             <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
@@ -23,21 +23,20 @@
             <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
         </Tasks>
         <Tokens>
-            <PrimaryToken TaskName="_default" TokenID="PhoneGapToken">
-                <TemplateFlip>
-                    <SmallImageURI IsRelative="true" IsResource="false">Background.png</SmallImageURI>
-                    <Count>0</Count>
-                    <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+            <PrimaryToken TaskName="_default" TokenID="PhoneGap">
+                <TemplateIconic>
+                    <SmallImageURI IsRelative="true" IsResource="false">TileSmall.png</SmallImageURI>
+                    <Count />
+                    <IconImageURI IsRelative="true" IsResource="false">TileMedium.png</IconImageURI>
                     <Title>PhoneGap</Title>
-                    <BackContent />
-                    <BackBackgroundImageURI />
-                    <BackTitle />
-                    <LargeBackgroundImageURI />
-                    <LargeBackContent />
-                    <LargeBackBackgroundImageURI />
-                    <DeviceLockImageURI />
-                    <HasLarge>false</HasLarge>
-                </TemplateFlip>
+                    <Message />
+                    <BackgroundColor />
+                    <HasLarge>True</HasLarge>
+                    <LargeContent1>PhoneGap Developer App</LargeContent1>
+                    <LargeContent2>A testing utility for the</LargeContent2>
+                    <LargeContent3>PhoneGap framework</LargeContent3>
+                    <DeviceLockImageURI IsRelative="true" IsResource="false" />
+                </TemplateIconic>
             </PrimaryToken>
         </Tokens>
         <ScreenResolutions>

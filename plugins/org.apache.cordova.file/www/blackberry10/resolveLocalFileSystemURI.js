@@ -19,37 +19,7 @@
  *
 */
 
-var fileUtils = require('./BB10Utils'),
-    FileError = require('./FileError');
-
-function stripURI(uri) {
-    var rmFsLocal = uri.substring("filesystem:local:///".length);
-    return rmFsLocal.substring(rmFsLocal.indexOf('/') + 1);
-}
-
-module.exports = function (uri, success, fail) {
-    var sandboxState,
-        decodedURI = decodeURI(uri);
-
-    cordova.exec(function (sandboxed) {
-        sandboxState = sandboxed;
-    }, function (e) {
-        console.log("[ERROR]: Could not retrieve sandbox state ", e);
-    }, "org.apache.cordova.file", "isSandboxed");
-
-    if (fileUtils.isOutsideSandbox(stripURI(decodedURI))) {
-        cordova.exec(null, null, "org.apache.cordova.file", "setSandbox", [false]);
-    } else {
-        cordova.exec(null, null, "org.apache.cordova.file", "setSandbox", [true]);
-    }
-    window.webkitResolveLocalFileSystemURL(decodedURI, function (entry) {
-        success(fileUtils.createEntry(entry));
-    }, function (e) {
-        window.webkitResolveLocalFileSystemURL(decodedURI + '/', function (entry) {
-            success(fileUtils.createEntry(entry));
-        }, function (e) {
-            fail(e);
-        });
-    });
-    cordova.exec(null, null, "org.apache.cordova.file", "setSandbox", [sandboxState]);
+module.exports = function () {
+    console.log("resolveLocalFileSystemURI is deprecated. Please call resolveLocalFileSystemURL instead.");
+    window.resolveLocalFileSystemURL.apply(this, arguments);
 };

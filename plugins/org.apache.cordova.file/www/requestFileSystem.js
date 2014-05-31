@@ -37,7 +37,7 @@ var requestFileSystem = function(type, size, successCallback, errorCallback) {
         errorCallback && errorCallback(new FileError(code));
     };
 
-    if (type < 0 || type > 3) {
+    if (type < 0) {
         fail(FileError.SYNTAX_ERR);
     } else {
         // if successful, return a FileSystem object

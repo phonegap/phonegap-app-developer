@@ -51,7 +51,7 @@ namespace WPCordovaClassLib.Cordova.Commands
             //BrowserOptions opts = JSON.JsonHelper.Deserialize<BrowserOptions>(options);
             string urlLoc = args[0];
             string target = args[1];
-            string featString = args[2];
+            string featString = (args[2] != null) ? args[2] : "";
 
             string[] features = featString.Split(',');
             foreach (string str in features)

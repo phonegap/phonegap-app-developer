@@ -9,8 +9,8 @@
         <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>com.phonegap.app</RootNamespace>
-        <AssemblyName>com.phonegap.app</AssemblyName>
+        <RootNamespace>com.phonegap.app.developer</RootNamespace>
+        <AssemblyName>com.phonegap.app.developer</AssemblyName>
         <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
         <SilverlightVersion>
         </SilverlightVersion>
@@ -21,9 +21,9 @@
         <SupportedCultures>en-US</SupportedCultures>
         <XapOutputs>true</XapOutputs>
         <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-        <XapFilename>CordovaAppProj_$(Configuration)_$(Platform).xap</XapFilename>
+        <XapFilename>com.phonegap.app.developer.xap</XapFilename>
         <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
-        <SilverlightAppEntry>com.phonegap.app.App</SilverlightAppEntry>
+        <SilverlightAppEntry>com.phonegap.app.developer.App</SilverlightAppEntry>
         <ValidateXaml>true</ValidateXaml>
         <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
         <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
@@ -127,15 +127,15 @@
             <DependentUpon>MainPage.xaml</DependentUpon>
         </Compile>
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Page Include="Plugins\org.apache.cordova.dialogs\NotificationBox.xaml">
+            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
         <Page Include="Plugins\org.apache.cordova.media-capture\AudioRecorder.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
         </Page>
         <Page Include="Plugins\org.apache.cordova.media-capture\VideoRecorder.xaml">
-            <SubType>Designer</SubType>
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-        <Page Include="Plugins\org.apache.cordova.dialogs\NotificationBox.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
         </Page>
@@ -211,209 +211,13 @@
         </PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
-        <Content Include="www\config.xml" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\cordova.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\css\index.css" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\icon.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\img\logo.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\index.html" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\js\index.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\phonegap.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\android\icon-36-ldpi.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\android\icon-48-mdpi.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\android\icon-72-hdpi.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\android\icon-96-xhdpi.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\bada\icon-128.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\bada-wac\icon-48-type5.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\bada-wac\icon-50-type3.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\bada-wac\icon-80-type4.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\blackberry\icon-80.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\ios\icon-57-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\ios\icon-57.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\ios\icon-72-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\ios\icon-72.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\tizen\icon-128.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\webos\icon-64.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\windows-phone\icon-173-tile.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\windows-phone\icon-48.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\icon\windows-phone\icon-62-tile.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-hdpi-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-hdpi-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-ldpi-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-ldpi-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-mdpi-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-mdpi-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-xhdpi-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\android\screen-xhdpi-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\bada\screen-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\bada-wac\screen-type3.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\bada-wac\screen-type4.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\bada-wac\screen-type5.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\blackberry\screen-225.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-ipad-landscape-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-ipad-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-ipad-portrait-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-ipad-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-landscape-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-landscape.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-portrait-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-portrait-568h-2x.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\ios\screen-iphone-portrait.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\tizen\README.md" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\webos\screen-64.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\res\screen\windows-phone\screen-portrait.jpg" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\helper.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\index.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\lib\jasmine-1.2.0\jasmine-html.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\lib\jasmine-1.2.0\jasmine.css" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\lib\jasmine-1.2.0\jasmine.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec\lib\jasmine-1.2.0\MIT.LICENSE" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\spec.html" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.file\File.cs" />
-    </ItemGroup>
-    <ItemGroup>
         <Compile Include="Plugins\org.apache.cordova.device-motion\Accelerometer.cs" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Plugins\org.apache.cordova.camera\Camera.cs" />
     </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\Capture.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\AudioCaptureTask.cs" />
-    </ItemGroup>
     <ItemGroup />
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\AudioRecorder.xaml.cs">
-            <DependentUpon>AudioRecorder.xaml</DependentUpon>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\VideoCaptureTask.cs" />
-    </ItemGroup>
     <ItemGroup />
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\VideoRecorder.xaml.cs">
-            <DependentUpon>VideoRecorder.xaml</DependentUpon>
-        </Compile>
-    </ItemGroup>
     <ItemGroup>
         <Compile Include="Plugins\org.apache.cordova.device-orientation\Compass.cs" />
     </ItemGroup>
@@ -463,58 +267,83 @@
         <Compile Include="Plugins\org.apache.cordova.inappbrowser\InAppBrowser.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
+        <Content Include="TileMedium.png" />
+        <Content Include="TileSmall.png" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryReader.js" />
+        <Content Include="www\config.xml" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\Entry.js" />
+        <Content Include="www\cordova.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\File.js" />
+        <Content Include="www\css\app.css" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\FileEntry.js" />
+        <Content Include="www\css\app.less" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\FileError.js" />
+        <Content Include="www\css\bot.less" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\FileReader.js" />
+        <Content Include="www\css\form.less" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\FileSystem.js" />
+        <Content Include="www\css\mixins.less" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\FileUploadOptions.js" />
+        <Content Include="www\img\frame.png" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\FileUploadResult.js" />
+        <Content Include="www\img\monitor-alert-wp8.png" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\FileWriter.js" />
+        <Content Include="www\img\monitor-wp8.png" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\Flags.js" />
+        <Content Include="www\img\scanline.png" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\LocalFileSystem.js" />
+        <Content Include="www\img\sprite.png" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\Metadata.js" />
+        <Content Include="www\index.html" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\ProgressEvent.js" />
+        <Content Include="www\js\app.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\requestFileSystem.js" />
+        <Content Include="www\js\ms-viewport.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\resolveLocalFileSystemURI.js" />
+        <Content Include="www\js\zepto.min.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\wp\FileUploadOptions.js" />
+        <Compile Include="Plugins\org.apache.cordova.file\File.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.file-transfer\FileTransfer.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.media-capture\Capture.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.media-capture\AudioCaptureTask.cs" />
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.media-capture\AudioRecorder.xaml.cs">
+            <DependentUpon>AudioRecorder.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.media-capture\VideoCaptureTask.cs" />
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.media-capture\VideoRecorder.xaml.cs">
+            <DependentUpon>VideoRecorder.xaml</DependentUpon>
+        </Compile>
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.device-motion\www\Acceleration.js" />
@@ -533,27 +362,6 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.camera\www\CameraPopoverHandle.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureAudioOptions.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureImageOptions.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureVideoOptions.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureError.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\MediaFileData.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\MediaFile.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\capture.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.device-orientation\www\CompassError.js" />
@@ -623,6 +431,87 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.inappbrowser\www\InAppBrowser.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryReader.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\Entry.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\File.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\FileEntry.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\FileError.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\FileReader.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\FileSystem.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\FileUploadOptions.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\FileUploadResult.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\FileWriter.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\Flags.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\LocalFileSystem.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\Metadata.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\ProgressEvent.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\requestFileSystem.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\resolveLocalFileSystemURI.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\wp\FileUploadOptions.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file-transfer\www\FileTransferError.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file-transfer\www\FileTransfer.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureAudioOptions.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureImageOptions.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureVideoOptions.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureError.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\MediaFileData.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\MediaFile.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\capture.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\cordova_plugins.js" />

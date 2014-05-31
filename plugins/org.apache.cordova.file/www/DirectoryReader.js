@@ -25,8 +25,8 @@ var exec = require('cordova/exec'),
 /**
  * An interface that lists the files and directories in a directory.
  */
-function DirectoryReader(path) {
-    this.path = path || null;
+function DirectoryReader(localURL) {
+    this.localURL = localURL || null;
     this.hasReadEntries = false;
 }
 
@@ -57,6 +57,8 @@ DirectoryReader.prototype.readEntries = function(successCallback, errorCallback)
             entry.isFile = result[i].isFile;
             entry.name = result[i].name;
             entry.fullPath = result[i].fullPath;
+            entry.filesystem = new (require('./FileSystem'))(result[i].filesystemName);
+            entry.nativeURL = result[i].nativeURL;
             retVal.push(entry);
         }
         reader.hasReadEntries = true;
@@ -65,7 +67,7 @@ DirectoryReader.prototype.readEntries = function(successCallback, errorCallback)
     var fail = typeof errorCallback !== 'function' ? null : function(code) {
         errorCallback(new FileError(code));
     };
-    exec(win, fail, "File", "readEntries", [this.path]);
+    exec(win, fail, "File", "readEntries", [this.localURL]);
 };
 
 module.exports = DirectoryReader;
