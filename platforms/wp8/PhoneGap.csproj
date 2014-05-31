@@ -346,6 +346,9 @@
         </Compile>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Plugins\nl.x-services.plugins.insomnia\Insomnia.cs" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.device-motion\www\Acceleration.js" />
     </ItemGroup>
     <ItemGroup>
@@ -512,6 +515,9 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.media-capture\www\capture.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\nl.x-services.plugins.insomnia\www\Insomnia.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\cordova_plugins.js" />
