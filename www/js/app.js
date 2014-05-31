@@ -49,6 +49,9 @@ $(document).on('deviceready', function() {
     // Add slight delay to allow DOM rendering to finish.
     // Avoids flicker on slower devices.
     setTimeout(function() {
+        // allow the screen to dim when returning from the served app
+        window.plugins.insomnia.allowSleepAgain();
+
         navigator.splashscreen.hide();
         $('.footer').removeClass('faded');
 
@@ -248,6 +251,9 @@ function buildSubmit() {
 function onBuildSubmitSuccess() {
     updateMessage( 'Success!' );
     saveConfig(function() {
+        // don't allow the screen to dim when serving an app
+        window.plugins.insomnia.keepAwake();
+
         setTimeout( function() {
             window.location = getAddress();
         }, 1000 );

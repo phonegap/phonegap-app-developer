@@ -39,6 +39,18 @@
     <feature name="InAppBrowser">
         <param name="wp-package" value="InAppBrowser" />
     </feature>
+    <feature name="File">
+        <param name="wp-package" value="File" />
+    </feature>
+    <feature name="FileTransfer">
+        <param name="wp-package" value="FileTransfer" />
+    </feature>
+    <feature name="Capture">
+        <param name="wp-package" value="Capture" />
+    </feature>
+    <feature name="Insomnia">
+        <param name="wp-package" value="Insomnia" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
@@ -70,13 +82,4 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="File">
-        <param name="wp-package" value="File" />
-    </feature>
-    <feature name="FileTransfer">
-        <param name="wp-package" value="FileTransfer" />
-    </feature>
-    <feature name="Capture">
-        <param name="wp-package" value="Capture" />
-    </feature>
 </widget>

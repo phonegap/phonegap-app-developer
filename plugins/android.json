@@ -75,6 +75,10 @@
                         {
                             "xml": "<feature name=\"Capture\"><param name=\"android-package\" value=\"org.apache.cordova.mediacapture.Capture\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -187,6 +191,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.media-capture": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "nl.x-services.plugins.insomnia": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },
