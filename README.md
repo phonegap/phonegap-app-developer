@@ -21,7 +21,8 @@ For more information, see [app.phonegap.com][3].
 
 ### Compile and Run the Application
 
-    $ npm install -g phonegap@3.4.0-0.19.21
+    $ npm install
+    $ npm install -g phonegap@3.4.0-0.20.0
     $ phonegap run ios
     $ phonegap run android
     $ phonegap run wp8
@@ -31,27 +32,36 @@ please build once with the CLI to correctly populate the platform assets:
 
     $ phonegap build <platform>
 
-### Compiling LESS / CSS
-
-When making changes to the CSS styling, remember to compile the LESS files:
-
-    $ npm install
-    $ npm run less
-
 ### Running the Tests
 
-We use the mobile-spec test suite to ensure that each API is correctly installed.
-You can kick up the test suite with any of the following commands:
+There are two types of test targets: the local app and served app.
+
+#### Test the Local Application
+
+The local application is the PhoneGap Developer App. To test the local
+functionality, we build the application with mobile-spec. This allows us to
+ensure that each plugin was correctly installed. Eventually, we would like
+to add functional tests for the app logic.
+
+You can run the local tests with:
 
     $ phonegap run android --test
     $ phonegap run ios --test
     $ phonegap run wp8 --test
 
-or 
+#### Test the Served Application
 
-    $ cd tests
+The served application is the app served by the CLI. To test the server
+functionality, we serve an instance of mobile-spec. We can then use the manual
+and automatic tests to ensure that the server provided the correct version of
+Cordova, the plugins, and the navigation logic.
+
+You can run the served tests with:
+
+    $ cd tests/
     $ phonegap serve
-    
+    # now connect with the latest build of the PG App
+
 ### Updating the Tests
 
 It's as easy as a copy and paste.
