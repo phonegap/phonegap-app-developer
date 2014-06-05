@@ -117,10 +117,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Vibration\"><param name=\"ios-package\" value=\"CDVVibration\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -142,6 +138,10 @@
                         },
                         {
                             "xml": "<feature name=\"Insomnia\"><param name=\"ios-package\" value=\"Insomnia\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Vibration\"><param name=\"ios-package\" value=\"CDVVibration\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -183,9 +183,6 @@
         "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "com.phonegap.app.dev"
         },
-        "org.apache.cordova.vibration": {
-            "PACKAGE_NAME": "com.phonegap.app.dev"
-        },
         "org.apache.cordova.splashscreen": {
             "PACKAGE_NAME": "com.phonegap.app.dev"
         },
@@ -202,6 +199,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "nl.x-services.plugins.insomnia": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.vibration": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

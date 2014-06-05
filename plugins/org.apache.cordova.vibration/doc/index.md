@@ -30,6 +30,7 @@ This plugin provides a way to vibrate the device.
 - Amazon Fire OS
 - Android
 - BlackBerry 10
+- Firefox OS
 - iOS
 - Windows Phone 7 and 8
 

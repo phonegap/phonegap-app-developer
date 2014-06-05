@@ -52,9 +52,6 @@
     <feature name="Notification">
         <param name="ios-package" value="CDVNotification" />
     </feature>
-    <feature name="Vibration">
-        <param name="ios-package" value="CDVVibration" />
-    </feature>
     <feature name="SplashScreen">
         <param name="ios-package" value="CDVSplashScreen" />
         <param name="onload" value="true" />
@@ -106,4 +103,7 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Vibration">
+        <param name="ios-package" value="CDVVibration" />
+    </feature>
 </widget>

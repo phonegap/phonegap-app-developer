@@ -30,9 +30,6 @@
     <feature name="Notification">
         <param name="wp-package" value="Notification" />
     </feature>
-    <feature name="Vibration">
-        <param name="wp-package" value="Vibration" />
-    </feature>
     <feature name="SplashScreen">
         <param name="wp-package" value="SplashScreen" />
     </feature>
@@ -82,4 +79,7 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Vibration">
+        <param name="wp-package" value="Vibration" />
+    </feature>
 </widget>

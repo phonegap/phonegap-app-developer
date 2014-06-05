@@ -37,9 +37,6 @@
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
-    <feature name="Vibration">
-        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
-    </feature>
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
     </feature>
@@ -90,4 +87,7 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Vibration">
+        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
+    </feature>
 </widget>
