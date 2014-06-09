@@ -37,9 +37,6 @@
     <feature name="Device">
         <param name="ios-package" value="CDVDevice" />
     </feature>
-    <feature name="Battery">
-        <param name="ios-package" value="CDVBattery" />
-    </feature>
     <feature name="Geolocation">
         <param name="ios-package" value="CDVLocation" />
     </feature>
@@ -105,5 +102,8 @@
     <content src="index.html" />
     <feature name="Vibration">
         <param name="ios-package" value="CDVVibration" />
+    </feature>
+    <feature name="Battery">
+        <param name="ios-package" value="CDVBattery" />
     </feature>
 </widget>

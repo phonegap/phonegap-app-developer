@@ -18,9 +18,6 @@
     <feature name="Device">
         <param name="wp-package" value="Device" />
     </feature>
-    <feature name="Battery">
-        <param name="wp-package" value="Battery" />
-    </feature>
     <feature name="Globalization">
         <param name="wp-package" value="Globalization" />
     </feature>
@@ -81,5 +78,8 @@
     <content src="index.html" />
     <feature name="Vibration">
         <param name="wp-package" value="Vibration" />
+    </feature>
+    <feature name="Battery">
+        <param name="wp-package" value="Battery" />
     </feature>
 </widget>

@@ -33,10 +33,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Battery\"><param name=\"wp-package\" value=\"Battery\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Globalization\"><param name=\"wp-package\" value=\"Globalization\" /></feature>",
                             "count": 1
                         },
@@ -74,6 +70,10 @@
                         },
                         {
                             "xml": "<feature name=\"Vibration\"><param name=\"wp-package\" value=\"Vibration\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Battery\"><param name=\"wp-package\" value=\"Battery\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -146,9 +146,6 @@
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
-        "org.apache.cordova.battery-status": {
-            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
-        },
         "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
@@ -180,6 +177,9 @@
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
         "org.apache.cordova.vibration": {
+            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
+        },
+        "org.apache.cordova.battery-status": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         }
     },

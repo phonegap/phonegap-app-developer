@@ -97,10 +97,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Battery\"><param name=\"ios-package\" value=\"CDVBattery\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
                             "count": 1
                         },
@@ -143,6 +139,10 @@
                         {
                             "xml": "<feature name=\"Vibration\"><param name=\"ios-package\" value=\"CDVVibration\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Battery\"><param name=\"ios-package\" value=\"CDVBattery\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -166,9 +166,6 @@
             "PACKAGE_NAME": "com.phonegap.app.dev"
         },
         "org.apache.cordova.device": {
-            "PACKAGE_NAME": "com.phonegap.app.dev"
-        },
-        "org.apache.cordova.battery-status": {
             "PACKAGE_NAME": "com.phonegap.app.dev"
         },
         "org.apache.cordova.geolocation": {
@@ -202,6 +199,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.vibration": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.battery-status": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.adobe.phonegap.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
+    <preference name="AndroidLaunchMode" value="singleTop" />
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
@@ -21,9 +22,6 @@
     </feature>
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
-    </feature>
-    <feature name="Battery">
-        <param name="android-package" value="org.apache.cordova.batterystatus.BatteryListener" />
     </feature>
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
@@ -56,6 +54,12 @@
     <feature name="Insomnia">
         <param name="android-package" value="nl.xservices.plugins.Insomnia" />
     </feature>
+    <feature name="Vibration">
+        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
+    </feature>
+    <feature name="Battery">
+        <param name="android-package" value="org.apache.cordova.batterystatus.BatteryListener" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
@@ -87,7 +91,4 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="Vibration">
-        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
-    </feature>
 </widget>
