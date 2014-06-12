@@ -4,7 +4,7 @@
     <Languages xmlns="">
         <Language code="en-US" />
     </Languages>
-    <App Author="Adobe PhoneGap Team" BitsPerPixel="32" Description="The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework." Genre="apps.normal" ProductID="{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}" Publisher="Adobe" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="PhoneGap Developer" Version="1.0.0" xmlns="">
+    <App Author="PhoneGap Author" BitsPerPixel="32" Description="The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework." Genre="apps.normal" ProductID="{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}" Publisher="PhoneGap Publisher" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="PhoneGap" Version="1.0.0" xmlns="">
         <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
         <Capabilities>
             <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
@@ -14,6 +14,10 @@
             <Capability Name="ID_CAP_MEDIALIB_AUDIO" />
             <Capability Name="ID_CAP_MEDIALIB_PLAYBACK" />
             <Capability Name="ID_CAP_MICROPHONE" />
+            <Capability Name="ID_CAP_IDENTITY_DEVICE" />
+            <Capability Name="ID_CAP_NETWORKING" />
+            <Capability Name="ID_CAP_LOCATION" />
+            <Capability Name="ID_CAP_CONTACTS" />
         </Capabilities>
         <Tasks>
             <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
