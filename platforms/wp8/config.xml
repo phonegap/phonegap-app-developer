@@ -51,6 +51,12 @@
     <feature name="Vibration">
         <param name="wp-package" value="Vibration" />
     </feature>
+    <feature name="Battery">
+        <param name="wp-package" value="Battery" />
+    </feature>
+    <feature name="Contacts">
+        <param name="wp-package" value="Contacts" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
@@ -82,10 +88,4 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="Battery">
-        <param name="wp-package" value="Battery" />
-    </feature>
-    <feature name="Contacts">
-        <param name="wp-package" value="Contacts" />
-    </feature>
 </widget>
