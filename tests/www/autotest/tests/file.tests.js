@@ -1356,6 +1356,7 @@ describe('File API', function() {
                 itMetadata = jasmine.createSpy().andCallFake(function(metadata) {
                     expect(metadata).toBeDefined();
                     expect(metadata.modificationTime instanceof Date).toBe(true);
+                    expect(isNaN(metadata.modificationTime.getTime())).toBe(false);
                     expect(typeof metadata.size).toBe("number");
 
                     // cleanup
@@ -1387,6 +1388,7 @@ describe('File API', function() {
                 itMetadata = jasmine.createSpy().andCallFake(function(metadata) {
                     expect(metadata).toBeDefined();
                     expect(metadata.modificationTime instanceof Date).toBe(true);
+                    expect(isNaN(metadata.modificationTime.getTime())).toBe(false);
                     expect(typeof metadata.size).toBe("number");
                     expect(metadata.size).toBe(0);
 
@@ -4425,6 +4427,25 @@ describe('File API', function() {
                 expect(validateFile).toHaveBeenCalled();
             });
         });
-
+        it("file.spec.129 cordova.file.*Directory are set", function() {
+            var expectedPaths = [
+                'applicationDirectory',
+                'applicationStorageDirectory',
+                'dataDirectory',
+                'cacheDirectory'
+            ];
+            if (cordova.platformId == 'android') {
+                expectedPaths.push('externalApplicationStorageDirectory', 'externalRootDirectory', 'externalCacheDirectory', 'externalDataDirectory');
+            } else if (cordova.platformId == 'ios') {
+                expectedPaths.push('syncedDataDirectory', 'documentsDirectory', 'tempDirectory');
+            } else {
+                console.log('Skipping test due on unsupported platform.');
+                return;
+            }
+            for (var i = 0; i < expectedPaths.length; ++i) {
+                expect(typeof cordova.file[expectedPaths[i]]).toBe('string');
+                expect(cordova.file[expectedPaths[i]]).toMatch(/\/$/, 'Path should end with a slash');
+            }
+        });
     });
 });

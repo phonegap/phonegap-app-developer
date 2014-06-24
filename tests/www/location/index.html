@@ -28,130 +28,9 @@
     <title>Cordova Mobile Spec</title>
     <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title" charset="utf-8">
     <script type="text/javascript" charset="utf-8" src="../cordova-incl.js"></script>      
-
-      
-<script type="text/javascript" charset="utf-8">
-
-    var origGeolocation = null;
-    var newGeolocation = null;
-
-    //-------------------------------------------------------------------------
-    // Location
-    //-------------------------------------------------------------------------
-    var watchLocationId = null;
-
-    /**
-     * Start watching location
-     */
-    var watchLocation = function(usePlugin) {
-        var geo = usePlugin ? newGeolocation : origGeolocation;
-        if (!geo) {
-            alert('geolocation object is missing. usePlugin = ' + usePlugin);
-            return;
-        }
-
-        // Success callback
-        var success = function(p){
-              console.log('watch location success');
-              setLocationDetails(p);
-        };
-
-        // Fail callback
-        var fail = function(e){
-            console.log("watchLocation fail callback with error code "+e);
-            stopLocation(geo);
-        };
-
-        // Get location
-        watchLocationId = geo.watchPosition(success, fail, {enableHighAccuracy: true});
-        setLocationStatus("Running");
-    };
-
-    /**
-     * Stop watching the location
-     */
-    var stopLocation = function(usePlugin) {
-        var geo = usePlugin ? newGeolocation : origGeolocation;
-        if (!geo) {
-            alert('geolocation object is missing. usePlugin = ' + usePlugin);
-            return;
-        }
-        setLocationStatus("Stopped");
-        if (watchLocationId) {
-            geo.clearWatch(watchLocationId);
-            watchLocationId = null;
-        }
-    };
-
-    /**
-     * Get current location
-     */
-    var getLocation = function(usePlugin, opts) {
-        var geo = usePlugin ? newGeolocation : origGeolocation;
-        if (!geo) {
-            alert('geolocation object is missing. usePlugin = ' + usePlugin);
-            return;
-        }
-
-        // Stop location if running
-        stopLocation(geo);
-
-        // Success callback
-        var success = function(p){
-            console.log('get location success');
-            setLocationDetails(p);
-            setLocationStatus("Done");
-        };
-
-        // Fail callback
-        var fail = function(e){
-            console.log("getLocation fail callback with error code "+e.code);
-            setLocationStatus("Error: "+e.code);
-        };
-
-        setLocationStatus("Retrieving location...");
-
-        // Get location
-        geo.getCurrentPosition(success, fail, opts || {enableHighAccuracy: true}); //, {timeout: 10000});
-
-    };
-
-    /**
-     * Set location status
-     */
-    var setLocationStatus = function(status) {
-        document.getElementById('location_status').innerHTML = status;
-    };
-var setLocationDetails = function(p) {
-var date = (new Date(p.timestamp));
-            document.getElementById('latitude').innerHTML = p.coords.latitude;
-            document.getElementById('longitude').innerHTML = p.coords.longitude;
-            document.getElementById('altitude').innerHTML = p.coords.altitude;
-            document.getElementById('accuracy').innerHTML = p.coords.accuracy;
-            document.getElementById('heading').innerHTML = p.coords.heading;
-            document.getElementById('speed').innerHTML = p.coords.speed;
-            document.getElementById('altitude_accuracy').innerHTML = p.coords.altitudeAccuracy;
-            document.getElementById('timestamp').innerHTML =  date.toDateString() + " " + date.toTimeString();
-    }
-    
-    /**
-     * Function called when page has finished loading.
-     */
-    function init() {
-        document.addEventListener("deviceready", function() {
-            newGeolocation = navigator.geolocation;
-            origGeolocation = cordova.require('cordova/modulemapper').getOriginalSymbol(window, 'navigator.geolocation');
-            if (!origGeolocation) {
-                origGeolocation = newGeolocation;
-                newGeolocation = null;
-            }
-        }, false);
-    }
-
-</script>
-
+    <script type="text/javascript" charset="utf-8" src="./index.js"></script>      
   </head>
-  <body onload="init();" id="stage" class="theme">
+  <body id="stage" class="theme">
   
     <h1>Location</h1>
     <div id="info">
@@ -205,15 +84,15 @@ var date = (new Date(p.timestamp));
     </div>
     <h2>Action</h2>
     <h3>Use Built-in WebView navigator.geolocation</h3>
-    <a href="javascript:" class="btn large" onclick="getLocation(false);">Get Location</a>
-    <a href="javascript:" class="btn large" onclick="watchLocation(false);">Start Watching Location</a>
-    <a href="javascript:" class="btn large" onclick="stopLocation(false);">Stop Watching Location</a>
-    <a href="javascript:" class="btn large" onclick="getLocation(false, {maximumAge:30000});">Get Location Up to 30 Seconds Old</a>
+    <a href="javascript:" class="btn large getWebViewLocation">Get Location</a>
+    <a href="javascript:" class="btn large watchWebViewLocation">Start Watching Location</a>
+    <a href="javascript:" class="btn large stopWebViewLocation">Stop Watching Location</a>
+    <a href="javascript:" class="btn large getWebViewLocation30">Get Location Up to 30 Seconds Old</a>
     <h3>Use Cordova Geolocation Plugin</h3>
-    <a href="javascript:" class="btn large" onclick="getLocation(true);">Get Location</a>
-    <a href="javascript:" class="btn large" onclick="watchLocation(true);">Start Watching Location</a>
-    <a href="javascript:" class="btn large" onclick="stopLocation(true);">Stop Watching Location</a>
-    <a href="javascript:" class="btn large" onclick="getLocation(true, {maximumAge:30000});">Get Location Up to 30 Seconds Old</a>
-    <h2>&nbsp;</h2><a href="javascript:" class="backBtn" onclick="backHome();">Back</a>    
+    <a href="javascript:" class="btn large getLocation">Get Location</a>
+    <a href="javascript:" class="btn large watchLocation">Start Watching Location</a>
+    <a href="javascript:" class="btn large stopLocation">Stop Watching Location</a>
+    <a href="javascript:" class="btn large getLocation30">Get Location Up to 30 Seconds Old</a>
+    <h2>&nbsp;</h2><a href="javascript:" class="backBtn"">Back</a>    
   </body>
 </html>      

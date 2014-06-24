@@ -22,7 +22,7 @@
 
 This project is a set of automated & manual tests that test Cordova core functionality.
 
-To set up the project, use `cordova-mobile-spec/createmobilespec/createmobilespec.js`.
+To set up the project, use `cordova-mobile-spec/createmobilespec/createmobilespec.js`. See the README.md in that directory.
 
 ### Requirements ###
 

@@ -27,27 +27,15 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"> <!-- ISO-8859-1 -->
     <title>Lazy-Loading of cordova-incl.js test</title>
     <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
-    <script>_doNotWriteCordovaScript = true</script>
+    <script type="text/javascript" charset="utf-8" src="./do-not-write-cordova-script.js"></script>      
     <script type="text/javascript" charset="utf-8" src="../cordova-incl.js"></script>
-<script type="text/javascript" charset="utf-8">
-    function init() {
-        document.addEventListener("deviceready", function() {
-            console.log("Device="+device.platform+" "+device.version);
-            document.getElementById('info').innerHTML = 'Cordova loaded just fine.';
-        }, false);
-        window.setTimeout(function() {
-            var s = document.createElement('script');
-            s.src = cordovaPath;
-            document.body.appendChild(s);
-        }, 0);
-    }
-</script>
+    <script type="text/javascript" charset="utf-8" src="./index.js"></script>      
   </head>
-  <body onload="init();" id="stage" class="theme">
+  <body id="stage" class="theme">
     <h1>Lazy-Loading of cordova-incl.js</h1>
     <div id="info">
       onDeviceReady has not yet fired.
     </div>
-    <h2> </h2><div class="backBtn" onclick="backHome();">Back</div>
+    <h2> </h2><div class="backBtn">Back</div>
   </body>
 </html>

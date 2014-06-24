@@ -38,7 +38,7 @@ try {
 
 // Vars, folders and libraries. To ensure compatibility cross platform, absolute paths are used instead of relative paths.
 var top_dir =             process.cwd() + path.sep,
-    cli_bin =             path.join(top_dir, "cordova-cli", "bin", "cordova"),
+    cli_local_bin =       path.join(top_dir, "cordova-cli", "bin", "cordova"),
     mobile_spec_git_dir = path.join(top_dir, "cordova-mobile-spec"),
     cordova_js_git_dir =  path.join(top_dir, "cordova-js"),
     cli_project_dir =     path.join(top_dir, "mobilespec"),
@@ -52,7 +52,7 @@ var top_dir =             process.cwd() + path.sep,
                                               "www": "www" },
                             "windows8":     { "bin": "cordova-windows" + path.sep + "windows8",
                                               "www": "www" },
-                            "wp8":          { "bin": "cordova-wp8" + path.sep + " wp8",
+                            "wp8":          { "bin": "cordova-wp8" + path.sep + "wp8",
                                               "www": "www" } },
     platform_dirs =       {"android": "cordova-android",
                            "blackberry10": "cordova-blackberry" + path.sep + "blackberry10",
@@ -65,17 +65,21 @@ var top_dir =             process.cwd() + path.sep,
                           "ios": "www",
                           "windows8": "www",
                           "wp8": "www"},
-    argv = optimist.usage("\nUsage: $0 [--android] [--blackberry10] [--ios] [--windows8] [--wp8] [-h|--help] [--plugman]\n" +
-                          "At least one platform must be specified.\n" +
-                          "A project will be created with the mobile-spec app and all the core plugins.")
+    argv = optimist.usage("\nUsage: $0 [--android] [--blackberry10] [--ios] [--windows8] [--wp8] [-h|--help] [--plugman] [--global] [--skipjs]\n" +
+                          "A project will be created with the mobile-spec app and all the core plugins.\n" +
+                          "At least one platform must be specified. See the included README.md.")
                    .describe("help", "Shows usage.")
-                   .describe("android", "Add Android platform to the mobile-spec project.")
-                   .describe("blackberry10", "Add Blackberry 10 platform to the mobile-spec project.")
-                   .describe("ios", "Add iOS platform to the mobile-spec project.")
-                   .describe("windows8", "Add Windows 8 (desktop) platform to the mobile-spec project.")
-                   .describe("wp8", "Add Windows Phone 8 to the mobile-spec projec.t")
+                   .describe("android", "Add Android platform when creating the mobile-spec project.")
+                   .describe("blackberry10", "Add Blackberry 10 platform when creating the mobile-spec project.")
+                   .describe("ios", "Add iOS platform when creating the mobile-spec project.")
+                   .describe("windows8", "Add Windows 8 (desktop) platform when creating the mobile-spec project.")
+                   .describe("wp8", "Add Windows Phone 8 when creating the mobile-spec project.")
                    .describe("plugman", "Use /bin/create and plugman directly instead of the CLI.")
+                   .describe("global", "Use the globally-installed cordova and the downloaded platforms/plugins from the registry instead of the local git repo. Will use the local git repo of mobile-spec. Generally used only to test RC or production releases. Cannot be used with --plugman.")
+                   .describe("skipjs", "Do not update the platform's cordova.js from the js git repo, use the one already present in the platform. Rarely used, generally to test RC releases. Cannot be used with --global because it is implied when --global is used.")
                    .boolean("plugman")
+                   .boolean("global")
+                   .boolean("skipjs")
                    .alias("h", "help")
                    .argv;
 
@@ -85,6 +89,7 @@ if (!fs.existsSync(mobile_spec_git_dir)) {
     shelljs.exit(1);
 }
 
+// technically not needed for --global, but we're developers.
 if (!fs.existsSync(cordova_js_git_dir)) {
     console.log("Please run this script from the directory that contains cordova-js");
     shelljs.exit(1);
@@ -96,6 +101,16 @@ if (argv.ios) { platforms.push("ios"); }
 if (argv.blackberry10) { platforms.push("blackberry10"); }
 if (argv.wp8) { platforms.push("wp8"); }
 if (argv.windows8) { platforms.push("windows8"); }
+if (argv.plugman && argv.global) {
+    console.log("The --global option can not be used with the --plugman option.");
+    optimist.showHelp();
+    return;
+}
+if (argv.skipjs && argv.global) {
+    console.log("The --skipjs option can not be used with the --global option.");
+    optimist.showHelp();
+    return;
+}
 
 // If no platforms, then stop and show help
 if (platforms.length === 0){
@@ -104,15 +119,35 @@ if (platforms.length === 0){
     process.exit(2);
 }
 
+// select between the globally-installed one on your path or your local git repo
+var cli = argv.global ? "cordova" : cli_local_bin;
+
 // Print relevant information
-console.log("Creating project. If you have any errors, it may be from missing repositories.");
-console.log("To clone needed repositories (android as an example):");
-console.log("  ./cordova-coho/coho repo-clone -r plugins -r mobile-spec -r android -r cli");
-console.log("To update all repositories:");
-console.log("  ./cordova-coho/coho repo-update");
+if (argv.global) {
+    console.log("Creating project. Using globally installed cordova and plugman, downloadable platforms and plugins, and local mobile-spec.");
+    console.log("To clone needed repositories:");
+    console.log("  ./cordova-coho/coho repo-clone -r mobile-spec");
+    console.log("To update all repositories:");
+    console.log("  ./cordova-coho/coho repo-update -r mobile-spec");
+} else {
+    console.log("Creating project. If you have any errors, it may be from missing repositories.");
+    console.log("To clone needed repositories (android as an example):");
+    console.log("  ./cordova-coho/coho repo-clone -r plugins -r mobile-spec -r android -r cli");
+    console.log("To update all repositories:");
+    console.log("  ./cordova-coho/coho repo-update");
+}
 
 // Setting up config.fatal as true, if something goes wrong the program will terminate
 shelljs.config.fatal = true;
+
+////////////////////// preparations before project creation
+
+if (argv.global) {
+    // clean out cached platforms and plugins and app-hello-world
+    var home_dir = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+    shelljs.rm("-rf", path.join(home_dir, ".cordova"));
+    shelljs.rm("-rf", path.join(home_dir, ".plugman"));
+}
 
 ////////////////////// create the project for each platform
 
@@ -126,7 +161,7 @@ function myDelete(myDir) {
         if (/^win/.test(process.platform)) {
             console.log("Not all files were deleted, killing ADB.EXE process to unlock folder...");
             shelljs.exec("TASKKILL /F /IM ADB.exe /T");
-            shelljs.rm("-r", myDir);
+            shelljs.rm("-rf", myDir);
         } else
             throw new Error("Error during folder deletion, try to remove " + myDir + " manually.");
     }
@@ -150,7 +185,7 @@ if (argv.plugman) {
     // Create the project using "cordova create"
     myDelete(cli_project_dir);
     console.log("Creating project mobilespec...");
-    shelljs.exec(cli_bin + " create mobilespec org.apache.cordova.mobilespec MobileSpec_Tests --link-to cordova-mobile-spec");
+    shelljs.exec(cli + " create mobilespec org.apache.cordova.mobilespec MobileSpec_Tests --link-to cordova-mobile-spec");
 
     // Config.json file ---> linked to local libraries
     shelljs.pushd(cli_project_dir);
@@ -164,13 +199,15 @@ if (argv.plugman) {
                     "windows8" :     { "uri" : top_dir + "cordova-windows" }
         }
     };
-    JSON.stringify(localPlatforms).to(".cordova/config.json");
+    if (!argv.global) {
+        JSON.stringify(localPlatforms).to(".cordova/config.json");
+    }
 
     // Executing platform Add
     console.log("Adding platforms...");
     platforms.forEach(function (platform) {
         console.log("Adding Platform: " + platform);
-        shelljs.exec(cli_bin + " platform add " + platform + " --verbose");
+        shelljs.exec(cli + " platform add " + platform + " --verbose");
     });
     shelljs.popd();
 }
@@ -180,42 +217,49 @@ if (argv.plugman) {
 if (argv.plugman) {
     console.log("Adding plugins using plugman...");
     platforms.forEach(function (platform) {
-        var projName = getProjName(platform);
+        var projName = getProjName(platform),
+            nodeCommand = /^win/.test(process.platform) ? process.argv[0] +" " : "";
         shelljs.pushd(projName);
         // plugin path must be relative and not absolute (sigh)
-        shelljs.exec(path.join(top_dir, "cordova-plugman", "main.js") + 
+        shelljs.exec(nodeCommand + path.join(top_dir, "cordova-plugman", "main.js") + 
                      " install --platform " + platform +
                      " --project . --plugin " + path.join("..", "cordova-mobile-spec", "dependencies-plugin") +
                      " --searchpath " + top_dir);
         shelljs.popd();
     });
 } else {
+    // don't use local git repos for plugins when using --global
+    var searchpath = argv.global ? "" : " --searchpath " + top_dir;
     shelljs.pushd(cli_project_dir);
     console.log("Adding plugins using CLI...");
-    shelljs.exec(cli_bin + " plugin add " + path.join(mobile_spec_git_dir, "dependencies-plugin") +
-                 " --searchpath " + top_dir);
+    shelljs.exec(cli + " plugin add " + path.join(mobile_spec_git_dir, "dependencies-plugin") +
+                 searchpath);
     shelljs.popd();
 }
 
 ////////////////////// update js files for each platform from cordova-js
 
-console.log("Updating js for platforms...");
+if (argv.skipjs) {
+    console.log("Skipping the js update.");
+} else if (!argv.global) {
+    console.log("Updating js for platforms...");
 
-shelljs.pushd(cordova_js_git_dir);
-var code = shelljs.exec("grunt").code;
-if (code) {
-    console.log("Failed to build js.");
-    process.exit(1);
+    shelljs.pushd(cordova_js_git_dir);
+    var code = shelljs.exec("grunt").code;
+    if (code) {
+        console.log("Failed to build js.");
+        process.exit(1);
+    }
+    shelljs.popd();
+
+    platforms.forEach(function (platform) {
+        var src = path.join(cordova_js_git_dir, "pkg", "cordova." + (platform === "wp8" ? "windowsphone" : platform) + ".js");
+        var dest = argv.plugman ? path.join(top_dir, getProjName(platform), platform_layout[platform].www, "cordova.js") :
+                                  path.join(cli_project_dir, "platforms", platform, "platform_www", "cordova.js");
+        shelljs.cp("-f", src, dest);
+        console.log("Javascript file updated for " + platform);
+    });
 }
-shelljs.popd();
-
-platforms.forEach(function (platform) {
-    var src = path.join(cordova_js_git_dir, "pkg", "cordova." + (platform === "wp8" ? "windowsphone" : platform) + ".js");
-    var dest = argv.plugman ? path.join(top_dir, getProjName(platform), platform_layout[platform].www, "cordova.js") :
-                              path.join(cli_project_dir, "platforms", platform, "platform_www", "cordova.js");
-    shelljs.cp("-f", src, dest);
-    console.log("Javascript file updated for " + platform);
-});
 
 ////////////////////// wrap-up
 
@@ -227,22 +271,24 @@ if (argv.plugman) {
 } else {
     shelljs.pushd(cli_project_dir);
 
-    console.log("Linking CLI...");
-    // Writing link files to use Local CLI
-    if (/^win/.test(process.platform)) {
-        var winBatchFile = "node  " + cli_bin + " %*";
-        fs.writeFileSync(path.join(cli_project_dir, "cordova.bat"), winBatchFile);
-    } else {
-        fs.symlinkSync(cli_bin, path.join(cli_project_dir, "cordova"));
-    }
-
     // Executing cordova prepare
     console.log("Preparing project...");
-    shelljs.exec(cli_bin + " prepare");
+    shelljs.exec(cli + " prepare");
+
+    if (!argv.global) {
+        console.log("Linking CLI...");
+        // Writing link files to use Local CLI
+        if (/^win/.test(process.platform)) {
+            var winBatchFile = "node  " + cli_local_bin + " %*";
+            fs.writeFileSync(path.join(cli_project_dir, "cordova.bat"), winBatchFile);
+        } else {
+            fs.symlinkSync(cli_local_bin, path.join(cli_project_dir, "cordova"));
+        }
+        console.log("Symlink to CLI created as " + cli_project_dir + path.sep + "cordova");
+    }
 
     shelljs.popd();
 
     console.log("Done. Project created at " + cli_project_dir);
-    console.log("Symlink to CLI created as " + cli_project_dir + path.sep + "cordova");
 }
 
