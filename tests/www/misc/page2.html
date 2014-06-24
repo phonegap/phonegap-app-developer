@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title" charset="utf-8">
     <script type="text/javascript" charset="utf-8" src="../cordova-incl.js"></script>
     <script type="text/javascript" charset="utf-8" src="../main.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./page2.js"></script>      
     <style>
       iframe, .iframe_container {
         height:100px;
@@ -36,7 +37,7 @@
       }
     </style>
   </head>
-  <body onload="init();" id="stage" class="theme">
+  <body id="stage" class="theme">
     <h1>Page2 App</h1>
     <h2>This is page 2 of a Apache Cordova app</h2>
     <div id="info">
@@ -58,15 +59,6 @@
      <div class="iframe_container">
        <iframe src="" id="apacheiframe"></iframe>
      </div>
-     <div><button class="backBtn" onclick="backHome();">Back</button></div>
+     <div><button class="backBtn">Back</button></div>
   </body>
-  <script>
-    setTimeout(function() {
-        console.log('loading iframe after timeout.');
-        document.querySelector('#apacheiframe').src = 'http://apache.org';
-    }, 2000);
-    document.addEventListener("deviceready", function() {
-        document.getElementById('info').textContent += '\nDevice is ready.';
-    }, false);
-  </script>
 </html>

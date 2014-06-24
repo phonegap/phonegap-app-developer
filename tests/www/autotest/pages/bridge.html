@@ -45,27 +45,11 @@
 
   <!-- Tests -->
   <script type="text/javascript" src="../tests/bridge.tests.js"></script>
-
-  <script type="text/javascript">
-    document.addEventListener('deviceready', function () {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
-
-      var htmlReporter = new jasmine.HtmlReporter();
-
-      jasmineEnv.addReporter(htmlReporter);
-
-      jasmineEnv.specFilter = function(spec) {
-        return htmlReporter.specFilter(spec);
-      };
-
-      jasmineEnv.execute();
-    }, false);
-  </script>
+  <script type="text/javascript" charset="utf-8" src="./run-tests.js"></script>      
 </head>
 
 <body>
-  <a href="javascript:" class="backBtn" onclick="backHome();">Back</a>
+  <a href="javascript:" class="backBtn">Back</a>
 </body>
 </html>
 

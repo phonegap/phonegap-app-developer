@@ -27,35 +27,7 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Cordova Mobile Spec</title>
     <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title" charset="utf-8">
-    <script>
-      console.log('Changing hash #1.');
-      if (location.search.indexOf('hash1') != -1) {
-        location.hash = 'a';
-      } else if (location.search.indexOf('hash2') != -1) {
-        location.replace('#replaced');
-      }
-      var hashCount = 0;
-      function changeHash() {
-        hashCount += 1;
-        if (hashCount % 1) {
-          location.hash = hashCount;
-        } else {
-          location.replace('#' + hashCount);
-        }
-      }
-      if (location.search.indexOf('changeURL') != -1) {
-        history.replaceState(null, null, 'fakepage.html');
-      }
-      function loadFrame() {
-        var ifr = document.createElement('iframe');
-        ifr.src="data:text/html;base64,PGh0bWw+";
-        document.body.appendChild(ifr);
-      }
-      function reload() {
-        // Test that iOS CDVWebViewDelegate doesn't ignore changes when URL doesn't change.
-        location.reload();
-      }
-    </script>
+    <script type="text/javascript" charset="utf-8" src="./page3A.js"></script>      
     <script type="text/javascript" charset="utf-8" src="../cordova-incl.js"></script>
     <script type="text/javascript" charset="utf-8" src="../main.js"></script>
   </head>

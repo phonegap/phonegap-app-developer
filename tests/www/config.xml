@@ -1,34 +1,43 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.adobe.phonegap.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PhoneGap</name>
+<widget id="org.apache.mobilespec" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+    <name>mobilespec</name>
+    <author>Apache Cordova</author>
     <description>
-        The PhoneGap Developer app is a testing utility for web developers
-        and designers using the PhoneGap framework. After installing the
-        PhoneGap Developer app you will be able to connect to your PhoneGap
-        desktop app to instantly view and test your work on the device.
+        Cordova test suite.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        Adobe PhoneGap Team
-    </author>
-    <preference name="permissions" value="none" />
-    <preference name="orientation" value="default" />
-    <preference name="target-device" value="universal" />
-    <preference name="fullscreen" value="false" />
-    <preference name="webviewbounce" value="true" />
-    <preference name="prerendered-icon" value="true" />
-    <preference name="stay-in-webview" value="false" />
-    <preference name="ios-statusbarstyle" value="black-opaque" />
-    <preference name="detect-data-types" value="true" />
-    <preference name="exit-on-suspend" value="false" />
-    <preference name="show-splash-screen-spinner" value="false" />
-    <preference name="ShowSplashScreenSpinner" value="false" />
-    <preference name="auto-hide-splash-screen" value="false" />
-    <preference name="AutoHideSplashScreen" value="false" />
-    <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
-    <preference name="android-installLocation" value="auto" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="WebViewBounce" value="false" />
-    <access origin="*" />
-    <content src="index.html" />
+    <access origin="http://audio.ibeat.org" />
+    <access origin="http://cordova-filetransfer.jitsu.com" />
+    <access origin="http://whatheaders.com" />
+    <access origin="http://*.apache.org" />
+    <access origin="https://*.apache.org" />
+    <access origin="http://www.google.com" />
+    <access origin="http://techslides.com" />
+    <access origin="httpssss://example.com" />
+    <platform name="blackberry10">
+        <access origin="file:///" />
+        <access origin="https://www.apache.org" />
+        <access origin="http://cordova.apache.org" />
+        <access origin="http://foobar.apache.org" />
+        <access origin="http://www.apache.org" />
+    </platform>
+    <preference name="iosPersistentFileLocation" value="Library" />
+    <preference name="AndroidPersistentFileLocation" value="Internal" />
 </widget>

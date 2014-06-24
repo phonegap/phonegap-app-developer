@@ -64,53 +64,11 @@
     }
 
     </style>
-    <script>
-        window.onerror = function(err,fn,ln) {alert("ERROR:" + err + ", " + fn + ":" + ln);};
-    </script>
+    <script type="text/javascript" charset="utf-8" src="./window-onerror.js"></script>      
     <script type="text/javascript" charset="utf-8" src="../cordova-incl.js"></script>      
-    
-    <script type="text/javascript" charset="utf-8">
-
-    var deviceReady = false;
-    var keyboardPlugin = null;
-    
-    /**
-     * Function called when page has finished loading.
-     */
-    function init() {
-        document.addEventListener("deviceready", function() {
-                deviceReady = true;
-                keyboardPlugin = window.Keyboard; // for now, before plugin re-factor
-                                  
-                if (keyboardPlugin == null) {
-                    var msg = 'The plugin org.apache.cordova.keyboard was not found. Check that you have it installed.';
-                    alert(msg);
-                }
-
-            }, false);
-        window.setTimeout(function() {
-        	if (!deviceReady) {
-                var msg = 'Error: Apache Cordova did not initialize.  Demo will not run correctly.';
-                alert(msg);
-        	}
-        },1000);
-    }
-    
-    function setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(shrinkView, hideFormAccessoryBar, disableScrollingInShrinkView)
-    {
-        keyboardPlugin.shrinkView(shrinkView);
-        document.getElementById("shrinkView-arg").innerHTML = shrinkView;
-        
-        keyboardPlugin.hideFormAccessoryBar(hideFormAccessoryBar);
-        document.getElementById("hideFormAccessoryBar-arg").innerHTML = hideFormAccessoryBar;
-
-        keyboardPlugin.disableScrollingInShrinkView(disableScrollingInShrinkView);
-        document.getElementById("disableScrollingInShrinkView-arg").innerHTML = disableScrollingInShrinkView;
-    }
-
-    </script>
+    <script type="text/javascript" charset="utf-8" src="./index.js"></script>      
   </head>
-  <body onload="init();" id="stage" class="theme">
+  <body id="stage" class="theme">
   
     <h1>Keyboard (iOS)</h1>
 
@@ -121,7 +79,7 @@
 
     <h1>isVisible</h1>
     <br />
-    <div class="btn large" onclick="alert('Keyboard.isVisible: ' + Keyboard.isVisible);">Keyboard.isVisible</div>
+    <div class="btn large keyboardIsVisible">Keyboard.isVisible</div>
     
     <h1>API Tests</h1>
     <br />
@@ -143,7 +101,7 @@
         </tr>
         <tr>
             <td class="highlight-w">
-                <div class="btn small" onclick="setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(false, false, false)">1</div>
+                <div class="btn small set_1">1</div>
             </td>
             <td>&#x2717;</td>
             <td>&#x2717;</td>
@@ -151,7 +109,7 @@
         </tr>
         <tr>
             <td class="highlight-w">
-                <div class="btn small" onclick="setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(false, false, true)">2</div>
+                <div class="btn small set_2">2</div>
             </td>
             <td>&#x2717;</td>
             <td>&#x2717;</td>
@@ -159,7 +117,7 @@
         </tr>
         <tr>
             <td class="highlight-w">
-                <div class="btn small" onclick="setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(false, true, true)">3</div>
+                <div class="btn small set_3">3</div>
             </td>
             <td>&#x2717;</td>
             <td class="highlight-w">&#10004;</td>
@@ -167,7 +125,7 @@
         </tr>
         <tr>
             <td class="highlight-w">
-                <div class="btn small" onclick="setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(false, true, false)">4</div>
+                <div class="btn small set_4">4</div>
             </td>
             <td>&#x2717;</td>
             <td class="highlight-w">&#10004;</td>
@@ -175,7 +133,7 @@
         </tr>
         <tr>
             <td class="highlight-w">
-                <div class="btn small" onclick="setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(true, false, false)">5</div>
+                <div class="btn small set_5">5</div>
             </td>
             <td class="highlight-w">&#10004;</td>
             <td>&#x2717;</td>
@@ -183,7 +141,7 @@
         </tr>
         <tr>
             <td class="highlight-w">
-                <div class="btn small" onclick="setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(true, false, true)">6</div>
+                <div class="btn small set_6">6</div>
             </td>
             <td class="highlight-w">&#10004;</td>
             <td>&#x2717;</td>
@@ -191,7 +149,7 @@
         </tr>
         <tr>
             <td class="highlight-w">
-                <div class="btn small" onclick="setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(true, true, true)">7</div>
+                <div class="btn small set_7">7</div>
             </td>
             <td class="highlight-w">&#10004;</td>
             <td class="highlight-w">&#10004;</td>
@@ -199,7 +157,7 @@
         </tr>
         <tr>
             <td class="highlight-w">
-                <div class="btn small" onclick="setShrinkView_hideFormAccessoryBar_andDisableScrollingInShrinkView(true, true, false)">8</div>
+                <div class="btn small set_8">8</div>
             </td>
             <td class="highlight-w">&#10004;</td>
             <td class="highlight-w">&#10004;</td>
@@ -211,7 +169,7 @@
         <input type="text" placeholder="touch to see keyboard" /><button class="btn-dismiss">dismiss</button>
     </div>
     <br />
-    <div class="backBtn" onclick="backHome();">Back</div>
+    <div class="backBtn">Back</div>
     
   </body>
 </html>

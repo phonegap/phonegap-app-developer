@@ -162,10 +162,4 @@ function init() {
     document.getElementById("user-agent").textContent = navigator.userAgent;
 }
 
-//
-// phonegap-app-developer support
-//
-
-document.addEventListener('deviceready', function() {
-    navigator.splashscreen.hide();
-}, false);
+window.onload = init;

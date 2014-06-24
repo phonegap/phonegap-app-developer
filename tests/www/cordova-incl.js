@@ -41,8 +41,8 @@ var PLAT;
 
 var scripts = document.getElementsByTagName('script');
 var currentPath = scripts[scripts.length - 1].src;
-if (PLAT !== "blackberry10" && PLAT !== "firefoxos") {
-    currentPath += '';
+if (PLAT !== "blackberry10" && PLAT !== "firefoxos" && PLAT !== 'windowsphone') {
+    currentPath += '?paramShouldBeIgnored';
 }
 var cordovaPath = currentPath.replace("cordova-incl.js", "cordova.js");
 
@@ -55,6 +55,28 @@ if (!window._doNotWriteCordovaScript) {
         document.head.appendChild(s);
     }
 }
+
+function addListenerToClass(className, listener, argsArray, action, doNotWrap) {
+    if (!action) {
+      action='click';
+    }
+    var elements = document.getElementsByClassName(className);
+    // choose Event target as a scope (like inline scripts)
+    if (!doNotWrap) {
+      if (argsArray && !Array.isArray(argsArray)) {
+        argsArray = [argsArray];
+      }
+      function callListener(e) {
+        listener.apply(null, argsArray);
+      }
+    } else {
+      callListener = listener;
+    }
+    for (var i = 0; i < elements.length; ++i) {
+      var item = elements[i];  
+      item.addEventListener(action, callListener, false);
+    }
+};
 
 function backHome() {
     if (window.device && device.platform && (device.platform.toLowerCase() == 'android' || device.platform.toLowerCase() == 'amazon-fireos')) {
