@@ -55,5 +55,27 @@ Replace `1.0.0` with the previous version:
 
 Copy and paste the output to `CHANGELOG.md`
 
+## iOS Release Build
+
+- $ cordova build ios
+- Build and test the app on a device
+- Project -> Archive
+- Window -> Organizer -> Archive
+- Select the latest archive with the correct version
+- Select Distribute -> Ad Hoc -> Select AppStore Adobe Systems provisioning profile
+- Export to res/release/ios/PhoneGap-x.x.x-appstore.ipa
+
+## iOS Submission
+
+- itunesconnect.apple.com
+- Add a new PhoneGap Developer version
+  - Choose to not auto-release the app
+- Download Application Loader
+- Open Application Loader
+- Select Deliver Your App
+- Select PhoneGap with the correct version number
+- Select Choose
+- Select Send
+
   [issue-url]: https://github.com/phonegap/phonegap-app-developer/issues
   [filter-url]: https://github.com/phonegap/phonegap-app-developer/issues?labels=discussion&page=1&state=open
