@@ -45,5 +45,15 @@ Platform releases should individually tagged as:
 - 1.0.0-android-release
 - 1.0.0-ios-release
 
+## Releases
+
+### Update CHANGELOG
+
+Replace `1.0.0` with the previous version:
+
+    $ git log HEAD...1.0.0 --format="%s"
+
+Copy and paste the output to `CHANGELOG.md`
+
   [issue-url]: https://github.com/phonegap/phonegap-app-developer/issues
   [filter-url]: https://github.com/phonegap/phonegap-app-developer/issues?labels=discussion&page=1&state=open
