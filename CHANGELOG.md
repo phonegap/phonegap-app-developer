@@ -1,0 +1,35 @@
+# 1.1.0
+
+- Updated Android to Cordova 3.5.0.
+- Updated iOS to Cordova 3.5.0.
+- Updated WP8 to Cordova 3.5.0.
+- Updated all plugins for Cordova 3.5.0.
+    - cordova-plugin-vibration@0.3.8
+    - cordova-plugin-statusbar@0.1.3
+    - cordova-plugin-splashscreen@0.3.0
+    - cordova-plugin-network-information@0.2.8
+    - cordova-plugin-media-capture@0.3.0
+    - cordova-plugin-media@0.2.10
+    - cordova-plugin-inappbrowser@0.4.0
+    - cordova-plugin-globalization@0.2.7
+    - cordova-plugin-geolocation@0.3.7
+    - cordova-plugin-file-transfer@0.4.3
+    - cordova-plugin-file@1.1.0
+    - cordova-plugin-dialogs@0.2.6
+    - cordova-plugin-device-orientation@0.3.6
+    - cordova-plugin-device-motion@0.2.7
+    - cordova-plugin-device@0.2.9
+    - cordova-plugin-contacts@0.2.10
+    - cordova-plugin-console@0.2.8
+    - cordova-plugin-camera@0.2.9
+    - cordova-plugin-battery-status@0.2.8
+- Prevent screen shutoff when previewing an app
+- Enable multi-device and multi-version support with the CLI.
+- Updated the address field to be editable on touch.
+- Disabled WP8 zoom bounce on double-tap.
+- Fixed viewport on WP8 that do not support meta viewport tag.
+- Disabled scrollable webview.
+- Fixed flickering visor on error.
+- Fixed monitor error status appearance on WP8.
+- Fixed monitor background on WP8.
+- Disabled fullscreen mode.
