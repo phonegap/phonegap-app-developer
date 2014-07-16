@@ -77,5 +77,13 @@ Copy and paste the output to `CHANGELOG.md`
 - Select Choose
 - Select Send
 
+## Android Release Build
+
+- clone phonegap-app-developer-keys
+- cd phonegap-app-developer/
+- ln -s path/to/phonegap-app-developer-keys/keys/android resources/signing/android
+- $ cordova build android --release
+- cp platforms/android/bin/PhoneGap-release.apk resources/release/android/PhoneGap-x.x.x-release.apk
+
   [issue-url]: https://github.com/phonegap/phonegap-app-developer/issues
   [filter-url]: https://github.com/phonegap/phonegap-app-developer/issues?labels=discussion&page=1&state=open
