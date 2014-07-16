@@ -32,4 +32,4 @@ platforms/wp8/*.suo
 platforms/wp8/*.csproj.user
 
 # res
-res/signing/android/*.keystore
+resources/signing
