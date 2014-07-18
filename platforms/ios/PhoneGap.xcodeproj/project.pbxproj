@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		014E234FC03E4150B5681EC9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C65355D490040A681F26B38 /* CDVCapture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 97F074BCD4994D7D862BD02D /* CDVCapture.bundle */; };
@@ -680,7 +681,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9CC4940B-47DD-497A-93E2-466FCB17D0B9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -714,7 +715,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9CC4940B-47DD-497A-93E2-466FCB17D0B9";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
