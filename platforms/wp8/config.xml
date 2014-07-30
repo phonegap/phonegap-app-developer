@@ -18,9 +18,6 @@
     <feature name="NetworkStatus">
         <param name="wp-package" value="NetworkStatus" />
     </feature>
-    <feature name="Camera">
-        <param name="wp-package" value="Camera" />
-    </feature>
     <feature name="Console">
         <param name="wp-package" value="DebugConsole" />
     </feature>
@@ -88,4 +85,7 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Camera">
+        <param name="wp-package" value="Camera" />
+    </feature>
 </widget>

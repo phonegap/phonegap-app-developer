@@ -33,10 +33,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Accelerometer\"><param name=\"android-package\" value=\"org.apache.cordova.devicemotion.AccelListener\" /></feature>",
                             "count": 1
                         },
@@ -78,6 +74,10 @@
                         },
                         {
                             "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -157,9 +157,6 @@
         "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
-        "org.apache.cordova.camera": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
@@ -197,6 +194,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.contacts": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

@@ -97,10 +97,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
                             "count": 1
                         },
@@ -163,6 +159,10 @@
                         {
                             "xml": "<feature name=\"Contacts\"><param name=\"ios-package\" value=\"CDVContacts\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -183,9 +183,6 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.network-information": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.console": {
@@ -225,6 +222,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.contacts": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },
