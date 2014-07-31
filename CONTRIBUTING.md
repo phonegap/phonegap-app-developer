@@ -85,5 +85,24 @@ Copy and paste the output to `CHANGELOG.md`
 - $ cordova build android --release
 - cp platforms/android/ant-build/PhoneGap-release.apk resources/release/android/PhoneGap-x.x.x-release.apk
 
+## Windows Phone Release Build
+
+- cd phonegap-app-developer/
+- cordova build wp8 --release
+- cp platforms/wp8/Bin/Release/com.adobe.phonegap.app.xap resources/release/wp8/phonegap-x.x.x.xap
+
+or
+
+- cd phonegap-app-developer/
+- cordova build wp8 # to populate the native code
+- Update WMAppManifest.xml
+  - <App Author="Adobe PhoneGap Team" />
+  - <App Publisher="Adobe" />
+  - <App Title="PhoneGap Developer" />
+- open platforms/wp8/PhoneGap.sln
+- Select "Release"
+- Select from menu Build -> Build Solution
+- cp platforms/wp8/Bin/Release/com.adobe.phonegap.app.xap resources/release/wp8/phonegap-x.x.x.xap
+
   [issue-url]: https://github.com/phonegap/phonegap-app-developer/issues
   [filter-url]: https://github.com/phonegap/phonegap-app-developer/issues?labels=discussion&page=1&state=open
