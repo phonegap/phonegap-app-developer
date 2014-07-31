@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ADBMobileSamples</string>
+    <string name="trackState">Use trackState:data: to send in page views.\n\nContext data is an optional way to send additional data with your hit.</string>
+    <string name="trackAction">Use trackAction:data: to send in actions that happen on any given page, like a button click or ad click.</string>
+    <string name="privacy">When set to Opt In, hits will be sent.\n\nWhen set to Opt Out, hits are discarded.\n\nThe config file is set to track offline, so when set to Opt Unknown, hits will be saved until status goes back to Opt In (saved hits are sent) or Opt Out (saved hits are discarded).</string>
+    <string name="timedActions">Starting a timed action that is already running will restart that action.\n\nTry backgrounding the app while a timed action is running, then stopping the action after relaunching the app.</string>
+    <string name="targetLocation">Use Adobe Target in conjunction with trackLocation(...) to target your users based on their geographical location.</string>
+    <string name="lifetimeValue">Use Lifetime Value to track the value of a user through the lifetime of use in the app.</string>
+    <string name="imageDescription">Use Adobe Target in conjunction with trackLocation(...) to target your users based on their geographical location.</string>
+</resources>

@@ -478,7 +478,7 @@
         <Content Include="www\plugins\org.apache.cordova.file\www\resolveLocalFileSystemURI.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\wp\FileUploadOptions.js" />
+        <Content Include="www\plugins\ADBMobile\sdks\Cordova\ADBMobile\Shared\ADBHelper.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file-transfer\www\FileTransfer.js" />

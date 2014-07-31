@@ -1,0 +1,36 @@
+{
+    "name": "mobile-mc-sdk",
+    "description": "Mobile SDKs, Sample Apps, and Bloodhound",
+    "version": "0.0.11",
+    "repository": { "type":"git", "url":"git+ssh://git@git.corp.adobe.com:dms-mobile/sdk.git" },
+    "private": true,
+
+    "versions": {
+		"sdks": {
+			"ios": "4.1.0",
+			"osx": null,
+			"android": "4.1.0",
+			"windows8": null,
+			"winphone8": null,
+			"xboxone": null,
+			"blackberry": "4.0.0",
+			"phonegap": null
+		},
+		"sample-apps": {
+			"ios": "1.1",
+			"osx": null,
+			"android": "1.1",
+			"windows8": null,
+			"winphone8": null,
+			"xboxone": null,
+			"blackberry": null,
+			"phonegap": null
+		},
+		"tools": {
+			"bloodhound": {
+				"osx": "2.1",
+				"windows": "2.1"
+			}
+		}
+	}
+}

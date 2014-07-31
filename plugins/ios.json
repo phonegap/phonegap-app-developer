@@ -47,6 +47,10 @@
                         {
                             "xml": "true",
                             "count": 1
+                        },
+                        {
+                            "xml": "false",
+                            "count": 1
                         }
                     ],
                     "AddressBook.framework": [
@@ -65,6 +69,12 @@
                         {
                             "xml": "true",
                             "count": 4
+                        }
+                    ],
+                    "libsqlite3.dylib": [
+                        {
+                            "xml": "false",
+                            "count": 1
                         }
                     ]
                 }
@@ -163,6 +173,10 @@
                         {
                             "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ADBMobile_PhoneGap\"><param name=\"ios-package\" value=\"ADBMobile_PhoneGap\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -225,6 +239,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "ADBMobile": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

@@ -75,6 +75,10 @@
 		DA6A81B1798C488B8988F105 /* CDVBattery.m in Sources */ = {isa = PBXBuildFile; fileRef = 4590EFF0F01D4E4D922AE3BA /* CDVBattery.m */; };
 		F2D71E42781A4B61858FCB8E /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0268920529F24F7BA1B30B4F /* CDVStatusBar.m */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
+		F81550ED37EC46618D1D248C /* ADBMobile_PhoneGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 22858487499C477F97BEBD5B /* ADBMobile_PhoneGap.m */; };
+		7289A1E5F5694EB68C561DA4 /* AdobeMobileLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 723814EEF00F4BCCA442CA3D /* AdobeMobileLibrary.a */; };
+		C5938E7219DA4B2C956B50BF /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 48DD4A4AEB7E40DBBA880A6C /* ADBMobileConfig.json */; };
+		81524D7251EF4907BA0D0443 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8129D0B1E7144F0B82BA362D /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +205,12 @@
 		F72137C8735340378EFFDAE3 /* CDVCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVCapture.h; path = "org.apache.cordova.media-capture/CDVCapture.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = PhoneGap/config.xml; sourceTree = "<group>"; };
 		F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		22858487499C477F97BEBD5B /* ADBMobile_PhoneGap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ADBMobile_PhoneGap.m"; path = "ADBMobile/ADBMobile_PhoneGap.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		723814EEF00F4BCCA442CA3D /* AdobeMobileLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "AdobeMobileLibrary.a"; path = "PhoneGap/Plugins/ADBMobile/AdobeMobileLibrary.a"; sourceTree = "<group>"; fileEncoding = 4; };
+		9722C0F717874ACF8BA756C7 /* ADBMobile_PhoneGap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ADBMobile_PhoneGap.h"; path = "ADBMobile/ADBMobile_PhoneGap.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		BAE56E10E490456BB8CFA4EC /* ADBMobile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ADBMobile.h"; path = "ADBMobile/ADBMobile.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		48DD4A4AEB7E40DBBA880A6C /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "ADBMobileConfig.json"; path = "ADBMobileConfig.json"; sourceTree = "<group>"; fileEncoding = 4; };
+		8129D0B1E7144F0B82BA362D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +230,8 @@
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */,
 				014E234FC03E4150B5681EC9 /* AudioToolbox.framework in Frameworks */,
+				7289A1E5F5694EB68C561DA4 /* AdobeMobileLibrary.a in Frameworks */,
+				81524D7251EF4907BA0D0443 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +316,7 @@
 				6886DB88E64044A0AE9BD8F2 /* CDVCapture.bundle */,
 				78557F70FE3B47E682C9C5FC /* CDVNotification.bundle */,
 				97F074BCD4994D7D862BD02D /* CDVCapture.bundle */,
+				48DD4A4AEB7E40DBBA880A6C /* ADBMobileConfig.json */,
 			);
 			name = Resources;
 			path = PhoneGap/Resources;
@@ -323,6 +336,8 @@
 				4D993850595C45E6BB359987 /* AddressBook.framework */,
 				D93BA6E3C88F4433942E5AC8 /* AddressBookUI.framework */,
 				F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */,
+				723814EEF00F4BCCA442CA3D /* AdobeMobileLibrary.a */,
+				8129D0B1E7144F0B82BA362D /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -389,6 +404,9 @@
 				BF0673F1195102700026C411 /* CDVVibration.m */,
 				3256CDAD831E42B1915A840C /* Insomnia.h */,
 				7D0241DCE35346FC8F962645 /* Insomnia.m */,
+				22858487499C477F97BEBD5B /* ADBMobile_PhoneGap.m */,
+				9722C0F717874ACF8BA756C7 /* ADBMobile_PhoneGap.h */,
+				BAE56E10E490456BB8CFA4EC /* ADBMobile.h */,
 			);
 			name = Plugins;
 			path = PhoneGap/Plugins;
@@ -555,6 +573,7 @@
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 				A6424F46CD324BC5A98C3DED /* CDVNotification.bundle in Resources */,
 				1C65355D490040A681F26B38 /* CDVCapture.bundle in Resources */,
+				C5938E7219DA4B2C956B50BF /* ADBMobileConfig.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +629,7 @@
 				BF0673E91950FAB80026C411 /* CDVSound.m in Sources */,
 				BF0673F8195102A20026C411 /* CDVNotification.m in Sources */,
 				DA6A81B1798C488B8988F105 /* CDVBattery.m in Sources */,
+				F81550ED37EC46618D1D248C /* ADBMobile_PhoneGap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +712,10 @@
 				PRODUCT_NAME = PhoneGap;
 				PROVISIONING_PROFILE = "9CC4940B-47DD-497A-93E2-466FCB17D0B9";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PhoneGap/Plugins/ADBMobile\"",
+				);
 			};
 			name = Debug;
 		};
@@ -726,6 +750,10 @@
 				PRODUCT_NAME = PhoneGap;
 				PROVISIONING_PROFILE = "9CC4940B-47DD-497A-93E2-466FCB17D0B9";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PhoneGap/Plugins/ADBMobile\"",
+				);
 			};
 			name = Release;
 		};

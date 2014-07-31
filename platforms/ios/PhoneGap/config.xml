@@ -115,4 +115,10 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Camera">
+        <param name="ios-package" value="CDVCamera" />
+    </feature>
+    <feature name="ADBMobile_PhoneGap">
+        <param name="ios-package" value="ADBMobile_PhoneGap" />
+    </feature>
 </widget>

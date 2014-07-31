@@ -91,4 +91,10 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <feature name="ADBMobile_PhoneGap">
+        <param name="android-package" value="com.adobe.ADBMobile_PhoneGap" />
+    </feature>
 </widget>

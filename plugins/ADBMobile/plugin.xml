@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+           id="ADBMobile"
+      version="1.0.0">
+    <name>ADBMobile</name>
+    <description>Adobe Mobile Services Plugin</description>
+ 
+	<js-module src="sdks/Cordova/ADBMobile/Shared/ADBHelper.js" name="ADBHelper">
+	    <clobbers target="ADB"/>
+	</js-module>
+	
+	 <!-- ios -->
+	 <platform name="ios">
+		 <config-file target="config.xml" parent="/*">
+			 <feature name="ADBMobile_PhoneGap">
+				 <param name="ios-package" value="ADBMobile_PhoneGap" />
+			 </feature>
+		 </config-file>
+		 <header-file src="sdks/Cordova/ADBMobile/iOS/ADBMobile_PhoneGap.h" />
+		 <source-file src="sdks/Cordova/ADBMobile/iOS/ADBMobile_PhoneGap.m" />
+		 <header-file src="sdks/iOS/AdobeMobileLibrary/ADBMobile.h" />
+		 <source-file src="sdks/iOS/AdobeMobileLibrary/AdobeMobileLibrary.a" framework="true" />        
+		 <resource-file src="sdks/iOS/AdobeMobileLibrary/ADBMobileConfig.json" />
+		 <framework src="libsqlite3.dylib" />
+		 <framework src="SystemConfiguration.framework" />
+	 </platform>
+     
+     <!-- android -->
+	 <platform name="android">
+		 <config-file target="res/xml/config.xml" parent="/*">
+			 <feature name="ADBMobile_PhoneGap">
+				 <param name="android-package" value="com.adobe.ADBMobile_PhoneGap" />
+			 </feature>
+		 </config-file>
+		 <config-file target="AndroidManifest.xml" parent="/manifest">
+	         <uses-permission android:name="android.permission.INTERNET" />
+	         <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+		 </config-file>
+		 <source-file src="sdks/Cordova/ADBMobile/Android/ADBMobile_PhoneGap.java" target-dir="src/com/adobe/" />
+		 <source-file src="sdks/Android/AdobeMobileLibrary/adobeMobileLibrary.jar" target-dir="libs" />
+         <source-file src="sdks/Android/AdobeMobileLibrary/ADBMobileConfig.json" target-dir="assets" />
+	 </platform>
+</plugin>

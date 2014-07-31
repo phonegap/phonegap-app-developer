@@ -1,0 +1,36 @@
+Release Notes for iOS App Measurement Library version 4:
+
+Included are notes from the latest major revision to current.
+
+For full SDK documentation, please visit:
+http://microsite.omniture.com/t2/help/en_US/mobile/ios/
+
+4.1.0 (17 April, 2014)
+- New - Bluetooth beacon tracking
+- New - App acquisition analytics
+- New - Apps that are timestamp enabled, crash hits are backdated to the correct session
+- New - Apps that are timestamp enabled, previous session is sent in a hit that is backdated to the correct session. (no longer previous session)
+- New - Batching
+
+4.0.2 (20 Feb, 2014)
+- Resolved issue that caused incorrect behavior when the same media item was opened in sequence without closing previous item.
+
+4.0.1 (30 Jan, 2014)
+- Resolved issue that could cause multiple hits to be sent when database was corrupted.
+- Resolved issue that could cause large previous session lengths when device time was incorrect.
+
+4.0.0 (20 Sept, 2013)
+- Initial release to production of version 4.0 
+- Initial platform support: 
+	arm64
+	armv7
+	armv7s
+	iOS Simulator (i386)
+	iOS Simulator (x86_64)
+- Please note there are some new library dependencies that will need to be added to your build process:
+	libsqlite3.0.dylib
+	SystemConfiguration.framework
+	CoreLocation.framework (optional, required for geo tracking capaibilites)
+  See documentation if you need further information.
+		
+
