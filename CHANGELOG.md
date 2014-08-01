@@ -1,3 +1,7 @@
+# 1.2.0
+
+- Update cordova-plugin-camera@0.3.0
+
 # 1.1.0
 
 - Updated Android to Cordova 3.5.0.
