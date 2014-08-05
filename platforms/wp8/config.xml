@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.adobe.phonegap.app" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.adobe.phonegap.app" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="Insomnia">
         <param name="wp-package" value="Insomnia" />
     </feature>
@@ -54,6 +54,9 @@
     <feature name="Contacts">
         <param name="wp-package" value="Contacts" />
     </feature>
+    <feature name="Camera">
+        <param name="wp-package" value="Camera" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
@@ -85,7 +88,4 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="Camera">
-        <param name="wp-package" value="Camera" />
-    </feature>
 </widget>
