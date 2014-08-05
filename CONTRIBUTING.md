@@ -104,5 +104,28 @@ or
 - Select from menu Build -> Build Solution
 - cp platforms/wp8/Bin/Release/com.adobe.phonegap.app.xap resources/release/wp8/phonegap-x.x.x.xap
 
+## Windows Phone Submission
+
+- Update test.app.phonegap.com to use the latest connect-phonegap
+- Deploy the site
+
+- Open Microsoft Remote Desktop
+- Go to dev.windowsphone.com
+- Select Dashboard
+- Select Windows Phone Store
+- Select Apps
+- Select PhoneGap Developer
+- Select Update App
+- Select Upload and Describe Your Package
+- Go to GitHub and download the latest tagged release and extract it
+- Select Replace on Windows Phone site
+- Update the package version number
+- Update the change log (involves replacing the current content)
+- Save
+- Press Review and Submit
+- Verify that it's a manual publish
+- Press Submit
+- Clean up the downloaded GitHub zip file
+
   [issue-url]: https://github.com/phonegap/phonegap-app-developer/issues
   [filter-url]: https://github.com/phonegap/phonegap-app-developer/issues?labels=discussion&page=1&state=open
