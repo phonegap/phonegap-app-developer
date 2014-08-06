@@ -287,7 +287,20 @@ function registerWithServer() {
             onBuildSubmitSuccess();
         },
         error: function(xhr, type) {
-            onBuildSubmitError();
+            // support older servers that do not support /register
+            $.ajax({
+                type: 'GET',
+                url: getAddress(),
+                dataType: 'text',
+                timeout: 1000 * 10,
+                success: function(data) {
+                    onBuildSubmitSuccess();
+                },
+                error: function(xhr, type) {
+                    onBuildSubmitError();
+                }
+            });
+
         }
     });
 }
