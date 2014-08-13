@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		014E234FC03E4150B5681EC9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C65355D490040A681F26B38 /* CDVCapture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 97F074BCD4994D7D862BD02D /* CDVCapture.bundle */; };
@@ -74,6 +75,7 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		DA6A81B1798C488B8988F105 /* CDVBattery.m in Sources */ = {isa = PBXBuildFile; fileRef = 4590EFF0F01D4E4D922AE3BA /* CDVBattery.m */; };
 		F2D71E42781A4B61858FCB8E /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0268920529F24F7BA1B30B4F /* CDVStatusBar.m */; };
+		F5B6596319B8DB8E00DD1745 /* CDVPhoneGapBuildOauth.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B6596219B8DB8E00DD1745 /* CDVPhoneGapBuildOauth.m */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 		F81550ED37EC46618D1D248C /* ADBMobile_PhoneGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 22858487499C477F97BEBD5B /* ADBMobile_PhoneGap.m */; };
 		7289A1E5F5694EB68C561DA4 /* AdobeMobileLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 723814EEF00F4BCCA442CA3D /* AdobeMobileLibrary.a */; };
@@ -202,6 +204,8 @@
 		D93BA6E3C88F4433942E5AC8 /* AddressBookUI.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		DD9F697B034B4A49B4E190C2 /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.console/CDVLogger.h; sourceTree = "<group>"; };
 		F14790EEB5E04004AA77C076 /* CDVCapture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVCapture.bundle; sourceTree = "<group>"; };
+		F5B6596119B8DB8E00DD1745 /* CDVPhoneGapBuildOauth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVPhoneGapBuildOauth.h; path = org.phonegap.build.oauth/CDVPhoneGapBuildOauth.h; sourceTree = "<group>"; };
+		F5B6596219B8DB8E00DD1745 /* CDVPhoneGapBuildOauth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVPhoneGapBuildOauth.m; path = org.phonegap.build.oauth/CDVPhoneGapBuildOauth.m; sourceTree = "<group>"; };
 		F72137C8735340378EFFDAE3 /* CDVCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVCapture.h; path = "org.apache.cordova.media-capture/CDVCapture.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = PhoneGap/config.xml; sourceTree = "<group>"; };
 		F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -353,6 +357,8 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				F5B6596119B8DB8E00DD1745 /* CDVPhoneGapBuildOauth.h */,
+				F5B6596219B8DB8E00DD1745 /* CDVPhoneGapBuildOauth.m */,
 				BFBF2B1319899DD40078D8FA /* CDVCamera.h */,
 				BFBF2B1419899DD40078D8FA /* CDVCamera.m */,
 				BFBF2B1519899DD40078D8FA /* CDVExif.h */,
@@ -625,6 +631,7 @@
 				CF1E9DA9529D424AB9C3AF50 /* CDVCapture.m in Sources */,
 				F2D71E42781A4B61858FCB8E /* CDVStatusBar.m in Sources */,
 				BFBF8F7E194A5446006BD792 /* CDVFileTransfer.m in Sources */,
+				F5B6596319B8DB8E00DD1745 /* CDVPhoneGapBuildOauth.m in Sources */,
 				BFBF8F86194A54A2006BD792 /* CDVConnection.m in Sources */,
 				BF0673E91950FAB80026C411 /* CDVSound.m in Sources */,
 				BF0673F8195102A20026C411 /* CDVNotification.m in Sources */,
@@ -710,7 +717,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "9CC4940B-47DD-497A-93E2-466FCB17D0B9";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -748,7 +755,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "9CC4940B-47DD-497A-93E2-466FCB17D0B9";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
