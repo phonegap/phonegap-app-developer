@@ -32,4 +32,8 @@
     <permission name="systemXHR" privileged="true"/>
     <access origin="*" />
     <content src="index.html" />
+    <platform name="firefoxos">
+        <icon height="128" src="resources/icon/firefoxos/icon-128.png" width="128" />
+        <icon height="60" src="resources/icon/firefoxos/icon-60.png" width="60" />
+    </platform>
 </widget>

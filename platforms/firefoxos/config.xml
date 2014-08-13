@@ -4,6 +4,26 @@
         <icon height="128" src="icon/icon-128.png" width="128" />
         <icon height="60" src="icon/icon-60.png" width="60" />
     </platform>
+    <feature name="Camera">
+        <param name="firefoxos-package" value="Camera" />
+    </feature>
+    <permission access="readwrite" description="Required for accessing address book." name="contacts" privileged="true" />
+    <feature name="Device">
+        <param name="firefoxos-package" value="Device" />
+    </feature>
+    <feature name="Accelerometer">
+        <param name="firefoxos-package" value="Accelerometer" />
+    </feature>
+    <feature name="Compass">
+        <param name="firefoxos-package" value="Compass" />
+    </feature>
+    <feature name="Notification">
+        <param name="firefoxos-package" value="Notification" />
+    </feature>
+    <permission description="Required for accessing user location." name="geolocation" />
+    <permission description="Enables the app to implement a browser in an iframe." name="browser" privileged="true" />
+    <icon height="128" src="resources/icon/firefoxos/icon-128.png" width="128" />
+    <icon height="60" src="resources/icon/firefoxos/icon-60.png" width="60" />
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
@@ -33,25 +53,7 @@
     <preference name="android-installLocation" value="auto" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="WebViewBounce" value="false" />
+    <permission name="systemXHR" privileged="true" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="Camera">
-        <param name="firefoxos-package" value="Camera" />
-    </feature>
-    <permission access="readwrite" description="Required for accessing address book." name="contacts" privileged="true" />
-    <feature name="Device">
-        <param name="firefoxos-package" value="Device" />
-    </feature>
-    <feature name="Accelerometer">
-        <param name="firefoxos-package" value="Accelerometer" />
-    </feature>
-    <feature name="Compass">
-        <param name="firefoxos-package" value="Compass" />
-    </feature>
-    <feature name="Notification">
-        <param name="firefoxos-package" value="Notification" />
-    </feature>
-    <permission name="systemXHR" privileged="true" />
-    <permission description="Required for accessing user location." name="geolocation" />
-    <permission description="Enables the app to implement a browser in an iframe." name="browser" privileged="true" />
 </widget>

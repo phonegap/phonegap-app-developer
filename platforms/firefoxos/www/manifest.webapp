@@ -15,6 +15,10 @@
         "default"
     ],
     "permissions": {
+        "contacts": {
+            "description": "Required for accessing address book.",
+            "access": "readwrite"
+        },
         "geolocation": {
             "description": "Required for accessing user location."
         },
