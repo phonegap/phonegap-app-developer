@@ -1,0 +1,16 @@
+{
+    "version": "2.1.0",
+    "name": "org.chromium.zip",
+    "cordova_name": "Zip",
+    "description": "Unzips zip files",
+    "platforms": [
+        "android",
+        "ios"
+    ],
+    "engines": [
+        {
+            "name": "cordova",
+            "version": ">=3.3.0"
+        }
+    ]
+}

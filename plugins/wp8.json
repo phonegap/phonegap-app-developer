@@ -195,6 +195,9 @@
         },
         "ADBMobile": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
+        },
+        "org.chromium.zip": {
+            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         }
     },
     "dependent_plugins": {

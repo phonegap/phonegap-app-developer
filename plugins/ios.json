@@ -76,6 +76,12 @@
                             "xml": "false",
                             "count": 1
                         }
+                    ],
+                    "libz.dylib": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -178,6 +184,12 @@
                             "xml": "<feature name=\"ADBMobile_PhoneGap\"><param name=\"ios-package\" value=\"ADBMobile_PhoneGap\" /></feature>",
                             "count": 1
                         }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"Zip\"><param name=\"ios-package\" value=\"Zip\" /></feature>",
+                            "count": 1
+                        }
                     ]
                 }
             }
@@ -242,6 +254,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "ADBMobile": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.chromium.zip": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

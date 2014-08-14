@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin xmlns="http://phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="org.chromium.zip"
+    version="2.1.0">
+  <engines>
+    <engine name="cordova" version=">=3.3.0" />
+  </engines>
+
+  <name>Zip</name>
+  <description>Unzips zip files</description>
+  <dependency id="org.apache.cordova.file" version="1.0.1" />
+
+  <js-module src="zip.js" name="Zip">
+    <clobbers target="zip" />
+  </js-module>
+
+  <js-module src="tests/tests.js" name="tests">
+  </js-module>
+
+  <platform name="android">
+    <source-file src="src/android/Zip.java" target-dir="src/org/apache/cordova" />
+
+    <config-file target="res/xml/config.xml" parent="/widget">
+      <feature name="Zip">
+        <param name="android-package" value="org.apache.cordova.Zip"/>
+      </feature>
+    </config-file>
+  </platform>
+
+  <platform name="ios">
+    <source-file src="src/ios/Zip.m" />
+    <header-file src="src/ios/Zip.h" />
+    <source-file src="src/ios/SSZipArchive.m" target-dir="Plugins/minizip" />
+    <header-file src="src/ios/SSZipArchive.h" target-dir="Plugins/minizip" />
+    <source-file src="src/ios/minizip/zip.c" target-dir="Plugins/minizip" />
+    <header-file src="src/ios/minizip/zip.h" target-dir="Plugins/minizip" />
+    <source-file src="src/ios/minizip/unzip.c" target-dir="Plugins/minizip" />
+    <header-file src="src/ios/minizip/unzip.h" target-dir="Plugins/minizip" />
+    <source-file src="src/ios/minizip/mztools.c" target-dir="Plugins/minizip" />
+    <header-file src="src/ios/minizip/mztools.h" target-dir="Plugins/minizip" />
+    <source-file src="src/ios/minizip/ioapi.c" target-dir="Plugins/minizip" />
+    <header-file src="src/ios/minizip/ioapi.h" target-dir="Plugins/minizip" />
+    <header-file src="src/ios/minizip/crypt.h" target-dir="Plugins/minizip" />
+
+    <config-file target="config.xml" parent="/widget">
+      <feature name="Zip">
+        <param name="ios-package" value="Zip"/>
+      </feature>
+    </config-file>
+    <framework src="libz.dylib" />
+  </platform>
+</plugin>
