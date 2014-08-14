@@ -255,7 +255,7 @@ function onBuildSubmitSuccess() {
         window.plugins.insomnia.keepAwake();
 
         setTimeout( function() {
-            window.location = getAddress();
+            downloadZip();
         }, 1000 );
     });
 }
@@ -271,6 +271,45 @@ function onBuildSubmitError(message) {
         updateMessage('');
         openBot();
     }, 3500);
+}
+
+function downloadZip(){
+    window.requestFileSystem(
+        LocalFileSystem.PERSISTENT,
+        0,
+        function(fileSystem) {
+            var fileTransfer = new FileTransfer();
+            var uri = encodeURI(getAddress() + '/__api__/zip');
+    
+            fileTransfer.download(
+                uri,
+                fileSystem.root.toURL() + 'app.zip',
+                function(entry) {
+                    console.log("download complete: " + entry.toURL());
+                    
+                    zip.unzip(fileSystem.root.toURL() + 'app.zip', fileSystem.root.toURL() +'/app', function(statusCode) {
+                        if (statusCode === 0) {
+                            console.log('[fileUtils] successfully extracted the update payload');
+                            window.location.href = fileSystem.root.toURL() +'/app/index.html'; 
+                        }
+                        else {
+                            console.error('[fileUtils] error: failed to extract update payload');
+                            console.log(zipPath, dirPath);
+                        }
+                    });
+                },
+                function(error) {
+                    console.log("download error source " + error.source);
+                    console.log("download error target " + error.target);
+                    console.log("upload error code" + error.code);
+                },
+                false
+            );        
+        },
+        function(e) {
+            callback(e);
+        }
+    );
 }
 
 function registerWithServer() {
