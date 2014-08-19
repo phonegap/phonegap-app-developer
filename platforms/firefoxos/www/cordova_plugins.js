@@ -147,13 +147,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/nl.x-services.plugins.insomnia/www/Insomnia.js",
-        "id": "nl.x-services.plugins.insomnia.Insomnia",
-        "clobbers": [
-            "window.plugins.insomnia"
-        ]
-    },
-    {
         "file": "plugins/org.apache.cordova.battery-status/www/battery.js",
         "id": "org.apache.cordova.battery-status.battery",
         "clobbers": [
@@ -518,13 +511,24 @@ module.exports = [
         "file": "plugins/org.apache.cordova.vibration/src/firefoxos/VibrationProxy.js",
         "id": "org.apache.cordova.vibration.VibrationProxy",
         "runs": true
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.insomnia/www/Insomnia.js",
+        "id": "nl.x-services.plugins.insomnia.Insomnia",
+        "clobbers": [
+            "window.plugins.insomnia"
+        ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.insomnia/src/firefoxos/insomnia.js",
+        "id": "nl.x-services.plugins.insomnia.InsomniaProxy",
+        "runs": true
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "org.apache.cordova.file": "1.3.0",
-    "nl.x-services.plugins.insomnia": "4.0.1",
     "org.apache.cordova.battery-status": "0.2.10",
     "org.apache.cordova.camera": "0.3.1",
     "org.apache.cordova.console": "0.2.10",
@@ -542,7 +546,8 @@ module.exports.metadata =
     "org.apache.cordova.network-information": "0.2.11",
     "org.apache.cordova.splashscreen": "0.3.2",
     "org.apache.cordova.statusbar": "0.1.7",
-    "org.apache.cordova.vibration": "0.3.10"
+    "org.apache.cordova.vibration": "0.3.10",
+    "nl.x-services.plugins.insomnia": "4.0.1"
 }
 // BOTTOM OF METADATA
 });
