@@ -352,6 +352,12 @@
         <Content Include="www\js\zepto.min.js" />
     </ItemGroup>
     <ItemGroup>
+        <Content Include="www\phonegap.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\ADBMobile\sdks\Cordova\ADBMobile\Shared\ADBHelper.js" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\plugins\nl.x-services.plugins.insomnia\www\Insomnia.js" />
     </ItemGroup>
     <ItemGroup>
@@ -478,7 +484,7 @@
         <Content Include="www\plugins\org.apache.cordova.file\www\resolveLocalFileSystemURI.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\ADBMobile\sdks\Cordova\ADBMobile\Shared\ADBHelper.js" />
+        <Content Include="www\plugins\org.apache.cordova.file\www\wp\FileUploadOptions.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file-transfer\www\FileTransfer.js" />
