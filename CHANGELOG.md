@@ -1,3 +1,9 @@
+# 1.3.0
+
+- [#193] Upgrade to Android@3.5.1.
+- [#187] Add support for servers missing the /register API.
+- [#47]  Add Adobe Mobile Analytics.
+
 # 1.2.0
 
 - Update cordova-plugin-camera@0.3.0
