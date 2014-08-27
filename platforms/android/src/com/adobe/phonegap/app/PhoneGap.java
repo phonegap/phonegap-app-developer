@@ -32,6 +32,19 @@ public class PhoneGap extends CordovaActivity
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
+        com.adobe.mobile.Config.setContext(this.getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        com.adobe.mobile.Config.collectLifecycleData();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        com.adobe.mobile.Config.pauseCollectingLifecycleData();
     }
 }
 
