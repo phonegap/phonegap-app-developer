@@ -5,59 +5,44 @@
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <title>PhoneGap Developer App</title>
-    <link rel="stylesheet" href="css/app.css" type="text/css"/>
+    <link rel="stylesheet" href="css/app.css" type="text/css">
+    <link rel="stylesheet" href="css/pgb.css" type="text/css">
     <script src="js/ms-viewport.js"></script>
 </head>
 <body ontouchstart="">
-
     <div class="container">
-        <div class="inner">
 
-            <article id="bot">
+        <div class="back">&lt;</div>
 
-                <div class="shadow"></div>
-
-                <div class="monitor">
-                    <div class="cover"></div>
-                    <form id="login-form" class="faded hidden" novalidate>
-                        <label>&gt; Server Address</label>
-                        <input type="url" id="address" class="offset"></input>
-                        <input type="submit" value="Connect" class="offset"></input>
-                        <label></label>
-                        <label class="info">3-finger tap goes home</label>
-                        <label class="info">4-finger tap refreshes</label>
-                    </form>
-                    <div class="visor pulse">
-                        <label>Loading...</label>
-                        <div class="eye left faded"></div>
-                        <div class="eye right faded"></div>
-                    </div>
-                </div>
-
-                <div class="panel top">
-                    <div class="panel visor-cover"></div>
-                </div>
-
-                <div class="panel bottom">
-                </div>
-
-                <div class="footer faded">
-                    <a href="http://www.adobe.com/misc/terms.html" target="_system">Terms</a>
-                    &amp;
-                    <a href="http://www.adobe.com/misc/privacy.html" target="_system">Privacy</a>
-                </div>
-
-                <div class="footer" style="bottom: -100px;">
-                    <a href="pgb.html" style="color: black; font-size: 15px;">Connect to PhoneGap Build</a>
-                </div>
-
-            </article>
-
+        <div class="view login">
+            <form id="login-form" class="" novalidate>
+                <h3>Login to Phonegap Build</h3>
+                <label>Adobe ID</label>
+                <input type="email" id="email" value="rywillo@gmail.com" />
+                <label>Password</label>
+                <input type="password" id="password" value="password"/>
+                <input type="submit" value="LOGIN" />
+            </form>
+            <div>or</div>
+            <form>
+                <h3>Connect to local cli server</h3>
+                <input type="submit" value="CONNECT" />
+            </form>
         </div>
+
+        <div class="view apps hidden">
+            <h2>My Apps</h2>
+            <ul></ul>
+        </div>
+
+        <div class="view app hidden">
+            <div class="detail"></div>
+        </div>
+
     </div>
 
     <script src="cordova.js"></script>
     <script src="js/zepto.min.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/pgb.js"></script>
 </body>
 </html>

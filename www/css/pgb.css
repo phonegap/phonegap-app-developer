@@ -1,0 +1,69 @@
+form#login-form label {
+    color: black;
+    text-align:center;
+}
+form#login-form input, input[type=button] {
+    color: black;
+    border: 1px solid black;
+}
+form#login-form input[type="submit"] {
+    background-color: #adecff;
+}
+h3 {
+    font-size: 22px;
+    margin: 0px 0px 20px;
+}
+form#login-form div {
+    margin-top: 20px;
+}
+.login {
+    display:table-cell;
+    text-align:center;
+    vertical-align:middle;
+}
+.apps ul {
+    border-bottom: 1px solid black;
+}
+.apps ul li {
+    border-top:1px solid black;
+    padding: 10px;
+    font-size: 20px;
+    background-size: 45px 45px;
+    background-repeat: no-repeat;
+    padding-left: 55px;
+    background-position: 5px 0px;
+}
+.apps ul a {
+    color: black;
+}
+.apps h2, .app h2 {
+    font-size: 25px;
+    color: black;
+    margin:20px ;
+    text-align:center;
+}
+.back {
+    padding:25px 20px 20px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.app td {
+    vertical-align: top;
+    padding: 5px;
+}
+.app td:nth-child(2) {
+    word-break:break-word;
+}
+.app .btns {
+    text-align:center;
+    margin-top:30px;
+}
+.app .btns input {
+    font-size:30px;
+}
+.hidden {
+    display:none;
+}
