@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.phonegap.build.oauth"
+    version="0.1.0">
+
+    <name>Phonegap Build Oauth Plugin</name>
+
+    <description>Use this plugin to authenticate users using Oauth on Phonegap Build.</description>
+
+    <license>MIT</license>
+
+    <repo>https://github.com/wildabeast/phonegap-build-oauth-plugin</repo>
+    <issue>https://github.com/wildabeast/phonegap-build-oauth-plugin/issues</issue> 
+    
+    <engines>
+        <engine name="cordova" version=">=3.5.0" />
+    </engines>    
+
+    <js-module src="www/phonegap-build-oauth.js" name="PhonegapBuildOauth">
+        <clobbers target="window.PhonegapBuildOauth" />
+    </js-module>
+
+    <preference name="CLIENT_ID" />
+    <preference name="CLIENT_SECRET" />
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="PhonegapBuildOauth">
+                <param name="ios-package" value="CDVPhonegapBuildOauth" />
+            </feature>
+            <preference name="pgb-client-id" value="$CLIENT_ID" />
+            <preference name="pgb-client-secret" value="$CLIENT_SECRET" />
+        </config-file>
+
+        <header-file src="src/ios/CDVPhonegapBuildOauth.h" />
+        <source-file src="src/ios/CDVPhonegapBuildOauth.m" />
+    </platform>
+</plugin>
