@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.phonegap.plugins.apploader"
+    version="1.0.0">
+
+    <name>AppLoader</name>
+    <description>Downloads zip files, unzips them, and runs the contents in the Phonegap webview.</description>
+
+    <engines>
+      <engine name="cordova" version=">=3.4.0" />
+    </engines>
+
+    <js-module src="www/apploader.js" name="apploader">
+        <clobbers target="navigator.apploader" />
+    </js-module>
+
+    <license>Apache 2.0</license>
+
+    <!-- ios -->
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="AppLoader"><param name="ios-package" value="AppLoader" /></feature>
+        </config-file>
+
+        <header-file src="src/ios/AppLoader.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/BinaryDownloader.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/FileDownloadURLConnection.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/UIWebViewPGAdditions.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/ZipUtil.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/ZipOperation.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/ZipArchive.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/zip.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/unzip.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/mztools.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/ioapi.h" compiler-flags="-fno-objc-arc" />
+        <header-file src="src/ios/crypt.h" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/AppLoader.m" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/BinaryDownloader.m" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/FileDownloadURLConnection.m" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/UIWebViewPGAdditions.m" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/ZipUtil.m" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/ZipOperation.m" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/ZipArchive.mm" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/zip.c" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/unzip.c" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/mztools.c" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/ioapi.c" compiler-flags="-fno-objc-arc" />
+
+        <framework src="libz.dylib" />
+    </platform>
+
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AppLoader">
+                <param name="android-package" value="com.phonegap.build.AppLoader"/>
+            </feature>   
+        </config-file>
+
+        <source-file src="src/android/src/com/phonegap/build/AppLoader.java" target-dir="src/com/phonegap/build" />
+    </platform>
+</plugin>

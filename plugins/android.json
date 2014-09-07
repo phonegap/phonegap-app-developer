@@ -83,6 +83,10 @@
                         {
                             "xml": "<feature name=\"ADBMobile_PhoneGap\"><param name=\"android-package\" value=\"com.adobe.ADBMobile_PhoneGap\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AppLoader\"><param name=\"android-package\" value=\"com.phonegap.build.AppLoader\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -212,6 +216,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "ADBMobile": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "com.phonegap.plugins.apploader": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

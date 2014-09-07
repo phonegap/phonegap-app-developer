@@ -63,6 +63,9 @@
     <feature name="ADBMobile_PhoneGap">
         <param name="android-package" value="com.adobe.ADBMobile_PhoneGap" />
     </feature>
+    <feature name="AppLoader">
+        <param name="android-package" value="com.phonegap.build.AppLoader" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
