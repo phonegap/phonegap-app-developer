@@ -114,7 +114,30 @@ function install() {
 }
 
 function run() {
-	console.log('Run not implemented yet ya jerk. ('+ $(this).attr("data-id") + ')');
+	var app_id = $(this).attr("data-id");
+	console.log('running app ' + app_id);
+	getUrl(app_id);
+}
+
+function getUrl(app_id) {
+	$.ajax({
+	  dataType: "json",
+	  url:"https://build.phonegap.com/api/v1/apps/" + app_id + "/www?access_token=" + access_token,
+	  success: function(data) {
+	  	navigator.apploader.fetch(decodeURI(data.www_url), function(d) {
+	  		if (d.state == 'complete') {
+	  			console.log('fetch complete');
+		  		navigator.apploader.load(function() {
+		  			console.log('Failed to load app.');
+		  		});
+		  	} else {
+	        console.log(Math.round(d.status) + '%');
+	      }
+	  	}, function() {
+	  		console.log('Failed to fetch app.');
+	  	});
+	  }
+	});
 }
 
 })();

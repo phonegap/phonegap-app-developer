@@ -416,24 +416,18 @@ const float updateIncrement = 2.0f;
 	CDVPluginResult* pluginResult = nil;
 	if (result.ok && !result.zip) { // only interested in unzip
         
-        // remove any previous existing app, since the unzip was successful
+        // wipe app directory
         [self __removeApp:appId];
-
-        // move result.target to appPath
-        [[NSFileManager defaultManager] moveItemAtPath:result.target toPath:appPath error:&error];
+        [[NSFileManager defaultManager] createDirectoryAtPath:appPath withIntermediateDirectories:true attributes:nil error:&error];
         
-        // copy cordova.js into downloaded app if its not there
-        NSString* srcPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www/cordova.js"];
-        NSString* destPath = [NSString stringWithFormat:@"%@/cordova.js", appPath];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:destPath]) 
-        {
-            [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:destPath error:&error];   
-        }
-        destPath = [NSString stringWithFormat:@"%@/phonegap.js", appPath];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:destPath]) 
-        {
-            [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:destPath error:&error];   
-        }
+        NSString* srcPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
+        
+        NSLog(@"Copying %@ to %@", srcPath, appPath);
+        // copy main bundle/www contents to the new app directory
+        // so that new app has access to same plugins
+        [self copyDirectoryContents:srcPath :appPath];
+        // now copy downloaded app into app directory, overwriting any existing files
+        [self copyDirectoryContents:result.target :appPath];
         
 		if (error == nil) {
             NSDictionary* jsDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"complete", nil] 
@@ -456,19 +450,42 @@ const float updateIncrement = 2.0f;
 	}
 }
 
+- (void) copyDirectoryContents:(NSString*)srcPath :(NSString*)destPath
+{
+    //Initialize fileManager first
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    //You should always check for errors
+    NSError *error;
+    NSArray *srcPathContents = [fileManager contentsOfDirectoryAtPath:srcPath error:&error];
+    //TODO: error handling if inboxContents is nil
+    
+    for(NSString *source in srcPathContents)
+    {
+        NSString *src = [srcPath stringByAppendingPathComponent:[source lastPathComponent]];
+        
+        //Create the path for the destination by appending the file name
+        NSString *dest = [destPath stringByAppendingPathComponent:
+                          [source lastPathComponent]];
+        
+        // overwrite
+        if ([fileManager fileExistsAtPath:dest] == YES) {
+            [fileManager removeItemAtPath:dest error:&error];
+        }
+        
+        if(![fileManager copyItemAtPath:src
+                                 toPath:dest
+                                  error:&error])
+        {
+            //TODO: Handle error
+            NSLog(@"Error: %@", error);
+            return;
+        }
+    }
+}
+
 - (void) zipProgress:(ZipProgress*)progress
 {
-	// COMMENTED OUT - since 'fetch' doesn't care about any of this
-	
-//	NSString* callbackId = [progress.context objectForKey:@"callbackId"];
-//	
-//	NSDictionary* jsDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[progress toDictionary], nil] 
-//													   forKeys:[NSArray arrayWithObjects:@"zipProgress", nil]];
-//	
-//	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsDict];
-//	[super writeJavascript:[pluginResult toSuccessCallbackString:callbackId]];
-	
-	DLog(@"%@ Progress: %llu of %llu", (progress.zip? @"Zip":@"Unzip"), progress.entryNumber, progress.entryTotal);
 }
 
 #pragma mark -
