@@ -187,6 +187,10 @@
                         {
                             "xml": "<feature name=\"AppLoader\"><param name=\"ios-package\" value=\"AppLoader\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PhoneGapBuildOauth\"><param name=\"ios-package\" value=\"CDVPhoneGapBuildOauth\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -255,6 +259,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "com.phonegap.plugins.apploader": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "com.phonegap.build.oauth": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

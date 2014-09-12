@@ -14,21 +14,9 @@ $(document).on('deviceready', function() {
 var access_token;
 var apps = {};
 
-$("#login-form").on('submit', function(e) {
-	e.preventDefault();
+// events
 
-	var email = $(this).find("#email").val(),
-			pass = $(this).find("#password").val();
-
-	cordova.exec(function(a) {
-		access_token = a.access_token;
-		getApps(a.access_token);
-	}, function(a) {
-		console.log("Auth failure: " + a.message);
-		alert('login failed');
-	}, "PhoneGapBuildOauth", "login", [email, pass]);
-
-});
+$("#login-form").on('submit', login);
 
 $("input[value='CONNECT']").on('click', function(e) {
 	e.preventDefault();
@@ -43,7 +31,9 @@ $('.back').click(function() {
 		cur.addClass('hidden');
 		prev.removeClass('hidden');
 	}
-})
+});
+
+// rendering
 
 function showView(sel) {
 	$('.view').addClass('hidden');
@@ -99,6 +89,23 @@ function renderApp() {
   $('.app a.link').click(browse);
 
   showView('.app');
+}
+
+// controller stuff
+
+function login(e) {
+	e.preventDefault();
+
+	var email = $(this).find("#email").val(),
+			pass = $(this).find("#password").val();
+
+	PhonegapBuildOauth.login(email, pass, function(a) {
+		access_token = a.access_token;
+		getApps(a.access_token);
+	}, function(a) {
+		console.log("Auth failure: " + a.message);
+		alert('login failed');
+	});
 }
 
 function browse() {
