@@ -280,17 +280,20 @@ function downloadZip(){
         function(fileSystem) {
             var fileTransfer = new FileTransfer();
             var uri = encodeURI(getAddress() + '/__api__/zip');
-    
+            var timeStamp = Math.round(+new Date()/1000);
+            var downloadPath = fileSystem.root.toURL() + 'app' + timeStamp + '.zip';
+            var dirPath =  fileSystem.root.toURL() + 'app' + timeStamp;
+
             fileTransfer.download(
                 uri,
-                fileSystem.root.toURL() + 'app.zip',
+                downloadPath,
                 function(entry) {
                     console.log("download complete: " + entry.toURL());
                     
-                    zip.unzip(fileSystem.root.toURL() + 'app.zip', fileSystem.root.toURL() +'/app', function(statusCode) {
+                    zip.unzip(downloadPath, dirPath, function(statusCode) {
                         if (statusCode === 0) {
                             console.log('[fileUtils] successfully extracted the update payload');
-                            window.location.href = fileSystem.root.toURL() +'/app/index.html'; 
+                            window.location.href = dirPath + '/index.html'; 
                         }
                         else {
                             console.error('[fileUtils] error: failed to extract update payload');
