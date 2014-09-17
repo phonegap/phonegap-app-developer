@@ -1,0 +1,11 @@
+<h2>{{ title }}</h2>
+<table>
+	<tr><td>Description</td><td>{{ description }}</td></tr>
+	<tr><td>Phonegap</td><td>{{ phonegap_version }}</td></tr>
+	<tr><td>Version</td><td>{{ version }}</td></tr>
+	{{ #repo }}
+	<tr><td>Repo</td><td><a class='link' href='#'>{{ repo }}</a></td></tr>
+	{{ /repo }}
+</table>
+<div class='btns'><input type='button' class='install' value='Install' data-id='{{ id }}'/><br/>
+<input type='button' class='run' value='Run' data-id='{{ id }}'/></div>

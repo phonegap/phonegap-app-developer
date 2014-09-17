@@ -3,6 +3,8 @@
 $(document).on('deviceready', function() {
 	// Add slight delay to allow DOM rendering to finish.
 	// Avoids flicker on slower devices.
+	addListeners();
+
 	setTimeout(function() {
    	// allow the screen to dim when returning from the served app
    	window.plugins.insomnia.allowSleepAgain();
@@ -10,28 +12,32 @@ $(document).on('deviceready', function() {
 	});
 });
 
-
 var access_token;
 var apps = {};
 
 // events
 
-$("#login-form").on('submit', login);
+function addListeners() {
 
-$("input[value='CONNECT']").on('click', function(e) {
-	e.preventDefault();
-	window.location.href='connect.html'; 
-	return false;
-});
+	$("#login-form").on('submit', login);
 
-$('.back').click(function() {
-	var cur = $('.view:not(.hidden)'),
-			prev = cur.prev('.view');
-	if (!!prev.length) {
-		cur.addClass('hidden');
-		prev.removeClass('hidden');
-	}
-});
+	$("input[value='CONNECT']").on('click', function(e) {
+		e.preventDefault();
+		window.location.href='connect.html'; 
+		return false;
+	});
+
+	$('.back').click(function() {
+		var cur = $('.view:not(.hidden)'),
+				prev = cur.prev('.view');
+		if (!!prev.length) {
+			cur.addClass('hidden');
+			prev.removeClass('hidden');
+		}
+	});
+
+}
+
 
 // rendering
 
@@ -58,38 +64,35 @@ function saveApps(appArray) {
 }
 
 function renderApps(appArray) {
-	var list = $(".apps ul").html("");
+	var html = "";
 
-	appArray.forEach(function(app) {
-		var img_url = "https://build.phonegap.com/api/v1/apps/" + app.id + "/icon?access_token=" + access_token;
-		list.append("<li style='background-image: url(\"" + img_url + "\")'>" + 
-			"<a href='#' data-id='" + app.id + "'>" + app.title + "</a></li>");
+	$.get('templates/app-li.html', function(template) {
+
+		$(".apps ul")
+			.html(Mustache.render(template, { apps: appArray, access_token: access_token }))
+			.find('a').click(renderApp);
+  	showView('.apps');
+
 	});
 
-	list.find('a').click(renderApp);
-  showView('.apps');
 }
 
 function renderApp() {
-	var app = apps[$(this).attr("data-id")],
-			html = "<h2>" + app.title + "</h2><table>";
+	var app = apps[$(this).attr("data-id")];
 
-	html += "<tr><td>Description</td><td>" + app.description + "</td></tr>";
-	html += "<tr><td>Phonegap</td><td>" + app.phonegap_version + "</td></tr>";
-	html += "<tr><td>Version</td><td>" + app.version + "</td></tr>";
-	if (app.repo)
-		html += "<tr><td>Repo</td><td><a class='link' href='#'>" + app.repo + "</a></td></tr>";
-	html += "</table>";
-	html += "<div class='btns'><input type='button' class='install' value='Install' data-id='" + app.id + "'/><br/>";
-	html += "<input type='button' class='run' value='Run' data-id='" + app.id + "'/></div>";
+	$.get('templates/app-view.html', function(template) {
 
-	$('.app .detail').html(html)
-  $('.app input.install').click(install);
-  $('.app input.run').click(run);
-  $('.app a.link').click(browse);
+    $('.app .detail').html(Mustache.render(template, app));
+	  $('.app input.install').click(install);
+	  $('.app input.run').click(run);
+	  $('.app a.link').click(browse);
 
-  showView('.app');
+	  showView('.app');
+	  comparePlugins(app.id);
+  });
+
 }
+
 
 // controller stuff
 
@@ -145,6 +148,34 @@ function getUrl(app_id) {
 	  	});
 	  }
 	});
+}
+
+function getPlugins(app_id, callback) {
+	$.ajax({
+	  dataType: "json",
+	  url:"https://build.phonegap.com/api/v1/apps/" + app_id + "/plugins?access_token=" + access_token,
+	  success: function(data) {
+
+	  	if (data.length) {
+
+	  		var app_plugins = data;
+	  		var available_plugins = cordova.require('cordova/plugin_list').metadata;
+
+	  		callback(app_plugins, available_plugins);
+
+	  		app_plugins.forEach(function(plugin) {
+	  			if (typeof available_plugins[plugin.name] == 'undefined') {
+	  				console.log(plugin.name + " unavailable");
+	  			} else if (available_plugins[plugin.name] != plugin.version) {
+	  				console.log(plugin.name + " version mismatch (" + available_plugins[plugin.name] + " vs " + plugin.version + ")");
+	  			}
+	  		});
+
+	  	}
+
+	  }
+	});
+
 }
 
 })();
