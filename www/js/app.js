@@ -293,7 +293,10 @@ function downloadZip(){
                     zip.unzip(downloadPath, dirPath, function(statusCode) {
                         if (statusCode === 0) {
                             console.log('[fileUtils] successfully extracted the update payload');
-                            window.location.href = dirPath + '/index.html'; 
+                            // copy www/cordova.js => dirPath/cordova.js
+                            // copy www/cordova_plugins.js => dirPath/cordova_plugins.js
+                            // copy www/plugins/**/* => dirPath/plugins/**/*
+                            window.location.href = dirPath + '/index.html';
                         }
                         else {
                             console.error('[fileUtils] error: failed to extract update payload');
