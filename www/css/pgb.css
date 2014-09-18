@@ -67,3 +67,14 @@ form#login-form div {
 .hidden {
     display:none;
 }
+.app-plugins,
+.plugins-info {
+    padding:10px;
+}
+.app-plugins td {
+    padding:0px;
+    font-size:12px;
+}
+.app-plugins .mismatch {
+    color:red;
+}

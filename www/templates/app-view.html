@@ -7,5 +7,37 @@
 	<tr><td>Repo</td><td><a class='link' href='#'>{{ repo }}</a></td></tr>
 	{{ /repo }}
 </table>
-<div class='btns'><input type='button' class='install' value='Install' data-id='{{ id }}'/><br/>
-<input type='button' class='run' value='Run' data-id='{{ id }}'/></div>
+
+<div class='btns'>
+	<input type='button' class='install' value='Install' data-id='{{ id }}'/><br/>
+	<input type='button' class='run' value='Run' data-id='{{ id }}'/>
+</div>
+
+<p class="plugins-info">This build of the Phonegap Developer App<br/>
+	{{#pg_version_mismatch}}
+		- is using a different version of Phonegap ({{pg_version}}) from this Phonegap Build App<br/>
+	{{/pg_version_mismatch}}	
+	{{#plugin_missing}}
+		- is missing at least one plugin used by this Phonegap Build App<br/>
+	{{/plugin_missing}}
+	{{#plugin_mismatch}}
+		- has at least one plugin mismatch with this Phonegap Build App<br/>
+	{{/plugin_mismatch}}
+	{{^plugin_missing}}{{^plugin_mismatch}}
+		- contains all plugins required by this Phonegap Build App<br/>
+	{{/plugin_mismatch}}{{/plugin_missing}}
+	<a href="#" class="show-details">Show plugin details</a>
+</p>
+
+<table class="app-plugins" style="display:none">
+	{{ #plugins }}
+	<tr {{ #mismatch }} class='mismatch' {{ /mismatch }}>
+		<td>{{ name }}</td>
+		<td>{{ version }}</td>
+		<td>{{ available_version }}</td>
+	</tr>
+	{{ /plugins }}
+	{{ ^plugins }}
+	<tr><td>App requires no plugins</td></tr>
+	{{ /plugins }}
+</table>

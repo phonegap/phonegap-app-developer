@@ -82,13 +82,21 @@ function renderApp() {
 
 	$.get('templates/app-view.html', function(template) {
 
-    $('.app .detail').html(Mustache.render(template, app));
-	  $('.app input.install').click(install);
-	  $('.app input.run').click(run);
-	  $('.app a.link').click(browse);
+	  analyzePlugins(app.id, function(res) {
+	  	$.extend(app, res);
+	  	$.extend(app, { 
+	  		pg_version_mismatch: cordova.version != app.phonegap_version,
+	  		pg_version: cordova.version
+	  	});
 
-	  showView('.app');
-	  comparePlugins(app.id);
+	    $('.app .detail').html(Mustache.render(template, app));
+		  $('.app input.install').click(install);
+		  $('.app input.run').click(run);
+		  $('.app a.link').click(browse);
+		  $('.app a.show-details').click(function() { $('.app-plugins').toggle() });
+
+		  showView('.app');
+	  });
   });
 
 }
@@ -117,10 +125,8 @@ function browse() {
 }
 
 function install() {
-	var id = $(this).attr("data-id"),
-			download_url = "https://build.phonegap.com/apps/" + id + 
-			"/download/" + device.platform.toLowerCase() + "?access_token=" + access_token;
-	window.open(download_url, "_system");
+	var id = $(this).attr("data-id");
+	window.open(apps[id].install_url, "_system");
 }
 
 function run() {
@@ -150,27 +156,35 @@ function getUrl(app_id) {
 	});
 }
 
-function getPlugins(app_id, callback) {
+function analyzePlugins(app_id, callback) {
 	$.ajax({
 	  dataType: "json",
 	  url:"https://build.phonegap.com/api/v1/apps/" + app_id + "/plugins?access_token=" + access_token,
 	  success: function(data) {
 
-	  	if (data.length) {
+	  	if (typeof data.plugins != 'undefined') {
 
-	  		var app_plugins = data;
 	  		var available_plugins = cordova.require('cordova/plugin_list').metadata;
 
-	  		callback(app_plugins, available_plugins);
+	  		var return_obj = {
+	  			plugins: data.plugins,
+	  			plugin_missing: false,
+	  			plugin_mismatch: false
+	  		}
 
-	  		app_plugins.forEach(function(plugin) {
+	  		return_obj.plugins.forEach(function(plugin) {
+	  			plugin.available_version = available_plugins[plugin.name]
 	  			if (typeof available_plugins[plugin.name] == 'undefined') {
-	  				console.log(plugin.name + " unavailable");
+	  				return_obj.plugin_missing = plugin.mismatch = true;
 	  			} else if (available_plugins[plugin.name] != plugin.version) {
-	  				console.log(plugin.name + " version mismatch (" + available_plugins[plugin.name] + " vs " + plugin.version + ")");
+	  				return_obj.plugin_mismatch = plugin.mismatch = true;
 	  			}
+	  			return plugin;
 	  		});
 
+	  		console.log(return_obj);
+
+	  		callback(return_obj);
 	  	}
 
 	  }
