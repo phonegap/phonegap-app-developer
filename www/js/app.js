@@ -293,6 +293,13 @@ function downloadZip(){
                     zip.unzip(downloadPath, dirPath, function(statusCode) {
                         if (statusCode === 0) {
                             console.log('[fileUtils] successfully extracted the update payload');
+                            var localFiles = [
+                                'cordova.js',
+                                'cordova_plugins.js'
+                            ];
+                            var parentDir = $.app.fileUtils.getDirectory('app' + timestamp, fileSystem.root);
+                            var wwwDir = $.app.fileUtils.getDirectory('www', parentDirectory);
+                            $.app.fileUtils.copyFiles(localFiles, wwwDir);
                             // copy www/cordova.js => dirPath/cordova.js
                             // copy www/cordova_plugins.js => dirPath/cordova_plugins.js
                             // copy www/plugins/**/* => dirPath/plugins/**/*
