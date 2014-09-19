@@ -73,29 +73,19 @@
             return deferred.promise;
         },
 
-        getDirectory: function(path, parentDir) {
-            var deferred = $q.defer();
-            if (!parentDir) {
-                this.getFileSystem()
-                    .then(function(fileSystem) {
-                        _getDirectory(fileSystem.root, path)
-                            .then(function(entry) {
-                                deferred.resolve(entry);
-                            })
-                            .catch(function(error){
-                                deferred.reject(error);
-                            });
-                    })
-            } else {
-                _getDirectory(parentDir, path)
-                    .then(function(entry) {
-                        deferred.resolve(entry);
-                    })
-                    .catch(function(error){
-                        deferred.reject(error);
+        getDirectory: function(path, parentDir, success, error) {
+            window.requestFileSystem(
+                LocalFileSystem.PERSISTENT,
+                0,
+                function(fileSystem) {
+                    fileSystem.root.getDirectory(path, { create: true, exclusive: false }, 
+                    function(dirEntry){
+                        success(dirEntry);
+                    }, function(){
+                        console.log('[fileUtils] error: failed to getDirectory');
+                        error();
                     });
-            }
-            return deferred.promise;
+                });
         },
 
         unzip: function (zipEntry, dirEntry) {
