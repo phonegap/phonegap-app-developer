@@ -298,22 +298,19 @@ function downloadZip(){
                                 'cordova_plugins.js'
                             ];
                             
-                            var parentDir = $.app.fileUtils.getDirectory('app' + timeStamp, fileSystem.root, 
-                                function(dirEntry){
-                                    var wwwDir = $.app.fileUtils.getDirectory('www', parentDir, 
-                                    function(wwwDirEntry){
-                                        console.log('got ' + wwwDirEntry);
-                                        $.app.fileUtils.copyFiles(localFiles, wwwDirEntry);
-                                        // copy www/cordova.js => dirPath/cordova.js
-                                        // copy www/cordova_plugins.js => dirPath/cordova_plugins.js
-                                        // copy www/plugins/**/* => dirPath/plugins/**/*
-                                        window.location.href = dirPath + '/index.html';
-                                    }, function(){
-                                        // error out - could not get wwwDir
-                                    });
-                                }, function(){
-                                    // error out - could not get parentDir
-                                });   
+                            var appDir = $.app.fileUtils.getDirectory('app' + timeStamp, 
+                                    function(appDirEntry){
+                                        $.app.fileUtils.copyFiles(localFiles, appDirEntry, function(){
+                                            // copy www/cordova.js => dirPath/cordova.js
+                                            // copy www/cordova_plugins.js => dirPath/cordova_plugins.js
+                                            // copy www/plugins/**/* => dirPath/plugins/**/*
+                                            
+                                            //var pluginsDir = 
+                                            window.location.href = dirPath + '/index.html';                                        
+                                        }, function(){
+                                            // error out
+                                        });
+                                    });   
                         }
                         else {
                             console.error('[fileUtils] error: failed to extract update payload');

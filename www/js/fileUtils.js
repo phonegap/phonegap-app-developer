@@ -73,7 +73,7 @@
             return deferred.promise;
         },
 
-        getDirectory: function(path, parentDir, success, error) {
+        getDirectory: function(path, success, error) {
             window.requestFileSystem(
                 LocalFileSystem.PERSISTENT,
                 0,
@@ -114,8 +114,12 @@
             return deferred.promise;
         },
 
-        copyFiles: function(fileList, destEntry) {
-            return copyFilesToWritableDirectory(fileList, destEntry);
+        copyDir: function(dir, destEntry, success) {
+            return copyDirToWritableDirectory(dir, destEntry, success);
+        },
+    
+        copyFiles: function(fileList, destEntry, success) {
+            return copyFilesToWritableDirectory(fileList, destEntry, success);
         },
 
         getNativePath: function(url) {
@@ -173,7 +177,12 @@
         return pathToWWW;
     }
 
-    function copyFilesToWritableDirectory(fileList, destinationDirectoryEntry) {
+    function copyDirToWritableDirectory(dir, destinationDirectoryEntry, success, error) {
+        var absolutePathToFile = getPathToWWWDir() + dir;
+        // need to scope this out
+    }
+    
+    function copyFilesToWritableDirectory(fileList, destinationDirectoryEntry, success, error) {
         var fileCount = 0,
             copyCount = 0;
 
@@ -188,7 +197,7 @@
                             console.log('[fileUtils] successfully CREATED the new file: [' + newFile.name + ']');
 
                             var fileTransfer = new FileTransfer();
-                            console.log('[fileUtils] copying file from: [' + absolutePathToFile + '] to: [' + newFile.fullPath + ']');
+                            console.log('[fileUtils] copying file from: [' + absolutePathToFile + '] to: [' + newFile.toURL() + ']');
                             fileTransfer.download(
                                 absolutePathToFile,
                                 newFile.toInternalURL(),
@@ -196,7 +205,7 @@
                                     //copy success
                                     copyCount++;
                                     console.log('[fileUtils] successfully COPIED the new file: [' + newFile.name + ']');
-                                    checkPosition();
+                                    checkPosition(success);
                                 },
                                 function(error) {
                                     console.log('[fileUtils][ERROR] failed to COPY the new file: [' + relativePathToFile +
@@ -214,11 +223,13 @@
             })();
         }
 
-        function checkPosition(position) {
+        function checkPosition(success) {
             // All done?
             fileCount++;
             if (fileCount === fileList.length) {
                 console.log('[fileUtils] successfully copied ' + copyCount + ' of ' + fileList.length + ' files.');
+                //alert();
+                success();
             }
         }
     }
