@@ -228,7 +228,6 @@
             fileCount++;
             if (fileCount === fileList.length) {
                 console.log('[fileUtils] successfully copied ' + copyCount + ' of ' + fileList.length + ' files.');
-                //alert();
                 success();
             }
         }

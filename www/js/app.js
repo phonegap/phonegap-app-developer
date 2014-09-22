@@ -289,7 +289,7 @@ function downloadZip(){
                 downloadPath,
                 function(entry) {
                     console.log("download complete: " + entry.toURL());
-                    
+
                     zip.unzip(downloadPath, dirPath, function(statusCode) {
                         if (statusCode === 0) {
                             console.log('[fileUtils] successfully extracted the update payload');
@@ -297,20 +297,14 @@ function downloadZip(){
                                 'cordova.js',
                                 'cordova_plugins.js'
                             ];
-                            
-                            var appDir = $.app.fileUtils.getDirectory('app' + timeStamp, 
-                                    function(appDirEntry){
-                                        $.app.fileUtils.copyFiles(localFiles, appDirEntry, function(){
-                                            // copy www/cordova.js => dirPath/cordova.js
-                                            // copy www/cordova_plugins.js => dirPath/cordova_plugins.js
-                                            // copy www/plugins/**/* => dirPath/plugins/**/*
-                                            
-                                            //var pluginsDir = 
-                                            window.location.href = dirPath + '/index.html';                                        
-                                        }, function(){
-                                            // error out
-                                        });
-                                    });   
+
+                            $.app.fileUtils.getDirectory('app' + timeStamp, function(appDirEntry){
+                                $.app.fileUtils.copyFiles(localFiles, appDirEntry, function(){
+                                    // copy www/plugins/**/* => dirPath/plugins/**/*
+                                }, function(){
+                                    // error out
+                                });
+                            });
                         }
                         else {
                             console.error('[fileUtils] error: failed to extract update payload');
