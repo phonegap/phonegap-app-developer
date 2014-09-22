@@ -300,10 +300,18 @@ function downloadZip(){
 
                             $.app.fileUtils.getDirectory('app' + timeStamp, function(appDirEntry){
                                 $.app.fileUtils.copyFiles(localFiles, appDirEntry, function(){
-                                    // copy www/plugins/**/* => dirPath/plugins/**/*
-                                    window.location.href = dirPath + '/index.html';
+                                   window.resolveLocalFileSystemURL(cordova.file.applicationDirectory + 'www/plugins', function(pluginsEntry){
+                                        pluginsEntry.copyTo(appDirEntry, 'plugins', function(){
+                                            // success - plugins folder copied over
+                                            window.location.href = dirPath + '/index.html';
+                                        }, function(){
+                                            // error out copying over plugins folder
+                                        });
+                                    }, function(){
+                                        // error out getting plugins folder
+                                    });
                                 }, function(){
-                                    // error out
+                                    // error out copying over localFiles
                                 });
                             });
                         }
