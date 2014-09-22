@@ -301,6 +301,7 @@ function downloadZip(){
                             $.app.fileUtils.getDirectory('app' + timeStamp, function(appDirEntry){
                                 $.app.fileUtils.copyFiles(localFiles, appDirEntry, function(){
                                     // copy www/plugins/**/* => dirPath/plugins/**/*
+                                    window.location.href = dirPath + '/index.html';
                                 }, function(){
                                     // error out
                                 });
