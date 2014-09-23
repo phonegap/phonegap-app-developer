@@ -77,3 +77,8 @@
 * CB-6478: Fix exception when try to record audio file on windows 8
 * CB-6477: Add musicLibrary and microphone capabilities to windows 8 platform
 * CB-6491 add CONTRIBUTING.md
+
+### 0.2.12 (Aug 06, 2014)
+* CB-6127 Updated translations for docs
+* ios: Make it easier to play media and record audio simultaneously
+* code #s for MediaError

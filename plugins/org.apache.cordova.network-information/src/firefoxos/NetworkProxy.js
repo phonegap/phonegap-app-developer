@@ -86,4 +86,4 @@ module.exports = {
   }
 };
 
-require("cordova/firefoxos/commandProxy").add("NetworkStatus", module.exports);
+require("cordova/exec/proxy").add("NetworkStatus", module.exports);

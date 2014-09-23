@@ -20,7 +20,8 @@
 #ifndef _VIBRATION_H_SFAFKNVX3456
 #define _VIBRATION_H_SFAFKNVX3456
 
-#include <QtQuick>
+#include <QtCore>
+#include <QFeedbackHapticsEffect>
 #include <cplugin.h>
 
 class Vibration: public CPlugin {
@@ -42,6 +43,12 @@ public:
     }
 public slots:
     void vibrate(int, int, int mills);
+    void cancelVibration(int, int);
+    void vibrateWithPattern(int, int, const QList<int> &pattern, int);
+
+private:
+    QList<QSharedPointer<QFeedbackEffect>> _effects;
+    QList<QSharedPointer<QTimer>> _timers;
 };
 
 #endif

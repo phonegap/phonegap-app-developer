@@ -38,4 +38,4 @@ var Accelerometer = {
 };
 
 module.exports = Accelerometer;
-require('cordova/firefoxos/commandProxy').add('Accelerometer', Accelerometer);
+require('cordova/exec/proxy').add('Accelerometer', Accelerometer);

@@ -31,7 +31,7 @@ Inappbrowser::Inappbrowser(Cordova *cordova): CPlugin(cordova), _eventCb(0) {
 }
 
 const char code[] = "\
-var component, object;                                                  \
+var component;                                                          \
 function createObject() {                                               \
     component = Qt.createComponent(%1);                                 \
     if (component.status == Component.Ready)                            \
@@ -40,7 +40,7 @@ function createObject() {                                               \
         component.statusChanged.connect(finishCreation);                \
 }                                                                       \
 function finishCreation() {                                             \
-    CordovaWrapper.object = component.createObject(root,                \
+    CordovaWrapper.global.inappbrowser = component.createObject(root,   \
         {root: root, cordova: cordova, url1: %2});                      \
 }                                                                       \
 createObject()";
@@ -50,45 +50,43 @@ const char LOADSTART_EVENT[] = "'loadstart'";
 const char LOADSTOP_EVENT[] = "'loadstop'";
 const char LOADERROR_EVENT[] = "'loaderror'";
 
-void Inappbrowser::open(int cb, int, const QString &url, const QString &windowName, const QString &windowFeatures) {
+void Inappbrowser::open(int cb, int, const QString &url, const QString &, const QString &) {
     assert(_eventCb == 0);
 
     _eventCb = cb;
 
     QString path = m_cordova->get_app_dir() + "/../qml/InAppBrowser.qml";
-
-    // TODO: relative url
     QString qml = QString(code)
       .arg(CordovaInternal::format(path)).arg(CordovaInternal::format(url));
     m_cordova->execQML(qml);
 }
 
 void Inappbrowser::show(int, int) {
-    m_cordova->execQML("CordovaWrapper.object.visible = true");
+    m_cordova->execQML("CordovaWrapper.global.inappbrowser.visible = true");
 }
 
 void Inappbrowser::close(int, int) {
-    m_cordova->execQML("CordovaWrapper.object.destroy()");
+    m_cordova->execQML("CordovaWrapper.global.inappbrowser.destroy()");
     this->callbackWithoutRemove(_eventCb, EXIT_EVENT);
     _eventCb = 0;
 }
 
-void Inappbrowser::injectStyleFile(int cb, int, const QString&, bool) {
+void Inappbrowser::injectStyleFile(int, int, const QString&, bool) {
     // TODO:
     qCritical() << "unimplemented " << __PRETTY_FUNCTION__;
 }
 
-void Inappbrowser::injectStyleCode(int cb, int, const QString&, bool) {
+void Inappbrowser::injectStyleCode(int, int, const QString&, bool) {
     // TODO:
     qCritical() << "unimplemented " << __PRETTY_FUNCTION__;
 }
 
-void Inappbrowser::injectScriptFile(int cb, int, const QString&, bool) {
+void Inappbrowser::injectScriptFile(int, int, const QString&, bool) {
     // TODO:
     qCritical() << "unimplemented " << __PRETTY_FUNCTION__;
 }
 
-void Inappbrowser::injectScriptCode(int cb, int, const QString&, bool) {
+void Inappbrowser::injectScriptCode(int, int, const QString&, bool) {
     // TODO:
     qCritical() << "unimplemented " << __PRETTY_FUNCTION__;
 }

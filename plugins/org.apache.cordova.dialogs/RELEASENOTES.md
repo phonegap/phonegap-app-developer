@@ -78,3 +78,12 @@
 * Added check for isFinishing() on the parent activity to prevent crashes when trying to display dialogs when activity is in this phase of it's lifecycle
 * CB-4966 Dialogs are in window now No need to add anything to manifest or index.html
 * Removing FirefoxOS Quirks * no need to add special permission (it's different API with the same name) * notification.css is added automatically
+
+### 0.2.9 (Aug 06, 2014)
+* ubuntu: pass proper arguments to prompt callback
+* ubuntu: use TextField instead of TextInput
+* ubuntu: proper message escaping before passing to qml
+* **FFOS** update notification.js
+* CB-6127 Updated translations for docs
+* android: Explicitly apply default theme to dialogs
+* Fix Beep exception on Android when no argument passed

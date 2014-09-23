@@ -62,6 +62,8 @@ Se c'è un errore nell'acquisizione della lingua, poi la `errorCallback` viene e
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -101,6 +103,8 @@ Se c'è un errore di ottenere le impostazioni locali, poi il `errorCallback` vie
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -150,6 +154,8 @@ Il `options.selector` può essere `date` , `time` o`date and time`.
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -168,6 +174,11 @@ Se il browser è impostato per la `en_US` locale, questa viene visualizzata una 
 ### Windows Phone 8 stranezze
 
 *   Il `formatLength` opzione supporta solo `short` e `full` i valori.
+
+### Firefox OS stranezze
+
+*   `formatLength`non è distinguere `long` e`full` 
+*   solo un metodo di visualizzazione data (non `long` o `full` versione)
 
 ## navigator.globalization.getCurrencyPattern
 
@@ -202,6 +213,7 @@ Se c'è un errore, ottenendo il pattern, allora il `errorCallback` viene eseguit
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
 *   iOS
 
 ### Esempio
@@ -258,6 +270,8 @@ Il valore di `options.item` può essere `months` o`days`.
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -275,6 +289,10 @@ Quando il browser è impostato per la `en_US` locale, in questo esempio viene vi
         { type: 'wide', item: 'months' }
     );
     
+
+### Firefox OS stranezze
+
+*   `options.type`supporta un `genitive` valore, importante per alcune lingue
 
 ## navigator.globalization.getDatePattern
 
@@ -309,6 +327,7 @@ time`.
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -352,6 +371,8 @@ Se c'è un errore, ottenendo il pattern, allora il `errorCallback` viene eseguit
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -405,6 +426,7 @@ Il `options.type` può essere `decimal` , `percent` , o`currency`.
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -463,6 +485,8 @@ Se c'è un errore di lettura della data, allora il `errorCallback` esegue. Previ
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -501,6 +525,7 @@ Il `options.type` può essere 'decimale', '%' o 'valuta'.
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -557,6 +582,8 @@ Se c'è un errore di parsing della stringa data, allora il `errorCallback` viene
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -602,6 +629,7 @@ Il `options.type` può essere `decimal` , `percent` , o`currency`.
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -638,6 +666,8 @@ Questo oggetto è creato e popolato da Cordova e restituito una richiamata in ca
 
 *   Amazon fuoco OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 
 ### Esempio

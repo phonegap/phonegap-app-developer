@@ -68,3 +68,10 @@
 * pass by only coords
 * proper implementation for firefoxos
 * call FxOS's getCurrentProxy added
+
+### 0.3.9 (Aug 06, 2014)
+* **FFOS** update GeolocationProxy.js
+* CB-7187 ios: Add explicit dependency on CoreLocation.framework
+* CB-7187 Delete unused #import of CDVShared.h
+* CB-6127 Updated translations for docs
+* ios: Changed distanceFilter from none to 5 meters, prevents it from spamming the callback even though nothing changed.

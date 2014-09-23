@@ -32,4 +32,4 @@ module.exports = {
     }
 };
 
-require("cordova/firefoxos/commandProxy").add("Vibration", module.exports);
+require("cordova/exec/proxy").add("Vibration", module.exports);

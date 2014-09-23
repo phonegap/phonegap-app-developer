@@ -1,5 +1,5 @@
 {
-    "version": "0.2.9",
+    "version": "0.2.10",
     "name": "org.apache.cordova.console",
     "cordova_name": "Console",
     "description": "Cordova Console Plugin",

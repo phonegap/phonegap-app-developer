@@ -43,15 +43,13 @@ This plugin displays and hides a splash screen during application launch.
 
 ### Android Quirks
 
-In your config.xml, you need to add the following preference
+In your config.xml, you need to add the following preferences:
 
-`<preference name="splashscreen" value="foo" />`
+`<preference name="SplashScreen" value="foo" />`
+`<preference name="SplashScreenDelay" value="10000" />`
 
-Where foo is the name of the splashscreen file. Preferably a 9 patch file. Make sure to add your splashcreen files to your res/xml directory under the appropriate folders.
-
-For Android, you also have to edit your projects main java file. You must add a second parameter representing a time delay to your super.loadUrl.
-
-`super.loadUrl(Config.getStartUrl(), 10000);`
+Where foo is the name of the splashscreen file, preferably a 9 patch file. Make sure to add your splashcreen files to your res/xml directory under the appropriate folders. The second parameter represents how long the splashscreen will appear in milliseconds. It defaults to 3000 ms. See [Icons and Splash Screens](http://cordova.apache.org/docs/en/edge/config_ref_images.md.html)
+for more information.
 
 ## splashscreen.hide
 

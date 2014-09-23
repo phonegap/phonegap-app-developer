@@ -39,5 +39,5 @@ var Compass = {
 var firefoxos = require('cordova/platform');
 
 module.exports = Compass;
-require('cordova/firefoxos/commandProxy').add('Compass', Compass);
+require('cordova/exec/proxy').add('Compass', Compass);
 

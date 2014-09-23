@@ -33,7 +33,7 @@ base64-encoded `String`, or as the URI for the image file.  The method
 itself returns a `CameraPopoverHandle` object that can be used to
 reposition the file selection popover.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
 
 ### Description
 
@@ -169,9 +169,9 @@ Optional parameters to customize the camera settings.
 
 ### Options
 
-- __quality__: Quality of the saved image, expressed as a range of 0-100, where 100 is typically full resolution with no loss from file compression. _(Number)_ (Note that information about the camera's resolution is unavailable.)
+- __quality__: Quality of the saved image, expressed as a range of 0-100, where 100 is typically full resolution with no loss from file compression. The default is 50. _(Number)_ (Note that information about the camera's resolution is unavailable.)
 
-- __destinationType__: Choose the format of the return value. Defined in `navigator.camera.DestinationType` _(Number)_
+- __destinationType__: Choose the format of the return value. The default is FILE_URI. Defined in `navigator.camera.DestinationType` _(Number)_
 
         Camera.DestinationType = {
             DATA_URL : 0,      // Return image as base64-encoded string
@@ -179,7 +179,7 @@ Optional parameters to customize the camera settings.
             NATIVE_URI : 2     // Return image native URI (e.g., assets-library:// on iOS or content:// on Android)
         };
 
-- __sourceType__: Set the source of the picture.  Defined in `navigator.camera.PictureSourceType` _(Number)_
+- __sourceType__: Set the source of the picture. The default is CAMERA. Defined in `navigator.camera.PictureSourceType` _(Number)_
 
         Camera.PictureSourceType = {
             PHOTOLIBRARY : 0,
@@ -189,7 +189,7 @@ Optional parameters to customize the camera settings.
 
 - __allowEdit__: Allow simple editing of image before selection. _(Boolean)_
 
-- __encodingType__: Choose the  returned image file's encoding.  Defined in `navigator.camera.EncodingType` _(Number)_
+- __encodingType__: Choose the  returned image file's encoding. Default is JPEG. Defined in `navigator.camera.EncodingType` _(Number)_
 
         Camera.EncodingType = {
             JPEG : 0,               // Return JPEG encoded image
@@ -214,7 +214,7 @@ Optional parameters to customize the camera settings.
 
 - __popoverOptions__: iOS-only options that specify popover location in iPad.  Defined in `CameraPopoverOptions`.
 
-- __cameraDirection__: Choose the camera to use (front- or back-facing).  Defined in `navigator.camera.Direction` _(Number)_
+- __cameraDirection__: Choose the camera to use (front- or back-facing). The default is BACK. Defined in `navigator.camera.Direction` _(Number)_
 
         Camera.Direction = {
             BACK : 0,      // Use the back-facing camera
@@ -240,8 +240,6 @@ Optional parameters to customize the camera settings.
 ### BlackBerry 10 Quirks
 
 - Ignores the `quality` parameter.
-
-- Ignores the `sourceType` parameter.
 
 - Ignores the `allowEdit` parameter.
 
@@ -275,7 +273,7 @@ Optional parameters to customize the camera settings.
 
 - Set `quality` below 50 to avoid memory errors on some devices.
 
-- When using `destinationType.FILE_URI`, photos are saved in the application's temporary directory.  You may delete the contents of this directory using the `navigator.fileMgr` APIs if storage space is a concern.
+- When using `destinationType.FILE_URI`, photos are saved in the application's temporary directory. The contents of the application's temporary directory is deleted when the application ends.
 
 ### Tizen Quirks
 

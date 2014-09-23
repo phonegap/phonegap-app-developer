@@ -168,4 +168,4 @@ var IABExecs = {
 
 module.exports = IABExecs;
 
-require('cordova/firefoxos/commandProxy').add('InAppBrowser', module.exports);
+require('cordova/exec/proxy').add('InAppBrowser', module.exports);

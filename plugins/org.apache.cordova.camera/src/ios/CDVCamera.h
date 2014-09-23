@@ -84,7 +84,6 @@ typedef NSUInteger CDVMediaType;
  *	quality: integer between 1 and 100
  */
 - (void)takePicture:(CDVInvokedUrlCommand*)command;
-- (void)postImage:(UIImage*)anImage withFilename:(NSString*)filename toUrl:(NSURL*)url;
 - (void)cleanup:(CDVInvokedUrlCommand*)command;
 - (void)repositionPopover:(CDVInvokedUrlCommand*)command;
 

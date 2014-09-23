@@ -82,3 +82,25 @@
 * CB-6212: [iOS] fix warnings compiled under arm64 64-bit
 * CB-6460: Update license headers
 * Add NOTICE file
+
+### 0.2.11 (Jul 2, 2014)
+* CB-6127 Spanish and French Translations added. Github close #25
+* Remove deprecated symbols for iOS < 6
+* CB-6797 Add license
+* [wp8] now pupulates contact photos
+* Update license headers format
+* Add pickContact functionality to cordova contacts plugin
+* CB-5416 - Adding support for auto-managing permissions
+* CB-6682 move windows8 command proxy into it's missing platform tag. This closes #30
+* Add ContactError codes to index.md doc (closes #28)
+* CB-6491 add CONTRIBUTING.md
+* Docs typo: navigator.contacts.length -> contacts.length
+* CB-5698 ios: Check to see if photoData exists before using
+* CB-7003 android: Make pickContact pick correct contact on Android 4.3 and 4.4.3
+
+### 0.2.12 (Aug 06, 2014)
+* fixes .find method when 'options' param is not passed. Will return all contacts on missing 'options' param
+* [FFOS] update ContactsProxy.js
+* Removing a stray unicode character
+* CB-6127 Updated translations for docs
+* CB-5698 ios: Check to see if photoData exists before using

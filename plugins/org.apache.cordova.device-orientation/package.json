@@ -1,5 +1,5 @@
 {
-    "version": "0.3.7",
+    "version": "0.3.8",
     "name": "org.apache.cordova.device-orientation",
     "cordova_name": "Device Orientation",
     "description": "Cordova Device Orientation Plugin",

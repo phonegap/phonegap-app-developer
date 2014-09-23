@@ -62,6 +62,8 @@ BCP 47 규격 언어 식별자 태그를 반환 합니다는 `successCallback` �
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 8
 
@@ -101,6 +103,8 @@ BCP 47 준수 로캘 식별자 문자열을 반환 합니다에 `successCallback
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 8
 
@@ -150,6 +154,8 @@ BCP 47 준수 로캘 식별자 문자열을 반환 합니다에 `successCallback
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 8
 
@@ -168,6 +174,11 @@ BCP 47 준수 로캘 식별자 문자열을 반환 합니다에 `successCallback
 ### Windows Phone 8 단점
 
 *   `formatLength`만 지원 옵션 `short` 및 `full` 값.
+
+### 파이어 폭스 OS 단점
+
+*   `formatLength`구별 하지 `long` 및`full` 
+*   날짜를 표시 하는 하나의 방법을 (아무 `long` 또는 `full` 버전)
 
 ## navigator.globalization.getCurrencyPattern
 
@@ -202,6 +213,7 @@ BCP 47 준수 로캘 식별자 문자열을 반환 합니다에 `successCallback
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
 *   iOS
 
 ### 예를 들어
@@ -258,6 +270,8 @@ BCP 47 준수 로캘 식별자 문자열을 반환 합니다에 `successCallback
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 8
 
@@ -275,6 +289,10 @@ BCP 47 준수 로캘 식별자 문자열을 반환 합니다에 `successCallback
         { type: 'wide', item: 'months' }
     );
     
+
+### 파이어 폭스 OS 단점
+
+*   `options.type`지원 한 `genitive` 값, 일부 언어에 대 한 중요 한
 
 ## navigator.globalization.getDatePattern
 
@@ -309,6 +327,7 @@ time`.
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
 *   iOS
 *   Windows Phone 8
 
@@ -352,6 +371,8 @@ time`.
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 8
 
@@ -405,6 +426,7 @@ time`.
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
 *   iOS
 *   Windows Phone 8
 
@@ -463,6 +485,8 @@ time`.
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 8
 
@@ -501,6 +525,7 @@ time`.
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
 *   iOS
 *   Windows Phone 8
 
@@ -557,6 +582,8 @@ time`.
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 8
 
@@ -602,6 +629,7 @@ time`.
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
 *   iOS
 *   Windows Phone 8
 
@@ -638,6 +666,8 @@ time`.
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 
 ### 예를 들어

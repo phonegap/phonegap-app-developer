@@ -69,3 +69,8 @@
 * added firefoxos version
 * CB-6800 Add license
 * CB-6491 add CONTRIBUTING.md
+
+### 0.2.11 (Aug 06, 2014)
+* [FFOS] update DeviceProxy.js
+* CB-6127 Updated translations for docs
+* Use Windows system calls to get better info

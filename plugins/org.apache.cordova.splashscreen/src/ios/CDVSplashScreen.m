@@ -138,18 +138,22 @@
 
     if (CDV_IsIPhone5()) {
         imageName = [imageName stringByAppendingString:@"-568h"];
-    } else if (CDV_IsIPad() && isOrientationLocked) {
-        switch (orientation) {
-            case UIInterfaceOrientationLandscapeLeft:
-            case UIInterfaceOrientationLandscapeRight:
-                imageName = [imageName stringByAppendingString:@"-Landscape"];
-                break;
+    } else if (CDV_IsIPad()) {
+        if (isOrientationLocked) {
+            imageName = [imageName stringByAppendingString:(supportsLandscape ? @"-Landscape" : @"-Portrait")];
+        } else {
+            switch (orientation) {
+                case UIInterfaceOrientationLandscapeLeft:
+                case UIInterfaceOrientationLandscapeRight:
+                    imageName = [imageName stringByAppendingString:@"-Landscape"];
+                    break;
 
-            case UIInterfaceOrientationPortrait:
-            case UIInterfaceOrientationPortraitUpsideDown:
-            default:
-                imageName = [imageName stringByAppendingString:@"-Portrait"];
-                break;
+                case UIInterfaceOrientationPortrait:
+                case UIInterfaceOrientationPortraitUpsideDown:
+                default:
+                    imageName = [imageName stringByAppendingString:@"-Portrait"];
+                    break;
+            }
         }
     }
 

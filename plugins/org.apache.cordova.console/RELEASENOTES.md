@@ -49,3 +49,6 @@
 * CB-6848 Add Android quirk, list applicable platforms
 * CB-6796 Add license
 * CB-6491 add CONTRIBUTING.md
+
+### 0.2.10 (Aug 06, 2014)
+* CB-6127 Updated translations for docs

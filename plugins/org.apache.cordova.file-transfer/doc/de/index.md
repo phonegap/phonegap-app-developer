@@ -30,12 +30,15 @@ Dieses Plugin ermöglicht Ihnen zum Hochladen und Herunterladen von Dateien.
 
 *   Amazon Fire OS
 *   Android
-*   BlackBerry 10 *
+*   BlackBerry 10
+*   Firefox OS **
 *   iOS
 *   Windows Phone 7 und 8 *
 *   Windows 8 *
 
 * *Unterstützen nicht `onprogress` noch `abort()` *
+
+** *Unterstützen keine `onprogress` *
 
 # FileTransfer
 
@@ -65,8 +68,6 @@ Das `FileTransfer` Objekt bietet eine Möglichkeit zum Hochladen von Dateien, di
 
 *   **ErrorCallback**: ein Rückruf, der ausgeführt wird, tritt ein Fehler beim Abrufen der `Metadata` . Aufgerufene mit einem `FileTransferError` Objekt. *(Funktion)*
 
-*   **TrustAllHosts**: Optionaler Parameter, wird standardmäßig auf `false` . Wenn legen Sie auf `true` , es akzeptiert alle Sicherheitszertifikate. Dies ist nützlich, da Android selbstsignierte Zertifikate ablehnt. Nicht für den produktiven Einsatz empfohlen. Auf Android und iOS unterstützt. *(Boolean)*
-
 *   **Optionen**: optionale Parameter *(Objekt)*. Gültige Schlüssel:
     
     *   **FileKey**: der Name des Form-Elements. Wird standardmäßig auf `file` . (DOM-String und enthält)
@@ -75,6 +76,8 @@ Das `FileTransfer` Objekt bietet eine Möglichkeit zum Hochladen von Dateien, di
     *   **Params**: eine Reihe von optionalen Schlüssel/Wert-Paaren in der HTTP-Anforderung übergeben. (Objekt)
     *   **ChunkedMode**: ob die Daten in "Chunked" streaming-Modus hochladen. Wird standardmäßig auf `true` . (Boolean)
     *   **Header**: eine Karte von Header-Name-Header-Werte. Verwenden Sie ein Array, um mehr als einen Wert anzugeben. (Objekt)
+
+*   **TrustAllHosts**: Optionaler Parameter, wird standardmäßig auf `false` . Wenn legen Sie auf `true` , es akzeptiert alle Sicherheitszertifikate. Dies ist nützlich, da Android selbstsignierte Zertifikate ablehnt. Nicht für den produktiven Einsatz empfohlen. Auf Android und iOS unterstützt. *(Boolean)*
 
 ### Beispiel
 
@@ -192,7 +195,7 @@ A `FileUploadResult` -Objekt wird an den Erfolg-Rückruf des übergeben die `Fil
         uri,
         fileURL,
         function(entry) {
-            console.log("download complete: " + entry.fullPath);
+            console.log("download complete: " + entry.toURL());
         },
         function(error) {
             console.log("download error source " + error.source);
@@ -252,12 +255,15 @@ A `FileTransferError` Objekt wird an eine Fehler-Callback übergeben, wenn ein F
 
 *   **HTTP_STATUS**: HTTP-Statuscode. Dieses Attribut ist nur verfügbar, wenn ein Response-Code aus der HTTP-Verbindung eingeht. (Anzahl)
 
+*   **Ausnahme**: entweder e.getMessage oder e.toString (String)
+
 ### Konstanten
 
-*   `FileTransferError.FILE_NOT_FOUND_ERR`
-*   `FileTransferError.INVALID_URL_ERR`
-*   `FileTransferError.CONNECTION_ERR`
-*   `FileTransferError.ABORT_ERR`
+*   1 = `FileTransferError.FILE_NOT_FOUND_ERR`
+*   2 = `FileTransferError.INVALID_URL_ERR`
+*   3 = `FileTransferError.CONNECTION_ERR`
+*   4 = `FileTransferError.ABORT_ERR`
+*   5 = `FileTransferError.NOT_MODIFIED_ERR`
 
 ## Hinweise rückwärts Kompatibilität
 

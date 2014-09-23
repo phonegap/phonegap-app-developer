@@ -19,7 +19,7 @@
 #
 -->
 # Release Notes
-
+ 
 ### 0.2.1 (Sept 5, 2013)
 * [CB-4656] Don't add newlines in data urls within readAsDataUrl.
 * [CB-4514] Making DirectoryCopy Recursive
@@ -171,7 +171,7 @@
 * fixed setMetadata() to use the formatted fullPath
 * corrected typo which leads to a "comma expression"
 * CB-4952: ios: Resolve symlinks in file:// URLs
-* Add docs about the extraFileSystems <preference>
+* Add docs about the extraFileSystems preference
 * CB-6460: Update license headers
 
 ### 1.2.0 (Jun 05, 2014)
@@ -188,8 +188,8 @@
 * Small wording tweaks
 * Fixed toURL() toInternalURL() information in the doku
 * ios: Don't fail a write of zero-length payload.
-* CB-285 Docs for cordova.file.*Directory properties
-* CB-285 Add cordova.file.*Directory properties for iOS & Android
+* CB-285 Docs for cordova.file.\*Directory properties
+* CB-285 Add cordova.file.\*Directory properties for iOS & Android
 * CB-3440 [BlackBerry10] Proxy based implementation
 * Fix typo in docs "app-bundle" -> "bundle"
 * CB-6583 ios: Fix failing to create entry when space in parent path
@@ -203,3 +203,43 @@
 * Add NOTICE file
 * CB-6114 Updated version and RELEASENOTES.md for release 1.0.1
 * CB-5980 Updated version and RELEASENOTES.md for release 1.0.0
+
+### 1.2.1
+* CB-6922 Fix inconsistent handling of lastModifiedDate and modificationTime
+* CB-285: Document filesystem root properties
+
+### 1.3.0 (Aug 06, 2014)
+* **FFOS** Remove unsupported paths from requestAllPaths
+* **FFOS** Support for resolve URI, request all paths and local app directory.
+* CB-4263 set ready state to done before onload
+* CB-7167 [BlackBerry10] copyTo - return wrapped entry rather than native
+* CB-7167 [BlackBerry10] Add directory support to getFileMetadata
+* CB-7167 [BlackBerry10] Fix tests detection of blob support (window.Blob is BlobConstructor object)
+* CB-7161 [BlackBerry10] Add file system directory paths
+* CB-7093 Create separate plugin.xml for new-style tests
+* CB-7057 Docs update: elaborate on what directories are for
+* CB-7093: Undo the effects of an old bad S&R command
+* CB-7093: Remove a bunch of unneeded log messages
+* CB-7093: Add JS module to plugin.xml file for auto-tests
+* CB-7093 Ported automated file tests
+* **WINDOWS** remove extra function closure, not    needed
+* **WINDOWS** remove check for undefined fail(), it is defined by the proxy and always exists
+* **WINDOWS** re-apply readAsBinaryString and readAsArrayBuffer
+* **WINDOWS** Moved similar calls to be the same calls, aliased long namespaced functions
+* CB-6127 Updated translations for docs.
+* CB-6571 Fix getParentForLocalURL to work correctly with directories with trailing '/' (This closes #58)
+* UTTypeCopyPreferredTagWithClass returns nil mimetype for css when there is no network
+* updated spec links in docs ( en only )
+* CB-6571 add trailing space it is missing in DirectoryEnty constructor.
+* CB-6980 Fixing filesystem:null property in Entry
+* Add win8 support for readAsBinaryString and readAsArrayBuffer
+* [FFOS] Update FileProxy.js
+* CB-6940: Fixing up commit from dzeims
+* CB-6940: Android: cleanup try/catch exception handling
+* CB-6940: context.getExternal* methods return null if sdcard isn't in mounted state, causing exceptions that prevent startup from reaching readystate
+* Fix mis-handling of filesystem reference in Entry.moveTo ('this' used in closure).
+* CB-6902: Use File.lastModified rather than .lastModifiedDate
+* CB-6922: Remove unused getMetadata native code
+* CB-6922: Use getFileMetadata consistently to get metadata
+* changed fullPath to self.rootDocsPath
+* CB-6890: Fix pluginManager access for 4.0.x branch

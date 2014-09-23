@@ -22,7 +22,7 @@
 xmlns:rim="http://www.blackberry.com/ns/widgets"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="org.apache.cordova.geolocation"
-      version="0.3.8">
+      version="0.3.9">
 
     <name>Geolocation</name>
     <description>Cordova Geolocation Plugin</description>
@@ -103,7 +103,8 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 	        </feature>
         </config-file>
         <header-file src="src/ios/CDVLocation.h" />
-	    <source-file src="src/ios/CDVLocation.m" />
+        <source-file src="src/ios/CDVLocation.m" />
+        <framework src="CoreLocation.framework" />
     </platform>
 
     <!-- blackberry10 -->

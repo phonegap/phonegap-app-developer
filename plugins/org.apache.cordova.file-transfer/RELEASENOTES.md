@@ -95,3 +95,21 @@
 * CB-6494 android: Fix upload of KitKat content URIs
 * Upleveled from android port with following commits: 3c1ff16 Andrew Grieve - CB-5762 android: Fix lengthComputable set wrong for gzip downloads 8374b3d Colin Mahoney - CB-5631 Removed SimpleTrackingInputStream.read(byte[] buffer) 6f91ac3 Bas Bosman - CB-4907 Close stream when we're finished with it 651460f Christoph Neumann - CB-6000 Nginx rejects Content-Type without a space before "boundary". 35f80e4 Ian Clelland - CB-6050: Use instance method on actual file plugin object to get FileEntry to return on download
 * CB-5980 Updated version and RELEASENOTES.md for release 0.4.1
+
+### 0.4.5
+
+### 0.4.5 (Aug 06, 2014)
+* Upload parameters out of order
+* **FirefoxOS** initial implementation
+* CB-6781: Expose FileTransferError.exception to application
+* CB-6928: Add new error code to documentation
+* CB-6928: Handle 304 status code
+* CB-6928: Open output stream only if it's necessary.
+* [BlackBerry10] Minor doc correction
+* CB-6127 Updated translations for docs
+* [Windows8] upload uses the provided fileName or the actual fileName
+* CB-2420 [Windows8] honor fileKey and param options. This closes #15
+* CB-6781: Update new docs to match AlexNennker's changes in PR30
+* CB-6781: Continue previous commit with one new instance (This closes #30)
+* CB-6781: add the exception text to the error object
+* CB-6890: Fix pluginManager access for 4.0.x branch

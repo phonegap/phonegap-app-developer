@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="org.apache.cordova.file"
-      version="1.2.0">
+      version="1.3.0">
     <name>File</name>
     <description>Cordova File Plugin</description>
     <license>Apache 2.0</license>
@@ -278,6 +278,9 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <js-module src="www/fileSystems-roots.js" name="fileSystems-roots">
             <runs/>
         </js-module>
+        <js-module src="www/fileSystemPaths.js" name="fileSystemPaths">
+            <merges target="cordova" />
+        </js-module>
         <js-module src="www/blackberry10/copyTo.js" name="copyToProxy" />
         <js-module src="www/blackberry10/getDirectory.js" name="getDirectoryProxy" />
         <js-module src="www/blackberry10/getFile.js" name="getFileProxy" />
@@ -298,7 +301,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         <js-module src="www/blackberry10/setMetadata.js" name="setMetadataProxy" />
         <js-module src="www/blackberry10/truncate.js" name="truncateProxy" />
         <js-module src="www/blackberry10/write.js" name="writeProxy" />
-        <source-file src="src/blackberry10/index.js" />
+        <source-file src="src/blackberry10/index.js" target-dir="File" />
     </platform>
 
     <!-- windows8 -->
@@ -312,6 +315,16 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <platform name="firefoxos">
         <js-module src="src/firefoxos/FileProxy.js" name="FileProxy">
             <runs />
+        </js-module>
+
+        <js-module src="www/fileSystemPaths.js" name="fileSystemPaths">
+            <merges target="cordova" />
+            <runs/>
+        </js-module>
+
+        <!-- Firefox OS specific file apis -->
+        <js-module src="www/firefoxos/FileSystem.js" name="firefoxFileSystem">
+            <merges target="window.FileSystem" />
         </js-module>
     </platform>
 

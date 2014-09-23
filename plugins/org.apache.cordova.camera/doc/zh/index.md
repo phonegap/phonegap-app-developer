@@ -28,7 +28,7 @@
 
 需要使用的相機，一張照片或從設備的圖像庫檢索一張照片。 圖像作為 base64 編碼傳遞成功回檔到 `String` ，或作為影像檔的 URI。 該方法本身返回 `CameraPopoverHandle` 可以用於重新置放檔選擇彈出的物件。
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### 說明
@@ -137,21 +137,21 @@ Tizen 僅支援 `destinationType` 的 `Camera.DestinationType.FILE_URI` 和 `sou
 
 ### 選項
 
-*   **品質**： 保存的圖像，表示為一系列的 0-100，在 100 哪裡通常全解析度而不會丟失檔的壓縮品質。 *（人數）*（請注意相機的解析度有關的資訊是不可用）。
+*   **品質**： 保存的圖像，表示為一系列的 0-100，在 100 哪裡通常全解析度而不會丟失檔的壓縮品質。 預設值為 50。 *（人數）*（請注意相機的解析度有關的資訊是不可用）。
 
-*   **destinationType**： 選擇傳回值的格式。定義在 `navigator.camera.DestinationType` *（人數）*
+*   **可**： 選擇傳回值的格式。預設值是 FILE_URI。定義在 `navigator.camera.DestinationType` *（人數）*
     
         Camera.DestinationType = {DATA_URL： 0，/ / 返回圖像作為 base64 編碼字串 FILE_URI： 1，/ / 返回影像檔的 URI NATIVE_URI： 2 / / 返回圖像本機 URI (例如，資產庫： / / 在 iOS 或內容上： / / 在 Android 上)} ；
         
 
-*   **sourceType**： 設置圖片的來源。定義在 `navigator.camera.PictureSourceType` *（人數）*
+*   **時**： 設置圖片的來源。預設值是觀景窗。定義在 `navigator.camera.PictureSourceType` *（人數）*
     
         Camera.PictureSourceType = {PHOTOLIBRARY: 0，相機： 1，SAVEDPHOTOALBUM: 2} ；
         
 
 *   **allowEdit**： 允許簡單編輯的選擇面前的形象。*（布林）*
 
-*   **encodingType**： 選擇返回的影像檔的編碼。定義在 `navigator.camera.EncodingType` *（人數）*
+*   **encodingType**： 選擇返回的影像檔的編碼。預設值為 JPEG。定義在 `navigator.camera.EncodingType` *（人數）*
     
         Camera.EncodingType = {JPEG: 0，/ / 返回 JPEG 編碼的 PNG 圖像： 1 / / 返回 PNG 編碼的圖像} ；
         
@@ -174,7 +174,7 @@ Tizen 僅支援 `destinationType` 的 `Camera.DestinationType.FILE_URI` 和 `sou
 
 *   **popoverOptions**： 僅限 iOS 在 iPad 中指定彈出位置的選項。在中定義`CameraPopoverOptions`.
 
-*   **cameraDirection**： 選擇相機以使用 （前面或後面-面向）。定義在 `navigator.camera.Direction` *（人數）*
+*   **cameraDirection**： 選擇相機以使用 （前面或後面-面向）。預設值是背。定義在 `navigator.camera.Direction` *（人數）*
     
         Camera.Direction = {回: 0，/ / 使用前面後面攝像頭： 1 / / 使用前置攝像頭} ；
         
@@ -198,8 +198,6 @@ Tizen 僅支援 `destinationType` 的 `Camera.DestinationType.FILE_URI` 和 `sou
 ### 黑莓 10 怪癖
 
 *   忽略 `quality` 參數。
-
-*   忽略 `sourceType` 參數。
 
 *   忽略 `allowEdit` 參數。
 
@@ -233,7 +231,7 @@ Tizen 僅支援 `destinationType` 的 `Camera.DestinationType.FILE_URI` 和 `sou
 
 *   設置 `quality` 低於 50，避免在某些設備上的記憶體不足錯誤。
 
-*   當使用 `destinationType.FILE_URI` ，照片保存在應用程式的臨時目錄中。 你可能會刪除此目錄使用的內容 `navigator.fileMgr` Api 如果存儲空間是關注的問題。
+*   當使用 `destinationType.FILE_URI` ，照片都保存在應用程式的臨時目錄。應用程式結束時，將刪除該應用程式的臨時目錄中的內容。
 
 ### Tizen 怪癖
 
@@ -249,7 +247,12 @@ Tizen 僅支援 `destinationType` 的 `Camera.DestinationType.FILE_URI` 和 `sou
 
 *   忽略 `cameraDirection` 參數。
 
-*   忽略 `mediaType` 屬性的 `cameraOptions` 作為 Windows Phone SDK 不提供方式從 PHOTOLIBRARY 中選擇視頻。
+*   忽略 `saveToPhotoAlbum` 參數。 重要： 使用 wp7/8 科爾多瓦攝像頭 API 拍攝的所有圖像總是都複製到手機的相機膠捲。 根據使用者的設置，這可能也意味著圖像是自動上傳到他們另。 這有可能意味著的圖像，可以比你的應用程式的目的更多的觀眾。 如果此阻滯劑您的應用程式，您將需要實現 CameraCaptureTask 在 msdn 上記載： [HTTP://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx][3]你可能還評論或在[問題追蹤器][4]的向上投票的相關的問題
+
+*   忽略了 `mediaType` 屬性的 `cameraOptions` 作為 Windows Phone SDK 並不提供從 PHOTOLIBRARY 中選擇視頻的方法。
+
+ [3]: http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx
+ [4]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 

@@ -533,48 +533,6 @@ static NSSet* org_apache_cordova_validArrowDirections;
     return newImage;
 }
 
-- (void)postImage:(UIImage*)anImage withFilename:(NSString*)filename toUrl:(NSURL*)url
-{
-    self.hasPendingOperation = YES;
-
-    NSString* boundary = @"----BOUNDARY_IS_I";
-
-    NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:url];
-    [req setHTTPMethod:@"POST"];
-
-    NSString* contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
-    [req setValue:contentType forHTTPHeaderField:@"Content-type"];
-
-    NSData* imageData = UIImagePNGRepresentation(anImage);
-
-    // adding the body
-    NSMutableData* postBody = [NSMutableData data];
-
-    // first parameter an image
-    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"upload\"; filename=\"%@\"\r\n", filename] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"Content-Type: image/png\r\n\r\n" dataUsingEncoding : NSUTF8StringEncoding]];
-    [postBody appendData:imageData];
-
-    //	// second parameter information
-    //	[postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    //	[postBody appendData:[@"Content-Disposition: form-data; name=\"some_other_name\"\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    //	[postBody appendData:[@"some_other_value" dataUsingEncoding:NSUTF8StringEncoding]];
-    //	[postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r \n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-
-    [req setHTTPBody:postBody];
-
-    NSURLResponse* response;
-    NSError* error;
-    [NSURLConnection sendSynchronousRequest:req returningResponse:&response error:&error];
-
-    //  NSData* result = [NSURLConnection sendSynchronousRequest:req returningResponse:&response error:&error];
-    //	NSString * resultStr =  [[[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding] autorelease];
-
-    self.hasPendingOperation = NO;
-}
-
-
 - (CLLocationManager *)locationManager {
     
 	if (locationManager != nil) {

@@ -67,3 +67,8 @@
 * Implemented vibrateWithPattern (for android) and adapted documentation.
 * CB-6811 Add license to CONTRIBUTING.md
 * CB-6491 add CONTRIBUTING.md
+
+### 0.3.10 (Aug 06, 2014)
+* ubuntu: Implemented vibrateWithPattern/cancelVibration
+* **FFOS** update VibrationProxy.js
+* CB-6127 Updated translations for docs

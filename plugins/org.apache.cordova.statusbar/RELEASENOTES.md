@@ -34,3 +34,13 @@
 * CB-6264 minor formatting issue
 * Update docs with recent WP changes, remove 'clear' from the loist of named colors in documentation
 * CB-6513 - Statusbar plugin for Android is not compiling
+
+### 0.1.7 (Aug 06, 2014)
+* Add LICENSE and NOTICE
+* Update statusbar.js
+* Update backgroundColorByHexString function
+* ios: Use a persistent callbackId instead of calling sendJs
+* CB-6626 ios: Add a JS event for tapping on statusbar
+* ios: Fix hide to adjust webview's frame only when status bar is not overlaying webview
+* CB-6127 Updated translations for docs
+* android: Fix StatusBar.initialize() not running on UI thread

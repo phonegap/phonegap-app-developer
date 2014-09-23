@@ -26,9 +26,19 @@ var FileTransferError = require('./FileTransferError'),
 
 module.exports = {
 
+/*
+exec(win, fail, 'FileTransfer', 'upload', 
+[filePath, server, fileKey, fileName, mimeType, params, trustAllHosts, chunkedMode, headers, this._id, httpMethod]);
+*/
     upload:function(successCallback, error, options) {
         var filePath = options[0];
         var server = options[1];
+        var fileKey = options[2] || 'source';
+        var fileName = options[3];
+        var mimeType = options[4];
+        var params = options[5];
+        var trustAllHosts = options[6]; // todo
+        var chunkedMode = options[7]; // todo 
         var headers = options[8] || {};
 
         if (filePath === null || typeof filePath === 'undefined') {
@@ -41,23 +51,38 @@ module.exports = {
         }
 
         Windows.Storage.StorageFile.getFileFromPathAsync(filePath).then(function (storageFile) {
+
+            if(!fileName) {
+                fileName = storageFile.name;
+            }
+            if(!mimeType) {
+                // use the actual content type of the file, probably this should be the default way.
+                // other platforms probably can't look this up.
+                mimeType = storageFile.contentType;
+            }
+
             storageFile.openAsync(Windows.Storage.FileAccessMode.read).then(function (stream) {
-                var blob = MSApp.createBlobFromRandomAccessStream(storageFile.contentType, stream);
+
+
+                var blob = MSApp.createBlobFromRandomAccessStream(mimeType, stream);
+
                 var formData = new FormData();
-                formData.append("source\";filename=\"" + storageFile.name + "\"", blob);
+                formData.append(fileKey, blob, fileName);
+                // add params
+                for(var key in params) {
+                    formData.append(key,params[key]);
+                }
+
                 WinJS.xhr({ type: "POST", url: server, data: formData, headers: headers }).then(function (response) {
-                    var code = response.status;
                     storageFile.getBasicPropertiesAsync().done(function (basicProperties) {
 
                         Windows.Storage.FileIO.readBufferAsync(storageFile).done(function (buffer) {
                             var dataReader = Windows.Storage.Streams.DataReader.fromBuffer(buffer);
                             var fileContent = dataReader.readString(buffer.length);
                             dataReader.close();
-                            var ftResult = new FileUploadResult(basicProperties.size, code, fileContent);
-                            // for now we explicitly write the bytesSent,responseCode,result 
-                            // in case cordova-plugin-file is not yet updated. -jm
+                            var ftResult = new FileUploadResult();
                             ftResult.bytesSent = basicProperties.size;
-                            ftResult.responseCode = code;
+                            ftResult.responseCode = response.status;
                             ftResult.response = fileContent;
                             successCallback && successCallback(ftResult);
                         });
@@ -104,8 +129,6 @@ module.exports = {
                 for (var header in headers) {
                     downloader.setRequestHeader(header, headers[header]);
                 }
-
-
                 download = downloader.createDownload(uri, storageFile);
                 download.startAsync().then(function () {
                     successCallback && successCallback(new FileEntry(storageFile.name, storageFile.path));
