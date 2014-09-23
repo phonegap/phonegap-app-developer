@@ -39,7 +39,6 @@ Rectangle {
     Camera {
         objectName: "camera"
         id: camera
-        cameraState: Camera.UnloadedState
         onError: {
             console.log(errorString);
             shootButton.source = recordOffImagePath
@@ -56,7 +55,7 @@ Rectangle {
             outputLocation: ui.parent.plugin('Capture').generateLocation("mp4")
             onRecorderStateChanged: {
                if (videoRecorder.recorderState === CameraRecorder.StoppedState) {
-                   ui.parent.exec("Capture", "onVideoRecordEnd", [camera.videoRecorder.actualLocation]);
+                   ui.parent.exec("Capture", "onVideoRecordEnd", [camera.videoRecorder.outputLocation]);
                    shootButton.source = recordOffImagePath
                }
             }

@@ -28,7 +28,7 @@
 
 カメラを使用して写真を取るか、デバイスの画像ギャラリーから写真を取得します。 イメージは base64 エンコードとして成功時のコールバックに渡される `String` 、またはイメージ ファイルの URI。 メソッド自体を返します、 `CameraPopoverHandle` オブジェクト ファイル選択ポップ オーバーの位置を変更するために使用することができます。
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### 説明
@@ -137,21 +137,21 @@ Tizen のみをサポートしている、 `destinationType` の `Camera.Destina
 
 ### オプション
 
-*   **品質**： 0-100、100 がファイルの圧縮から損失なしで通常のフル解像度の範囲で表される、保存されたイメージの品質。 *(数)*（カメラの解像度についての情報が利用できないことに注意してください)。
+*   **品質**： 0-100、100 がファイルの圧縮から損失なしで通常のフル解像度の範囲で表される、保存されたイメージの品質。 既定値は 50 です。 *(数)*（カメラの解像度についての情報が利用できないことに注意してください)。
 
-*   **destinationType**: 戻り値の形式を選択します。定義されている `navigator.camera.DestinationType` *（番号）*
+*   **destinationType**: 戻り値の形式を選択します。既定値は FILE_URI です。定義されている `navigator.camera.DestinationType` *（番号）*
     
         Camera.DestinationType = {DATA_URL: 0、/base64 エンコード文字列 FILE_URI としてイメージを返す/: 1、//画像ファイル URI NATIVE_URI を返す： 2//戻り画像ネイティブ URI (例えば、資産ライブラリ://iOS またはコンテンツに：//アンドロイド)};
         
 
-*   **sourceType**: 画像のソースを設定します。定義されている `navigator.camera.PictureSourceType` *（番号）*
+*   **sourceType**: 画像のソースを設定します。既定値は、カメラです。定義されている `navigator.camera.PictureSourceType` *（番号）*
     
         Camera.PictureSourceType = {フォト ライブラリ: 0, カメラ: 1、SAVEDPHOTOALBUM: 2};
         
 
 *   **allowEdit**: 単純な選択の前に画像の編集を許可します。*(ブール値)*
 
-*   **encodingType**: 返されるイメージ ファイルのエンコーディングを選択します。定義されている `navigator.camera.EncodingType` *（番号）*
+*   **encodingType**: 返されるイメージ ファイルのエンコーディングを選択します。デフォルトは JPEG です。定義されている `navigator.camera.EncodingType` *（番号）*
     
         Camera.EncodingType = {JPEG: 0//戻る JPEG PNG イメージをエンコード: 1/返す PNG イメージをエンコードされた/};
         
@@ -174,7 +174,7 @@ Tizen のみをサポートしている、 `destinationType` の `Camera.Destina
 
 *   **popoverOptions**: iPad のポップ オーバーの場所を指定する iOS のみのオプションです。定義されています。`CameraPopoverOptions`.
 
-*   **cameraDirection**： （前面または背面側） を使用するカメラを選択します。定義されている `navigator.camera.Direction` *（番号）*
+*   **cameraDirection**： （前面または背面側） を使用するカメラを選択します。既定値は戻るです。定義されている `navigator.camera.Direction` *（番号）*
     
         Camera.Direction = {戻る: 0、//後ろ向きカメラ前部を使用: 1/フロントに面したカメラを使用して/};
         
@@ -198,8 +198,6 @@ Tizen のみをサポートしている、 `destinationType` の `Camera.Destina
 ### ブラックベリー 10 癖
 
 *   無視、 `quality` パラメーター。
-
-*   無視、 `sourceType` パラメーター。
 
 *   無視、 `allowEdit` パラメーター。
 
@@ -233,7 +231,7 @@ Tizen のみをサポートしている、 `destinationType` の `Camera.Destina
 
 *   設定 `quality` 一部のデバイスでメモリ不足エラーを避けるために 50 の下。
 
-*   使用する場合 `destinationType.FILE_URI` 、写真、アプリケーションの一時ディレクトリに保存されます。 使用して、このディレクトリの内容を削除可能性があります、 `navigator.fileMgr` Api のストレージ スペースが必要な場合。
+*   使用する場合 `destinationType.FILE_URI` 、写真、アプリケーションの一時ディレクトリに保存されます。アプリケーションの一時ディレクトリの内容は、アプリケーションの終了時に削除されます。
 
 ### Tizen の癖
 
@@ -249,7 +247,11 @@ Tizen のみをサポートしている、 `destinationType` の `Camera.Destina
 
 *   無視、 `cameraDirection` パラメーター。
 
+*   無視、 `saveToPhotoAlbum` パラメーター。 重要: wp7/8 コルドバ カメラ API で撮影したすべての画像は携帯電話のカメラ巻き物に常にコピーします。 ユーザーの設定に応じて、これも、画像はその OneDrive に自動アップロードを意味できます。 イメージは意図したアプリより広い聴衆に利用できる可能性があります可能性があります。 場合は、このアプリケーションのブロッカー、msdn で説明されているように、CameraCaptureTask を実装する必要があります: <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx>コメントにすることがありますもかアップ投票関連の問題を[課題追跡システム][3]で
+
 *   無視、 `mediaType` のプロパティ `cameraOptions` として Windows Phone SDK には、フォト ライブラリからビデオを選択する方法は行いません。
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 

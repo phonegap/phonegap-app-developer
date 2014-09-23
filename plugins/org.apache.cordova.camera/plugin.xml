@@ -22,7 +22,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     id="org.apache.cordova.camera"
-    version="0.3.0">
+    version="0.3.1">
     <name>Camera</name>
     <description>Cordova Camera Plugin</description>
     <license>Apache 2.0</license>
@@ -135,13 +135,14 @@
          <header-file src="src/ios/CDVCamera.h" />
          <source-file src="src/ios/CDVCamera.m" />
          <header-file src="src/ios/CDVJpegHeaderWriter.h" />
- 	     <source-file src="src/ios/CDVJpegHeaderWriter.m" />
- 	     <header-file src="src/ios/CDVExif.h" />
- 	     <framework src="ImageIO.framework" weak="true" />
- 	     <framework src="CoreLocation.framework" />
- 	     <framework src="CoreGraphics.framework" />
- 	     <framework src="AssetsLibrary.framework" />
+         <source-file src="src/ios/CDVJpegHeaderWriter.m" />
+         <header-file src="src/ios/CDVExif.h" />
+         <framework src="ImageIO.framework" weak="true" />
+         <framework src="CoreLocation.framework" />
+         <framework src="CoreGraphics.framework" />
+         <framework src="AssetsLibrary.framework" />
          <framework src="MobileCoreServices.framework" />
+         <framework src="CoreGraphics.framework" />
      </platform>
 
     <!-- blackberry10 -->
@@ -202,7 +203,6 @@
     <!-- windows8 -->
     <platform name="windows8">
 
-        <dependency id="org.apache.cordova.file" />
         <config-file target="package.appxmanifest" parent="/Package/Capabilities">
             <Capability Name="picturesLibrary" />
             <DeviceCapability Name="webcam" />

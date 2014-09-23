@@ -28,7 +28,7 @@ Ce plugin fournit une API pour la prise de photos et de choisir des images de la
 
 Prend une photo à l'aide de la caméra, ou récupère une photo de la Galerie d'images de l'appareil. L'image est passée au callback "succès" comme une `String` encodée en base64 ou l'URI du fichier de l'image. La méthode elle-même renvoie un objet `CameraPopoverHandle` qui permet de repositionner la boite de dialogue de selection d'image.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### Description
@@ -145,9 +145,9 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 ### Options
 
-*   **quality** : Qualité de l'image enregistrée, comprise entre 0 et 100, où 100 correspond à la pleine résolution de l'appareil, sans perte liée à la compression. *(Number)* (Notez que les informations sur la résolution de l'appareil photo sont indisponibles.)
+*   **quality** : Qualité de l'image enregistrée, comprise entre 0 et 100, où 100 correspond à la pleine résolution de l'appareil, sans perte liée à la compression. La valeur par défaut est 50. *(Nombre)* (Notez que les informations sur la résolution de la caméra sont indisponibles).
 
-*   **destinationType**: choisissez le format de la valeur de retour. Définies dans `navigator.camera.DestinationType` *(nombre)* 
+*   **destinationType**: choisissez le format de la valeur de retour. La valeur par défaut est FILE_URI. Définies dans `navigator.camera.DestinationType` *(nombre)*
     
         Camera.DestinationType = {
             DATA_URL : 0,      // Retourne l'image sous la forme d'une chaîne encodée en base-64
@@ -156,7 +156,7 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
         };
         
 
-*   **sourceType**: définissez la source de l'image. Définies dans `navigator.camera.PictureSourceType` *(nombre)* 
+*   **sourceType**: définissez la source de l'image. La valeur par défaut est la caméra. Définies dans `navigator.camera.PictureSourceType` *(nombre)*
     
         Camera.PictureSourceType = {
             PHOTOLIBRARY : 0,
@@ -167,7 +167,7 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 *   **allowEdit**: Autoriser une modification simple de l'image avant sa sélection. *(Boolean)*
 
-*   **encodingType**: choisir le fichier image retournée de codage. Définies dans `navigator.camera.EncodingType` *(nombre)* 
+*   **encodingType**: choisir le fichier image retournée de codage. Valeur par défaut est JPEG. Définies dans `navigator.camera.EncodingType` *(nombre)*
     
         Camera.EncodingType = {
             JPEG : 0,               // Renvoie l'image au format JPEG
@@ -193,7 +193,7 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 *   **popoverOptions**: options pour iOS uniquement qui spécifient l'emplacement de la boîte de dialogue sur iPad. Définie dans`CameraPopoverOptions`.
 
-*   **cameraDirection**: choisissez la caméra à utiliser (ou dos-face). Définies dans `navigator.camera.Direction` *(nombre)* 
+*   **cameraDirection**: choisissez la caméra à utiliser (ou dos-face). La valeur par défaut est de retour. Définies dans `navigator.camera.Direction` *(nombre)*
     
         Camera.Direction = {BACK: 0, // utiliser la caméra arrière FRONT: 1 // utiliser la caméra frontale} ;
         
@@ -218,15 +218,13 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 *   Ignore le paramètre `quality`.
 
-*   Ignore le paramètre `sourceType`.
-
 *   Ignore la `allowEdit` paramètre.
 
-*   `Camera.MediaType` n'est pas pris en charge.
+*   `Camera.MediaType`n'est pas pris en charge.
 
-*   Ignore le paramètre `correctOrientation`.
+*   Ignore la `correctOrientation` paramètre.
 
-*   Ignore le paramètre `cameraDirection`.
+*   Ignore la `cameraDirection` paramètre.
 
 ### Firefox OS Quirks
 
@@ -252,7 +250,7 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 *   Choisir la valeur `quality` en dessous de 50 pour éviter les erreurs de mémoire sur certains appareils.
 
-*   Lorsque vous utilisez `destinationType.FILE_URI` , les photos sont sauvegardées dans le répertoire temporaire de l'application. Vous pouvez supprimer le contenu de ce répertoire en utilisant l'API `navigator.fileMgr` si l'espace de stockage est un sujet de préoccupation.
+*   Lorsque vous utilisez `destinationType.FILE_URI` , les photos sont sauvegardées dans le répertoire temporaire de l'application. Le contenu du répertoire temporaire de l'application est supprimé lorsque l'application se termine.
 
 ### Bizarreries de paciarelli
 
@@ -268,7 +266,11 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 *   Ignore la `cameraDirection` paramètre.
 
+*   Ignore la `saveToPhotoAlbum` paramètre. IMPORTANT : Toutes les images prises avec la caméra de cordova wp7/8 API sont toujours copiés au rôle d'appareil photo du téléphone. Selon les paramètres de l'utilisateur, cela pourrait également signifier que l'image est auto-téléchargées à leur OneDrive. Potentiellement, cela pourrait signifier que l'image est disponible à un public plus large que votre application destinée. Si ce un bloqueur pour votre application, vous devrez implémenter le CameraCaptureTask tel que documenté sur msdn : <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx> vous pouvez aussi commenter ou haut-vote la question connexe dans le [gestionnaire d'incidents][3]
+
 *   Ignore la `mediaType` propriété de `cameraOptions` comme le kit de développement Windows Phone ne fournit pas un moyen de choisir les vidéos de PHOTOLIBRARY.
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 

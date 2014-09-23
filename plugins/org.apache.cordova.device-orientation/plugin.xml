@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="org.apache.cordova.device-orientation"
-    version="0.3.7">
+    version="0.3.8">
 
     <name>Device Orientation</name>
     <description>Cordova Device Orientation Plugin</description>
@@ -108,16 +108,16 @@
 
     <!-- ios -->
     <platform name="ios">
-
         <config-file target="config.xml" parent="/*">
-	        <feature name="Compass">
-	            <param name="ios-package" value="CDVCompass"/>
-	        </feature>
+            <feature name="Compass">
+                <param name="ios-package" value="CDVCompass"/>
+            </feature>
         </config-file>
 
-	    <header-file src="src/ios/CDVCompass.h" />
-	    <source-file src="src/ios/CDVCompass.m" />
+        <header-file src="src/ios/CDVCompass.h" />
+        <source-file src="src/ios/CDVCompass.m" />
 
+        <framework src="CoreLocation.framework" />
     </platform>
 
     <!-- wp7 -->

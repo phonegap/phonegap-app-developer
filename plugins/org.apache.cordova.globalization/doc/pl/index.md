@@ -62,6 +62,8 @@ Jeśli tu jest błąd w języku, a następnie `errorCallback` wykonuje z `Global
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -101,6 +103,8 @@ Jeśli tu jest błąd ustawienia regionalne, a następnie `errorCallback` wykonu
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -150,6 +154,8 @@ Jeśli występuje błąd formatowania daty, a następnie `errorCallback` wykonuj
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -168,6 +174,11 @@ Jeśli przeglądarka jest ustawiona na `en_US` Ustawienia regionalne, to wyświe
 ### Windows Phone 8 dziwactwa
 
 *   `formatLength`Opcja obsługuje tylko `short` i `full` wartości.
+
+### Firefox OS dziwactwa
+
+*   `formatLength`nie jest odróżnienie `long` i`full` 
+*   tylko jedna metoda wyświetlania daty (nie `long` lub `full` wersja)
 
 ## navigator.globalization.getCurrencyPattern
 
@@ -202,6 +213,7 @@ Jeśli występuje błąd uzyskania wzorzec, a następnie `errorCallback` wykonuj
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
 *   iOS
 
 ### Przykład
@@ -258,6 +270,8 @@ Wartość `options.item` może być `months` lub`days`.
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -275,6 +289,10 @@ Kiedy przeglądarka jest ustawiona na `en_US` ustawień regionalnych, w tym przy
         { type: 'wide', item: 'months' }
     );
     
+
+### Firefox OS dziwactwa
+
+*   `options.type`obsługuje `genitive` wartość, ważne dla niektórych języków
 
 ## navigator.globalization.getDatePattern
 
@@ -309,6 +327,7 @@ time`.
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
 *   iOS
 *   Windows Phone 8
 
@@ -352,6 +371,8 @@ Jeśli występuje błąd uzyskania wzorzec, a następnie `errorCallback` wykonuj
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -405,6 +426,7 @@ Jeśli występuje błąd uzyskania wzorzec, a następnie `errorCallback` wykonuj
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
 *   iOS
 *   Windows Phone 8
 
@@ -463,6 +485,8 @@ Jeśli występuje błąd odczytu daty, a następnie `errorCallback` wykonuje. Oc
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -501,6 +525,7 @@ Jeśli występuje błąd formatowanie numeru, a następnie `errorCallback` wykon
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
 *   iOS
 *   Windows Phone 8
 
@@ -557,6 +582,8 @@ Jeśli występuje błąd podczas analizowania ciągu daty, a następnie `errorCa
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -602,6 +629,7 @@ Jeśli występuje błąd podczas analizowania ciągu liczb, a następnie `errorC
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
 *   iOS
 *   Windows Phone 8
 
@@ -638,6 +666,8 @@ Ten obiekt jest tworzona i wypełniane przez Cordova i wrócił do wywołania zw
 
 *   Amazon ogień OS
 *   Android
+*   Jeżyna 10
+*   Firefox OS
 *   iOS
 
 ### Przykład

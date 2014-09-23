@@ -22,7 +22,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:rim="http://www.blackberry.com/ns/widgets"
            id="org.apache.cordova.media-capture"
-      version="0.3.1">
+      version="0.3.2">
     <name>Capture</name>
 
     <description>Cordova Media Capture Plugin</description>

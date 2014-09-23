@@ -20,7 +20,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
            id="org.apache.cordova.inappbrowser"
-      version="0.5.0">
+      version="0.5.1">
 
     <name>InAppBrowser</name>
     <description>Cordova InAppBrowser Plugin</description>
@@ -166,7 +166,7 @@
     <!-- firefoxos -->
     <platform name="firefoxos">
         <config-file target="config.xml" parent="/*">
-            <permission name="browser" description="Enables the app to implement a browser in an iframe." />
+            <permission name="browser" description="Enables the app to implement a browser in an iframe." privileged="true"/>
         </config-file>
         <js-module src="www/inappbrowser.js" name="inappbrowser">
             <clobbers target="window.open" />

@@ -23,12 +23,10 @@
 @interface CDVStatusBar : CDVPlugin {
     @protected
     BOOL _statusBarOverlaysWebView;
-    @protected
     UIView* _statusBarBackgroundView;
-    @protected
     BOOL _uiviewControllerBasedStatusBarAppearance;
-    @protected
     UIColor* _statusBarBackgroundColor;
+    NSString* _eventsCallbackId;
 }
 
 @property (atomic, assign) BOOL statusBarOverlaysWebView;

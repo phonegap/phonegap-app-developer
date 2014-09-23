@@ -68,3 +68,9 @@
 * CB-6798 Add license
 * CB-6491 add CONTRIBUTING.md
 * FFOS added to supported platforms
+
+### 0.2.9 (Aug 06, 2014)
+* [FFOS] update accelerometer.js
+* CB-6127 Updated translations for docs
+* FFOS added to supported platforms
+

@@ -1,5 +1,5 @@
 {
-    "version": "0.5.0",
+    "version": "0.5.1",
     "name": "org.apache.cordova.inappbrowser",
     "cordova_name": "InAppBrowser",
     "description": "Cordova InAppBrowser Plugin",

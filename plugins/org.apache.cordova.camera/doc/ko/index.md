@@ -28,7 +28,7 @@
 
 카메라를 사용 하 여 사진을 걸립니다 또는 소자의 이미지 갤러리에서 사진을 검색 합니다. 이미지 base64 인코딩으로 성공 콜백에 전달 됩니다 `String` , 또는 이미지 파일에 대 한 URI로. 방법 자체는 반환 합니다 한 `CameraPopoverHandle` 개체 파일 선택 popover를 재배치 하는 데 사용할 수 있습니다.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### 설명
@@ -137,21 +137,21 @@ Tizen만 지원 한 `destinationType` 의 `Camera.DestinationType.FILE_URI` 와 
 
 ### 옵션
 
-*   **품질**: 범위 0-100, 100은 파일 압축에서 손실 없이 일반적으로 전체 해상도 저장된 된 이미지의 품질. *(수)* (Note 카메라의 해상도 대 한 정보는 사용할 수 없습니다.)
+*   **품질**: 범위 0-100, 100은 파일 압축에서 손실 없이 일반적으로 전체 해상도 저장된 된 이미지의 품질. 기본값은 50입니다. *(수)* (Note 카메라의 해상도 대 한 정보는 사용할 수 없습니다.)
 
-*   **destinationType**: 반환 값의 형식을 선택 합니다. 에 정의 된 `navigator.camera.DestinationType` *(수)*
+*   **destinationType**: 반환 값의 형식을 선택 합니다. 기본값은 FILE_URI입니다. 에 정의 된 `navigator.camera.DestinationType` *(수)*
     
         Camera.DestinationType = {DATA_URL: 0, / / base64 인코딩된 문자열로 FILE_URI 이미지를 반환: 1, / / 이미지 파일 URI NATIVE_URI 반환: 2 / / 반환 이미지 기본 URI (예를 들어, 자산 라이브러리: / / iOS 또는 콘텐츠: / / 안 드 로이드에)};
         
 
-*   **sourceType**: 그림의 소스를 설정 합니다. 에 정의 된 `navigator.camera.PictureSourceType` *(수)*
+*   **sourceType**: 그림의 소스를 설정 합니다. 기본값은 카메라입니다. 에 정의 된 `navigator.camera.PictureSourceType` *(수)*
     
         Camera.PictureSourceType = {PHOTOLIBRARY: 0, 카메라: 1, SAVEDPHOTOALBUM: 2};
         
 
 *   **allowEdit**: 선택 하기 전에 이미지의 간단한 편집을 허용 합니다. *(부울)*
 
-*   **encodingType**: 반환 된 이미지 파일의 인코딩을 선택 합니다. 에 정의 된 `navigator.camera.EncodingType` *(수)*
+*   **encodingType**: 반환 된 이미지 파일의 인코딩을 선택 합니다. 기본값은 JPEG입니다. 에 정의 된 `navigator.camera.EncodingType` *(수)*
     
         Camera.EncodingType = {JPEG: 0, / / 반환 JPEG로 인코딩된 PNG 이미지: 1 / 반환 PNG 이미지 인코딩 /};
         
@@ -174,7 +174,7 @@ Tizen만 지원 한 `destinationType` 의 `Camera.DestinationType.FILE_URI` 와 
 
 *   **popoverOptions**: iPad에 popover 위치를 지정 하는 iOS 전용 옵션. 에 정의 된`CameraPopoverOptions`.
 
-*   **cameraDirection**: (앞 이나 뒤로-연결)를 사용 하 여 카메라를 선택 하십시오. 에 정의 된 `navigator.camera.Direction` *(수)*
+*   **cameraDirection**: (앞 이나 뒤로-연결)를 사용 하 여 카메라를 선택 하십시오. 기본값은 다시. 에 정의 된 `navigator.camera.Direction` *(수)*
     
         Camera.Direction = {다시: 0, / / 앞 뒤 방향 카메라를 사용: 1 / 전면을 향하는 카메라를 사용 하 여 /};
         
@@ -198,8 +198,6 @@ Tizen만 지원 한 `destinationType` 의 `Camera.DestinationType.FILE_URI` 와 
 ### 블랙베리 10 단점
 
 *   무시는 `quality` 매개 변수.
-
-*   무시는 `sourceType` 매개 변수.
 
 *   무시는 `allowEdit` 매개 변수.
 
@@ -233,7 +231,7 @@ Tizen만 지원 한 `destinationType` 의 `Camera.DestinationType.FILE_URI` 와 
 
 *   설정 `quality` 일부 장치 메모리 오류를 피하기 위해 50 아래.
 
-*   사용 하는 경우 `destinationType.FILE_URI` , 사진 응용 프로그램의 임시 디렉터리에 저장 됩니다. 사용 하 여이 디렉터리의 내용을 삭제할 수 있는 `navigator.fileMgr` Api 저장 공간이 중요 한 경우.
+*   사용 하는 경우 `destinationType.FILE_URI` , 사진 응용 프로그램의 임시 디렉터리에 저장 됩니다. 응용 프로그램이 종료 될 때 응용 프로그램의 임시 디렉터리의 내용은 삭제 됩니다.
 
 ### Tizen 특수
 
@@ -249,7 +247,11 @@ Tizen만 지원 한 `destinationType` 의 `Camera.DestinationType.FILE_URI` 와 
 
 *   무시는 `cameraDirection` 매개 변수.
 
+*   무시는 `saveToPhotoAlbum` 매개 변수. 중요: 모든 이미지 API wp7/8 코르도바 카메라로 촬영 항상 복사 됩니다 휴대 전화의 카메라 롤에. 사용자의 설정에 따라이 또한 그들의 OneDrive에 자동 업로드 이미지는 의미. 이 잠재적으로 이미지는 당신의 애플 리 케이 션을 위한 보다 넓은 청중에 게 사용할 수 있는 의미. 이 경우 응용 프로그램에 대 한 차단, 당신은 msdn에 설명 대로 단말기를 구현 해야 합니다: <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx> 수 있습니다 또한 의견 또는 [이슈 트래커][3] 에서 업-투표 관련된 문제
+
 *   무시는 `mediaType` 속성을 `cameraOptions` 으로 Windows Phone SDK PHOTOLIBRARY에서 비디오를 선택 하는 방법을 제공 하지 않습니다.
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 

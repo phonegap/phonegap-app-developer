@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
            id="org.apache.cordova.network-information"
-      version="0.2.9">
+      version="0.2.11">
 
     <name>Network Information</name>
     <description>Cordova Network Information Plugin</description>

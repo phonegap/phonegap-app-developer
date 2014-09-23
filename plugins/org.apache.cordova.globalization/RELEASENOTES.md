@@ -58,3 +58,12 @@
 * Android should return BCP47 tag, not localized string
 * CB-6491 add CONTRIBUTING.md
 * CB-5980 Updated version and RELEASENOTES.md for release 0.2.6
+
+### 0.3.0 (Aug 06, 2014)
+* The right Apache License 2.0 added
+* Update headers and NOTICE file
+* [BlackBerry10] Implement Globalization for BB10
+* Initial implementation for **FirefoxOS**
+* CB-4602 ios: Use normalized values for getPreferredLanguage.
+* CB-6127 Updated translations for docs
+* CB-4602 geolocation.getPreferredLanguage and geolocation.getLocaleName now return strings with hypen (-) to stay compliant with current standards

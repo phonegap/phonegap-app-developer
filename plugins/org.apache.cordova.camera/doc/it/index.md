@@ -28,7 +28,7 @@ Questo plugin fornisce un'API per scattare foto e per aver scelto immagini dalla
 
 Prende una foto utilizzando la fotocamera, o recupera una foto dalla galleria di immagini del dispositivo. L'immagine viene passata al metodo di callback successo come una codifica base64 `String` , o come l'URI per il file di immagine. Il metodo stesso restituisce un `CameraPopoverHandle` che può essere utilizzato per riposizionare il Muffin di selezione file.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### Descrizione
@@ -137,21 +137,21 @@ Parametri opzionali per personalizzare le impostazioni della fotocamera.
 
 ### Opzioni
 
-*   **qualità**: qualità dell'immagine salvata, espressa come un intervallo di 0-100, dove 100 è tipicamente piena risoluzione senza perdita di compressione file. *(Numero)* (Si noti che informazioni sulla risoluzione della fotocamera non sono disponibile).
+*   **qualità**: qualità dell'immagine salvata, espressa come un intervallo di 0-100, dove 100 è tipicamente piena risoluzione senza perdita di compressione file. Il valore predefinito è 50. *(Numero)* (Si noti che informazioni sulla risoluzione della fotocamera non sono disponibile).
 
-*   **destinationType**: Scegli il formato del valore restituito. Definito in `navigator.camera.DestinationType` *(numero)*
+*   **destinationType**: Scegli il formato del valore restituito. Il valore predefinito è FILE_URI. Definito in `navigator.camera.DestinationType` *(numero)*
     
         Camera.DestinationType = {DATA_URL: 0, / / ritorno di immagine come stringa con codifica base64 FILE_URI: 1, / / ritorno file immagine URI NATIVE_URI: 2 / / ritorno immagine nativa URI (ad esempio, beni-biblioteca: / / su iOS o contenuto: / / su Android)};
         
 
-*   **sourceType**: impostare l'origine dell'immagine. Definito in `navigator.camera.PictureSourceType` *(numero)*
+*   **sourceType**: impostare l'origine dell'immagine. Il valore predefinito è la fotocamera. Definito in `navigator.camera.PictureSourceType` *(numero)*
     
         Camera.PictureSourceType = {PHOTOLIBRARY: 0, fotocamera: 1, SAVEDPHOTOALBUM: 2};
         
 
 *   **Proprietà allowEdit**: consentire la semplice modifica dell'immagine prima di selezione. *(Booleano)*
 
-*   **encodingType**: scegliere il file immagine restituita di codifica. Definito in `navigator.camera.EncodingType` *(numero)*
+*   **encodingType**: scegliere il file immagine restituita di codifica. Predefinito è JPEG. Definito in `navigator.camera.EncodingType` *(numero)*
     
         Camera.EncodingType = {JPEG: 0, / / JPEG restituire codificati immagine PNG: 1 / / ritorno PNG codificato immagine};
         
@@ -174,7 +174,7 @@ Parametri opzionali per personalizzare le impostazioni della fotocamera.
 
 *   **popoverOptions**: solo iOS opzioni che specificano la posizione di muffin in iPad. Definito in`CameraPopoverOptions`.
 
-*   **cameraDirection**: scegliere la telecamera da utilizzare (o retro-frontale). Definito in `navigator.camera.Direction` *(numero)*
+*   **cameraDirection**: scegliere la telecamera da utilizzare (o retro-frontale). Il valore predefinito è tornato. Definito in `navigator.camera.Direction` *(numero)*
     
         Camera.Direction = {indietro: 0, / / utilizzare la fotocamera posteriore anteriore: 1 / / utilizzare la fotocamera frontale};
         
@@ -198,8 +198,6 @@ Parametri opzionali per personalizzare le impostazioni della fotocamera.
 ### BlackBerry 10 capricci
 
 *   Ignora il `quality` parametro.
-
-*   Ignora il `sourceType` parametro.
 
 *   Ignora il `allowEdit` parametro.
 
@@ -233,7 +231,7 @@ Parametri opzionali per personalizzare le impostazioni della fotocamera.
 
 *   Impostare `quality` inferiore al 50 per evitare errori di memoria su alcuni dispositivi.
 
-*   Quando si utilizza `destinationType.FILE_URI` , foto vengono salvati nella directory temporanea dell'applicazione. Si può eliminare il contenuto di questa directory utilizzando il `navigator.fileMgr` API, se lo spazio di archiviazione è una preoccupazione.
+*   Quando si utilizza `destinationType.FILE_URI` , foto vengono salvati nella directory temporanea dell'applicazione. Il contenuto della directory temporanea dell'applicazione viene eliminato quando l'applicazione termina.
 
 ### Tizen stranezze
 
@@ -249,7 +247,11 @@ Parametri opzionali per personalizzare le impostazioni della fotocamera.
 
 *   Ignora il `cameraDirection` parametro.
 
+*   Ignora il `saveToPhotoAlbum` parametro. IMPORTANTE: Tutte le immagini scattate con la fotocamera di cordova wp7/8 API vengono sempre copiate rotolo fotocamera del telefono cellulare. A seconda delle impostazioni dell'utente, questo potrebbe anche significare che l'immagine viene caricato in automatico a loro OneDrive. Questo potenzialmente potrebbe significare che l'immagine è disponibile a un pubblico più ampio di app destinate. Se questo un blocco dell'applicazione, sarà necessario implementare il CameraCaptureTask come documentato su msdn: <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx> si può anche commentare o up-voto la questione correlata nel [tracciatore di problemi][3]
+
 *   Ignora la `mediaType` proprietà di `cameraOptions` come il SDK di Windows Phone non fornisce un modo per scegliere il video da PHOTOLIBRARY.
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 

@@ -158,7 +158,14 @@ Los detalles de cómo se genera un UUID son determinados por el fabricante del d
 
 ### Ejemplo rápido
 
-    / / Android: devuelve un entero de 64 bits al azar (como una cadena, otra vez!) / / el entero se genera en el primer arranque del dispositivo / / / / BlackBerry: devuelve el número PIN del dispositivo / / este es un entero único de nueve dígitos (como una cadena, aunque!) / / / / iPhone: (parafraseado de la documentación de la clase UIDevice) / / devuelve una cadena de valores hash creado a partir de múltiples hardware identifica.
+    // Android: Returns a random 64-bit integer (as a string, again!)
+    //          The integer is generated on the device's first boot
+    //
+    // BlackBerry: Returns the PIN number of the device
+    //             This is a nine-digit unique integer (as a string, though!)
+    //
+    // iPhone: (Paraphrased from the UIDevice Class documentation)
+    //         Returns a string of hash values created from multiple hardware identifies.
     / / Está garantizado para ser único para cada dispositivo y no puede ser atado / / a la cuenta de usuario.
     / / Windows Phone 7: devuelve un hash de dispositivo + usuario actual, / / si el usuario no está definido, un guid se genera y persistirá hasta que se desinstala la aplicación / / Tizen: devuelve el dispositivo IMEI (identidad de equipo móvil internacional o IMEI es un número / / único para cada teléfono móvil GSM y UMTS.
     var deviceID = device.uuid;

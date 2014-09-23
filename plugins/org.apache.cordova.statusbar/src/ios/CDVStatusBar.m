@@ -70,6 +70,11 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 @end
 
 
+@interface CDVStatusBar () <UIScrollViewDelegate>
+- (void)fireTappedEvent;
+- (void)updateIsVisible:(BOOL)visible;
+@end
+
 @implementation CDVStatusBar
 
 - (id)settingForKey:(NSString*)key
@@ -81,9 +86,7 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 {
     if ([keyPath isEqual:@"statusBarHidden"]) {
         NSNumber* newValue = [change objectForKey:NSKeyValueChangeNewKey];
-        BOOL boolValue = [newValue boolValue];
-
-        [self.commandDelegate evalJs:[NSString stringWithFormat:@"StatusBar.isVisible = %@;", boolValue? @"false" : @"true" ]];
+        [self updateIsVisible:![newValue boolValue]];
     }
 }
 
@@ -120,12 +123,46 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     if ([self settingForKey:setting]) {
         [self setStatusBarStyle:[self settingForKey:setting]];
     }
+
+    // blank scroll view to intercept status bar taps
+    self.webView.scrollView.scrollsToTop = NO;
+    UIScrollView *fakeScrollView = [[UIScrollView alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    fakeScrollView.delegate = self;
+    fakeScrollView.scrollsToTop = YES;
+    [self.viewController.view addSubview:fakeScrollView]; // Add scrollview to the view heirarchy so that it will begin accepting status bar taps
+    [self.viewController.view sendSubviewToBack:fakeScrollView]; // Send it to the very back of the view heirarchy
+    fakeScrollView.contentSize = CGSizeMake(UIScreen.mainScreen.bounds.size.width, UIScreen.mainScreen.bounds.size.height * 2.0f); // Make the scroll view longer than the screen itself
+    fakeScrollView.contentOffset = CGPointMake(0.0f, UIScreen.mainScreen.bounds.size.height); // Scroll down so a tap will take scroll view back to the top
 }
+
+- (void)onReset {
+    _eventsCallbackId = nil;
+}
+
+- (void)fireTappedEvent {
+    if (_eventsCallbackId == nil) {
+        return;
+    }
+    NSDictionary* payload = @{@"type": @"tap"};
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:payload];
+    [result setKeepCallbackAsBool:YES];
+    [self.commandDelegate sendPluginResult:result callbackId:_eventsCallbackId];
+}
+
+- (void)updateIsVisible:(BOOL)visible {
+    if (_eventsCallbackId == nil) {
+        return;
+    }
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:visible];
+    [result setKeepCallbackAsBool:YES];
+    [self.commandDelegate sendPluginResult:result callbackId:_eventsCallbackId];
+}
+
 
 - (void) _ready:(CDVInvokedUrlCommand*)command
 {
-    // set the initial value
-    [self.commandDelegate evalJs:[NSString stringWithFormat:@"StatusBar.isVisible = %@;", [UIApplication sharedApplication].statusBarHidden? @"false" : @"true" ]];
+    _eventsCallbackId = command.callbackId;
+    [self updateIsVisible:![UIApplication sharedApplication].statusBarHidden];
 }
 
 - (void) initializeStatusBarBackgroundView
@@ -327,11 +364,12 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
 
             CGRect frame = self.webView.frame;
             frame.origin.y = 0;
-
-            if (UIDeviceOrientationIsLandscape(self.viewController.interfaceOrientation)) {
-                frame.size.height += statusBarFrame.size.width;
-            } else {
-                frame.size.height += statusBarFrame.size.height;
+            if (!self.statusBarOverlaysWebView) {
+                if (UIDeviceOrientationIsLandscape(self.viewController.interfaceOrientation)) {
+                    frame.size.height += statusBarFrame.size.width;
+                } else {
+                    frame.size.height += statusBarFrame.size.height;
+                }
             }
 
             self.webView.frame = frame;
@@ -409,5 +447,13 @@ static const void *kStatusBarStyle = &kStatusBarStyle;
     [[UIApplication sharedApplication] removeObserver:self forKeyPath:@"statusBarHidden"];
 }
 
+
+#pragma mark - UIScrollViewDelegate
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+{
+    [self fireTappedEvent];
+    return NO;
+}
 
 @end

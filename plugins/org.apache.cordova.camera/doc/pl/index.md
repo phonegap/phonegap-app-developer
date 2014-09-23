@@ -28,7 +28,7 @@ Wtyczka dostarcza API do robienia zdjęć i wybór zdjęć z biblioteki obrazu s
 
 Pobiera zdjęcia za pomocą aparatu lub z galerii zdjęć w urządzeniu. Obraz jest przekazywany do funkcji zwrotnej success jako `String` kodowany za pomocą base64 lub jako URI do pliku. Sama metoda zwraca obiekt `CameraPopoverHandle`, który może służyć do zmiany położenia wyskakującego okna wyboru pliku.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### Opis
@@ -147,9 +147,9 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 ### Opcje
 
-*   **quality**: Jakość zapisywanego obrazu, wyrażona w przedziale 0-100, gdzie 100 zazwyczaj jest maksymalną rozdzielczością bez strat w czasie kompresji pliku. *(Liczba)* (Pamiętaj, że informacja o rozdzielczości aparatu jest niedostępna.)
+*   **quality**: Jakość zapisywanego obrazu, wyrażona w przedziale 0-100, gdzie 100 zazwyczaj jest maksymalną rozdzielczością bez strat w czasie kompresji pliku. Wartością domyślną jest 50. *(Liczba)* (Należy zauważyć, że informacje o rozdzielczość kamery jest niedostępny).
 
-*   **destinationType**: Wybierz format zwracanej wartości. Zdefiniowane w `navigator.camera.DestinationType` *(numer)*
+*   **destinationType**: Wybierz format zwracanej wartości. Wartością domyślną jest FILE_URI. Zdefiniowane w `navigator.camera.DestinationType` *(numer)*
     
         Camera.DestinationType = {
             DATA_URL : 0,      // Return image as base64-encoded string
@@ -158,7 +158,7 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
         };
         
 
-*   **sourceType**: Ustaw źródło obrazu. Zdefiniowane w `navigator.camera.PictureSourceType` *(numer)*
+*   **sourceType**: Ustaw źródło obrazu. Wartością domyślną jest aparat fotograficzny. Zdefiniowane w `navigator.camera.PictureSourceType` *(numer)*
     
         Camera.PictureSourceType = {
             PHOTOLIBRARY : 0,
@@ -169,7 +169,7 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 *   **allowEdit**: Pozwala na prostą edycję obrazu przed zaznaczeniem. *(Boolean)*
 
-*   **encodingType**: Wybierz plik obrazu zwracany jest kodowanie. Zdefiniowane w `navigator.camera.EncodingType` *(numer)*
+*   **encodingType**: Wybierz plik obrazu zwracany jest kodowanie. Domyślnie jest JPEG. Zdefiniowane w `navigator.camera.EncodingType` *(numer)*
     
         Camera.EncodingType = {
             JPEG : 0,               // Return JPEG encoded image
@@ -196,7 +196,7 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 *   **popoverOptions**: Opcja tylko dla platformy iOS, która określa położenie wyskakującego okna na iPadzie. Zdefiniowane w `CameraPopoverOptions`.
 
-*   **cameraDirection**: Wybierz aparat do korzystania (lub z powrotem przodem). Zdefiniowane w `navigator.camera.Direction` *(numer)*
+*   **cameraDirection**: Wybierz aparat do korzystania (lub z powrotem przodem). Wartością domyślną jest z powrotem. Zdefiniowane w `navigator.camera.Direction` *(numer)*
     
         Camera.Direction = {
             BACK : 0,      // Używa tylnej kamery
@@ -224,15 +224,13 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 *   Parametr `quality` jest ignorowany.
 
-*   Parametr `sourceType` jest ignorowany.
-
 *   Ignoruje `allowEdit` parametr.
 
-*   Nie jest wspierane `Camera.MediaType`.
+*   `Camera.MediaType`nie jest obsługiwane.
 
-*   Parametr `correctOrientation` jest ignorowany.
+*   Ignoruje `correctOrientation` parametr.
 
-*   Parametr `cameraDirection` jest ignorowany.
+*   Ignoruje `cameraDirection` parametr.
 
 ### Firefox OS dziwactwa
 
@@ -258,7 +256,7 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 *   Ustaw `quality` poniżej 50 aby uniknąć błędów pamięci na niektórych urządzeniach.
 
-*   Jeśli użyjesz `destinationType.FILE_URI` zdjęcia zostaną zapisane w katalogu tymczasowym aplikacji. Jeżeli masz problemy z miejscem, możesz usunąć zawartość tego katalogu używając API `navigator.fileMgr`.
+*   Podczas korzystania z `destinationType.FILE_URI` , zdjęcia są zapisywane w katalogu tymczasowego stosowania. Zawartość katalogu tymczasowego stosowania jest usuwany po zakończeniu aplikacji.
 
 ### Osobliwości Tizen
 
@@ -274,7 +272,11 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 *   Ignoruje `cameraDirection` parametr.
 
+*   Ignoruje `saveToPhotoAlbum` parametr. Ważne: Wszystkie zdjęcia zrobione aparatem wp7/8 cordova API są zawsze kopiowane do telefonu w kamerze. W zależności od ustawień użytkownika może to też oznaczać że obraz jest automatycznie przesłane do ich OneDrive. Potencjalnie może to oznaczać, że obraz jest dostępne dla szerszego grona odbiorców niż Twoja aplikacja przeznaczona. Jeśli ten bloker aplikacji, trzeba będzie wdrożenie CameraCaptureTask, opisane na msdn: <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx> można także komentarz lub górę głosowanie powiązanych kwestii w [śledzenia błędów][3]
+
 *   Ignoruje `mediaType` Właściwość `cameraOptions` jako SDK Windows Phone nie umożliwiają wybór filmów z PHOTOLIBRARY.
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 

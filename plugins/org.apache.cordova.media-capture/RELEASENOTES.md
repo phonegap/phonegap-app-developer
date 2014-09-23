@@ -80,3 +80,10 @@
 * CB-6808 Add license
 * CB-6706: Relax dependency on file plugin
 * CB-6491 add CONTRIBUTING.md
+
+### 0.3.2 (Aug 06, 2014)
+* ubuntu: fix compler warnings
+* ubuntu: support qt 5.2
+* CB-6127 Updated translations for docs
+* CB-6978 captureImage() function fails in Android
+* CB-6890: Fix pluginManager access for 4.0.x branch

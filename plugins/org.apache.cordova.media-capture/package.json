@@ -1,5 +1,5 @@
 {
-    "version": "0.3.1",
+    "version": "0.3.2",
     "name": "org.apache.cordova.media-capture",
     "cordova_name": "Capture",
     "description": "Cordova Media Capture Plugin",

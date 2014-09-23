@@ -44,7 +44,7 @@ properties:
 - __isPlugged__: A boolean that indicates whether the device is plugged in. _(Boolean)_
 
 Applications typically should use `window.addEventListener` to
-attach an event listener once the `deviceready` event fires. e.g.:
+attach an event listener after the `deviceready` event fires.
 
 ### Supported Platforms
 
@@ -54,6 +54,7 @@ attach an event listener once the `deviceready` event fires. e.g.:
 - BlackBerry 10
 - Windows Phone 7 and 8
 - Tizen
+- Firefox OS
 
 ### Windows Phone 7 and 8 Quirks
 
@@ -92,6 +93,7 @@ an event listener once the `deviceready` event fires.
 - Android
 - BlackBerry 10
 - Tizen
+- Firefox OS
 
 ### Example
 
@@ -124,6 +126,7 @@ attach an event listener once the `deviceready` event fires.
 - Android
 - BlackBerry 10
 - Tizen
+- Firefox OS
 
 ### Example
 

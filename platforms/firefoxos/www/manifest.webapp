@@ -1,0 +1,31 @@
+{
+    "launch_path": "/index.html",
+    "installs_allowed_from": [
+        "*"
+    ],
+    "version": "1.1.0",
+    "name": "PhoneGap",
+    "description": "The PhoneGap Developer app is a testing utility for web developers\n        and designers using the PhoneGap framework. After installing the\n        PhoneGap Developer app you will be able to connect to your PhoneGap\n        desktop app to instantly view and test your work on the device.",
+    "developer": {
+        "name": "Adobe PhoneGap Team",
+        "url": "http://phonegap.com"
+    },
+    "fullscreen": "false",
+    "orientation": [
+        "default"
+    ],
+    "permissions": {
+        "geolocation": {
+            "description": "Required for accessing user location."
+        },
+        "browser": {
+            "description": "Enables the app to implement a browser in an iframe."
+        },
+        "systemXHR": {}
+    },
+    "type": "privileged",
+    "icons": {
+        "60": "/icon/icon-60.png",
+        "128": "/icon/icon-128.png"
+    }
+}

@@ -112,3 +112,10 @@
 * CB-5649 - InAppBrowser overrides App's orientation
 * refactoring fixed
 * CB-6396 [Firefox OS] Adding basic support
+
+### 0.5.1 (Aug 06, 2014)
+* ubuntu: support qt 5.2
+* **FFOS** update InAppBrowserProxy.js
+* **FFOS** app needs to be privileged
+* CB-6127 Updated translations for docs
+* CB-6769 ios: Fix statusbar color reset wasn't working on iOS7+

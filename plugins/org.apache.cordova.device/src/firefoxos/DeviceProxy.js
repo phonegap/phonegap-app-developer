@@ -77,4 +77,4 @@ module.exports = {
     }
 };
 
-require("cordova/firefoxos/commandProxy").add("Device", module.exports);
+require("cordova/exec/proxy").add("Device", module.exports);

@@ -482,7 +482,7 @@ A `MediaError` 개체에 반환 됩니다는 `mediaError` 콜백 함수 오류�
 
 ### 상수
 
-*   `MediaError.MEDIA_ERR_ABORTED`
-*   `MediaError.MEDIA_ERR_NETWORK`
-*   `MediaError.MEDIA_ERR_DECODE`
-*   `MediaError.MEDIA_ERR_NONE_SUPPORTED`
+*   `MediaError.MEDIA_ERR_ABORTED` = 1
+*   `MediaError.MEDIA_ERR_NETWORK` = 2
+*   `MediaError.MEDIA_ERR_DECODE` = 3
+*   `MediaError.MEDIA_ERR_NONE_SUPPORTED` = 4

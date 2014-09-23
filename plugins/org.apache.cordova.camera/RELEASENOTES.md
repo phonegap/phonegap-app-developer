@@ -100,3 +100,17 @@
 * CB-6491 add CONTRIBUTING.md
 * CB-6546 android: Fix a couple bugs with allowEdit pull request
 * CB-6546 android: Add support for allowEdit Camera option
+
+### 0.3.1 (Aug 06, 2014)
+* **FFOS** update CameraProxy.js
+* CB-7187 ios: Add explicit dependency on CoreLocation.framework
+* [BlackBerry10] Doc correction - sourceType is supported
+* CB-7071 android: Fix callback firing before CROP intent is sent when allowEdit=true
+* CB-6875 android: Handle exception when SDCard is not mounted
+* ios: Delete postImage (dead code)
+* Prevent NPE on processResiultFromGallery when intent comes null
+* Remove iOS doc reference to non-existing navigator.fileMgr API
+* Docs updated with some default values
+* Removes File plugin dependency from windows8 code.
+* Use WinJS functionality to resize image instead of File plugin functionality
+* CB-6127 Updated translations for docs

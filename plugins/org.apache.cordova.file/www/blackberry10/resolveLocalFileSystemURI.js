@@ -123,7 +123,7 @@ function resolve(success, fail, path, fsType, sandbox, options, size) {
                 requestAnimationFrame(function () {
                     resolveNative(success, fail, path, fsType, options, size);
                 });
-            }, fail, 'org.apache.cordova.file', 'setSandbox', [sandbox], false);
+            }, fail, 'File', 'setSandbox', [sandbox], false);
         });
     }
 }

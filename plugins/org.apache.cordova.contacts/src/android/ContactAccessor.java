@@ -19,7 +19,6 @@ package org.apache.cordova.contacts;
 import java.util.HashMap;
 
 import android.util.Log;
-
 import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,12 +53,16 @@ public abstract class ContactAccessor {
      * @param fields the list of fields to populate
      * @return the hash map of required data
      */
-    protected HashMap<String,Boolean> buildPopulationSet(JSONArray fields) {
-        HashMap<String,Boolean> map = new HashMap<String,Boolean>();
+    protected HashMap<String, Boolean> buildPopulationSet(JSONObject options) {
+        HashMap<String, Boolean> map = new HashMap<String, Boolean>();
 
         String key;
         try {
-            if (fields.length() == 1 && fields.getString(0).equals("*")) {
+            JSONArray desiredFields = null;
+            if (options!=null && options.has("desiredFields")) {
+                desiredFields = options.getJSONArray("desiredFields");
+            }
+            if (desiredFields == null || desiredFields.length() == 0) {
                 map.put("displayName", true);
                 map.put("name", true);
                 map.put("nickname", true);
@@ -73,54 +76,40 @@ public abstract class ContactAccessor {
                 map.put("urls", true);
                 map.put("photos", true);
                 map.put("categories", true);
-           } 
-            else {
-                for (int i=0; i<fields.length(); i++) {
-                    key = fields.getString(i);
+            } else {
+                for (int i = 0; i < desiredFields.length(); i++) {
+                    key = desiredFields.getString(i);
                     if (key.startsWith("displayName")) {
                         map.put("displayName", true);
-                    }
-                    else if (key.startsWith("name")) {
+                    } else if (key.startsWith("name")) {
                         map.put("displayName", true);
                         map.put("name", true);
-                    }
-                    else if (key.startsWith("nickname")) {
+                    } else if (key.startsWith("nickname")) {
                         map.put("nickname", true);
-                    }
-                    else if (key.startsWith("phoneNumbers")) {
+                    } else if (key.startsWith("phoneNumbers")) {
                         map.put("phoneNumbers", true);
-                    }
-                    else if (key.startsWith("emails")) {
+                    } else if (key.startsWith("emails")) {
                         map.put("emails", true);
-                    }
-                    else if (key.startsWith("addresses")) {
+                    } else if (key.startsWith("addresses")) {
                         map.put("addresses", true);
-                    }
-                    else if (key.startsWith("ims")) {
+                    } else if (key.startsWith("ims")) {
                         map.put("ims", true);
-                    }
-                    else if (key.startsWith("organizations")) {
+                    } else if (key.startsWith("organizations")) {
                         map.put("organizations", true);
-                    }
-                    else if (key.startsWith("birthday")) {
+                    } else if (key.startsWith("birthday")) {
                         map.put("birthday", true);
-                    }
-                    else if (key.startsWith("note")) {
+                    } else if (key.startsWith("note")) {
                         map.put("note", true);
-                    }
-                    else if (key.startsWith("urls")) {
+                    } else if (key.startsWith("urls")) {
                         map.put("urls", true);
-                    }
-                    else if (key.startsWith("photos")) {
+                    } else if (key.startsWith("photos")) {
                         map.put("photos", true);
-                    }
-                    else if (key.startsWith("categories")) {
+                    } else if (key.startsWith("categories")) {
                         map.put("categories", true);
                     }
                 }
             }
-       }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         }
         return map;
@@ -168,12 +157,19 @@ public abstract class ContactAccessor {
      * @throws JSONException
      */
     public abstract JSONObject getContactById(String id) throws JSONException;
+    
+    /**
+     * Handles searching through SDK-specific contacts API.
+     * @param desiredFields fields that will filled. All fields will be filled if null 
+     * @throws JSONException
+     */
+    public abstract JSONObject getContactById(String id, JSONArray desiredFields) throws JSONException;
 
     /**
      * Handles removing a contact from the database.
      */
     public abstract boolean remove(String id);
-
+    
    /**
      * A class that represents the where clause to be used in the database query 
      */

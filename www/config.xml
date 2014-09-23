@@ -29,6 +29,7 @@
     <preference name="android-installLocation" value="auto" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="WebViewBounce" value="false" />
+    <permission name="systemXHR" privileged="true"/>
     <access origin="*" />
     <content src="index.html" />
 </widget>

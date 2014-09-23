@@ -1,5 +1,5 @@
 {
-    "version": "0.3.8",
+    "version": "0.3.9",
     "name": "org.apache.cordova.geolocation",
     "cordova_name": "Geolocation",
     "description": "Cordova Geolocation Plugin",

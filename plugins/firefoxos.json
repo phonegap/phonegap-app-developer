@@ -1,0 +1,125 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"firefoxos-package\" value=\"Camera\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<permission access=\"readwrite\" description=\"Required for accessing address book.\" name=\"contacts\" privileged=\"true\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"firefoxos-package\" value=\"Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Accelerometer\"><param name=\"firefoxos-package\" value=\"Accelerometer\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Compass\"><param name=\"firefoxos-package\" value=\"Compass\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"firefoxos-package\" value=\"Notification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<permission name=\"systemXHR\" privileged=\"true\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<permission description=\"Required for accessing user location.\" name=\"geolocation\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<permission description=\"Enables the app to implement a browser in an iframe.\" name=\"browser\" privileged=\"true\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "www/config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Vibration\"><param name=\"firefoxos-package\" value=\"Vibration\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "nl.x-services.plugins.insomnia": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.battery-status": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.console": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.contacts": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.device-motion": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.device-orientation": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.globalization": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.media": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.media-capture": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.splashscreen": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.statusbar": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.vibration": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        }
+    },
+    "dependent_plugins": {}
+}

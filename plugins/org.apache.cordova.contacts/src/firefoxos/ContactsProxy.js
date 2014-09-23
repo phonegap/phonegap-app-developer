@@ -461,4 +461,4 @@ module.exports = {
     search: search
 };    
     
-require("cordova/firefoxos/commandProxy").add("Contacts", module.exports);
+require("cordova/exec/proxy").add("Contacts", module.exports);

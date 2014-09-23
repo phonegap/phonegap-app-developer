@@ -28,7 +28,7 @@ Dieses Plugin stellt eine API für Aufnahmen und für die Auswahl der Bilder aus
 
 Nimmt ein Foto mit der Kamera, oder ein Foto aus dem Gerät Bildergalerie abgerufen. Das Bild wird an den Erfolg-Rückruf als eine base64-codierte übergeben `String` , oder als den URI für die Image-Datei. Die Methode selbst gibt ein `CameraPopoverHandle` -Objekt, das verwendet werden kann, um die Datei-Auswahl-Popover neu zu positionieren.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### Beschreibung
@@ -137,21 +137,21 @@ Optionale Parameter die Kameraeinstellungen anpassen.
 
 ### Optionen
 
-*   **Qualität**: Qualität des gespeicherten Bildes, ausgedrückt als ein Bereich von 0-100, wo 100 in der Regel voller Auflösung ohne Verlust aus der Dateikomprimierung ist. *(Anzahl)* (Beachten Sie, dass Informationen über die Kamera Auflösung nicht verfügbar ist.)
+*   **Qualität**: Qualität des gespeicherten Bildes, ausgedrückt als ein Bereich von 0-100, wo 100 in der Regel voller Auflösung ohne Verlust aus der Dateikomprimierung ist. Der Standardwert ist 50. *(Anzahl)* (Beachten Sie, dass Informationen über die Kamera Auflösung nicht verfügbar ist.)
 
-*   **DestinationType**: Wählen Sie das Format des Rückgabewerts. Im Sinne `navigator.camera.DestinationType` *(Anzahl)*
+*   **DestinationType**: Wählen Sie das Format des Rückgabewerts. Der Standardwert ist FILE_URI. Im Sinne `navigator.camera.DestinationType` *(Anzahl)*
     
         Camera.DestinationType = {DATA_URL: 0, / / Return Bild als base64-codierte Zeichenfolge FILE_URI: 1, / / Return Image-Datei-URI NATIVE_URI: 2 / / Return image native URI (z. B. Ressourcen-Bibliothek: / / auf iOS oder Inhalte: / / auf Android)};
         
 
-*   **SourceType**: Legen Sie die Quelle des Bildes. Im Sinne `navigator.camera.PictureSourceType` *(Anzahl)*
+*   **SourceType**: Legen Sie die Quelle des Bildes. Der Standardwert ist die Kamera. Im Sinne `navigator.camera.PictureSourceType` *(Anzahl)*
     
         Camera.PictureSourceType = {Fotothek: 0, Kamera: 1, SAVEDPHOTOALBUM: 2};
         
 
 *   **AllowEdit**: einfache Bearbeitung des Bildes vor Auswahl zu ermöglichen. *(Boolesch)*
 
-*   **EncodingType**: die zurückgegebene Image-Datei ist Codierung auswählen. Im Sinne `navigator.camera.EncodingType` *(Anzahl)*
+*   **EncodingType**: die zurückgegebene Image-Datei ist Codierung auswählen. Standardwert ist JPEG. Im Sinne `navigator.camera.EncodingType` *(Anzahl)*
     
         Camera.EncodingType = {JPEG: 0, / / Return JPEG-codierte Bild PNG: 1 / / Return PNG codiertes Bild};
         
@@ -174,7 +174,7 @@ Optionale Parameter die Kameraeinstellungen anpassen.
 
 *   **PopoverOptions**: iOS-nur Optionen, die Popover Lage in iPad angeben. In definierten`CameraPopoverOptions`.
 
-*   **CameraDirection**: Wählen Sie die Kamera (vorn oder hinten-gerichtete) verwenden. Im Sinne `navigator.camera.Direction` *(Anzahl)*
+*   **CameraDirection**: Wählen Sie die Kamera (vorn oder hinten-gerichtete) verwenden. Der Standardwert ist zurück. Im Sinne `navigator.camera.Direction` *(Anzahl)*
     
         Camera.Direction = {zurück: 0, / / die hinten gerichteter Kamera vorne verwenden: 1 / / die nach vorn gerichtete Kamera verwenden};
         
@@ -198,8 +198,6 @@ Optionale Parameter die Kameraeinstellungen anpassen.
 ### BlackBerry 10 Macken
 
 *   Ignoriert die `quality` Parameter.
-
-*   Ignoriert die `sourceType` Parameter.
 
 *   Ignoriert die `allowEdit` Parameter.
 
@@ -233,7 +231,7 @@ Optionale Parameter die Kameraeinstellungen anpassen.
 
 *   Legen Sie `quality` unter 50 Speicherfehler auf einigen Geräten zu vermeiden.
 
-*   Bei der Verwendung `destinationType.FILE_URI` , Fotos werden im temporären Verzeichnis der Anwendung gespeichert. Sie können den Inhalt dieses Verzeichnisses mit löschen die `navigator.fileMgr` APIs, wenn Speicherplatz ein Anliegen.
+*   Bei der Verwendung `destinationType.FILE_URI` , Fotos werden im temporären Verzeichnis der Anwendung gespeichert. Den Inhalt des temporären Verzeichnis der Anwendung wird gelöscht, wenn die Anwendung beendet.
 
 ### Tizen Macken
 
@@ -249,7 +247,11 @@ Optionale Parameter die Kameraeinstellungen anpassen.
 
 *   Ignoriert die `cameraDirection` Parameter.
 
+*   Ignoriert die `saveToPhotoAlbum` Parameter. WICHTIG: Alle Aufnahmen die wp7/8 Cordova-Kamera-API werden immer in Kamerarolle des Telefons kopiert. Abhängig von den Einstellungen des Benutzers könnte dies auch bedeuten, dass das Bild in ihre OneDrive automatisch hochgeladen ist. Dies könnte möglicherweise bedeuten, dass das Bild für ein breiteres Publikum als Ihre Anwendung vorgesehen ist. Wenn diese einen Blocker für Ihre Anwendung, Sie müssen die CameraCaptureTask zu implementieren, wie im Msdn dokumentiert: <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx> Sie können kommentieren oder Up-Abstimmung das Beiträge zu diesem Thema im [Bugtracker][3]
+
 *   Ignoriert die `mediaType` -Eigenschaft des `cameraOptions` wie das Windows Phone SDK keine Möglichkeit, Fotothek Videos wählen.
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 

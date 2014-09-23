@@ -62,6 +62,8 @@
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 8
 
@@ -101,6 +103,8 @@
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 8
 
@@ -150,6 +154,8 @@
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 8
 
@@ -169,6 +175,11 @@
 
 *   `formatLength`選項僅支援 `short` 和 `full` 的值。
 
+### 火狐瀏覽器作業系統的怪癖
+
+*   `formatLength`不區分 `long` 和`full` 
+*   顯示日期的只有一個方法 （沒有 `long` 或 `full` 版本）
+
 ## navigator.globalization.getCurrencyPattern
 
 返回一個模式字串格式化和分析根據用戶端的使用者首選項和 ISO 4217 貨幣代碼貨幣值。
@@ -176,19 +187,19 @@
      navigator.globalization.getCurrencyPattern(currencyCode, successCallback, errorCallback);
     
 
-### 說明
+### 描述
 
 返回到模式 `successCallback` 與 `properties` 物件作為參數。該物件應包含以下屬性：
 
-*   **模式**： 要格式化和分析貨幣值的貨幣模式。 模式按照[Unicode 技術標準 #35][1]。 *（字串）*
+*   **模式**： 要格式化和解析貨幣值的貨幣模式。 模式按照[Unicode 技術標準 #35][1]。 *（字串）*
 
 *   **代碼**： 模式的 ISO 4217 貨幣代碼。*（字串）*
 
 *   **分數**： 小數位數解析和貨幣的格式時要使用的數量。*（人數）*
 
-*   **舍**： 舍遞增時分析和格式設置使用。*（人數）*
+*   **舍入**： 舍入增量解析和設置格式時使用。*（人數）*
 
-*   **十進位**： 小數點符號用於分析和格式設置。*（字串）*
+*   **十進位**： 用於分析和格式設置的小數點符號。*（字串）*
 
 *   **分組**： 分組符號用於分析和格式設置。*（字串）*
 
@@ -202,6 +213,7 @@
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
 *   iOS
 
 ### 示例
@@ -239,7 +251,7 @@
     navigator.globalization.getDateNames(successCallback, errorCallback, options);
     
 
-### 說明
+### 描述
 
 返回的陣列的名稱為 `successCallback` 與 `properties` 物件作為參數。 該物件包含 `value` 屬性與 `Array` 的 `String` 的值。 從任一開始一年或一周內，根據所選的選項的第一天中的第一個月的陣列功能名稱。
 
@@ -257,7 +269,9 @@
 ### 支援的平臺
 
 *   亞馬遜火 OS
-*   Android 系統
+*   安卓系統
+*   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 8
 
@@ -276,6 +290,10 @@
     );
     
 
+### 火狐瀏覽器作業系統的怪癖
+
+*   `options.type`支援 `genitive` 的價值，對於某些語言重要
+
 ## navigator.globalization.getDatePattern
 
 返回一個模式字串格式化和解析日期根據用戶端的使用者首選項。
@@ -283,7 +301,7 @@
     navigator.globalization.getDatePattern(successCallback, errorCallback, options);
     
 
-### 說明
+### 描述
 
 返回到模式 `successCallback` 。作為一個參數傳遞的物件包含以下屬性：
 
@@ -291,9 +309,9 @@
 
 *   **時區**： 在用戶端上的時區的縮寫的名稱。*（字串）*
 
-*   **utc_offset**： 用戶端的時區和協調通用時間當前區別秒。*（人數）*
+*   **utc_offset**： 用戶端的時區和協調通用時間以秒為單位的當前區別。*（人數）*
 
-*   **dst_offset**： 在用戶端的夏之間的秒數的當前夏令時偏移量的時區和用戶端的夏時制儲蓄的時區。*（人數）*
+*   **dst_offset**： 在用戶端的非夏令時之間的秒數的當前日光節約時間偏移量的時區和用戶端的夏時制節約的時區的時間。*（人數）*
 
 如果您獲取該模式，錯誤 `errorCallback` 執行與 `GlobalizationError` 物件作為參數。 錯誤的期望的代碼`GlobalizationError.PATTERN_ERROR`.
 
@@ -309,6 +327,7 @@ time`.
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
 *   iOS
 *   Windows Phone 8
 
@@ -329,11 +348,11 @@ time`.
 
 *   `formatLength`僅支援 `short` 和 `full` 的值。
 
-*   `pattern`的 `date and time` 模式返回只完整的日期時間格式。
+*   `pattern`為 `date and time` 模式返回只完整的日期時間格式。
 
 *   `timezone`返回全時區名稱。
 
-*   `dst_offset`屬性不受支援，並且總是返回零。
+*   `dst_offset`不支援屬性，並始終返回零。
 
 ## navigator.globalization.getFirstDayOfWeek
 
@@ -342,7 +361,7 @@ time`.
     navigator.globalization.getFirstDayOfWeek(successCallback, errorCallback);
     
 
-### 說明
+### 描述
 
 周中天的編號 1，從開始位置 1 假定是星期日。 返回到天 `successCallback` 與 `properties` 物件作為參數。 物件應具有 `value` 屬性與 `Number` 的值。
 
@@ -352,6 +371,8 @@ time`.
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 8
 
@@ -372,23 +393,23 @@ time`.
     navigator.globalization.getNumberPattern(successCallback, errorCallback, options);
     
 
-### 說明
+### 描述
 
 返回到模式 `successCallback` 與 `properties` 物件作為參數。該物件包含以下屬性：
 
-*   **模式**： 要格式化和分析數位的數位模式。 模式按照[Unicode 技術標準 #35][1]。 *（字串）*
+*   **模式**： 要格式化和解析數位的數位模式。 模式按照[Unicode 技術標準 #35][1]。 *（字串）*
 
-*   **符號**： 符號格式設置和分析過程中，如 %或貨幣符號時使用。*（字串）*
+*   **符號**： 符號格式和解析，如 %或貨幣符號時使用。*（字串）*
 
 *   **分數**： 小數位數解析和設置數位格式時要使用的數量。*（人數）*
 
-*   **舍**： 舍遞增時分析和格式設置使用。*（人數）*
+*   **舍入**： 舍入增量解析和設置格式時使用。*（人數）*
 
 *   **積極**： 積極數位分析和格式時要使用的符號。*（字串）*
 
 *   **負面**： 要為負數時分析和格式設置使用的符號。*（字串）*
 
-*   **十進位**： 小數點符號用於分析和格式設置。*（字串）*
+*   **十進位**： 用於分析和格式設置的小數點符號。*（字串）*
 
 *   **分組**： 分組符號用於分析和格式設置。*（字串）*
 
@@ -405,6 +426,7 @@ time`.
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
 *   iOS
 *   Windows Phone 8
 
@@ -451,7 +473,7 @@ time`.
     navigator.globalization.isDayLightSavingsTime(date, successCallback, errorCallback);
     
 
-### 說明
+### 描述
 
 指示是否夏令時生效的是 `successCallback` 與 `properties` 物件作為參數。 物件應具有 `dst` 屬性與 `Boolean` 的值。 A `true` 值指示夏令時實際上是對給定的日期，和 `false` 指示它不是。
 
@@ -462,7 +484,9 @@ time`.
 ### 支援的平臺
 
 *   亞馬遜火 OS
-*   Android 系統
+*   安卓系統
+*   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 8
 
@@ -484,7 +508,7 @@ time`.
     navigator.globalization.numberToString(number, successCallback, errorCallback, options);
     
 
-### 說明
+### 描述
 
 返回到帶格式的數位字串 `successCallback` 與 `properties` 物件作為參數。 物件應具有 `value` 屬性與 `String` 的值。
 
@@ -501,6 +525,7 @@ time`.
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
 *   iOS
 *   Windows Phone 8
 
@@ -523,23 +548,23 @@ time`.
     navigator.globalization.stringToDate(dateString, successCallback, errorCallback, options);
     
 
-### 說明
+### 描述
 
 返回的日期與成功回檔到 `properties` 物件作為參數。該物件應具有以下屬性：
 
-*   **一年**： 將四個數字的年份。*（人數）*
+*   **年**： 將四個數字的年份。*（人數）*
 
 *   **月**： 從 （0-11) 月。*（人數）*
 
 *   **一天**： 從 （1-31) 天。*（人數）*
 
-*   **小時**： 從 (0-23) 小時。*（人數）*
+*   **小時**： 從 （0-23) 小時。*（人數）*
 
-*   **分鐘**： 從 (0-59) 分鐘。*（人數）*
+*   **分鐘**： 從 （0-59) 分鐘。*（人數）*
 
 *   **第二**： 的第二位 (0-59)。*（人數）*
 
-*   **毫秒**： 的毫秒數 （從 0-999)，在所有平臺上不可用。*（人數）*
+*   **毫秒**： 的毫秒數 （從 0-999），在所有的平臺上不可用。*（人數）*
 
 入站 `dateString` 參數的類型應為`String`.
 
@@ -557,6 +582,8 @@ time`.
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 8
 
@@ -585,7 +612,7 @@ time`.
     navigator.globalization.stringToNumber(string, successCallback, errorCallback, options);
     
 
-### 說明
+### 描述
 
 返回到數 `successCallback` 與 `properties` 物件作為參數。物件應具有 `value` 屬性與 `Number` 的值。
 
@@ -602,6 +629,7 @@ time`.
 
 *   亞馬遜火 OS
 *   Android 系統
+*   黑莓 10
 *   iOS
 *   Windows Phone 8
 
@@ -630,14 +658,16 @@ time`.
     *   GlobalizationError.PATTERN_ERROR: 3
 *   **消息**： 一條文本消息，包括錯誤的解釋，和/或詳細說明*（字串）*
 
-### 說明
+### 描述
 
 此物件創建和填充的科爾多瓦，並返回到出現錯誤時的回檔。
 
 ### 支援的平臺
 
 *   亞馬遜火 OS
-*   Android 系統
+*   安卓系統
+*   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 
 ### 示例

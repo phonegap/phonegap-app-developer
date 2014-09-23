@@ -36,7 +36,16 @@ var argscheck = require('cordova/argscheck'),
  * {FileSystem} filesystem on which the directory resides (readonly)
  */
 var DirectoryEntry = function(name, fullPath, fileSystem, nativeURL) {
-     DirectoryEntry.__super__.constructor.call(this, false, true, name, fullPath, fileSystem, nativeURL);
+
+    // add trailing slash if it is missing
+    if (!/\/$/.test(fullPath)) {
+        fullPath += "/";
+    }
+    // add trailing slash if it is missing
+    if (!/\/$/.test(nativeURL)) {
+        nativeURL += "/";
+    }
+    DirectoryEntry.__super__.constructor.call(this, false, true, name, fullPath, fileSystem, nativeURL);
 };
 
 utils.extend(DirectoryEntry, Entry);

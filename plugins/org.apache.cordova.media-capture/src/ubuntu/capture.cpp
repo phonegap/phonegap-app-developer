@@ -28,7 +28,7 @@ function createObject() {                                               \
         component.statusChanged.connect(finishCreation);                \
 }                                                                       \
 function finishCreation() {                                             \
-    CordovaWrapper.captureObject = component.createObject(root,         \
+    CordovaWrapper.global.captureObject = component.createObject(root,         \
         {root: root, cordova: cordova, state: \"%2\"});                 \
 }                                                                       \
 createObject()";
@@ -50,7 +50,7 @@ static QString formatFile(const QMimeDatabase &db, const QString &path) {
 MediaCapture::MediaCapture(Cordova *cordova): CPlugin(cordova), _scId(0), _ecId(0) {
 }
 
-void MediaCapture::captureAudio(int scId, int ecId, QVariantMap options) {
+void MediaCapture::captureAudio(int scId, int ecId, const QVariantMap &) {
     if (_scId || _ecId) {
         this->callback(_ecId, QString("{code: %1}").arg(CAPTURE_APPLICATION_BUSY));
         return;
@@ -58,7 +58,6 @@ void MediaCapture::captureAudio(int scId, int ecId, QVariantMap options) {
 
     QString path = m_cordova->get_app_dir() + "/../qml/MediaCaptureWidget.qml";
 
-    // TODO: relative url
     QString qml = QString(code).arg(CordovaInternal::format(path)).arg("audio");
     m_cordova->execQML(qml);
 
@@ -75,7 +74,7 @@ void MediaCapture::onAudioRecordError(QMediaRecorder::Error) {
     _recorder.clear();
     _files.clear();
 
-    m_cordova->execQML("CordovaWrapper.captureObject.destroy()");
+    m_cordova->execQML("CordovaWrapper.global.captureObject.destroy()");
 }
 
 void MediaCapture::recordAudio() {
@@ -90,7 +89,7 @@ void MediaCapture::recordAudio() {
         this->callback(_scId, QString("[%1]").arg(formatFile(_db, path)));
         _ecId = _scId = 0;
 
-        m_cordova->execQML("CordovaWrapper.captureObject.destroy()");
+        m_cordova->execQML("CordovaWrapper.global.captureObject.destroy()");
     } else {
         _recorder = QSharedPointer<QAudioRecorder>(new QAudioRecorder);
         QObject::connect(_recorder.data(), SIGNAL(error(QMediaRecorder::Error)), this, SLOT(onAudioRecordError(QMediaRecorder::Error)));
@@ -110,7 +109,7 @@ void MediaCapture::cancel() {
     if (!_ecId)
         return;
 
-    m_cordova->execQML("CordovaWrapper.captureObject.destroy()");
+    m_cordova->execQML("CordovaWrapper.global.captureObject.destroy()");
 
     _recorder.clear();
     this->callback(_ecId, QString("{code: %1}").arg(CAPTURE_NO_MEDIA_FILES));
@@ -119,15 +118,13 @@ void MediaCapture::cancel() {
     _recorder.clear();
 }
 
-void MediaCapture::captureVideo(int scId, int ecId, QVariantMap options) {
+void MediaCapture::captureVideo(int scId, int ecId, const QVariantMap &) {
     if (_scId || _ecId) {
         this->callback(_ecId, QString("{code: %1}").arg(CAPTURE_APPLICATION_BUSY));
         return;
     }
 
     QString path = m_cordova->get_app_dir() + "/../qml/MediaCaptureWidget.qml";
-
-    // TODO: relative url
     QString qml = QString(code).arg(CordovaInternal::format(path)).arg("videoRecording");
     m_cordova->execQML(qml);
 
@@ -135,25 +132,22 @@ void MediaCapture::captureVideo(int scId, int ecId, QVariantMap options) {
     _ecId = ecId;
 }
 
-void MediaCapture::onVideoRecordEnd(QString path) {
-    assert(path.startsWith("file:"));
-    path = path.mid(5);
+void MediaCapture::onVideoRecordEnd(const QString &uri) {
+    QString path = QUrl::fromUserInput(uri).path();
 
     this->callback(_scId, QString("[%1]").arg(formatFile(_db, path)));
     _ecId = _scId = 0;
 
-    m_cordova->execQML("CordovaWrapper.captureObject.destroy()");
+    m_cordova->execQML("CordovaWrapper.global.captureObject.destroy()");
 }
 
-void MediaCapture::captureImage(int scId, int ecId, QVariantMap options) {
+void MediaCapture::captureImage(int scId, int ecId, const QVariantMap &) {
     if (_scId || _ecId) {
         this->callback(_ecId, QString("{code: %1}").arg(CAPTURE_APPLICATION_BUSY));
         return;
     }
 
     QString path = m_cordova->get_app_dir() + "/../qml/MediaCaptureWidget.qml";
-
-    // TODO: relative url
     QString qml = QString(code).arg(CordovaInternal::format(path)).arg("camera");
     m_cordova->execQML(qml);
 

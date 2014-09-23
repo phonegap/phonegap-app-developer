@@ -274,6 +274,10 @@ function onBuildSubmitError(message) {
 }
 
 function registerWithServer() {
+	$.ajaxSettings.xhr = function() {
+		return new XMLHttpRequest({mozSystem: true})
+	};
+
     $.ajax({
         type: 'POST',
         url: getAddress('/__api__/register'),

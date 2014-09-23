@@ -43,14 +43,19 @@ public class StatusBar extends CordovaPlugin {
      * @param webView The CordovaWebView Cordova is running in.
      */
     @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+    public void initialize(final CordovaInterface cordova, CordovaWebView webView) {
         Log.v(TAG, "StatusBar: initialization");
         super.initialize(cordova, webView);
 
-        // Clear flag FLAG_FORCE_NOT_FULLSCREEN which is set initially
-        // by the Cordova.
-        Window window = this.cordova.getActivity().getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        this.cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Clear flag FLAG_FORCE_NOT_FULLSCREEN which is set initially
+                // by the Cordova.
+                Window window = cordova.getActivity().getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+            }
+        });
     }
 
     /**

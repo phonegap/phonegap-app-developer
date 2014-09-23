@@ -61,4 +61,4 @@ module.exports = {
     }
 };
 
-require("cordova/firefoxos/commandProxy").add("Geolocation", module.exports);
+require("cordova/exec/proxy").add("Geolocation", module.exports);

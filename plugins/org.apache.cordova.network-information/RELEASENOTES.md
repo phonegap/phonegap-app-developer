@@ -62,3 +62,12 @@
 * CB-6350 - Fix networkStatusForFlags return value type to work with 64-bit iOS (closes #8)
 * Initial version of firefox os network information plugin
 * there was an error in the object definition
+
+### 0.2.10 (Jun 24, 2014)
+* CB-6907: [android] Don't crash on startup if no networks available
+
+### 0.2.11 (Aug 06, 2014)
+* **FFOS** update NetworkProxy.js
+* CB-6127 Updated translations for docs
+* CB-7019 Updated version and RELEASENOTES.md for release 0.2.10
+* Fixed docs for online/offline event being backwards

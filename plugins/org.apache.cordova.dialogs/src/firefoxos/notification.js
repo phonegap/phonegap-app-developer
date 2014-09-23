@@ -151,4 +151,4 @@ var Notification = {
 
 
 module.exports = Notification;
-require('cordova/firefoxos/commandProxy').add('Notification', Notification);
+require('cordova/exec/proxy').add('Notification', Notification);

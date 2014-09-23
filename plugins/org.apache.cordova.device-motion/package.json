@@ -1,5 +1,5 @@
 {
-    "version": "0.2.8",
+    "version": "0.2.9",
     "name": "org.apache.cordova.device-motion",
     "cordova_name": "Device Motion",
     "description": "Cordova Device Motion Plugin",

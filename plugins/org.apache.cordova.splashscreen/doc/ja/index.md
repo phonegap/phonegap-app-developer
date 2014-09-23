@@ -42,15 +42,13 @@
 
 ### Android の癖
 
-あなた config.xml で、以下の設定を追加する必要があります。
+あなたの config.xml を以下の設定を追加する必要があります。
 
-`<preference name="splashscreen" value="foo" />`
+`<preference name="SplashScreen" value="foo" />` `<preference name="SplashScreenDelay" value="10000" />`
 
-Foo は splashscreen ファイルの名前です。できれば 9 パッチ ファイルです。解像度/xml ディレクトリの適切なフォルダーの下に splashcreen ファイルを追加することを確認します。
+Foo ができれば 9 パッチファイル splashscreen ファイルの名前です。 解像度/xml ディレクトリの適切なフォルダーの下に splashcreen ファイルを追加することを確認します。 2 番目のパラメーターは、スプラッシュ ・ スクリーンがの表示時間 (ミリ秒単位) を表します。 デフォルトでは 3000 ミリ秒です。 詳細については、[アイコンとスプラッシュ画面][1]を参照してください。
 
-アンドロイドのためまた、プロジェクトの主要な java ファイルを編集する必要があります。あなたの super.loadUrl への遅延時間を表す 2 番目のパラメーターを追加する必要があります。
-
-`super.loadUrl(Config.getStartUrl(), 10000);`
+ [1]: http://cordova.apache.org/docs/en/edge/config_ref_images.md.html
 
 ## splashscreen.hide
 
@@ -59,13 +57,9 @@ Foo は splashscreen ファイルの名前です。できれば 9 パッチ フ�
     navigator.splashscreen.hide();
     
 
-### ブラックベリー 10 気まぐれ
+### ブラックベリー 10、WP8、iOS の気まぐれ
 
-`config.xml`ファイルの `AutoHideSplashScreen` 設定する必要があります`false`.
-
-### iOS の気まぐれ
-
-`config.xml`ファイルの `AutoHideSplashScreen` 設定する必要があります `false` 。 遅延を 2 秒間スプラッシュ スクリーンを非表示、する、タイマーを追加しますで次のように `deviceready` イベント ハンドラー。
+`config.xml`ファイルの `AutoHideSplashScreen` 設定する必要があります `false` 。 遅延を 2 秒間スプラッシュ スクリーンを非表示、タイマーを追加しますで次のように `deviceready` イベント ハンドラー。
 
         setTimeout(function() {
             navigator.splashscreen.hide();
@@ -80,5 +74,3 @@ Foo は splashscreen ファイルの名前です。できれば 9 パッチ フ�
     
 
 アプリケーションを呼び出すことはできません `navigator.splashscreen.show()` 、アプリが開始されるまで、 `deviceready` イベントが発生します。 しかし、以来、通常スプラッシュ画面アプリ開始前に表示するものですと思われる、スプラッシュ スクリーンの目的の敗北します。 いくつかの構成を提供する `config.xml` は自動的に `show` スプラッシュ画面、アプリを起動後すぐに、それが完全に起動し、受信する前に、 `deviceready` イベント。 詳細についてはこの構成を行うには、[アイコンとスプラッシュ画面][1]を参照してください。 このような理由から、それは可能性を呼び出す必要があります `navigator.splashscreen.show()` アプリ起動時のスプラッシュ画面を見やすくします。
-
- [1]: http://cordova.apache.org/docs/en/edge/config_ref_images.md.html

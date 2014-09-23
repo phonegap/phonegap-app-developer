@@ -71,3 +71,9 @@
 * CB-6483 Use splash screen image from manifest on Windows8
 * CB-6491 add CONTRIBUTING.md
 * Revert "Merge branch 'tizen' of http://github.com/siovene/cordova-plugin-splashscreen"
+
+### 0.3.2 (Aug 06, 2014)
+* CB-6127 Updated translations for docs
+* CB-7041 ios: Fix image filename logic when setting the iPad splash screen
+* fixes Splashscreen crash on WP8
+* Remove outdated doc

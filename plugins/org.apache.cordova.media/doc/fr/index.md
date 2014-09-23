@@ -482,7 +482,7 @@ Un objet `MediaError` est transmis à la fonction callback `mediaError` lorsqu'u
 
 ### Constantes
 
-*   `MediaError.MEDIA_ERR_ABORTED`
-*   `MediaError.MEDIA_ERR_NETWORK`
-*   `MediaError.MEDIA_ERR_DECODE`
-*   `MediaError.MEDIA_ERR_NONE_SUPPORTED`
+*   `MediaError.MEDIA_ERR_ABORTED` = 1
+*   `MediaError.MEDIA_ERR_NETWORK` = 2
+*   `MediaError.MEDIA_ERR_DECODE` = 3
+*   `MediaError.MEDIA_ERR_NONE_SUPPORTED` = 4

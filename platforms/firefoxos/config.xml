@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.adobe.phonegap.app" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+    <platform name="firefoxos">
+        <icon height="128" src="icon/icon-128.png" width="128" />
+        <icon height="60" src="icon/icon-60.png" width="60" />
+    </platform>
+    <name>PhoneGap</name>
+    <description>
+        The PhoneGap Developer app is a testing utility for web developers
+        and designers using the PhoneGap framework. After installing the
+        PhoneGap Developer app you will be able to connect to your PhoneGap
+        desktop app to instantly view and test your work on the device.
+    </description>
+    <author email="support@phonegap.com" href="http://phonegap.com">
+        Adobe PhoneGap Team
+    </author>
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="default" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="false" />
+    <preference name="webviewbounce" value="true" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="show-splash-screen-spinner" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="auto-hide-splash-screen" value="false" />
+    <preference name="AutoHideSplashScreen" value="false" />
+    <preference name="disable-cursor" value="false" />
+    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-installLocation" value="auto" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="WebViewBounce" value="false" />
+    <access origin="*" />
+    <content src="index.html" />
+    <feature name="Camera">
+        <param name="firefoxos-package" value="Camera" />
+    </feature>
+    <permission access="readwrite" description="Required for accessing address book." name="contacts" privileged="true" />
+    <feature name="Device">
+        <param name="firefoxos-package" value="Device" />
+    </feature>
+    <feature name="Accelerometer">
+        <param name="firefoxos-package" value="Accelerometer" />
+    </feature>
+    <feature name="Compass">
+        <param name="firefoxos-package" value="Compass" />
+    </feature>
+    <feature name="Notification">
+        <param name="firefoxos-package" value="Notification" />
+    </feature>
+    <permission name="systemXHR" privileged="true" />
+    <permission description="Required for accessing user location." name="geolocation" />
+    <permission description="Enables the app to implement a browser in an iframe." name="browser" privileged="true" />
+</widget>
