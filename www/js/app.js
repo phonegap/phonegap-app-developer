@@ -293,23 +293,33 @@ function downloadZip(){
                     zip.unzip(downloadPath, dirPath, function(statusCode) {
                         if (statusCode === 0) {
                             console.log('[fileUtils] successfully extracted the update payload');
+                            var plugins = cordova.require('cordova/plugin_list');
+                            
                             var localFiles = [
                                 'cordova.js',
                                 'cordova_plugins.js'
                             ];
-
+                            
+                            for(var i=0; i<plugins.length; i++){
+                                localFiles.push(plugins[i].file);
+                            }
+                            
                             $.app.fileUtils.getDirectory('app' + timeStamp, function(appDirEntry){
                                 $.app.fileUtils.copyFiles(localFiles, appDirEntry, function(){
+                                    window.location.href = dirPath + '/index.html';
+                                   /*
                                    window.resolveLocalFileSystemURL(cordova.file.applicationDirectory + 'www/plugins', function(pluginsEntry){
                                         pluginsEntry.copyTo(appDirEntry, 'plugins', function(){
                                             // success - plugins folder copied over
-                                            window.location.href = dirPath + '/index.html';
+                                            
                                         }, function(){
                                             // error out copying over plugins folder
                                         });
                                     }, function(){
                                         // error out getting plugins folder
                                     });
+                                    */
+                                    
                                 }, function(){
                                     // error out copying over localFiles
                                 });
