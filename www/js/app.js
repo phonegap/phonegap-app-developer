@@ -263,7 +263,8 @@ function onBuildSubmitSuccess() {
 function onBuildSubmitError(message) {
     errorMessage('Error!');
     setTimeout(function() {
-        errorMessage('Timed out!');
+        message = message || 'Timed out!';
+        errorMessage(message);
     }, 1500);
 
     setTimeout(function() {
@@ -332,6 +333,13 @@ function downloadZip(){
                     });
                 },
                 function(error) {
+                    onBuildSubmitError('Upgrade CLI');
+                    setTimeout(function() {
+                        navigator.notification.alert(
+                            'Hey! Recently, we\'ve added a lot of improvements to the app.\n\n' +
+                            'Please upgrade your PhoneGap CLI to support this app.'
+                        );
+                    }, 4000);
                     console.log("download error source " + error.source);
                     console.log("download error target " + error.target);
                     console.log("upload error code" + error.code);
