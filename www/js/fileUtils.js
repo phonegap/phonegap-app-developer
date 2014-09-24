@@ -119,7 +119,21 @@
         },
     
         copyFiles: function(fileList, destEntry, success) {
-            return copyFilesToWritableDirectory(fileList, destEntry, success);
+            var fileListCopy = fileList.splice(0);
+            (function copyOne(){
+                var file = fileListCopy.splice(0, 1)[0];
+                copyFile(file, destEntry,
+                    function(){
+                        if(fileListCopy.length==0){
+                            success();
+                        }else{
+                            copyOne();
+                        }
+                    },
+                    function(){
+                        console.error('[fileUtils][ERROR] Could not copy over files');
+                    });
+            })();
         },
 
         getNativePath: function(url) {
@@ -181,46 +195,79 @@
         var absolutePathToFile = getPathToWWWDir() + dir;
         // need to scope this out
     }
-    
+
+    function copyFile(filePath, destinationDirectoryEntry, success, error){
+        var relativePathToFile = filePath;
+        var absolutePathToFile = getPathToWWWDir() + relativePathToFile;
+        createPath(destinationDirectoryEntry, relativePathToFile, function(e) {
+                destinationDirectoryEntry.getFile(relativePathToFile, {create: true},
+                    function(newFile) {
+                        console.log('[fileUtils] successfully CREATED the new file: [' + newFile.name + ']');
+
+                        var fileTransfer = new FileTransfer();
+                        console.log('[fileUtils] copying file from: [' + absolutePathToFile + '] to: [' + newFile.toURL() + ']');
+                        fileTransfer.download(
+                            absolutePathToFile,
+                            newFile.toInternalURL(),
+                            function() {
+                                //copy success
+                                console.log('[fileUtils] successfully COPIED the new file: [' + newFile.name + ']');
+                                success();
+                            },
+                            function(error) {
+                                console.log('[fileUtils][ERROR] failed to COPY the new file: [' + relativePathToFile +
+                                    '] error code: [' + error.code + '] source: [' + error.source +
+                                    '] target: [' + error.target + '] http_status: [' + error.http_status + ']');
+                                error();
+                            }
+                        );
+                    },
+                    function(error) {
+                        console.log('[fileUtils][ERROR] failed to GET a handle on the new file: [' + relativePathToFile + '] error code: [' + error.code + ']');
+                        error();
+                    });
+            });
+    }
+
     function copyFilesToWritableDirectory(fileList, destinationDirectoryEntry, success, error) {
         var fileCount = 0,
             copyCount = 0;
 
         for (var i = 0; i < fileList.length; i++) {
-            (function() {
-                var relativePathToFile = fileList[i];
-                var absolutePathToFile = getPathToWWWDir() + relativePathToFile;
 
-                createPath(destinationDirectoryEntry, relativePathToFile, function(e) {
-                    destinationDirectoryEntry.getFile(relativePathToFile, {create: true},
-                        function(newFile) {
-                            console.log('[fileUtils] successfully CREATED the new file: [' + newFile.name + ']');
+            var relativePathToFile = fileList[i];
+            var absolutePathToFile = getPathToWWWDir() + relativePathToFile;
 
-                            var fileTransfer = new FileTransfer();
-                            console.log('[fileUtils] copying file from: [' + absolutePathToFile + '] to: [' + newFile.toURL() + ']');
-                            fileTransfer.download(
-                                absolutePathToFile,
-                                newFile.toInternalURL(),
-                                function() {
-                                    //copy success
-                                    copyCount++;
-                                    console.log('[fileUtils] successfully COPIED the new file: [' + newFile.name + ']');
-                                    checkPosition(success);
-                                },
-                                function(error) {
-                                    console.log('[fileUtils][ERROR] failed to COPY the new file: [' + relativePathToFile +
-                                        '] error code: [' + error.code + '] source: [' + error.source +
-                                        '] target: [' + error.target + '] http_status: [' + error.http_status + ']');
-                                    checkPosition();
-                                }
-                            );
-                        },
-                        function(error) {
-                            console.log('[fileUtils][ERROR] failed to GET a handle on the new file: [' + relativePathToFile + '] error code: [' + error.code + ']');
-                            checkPosition();
-                        });
-                });
-            })();
+            createPath(destinationDirectoryEntry, relativePathToFile, function(e) {
+                destinationDirectoryEntry.getFile(relativePathToFile, {create: true},
+                    function(newFile) {
+                        console.log('[fileUtils] successfully CREATED the new file: [' + newFile.name + ']');
+
+                        var fileTransfer = new FileTransfer();
+                        console.log('[fileUtils] copying file from: [' + absolutePathToFile + '] to: [' + newFile.toURL() + ']');
+                        fileTransfer.download(
+                            absolutePathToFile,
+                            newFile.toInternalURL(),
+                            function() {
+                                //copy success
+                                copyCount++;
+                                console.log('[fileUtils] successfully COPIED the new file: [' + newFile.name + ']');
+                                checkPosition(success);
+                            },
+                            function(error) {
+                                console.log('[fileUtils][ERROR] failed to COPY the new file: [' + relativePathToFile +
+                                    '] error code: [' + error.code + '] source: [' + error.source +
+                                    '] target: [' + error.target + '] http_status: [' + error.http_status + ']');
+                                checkPosition();
+                            }
+                        );
+                    },
+                    function(error) {
+                        console.log('[fileUtils][ERROR] failed to GET a handle on the new file: [' + relativePathToFile + '] error code: [' + error.code + ']');
+                        checkPosition();
+                    });
+            });
+
         }
 
         function checkPosition(success) {
