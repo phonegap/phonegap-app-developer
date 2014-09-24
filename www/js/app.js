@@ -336,8 +336,10 @@ function downloadZip(){
                     onBuildSubmitError('Upgrade CLI');
                     setTimeout(function() {
                         navigator.notification.alert(
-                            'Hey! Recently, we\'ve added a lot of improvements to the app.\n\n' +
-                            'Please upgrade your PhoneGap CLI to support this app.'
+                            'Hi! We\'ve recently improved the PhoneGap Developer App.\n\n' +
+                            'Please update the PhoneGap CLI on your development machine to take advantage of the new features.',
+                            function() {},
+                            'Upgrade PhoneGap CLI'
                         );
                     }, 4000);
                     console.log("download error source " + error.source);
