@@ -304,26 +304,14 @@ function downloadZip(){
                             for(var i=0; i<plugins.length; i++){
                                 localFiles.push(plugins[i].file);
                             }
-                            
+
                             $.app.fileUtils.getDirectory('app' + timeStamp, function(appDirEntry){
                                 $.app.fileUtils.copyFiles(localFiles, appDirEntry, function(){
                                     window.location.href = dirPath + '/index.html';
-                                   /*
-                                   window.resolveLocalFileSystemURL(cordova.file.applicationDirectory + 'www/plugins', function(pluginsEntry){
-                                        pluginsEntry.copyTo(appDirEntry, 'plugins', function(){
-                                            // success - plugins folder copied over
-                                            
-                                        }, function(){
-                                            // error out copying over plugins folder
-                                        });
-                                    }, function(){
-                                        // error out getting plugins folder
-                                    });
-                                    */
-                                    
                                 }, function(){
                                     // error out copying over localFiles
                                 });
+
                             });
                         }
                         else {
