@@ -240,11 +240,9 @@ function buildSubmit() {
     updateMessage('');
     setTimeout(function() {
         pulsingMessage( 'Connecting...' );
-        registerWithServer();
+        onBuildSubmitSuccess();
     }, 500);
 
-    // Placeholder
-    //setTimeout(onBuildSubmitError,2000);
     return false;
 }
 
@@ -341,38 +339,6 @@ function downloadZip(){
             callback(e);
         }
     );
-}
-
-function registerWithServer() {
-    $.ajax({
-        type: 'POST',
-        url: getAddress('/__api__/register'),
-        dataType: 'json',
-        data: {
-            platform: device.platform,
-            version: device.cordova
-        },
-        timeout: 1000 * 10,
-        success: function(data) {
-            onBuildSubmitSuccess();
-        },
-        error: function(xhr, type) {
-            // support older servers that do not support /register
-            $.ajax({
-                type: 'GET',
-                url: getAddress(),
-                dataType: 'text',
-                timeout: 1000 * 10,
-                success: function(data) {
-                    onBuildSubmitSuccess();
-                },
-                error: function(xhr, type) {
-                    onBuildSubmitError();
-                }
-            });
-
-        }
-    });
 }
 
 function getAddressField() {
