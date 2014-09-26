@@ -56,7 +56,15 @@ $(document).on('deviceready', function() {
         $('.footer').removeClass('faded');
 
         // Load configuration
-        loadConfig(function() {
+        window.phonegap.app.config.load(function(data) {
+            // store the config data
+            config = data;
+
+            // load server address
+            if (config.address) {
+                $('#address').val(config.address);
+            }
+
             setTimeout( function() {
                 $('.alert').removeClass('alert');
                 $('.visor').removeClass('pulse');
@@ -71,120 +79,6 @@ $(document).on('deviceready', function() {
         });
     }, 350);
 });
-
-/*---------------------------------------------------
-    App - Configuration
----------------------------------------------------*/
-
-function loadConfig(callback) {
-    readFile('config.json', function(e, text) {
-        config = parseAsJSON(text);
-
-        // load defaults
-        config.address = config.address || '127.0.0.1:3000';
-
-        // load server address
-        if (config.address) {
-            $('#address').val(config.address);
-        }
-
-        callback();
-    });
-}
-
-function saveConfig(callback) {
-    // this URL
-    config.URL = document.URL;
-
-    // server address
-    config.address = getAddressField();
-
-    // save config
-    saveFile('config.json', config, function(e) {
-        callback();
-    });
-}
-
-function readFile(filepath, callback) {
-    window.requestFileSystem(
-        LocalFileSystem.PERSISTENT,
-        0,
-        function(fileSystem) {
-            fileSystem.root.getFile(
-                filepath,
-                null,
-                function gotFileEntry(fileEntry) {
-                    fileEntry.file(
-                        function gotFile(file){
-                            var reader = new FileReader();
-                            reader.onloadend = function(evt) {
-                                // #72 - Fix WP8 loading of config.json
-                                // On WP8, `evt.target.result` is returned as an object instead
-                                // of a string. Since WP8 is using a newer version of the File API
-                                // this may be a platform quirk or an API update.
-                                var text = evt.target.result;
-                                text = (typeof text === 'object') ? JSON.stringify(text) : text;
-                                callback(null, text); // text is a string
-                            };
-                            reader.readAsText(file);
-                        },
-                        function(error) {
-                            callback(error);
-                        }
-                    );
-                },
-                function(error) {
-                    callback(error);
-                }
-            );
-        },
-        function(error) {
-            callback(error);
-        }
-    );
-}
-
-function saveFile(filepath, data, callback) {
-    data = (typeof data === 'string') ? data : JSON.stringify(data);
-
-    window.requestFileSystem(
-        LocalFileSystem.PERSISTENT,
-        0,
-        function(fileSystem) {
-            fileSystem.root.getFile(
-                filepath,
-                { create: true, exclusive: false },
-                function(fileEntry) {
-                    fileEntry.createWriter(
-                        function(writer) {
-                            writer.onwriteend = function(evt) {
-                                callback();
-                            };
-                            writer.write(data);
-                        },
-                        function(e) {
-                            callback(e);
-                        }
-                    );
-                },
-                function(e) {
-                    callback(e);
-                }
-            );
-        },
-        function(e) {
-            callback(e);
-        }
-    );
-}
-
-function parseAsJSON(text) {
-    try {
-        return JSON.parse(text);
-    } catch(e) {
-        return {};
-    }
-}
 
 /*---------------------------------------------------
     UI - General
@@ -248,12 +142,30 @@ function buildSubmit() {
 
 function onBuildSubmitSuccess() {
     updateMessage( 'Success!' );
-    saveConfig(function() {
+
+    // update config data
+    config.URL = document.URL;
+    config.address = getAddressField();
+
+    window.phonegap.app.config.save(config, function() {
         // don't allow the screen to dim when serving an app
         window.plugins.insomnia.keepAwake();
 
         setTimeout( function() {
-            downloadZip();
+            window.phonegap.app.downloadZip({
+                address: getAddress(),
+                onDownloadError: function(e) {
+                    onBuildSubmitError('Upgrade CLI');
+                    setTimeout(function() {
+                        navigator.notification.alert(
+                            'Hi! We\'ve recently improved the PhoneGap Developer App.\n\n' +
+                            'Please update the PhoneGap CLI on your development machine to take advantage of the new features.',
+                            function() {},
+                            'Upgrade PhoneGap CLI'
+                        );
+                    }, 4000);
+                }
+            });
         }, 1000 );
     });
 }
@@ -270,75 +182,6 @@ function onBuildSubmitError(message) {
         updateMessage('');
         openBot();
     }, 3500);
-}
-
-function downloadZip(){
-    window.requestFileSystem(
-        LocalFileSystem.PERSISTENT,
-        0,
-        function(fileSystem) {
-            var fileTransfer = new FileTransfer();
-            var uri = encodeURI(getAddress() + '/__api__/zip');
-            var timeStamp = Math.round(+new Date()/1000);
-            var downloadPath = fileSystem.root.toURL() + 'app' + timeStamp + '.zip';
-            var dirPath =  fileSystem.root.toURL() + 'app' + timeStamp;
-
-            fileTransfer.download(
-                uri,
-                downloadPath,
-                function(entry) {
-                    console.log("download complete: " + entry.toURL());
-
-                    zip.unzip(downloadPath, dirPath, function(statusCode) {
-                        if (statusCode === 0) {
-                            console.log('[fileUtils] successfully extracted the update payload');
-                            var plugins = cordova.require('cordova/plugin_list');
-                            
-                            var localFiles = [
-                                'cordova.js',
-                                'cordova_plugins.js'
-                            ];
-                            
-                            for(var i=0; i<plugins.length; i++){
-                                localFiles.push(plugins[i].file);
-                            }
-
-                            $.app.fileUtils.getDirectory('app' + timeStamp, function(appDirEntry){
-                                $.app.fileUtils.copyFiles(localFiles, appDirEntry, function(){
-                                    window.location.href = dirPath + '/index.html';
-                                }, function(){
-                                    // error out copying over localFiles
-                                });
-
-                            });
-                        }
-                        else {
-                            console.error('[fileUtils] error: failed to extract update payload');
-                            console.log(zipPath, dirPath);
-                        }
-                    });
-                },
-                function(error) {
-                    onBuildSubmitError('Upgrade CLI');
-                    setTimeout(function() {
-                        navigator.notification.alert(
-                            'Hi! We\'ve recently improved the PhoneGap Developer App.\n\n' +
-                            'Please update the PhoneGap CLI on your development machine to take advantage of the new features.',
-                            function() {},
-                            'Upgrade PhoneGap CLI'
-                        );
-                    }, 4000);
-                    console.log("download error source " + error.source);
-                    console.log("download error target " + error.target);
-                    console.log("upload error code" + error.code);
-                },
-                false
-            );        
-        },
-        function(e) {
-            callback(e);
-        }
-    );
 }
 
 function getAddressField() {

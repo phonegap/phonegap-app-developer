@@ -1,6 +1,7 @@
 (function() {
 
     // app namespace
+    window.$ = window.$ || {};
     $.app = $.app || {};
 
     // global variables
@@ -183,7 +184,10 @@
     //
     function getPathToWWWDir() {
         var currentLocation = window.location.href;
-        var pathToWWW = null;
+        var pathToWWW = currentLocation.substring(
+            0,
+            currentLocation.lastIndexOf('/') + 1
+        );
         var indexOfWWW = currentLocation.indexOf('/www/');
         if (indexOfWWW != -1) {
             pathToWWW = currentLocation.substring(0, indexOfWWW + 5);
