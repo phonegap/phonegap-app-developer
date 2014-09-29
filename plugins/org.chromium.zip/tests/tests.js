@@ -1,7 +1,5 @@
-exports.init = function() {
-  eval(require('org.apache.cordova.test-framework.test').injectJasmineInterface(this, 'this'));
+exports.defineAutoTests = function() {
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 75000;
-
   var zip = require('org.chromium.zip.Zip');
 
   describe('Zip', function () {

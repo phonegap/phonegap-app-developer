@@ -83,6 +83,10 @@
                         {
                             "xml": "<feature name=\"Camera\"><param name=\"wp-package\" value=\"Camera\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Zip\"><param name=\"wp-package\" value=\"UnZip\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }

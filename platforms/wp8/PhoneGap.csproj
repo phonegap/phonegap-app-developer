@@ -220,6 +220,9 @@
     <ItemGroup />
     <ItemGroup />
     <ItemGroup>
+        <Compile Include="Plugins\org.chromium.zip\UnZip.cs" />
+    </ItemGroup>
+    <ItemGroup>
         <Compile Include="Plugins\nl.x-services.plugins.insomnia\Insomnia.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -488,9 +491,6 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.chromium.zip\zip.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.chromium.zip\tests\tests.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />

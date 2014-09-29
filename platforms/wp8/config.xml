@@ -88,4 +88,7 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Zip">
+        <param name="wp-package" value="UnZip" />
+    </feature>
 </widget>

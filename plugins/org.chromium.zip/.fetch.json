@@ -1,1 +1,1 @@
-{"source":{"type":"local","path":"/Users/timkim/.plugman/cache/org.chromium.zip/2.1.0/package"}}
+{"source":{"type":"git","url":"https://github.com/purplecabbage/zip","subdir":"."}}

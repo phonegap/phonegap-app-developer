@@ -9,13 +9,10 @@
 
   <name>Zip</name>
   <description>Unzips zip files</description>
-  <dependency id="org.apache.cordova.file" version="1.0.1" />
+  <dependency id="org.apache.cordova.file" version=">=1.0.1" />
 
   <js-module src="zip.js" name="Zip">
     <clobbers target="zip" />
-  </js-module>
-
-  <js-module src="tests/tests.js" name="tests">
   </js-module>
 
   <platform name="android">
@@ -49,5 +46,14 @@
       </feature>
     </config-file>
     <framework src="libz.dylib" />
+  </platform>
+
+  <platform name="wp8">
+    <config-file target="config.xml" parent="/*">
+    <feature name="Zip">
+        <param name="wp-package" value="UnZip"/>
+    </feature>
+    </config-file>
+    <source-file src="src/wp8/UnZip.cs" />
   </platform>
 </plugin>
