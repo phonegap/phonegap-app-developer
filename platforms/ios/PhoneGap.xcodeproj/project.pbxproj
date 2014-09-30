@@ -29,6 +29,7 @@
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		7289A1E5F5694EB68C561DA4 /* AdobeMobileLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 723814EEF00F4BCCA442CA3D /* AdobeMobileLibrary.a */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -39,11 +40,19 @@
 		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
+		81524D7251EF4907BA0D0443 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8129D0B1E7144F0B82BA362D /* libsqlite3.dylib */; };
 		A6424F46CD324BC5A98C3DED /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 78557F70FE3B47E682C9C5FC /* CDVNotification.bundle */; };
 		AC0EDB61191024200011CD32 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = AC0EDB5F191024200011CD32 /* Default-Landscape@2x~ipad.png */; };
 		AC0EDB62191024200011CD32 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = AC0EDB60191024200011CD32 /* Default-Landscape~ipad.png */; };
 		AC21E4DC18EA17C7004D58B6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AC21E4DA18EA17C7004D58B6 /* Default.png */; };
 		AC21E4DE18EA17FA004D58B6 /* Default@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = AC21E4DD18EA17FA004D58B6 /* Default@2x~ipad.png */; };
+		ACDE005A19DB66150022DEF6 /* Zip.m in Sources */ = {isa = PBXBuildFile; fileRef = ACDE005919DB66150022DEF6 /* Zip.m */; };
+		ACDE006619DB662C0022DEF6 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = ACDE005C19DB662C0022DEF6 /* ioapi.c */; };
+		ACDE006719DB662C0022DEF6 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = ACDE005E19DB662C0022DEF6 /* mztools.c */; };
+		ACDE006819DB662C0022DEF6 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = ACDE006119DB662C0022DEF6 /* SSZipArchive.m */; };
+		ACDE006919DB662C0022DEF6 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = ACDE006219DB662C0022DEF6 /* unzip.c */; };
+		ACDE006A19DB662C0022DEF6 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = ACDE006419DB662C0022DEF6 /* zip.c */; };
+		AD13CF2A38AF4D83A90D0A24 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9367B9C2C2A44EBE8948863B /* libz.dylib */; };
 		BF0673D31950F27E0026C411 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3411C91DEDE44008453EF7B /* CoreMotion.framework */; };
 		BF0673D41950F2890026C411 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF2A1D064F024E8D88A35F0D /* SystemConfiguration.framework */; };
 		BF0673D71950F2E50026C411 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0673D61950F2E50026C411 /* CDVDevice.m */; };
@@ -69,23 +78,14 @@
 		BFBF8F81194A5475006BD792 /* CDVAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBF8F80194A5475006BD792 /* CDVAccelerometer.m */; };
 		BFBF8F86194A54A2006BD792 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBF8F83194A54A2006BD792 /* CDVConnection.m */; };
 		BFBF8F87194A54A2006BD792 /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBF8F85194A54A2006BD792 /* CDVReachability.m */; };
+		C5938E7219DA4B2C956B50BF /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 48DD4A4AEB7E40DBBA880A6C /* ADBMobileConfig.json */; };
 		CA480DFE192E428094AA1F7F /* Insomnia.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D0241DCE35346FC8F962645 /* Insomnia.m */; };
 		CF1E9DA9529D424AB9C3AF50 /* CDVCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 6056D4F18A6349DFB4CF6264 /* CDVCapture.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		DA6A81B1798C488B8988F105 /* CDVBattery.m in Sources */ = {isa = PBXBuildFile; fileRef = 4590EFF0F01D4E4D922AE3BA /* CDVBattery.m */; };
 		F2D71E42781A4B61858FCB8E /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0268920529F24F7BA1B30B4F /* CDVStatusBar.m */; };
-		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 		F81550ED37EC46618D1D248C /* ADBMobile_PhoneGap.m in Sources */ = {isa = PBXBuildFile; fileRef = 22858487499C477F97BEBD5B /* ADBMobile_PhoneGap.m */; };
-		7289A1E5F5694EB68C561DA4 /* AdobeMobileLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 723814EEF00F4BCCA442CA3D /* AdobeMobileLibrary.a */; };
-		C5938E7219DA4B2C956B50BF /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 48DD4A4AEB7E40DBBA880A6C /* ADBMobileConfig.json */; };
-		81524D7251EF4907BA0D0443 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8129D0B1E7144F0B82BA362D /* libsqlite3.dylib */; };
-		A3BA54737F884892B94DC370 /* Zip.m in Sources */ = {isa = PBXBuildFile; fileRef = EA24B606BA534F68A37112B2 /* Zip.m */; };
-		9805AABC3A7142D885FCF9AB /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3EE4EF45B4F1EB64CBE16 /* SSZipArchive.m */; };
-		534C62B14283425CAFAE13D6 /* zip.c in Resources */ = {isa = PBXBuildFile; fileRef = B9AE3FB106B94838AA9EEF90 /* zip.c */; };
-		2562A10B7DA64F38A55B97D0 /* unzip.c in Resources */ = {isa = PBXBuildFile; fileRef = E3214D70B7FC45E69122AA6F /* unzip.c */; };
-		33D6D0BF1F58409EBDAA5A45 /* mztools.c in Resources */ = {isa = PBXBuildFile; fileRef = DB3539202A09441998A9E688 /* mztools.c */; };
-		7750E305D61241ADB1036CC4 /* ioapi.c in Resources */ = {isa = PBXBuildFile; fileRef = 0C0482A00A964D4CAD6A9B70 /* ioapi.c */; };
-		AD13CF2A38AF4D83A90D0A24 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9367B9C2C2A44EBE8948863B /* libz.dylib */; };
+		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +112,7 @@
 		1D6058910D05DD3D006BFB54 /* PhoneGap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneGap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F766FDD13BBADB100FB74C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
 		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
+		22858487499C477F97BEBD5B /* ADBMobile_PhoneGap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADBMobile_PhoneGap.m; path = ADBMobile/ADBMobile_PhoneGap.m; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
@@ -135,11 +136,13 @@
 		3D58D6226B7E4D2EBB8807E6 /* CDVCompass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVCompass.h; path = "org.apache.cordova.device-orientation/CDVCompass.h"; sourceTree = "<group>"; };
 		41F4B378F1CA4FD9A1F0AAC7 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
 		4590EFF0F01D4E4D922AE3BA /* CDVBattery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVBattery.m; path = "org.apache.cordova.battery-status/CDVBattery.m"; sourceTree = "<group>"; };
+		48DD4A4AEB7E40DBBA880A6C /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4D993850595C45E6BB359987 /* AddressBook.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		5AEE5B34173C68D80009041E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		6056D4F18A6349DFB4CF6264 /* CDVCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVCapture.m; path = "org.apache.cordova.media-capture/CDVCapture.m"; sourceTree = "<group>"; };
 		6886DB88E64044A0AE9BD8F2 /* CDVCapture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVCapture.bundle; sourceTree = "<group>"; };
+		723814EEF00F4BCCA442CA3D /* AdobeMobileLibrary.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = AdobeMobileLibrary.a; path = PhoneGap/Plugins/ADBMobile/AdobeMobileLibrary.a; sourceTree = "<group>"; };
 		75D2469EBC914046B9E979B7 /* CDVLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = org.apache.cordova.console/CDVLogger.m; sourceTree = "<group>"; };
 		78557F70FE3B47E682C9C5FC /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
 		7D0241DCE35346FC8F962645 /* Insomnia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Insomnia.m; path = "nl.x-services.plugins.insomnia/Insomnia.m"; sourceTree = "<group>"; };
@@ -153,7 +156,10 @@
 		7E7966DB1810823500FA85AD /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76@2x.png"; sourceTree = "<group>"; };
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
+		8129D0B1E7144F0B82BA362D /* libsqlite3.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* PhoneGap-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PhoneGap-Info.plist"; path = "../PhoneGap-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		9367B9C2C2A44EBE8948863B /* libz.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		9722C0F717874ACF8BA756C7 /* ADBMobile_PhoneGap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADBMobile_PhoneGap.h; path = ADBMobile/ADBMobile_PhoneGap.h; sourceTree = "<group>"; };
 		97F074BCD4994D7D862BD02D /* CDVCapture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVCapture.bundle; sourceTree = "<group>"; };
 		A3411C91DEDE44008453EF7B /* CoreMotion.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A60A56F8365B47E2853EADEB /* CDVStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVStatusBar.h; path = org.apache.cordova.statusbar/CDVStatusBar.h; sourceTree = "<group>"; };
@@ -162,6 +168,20 @@
 		AC21E4DA18EA17C7004D58B6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		AC21E4DD18EA17FA004D58B6 /* Default@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~ipad.png"; sourceTree = "<group>"; };
 		ACD132BA2B764B47BEE06ACB /* ImageIO.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		ACDE005819DB66150022DEF6 /* Zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Zip.h; path = org.chromium.zip/Zip.h; sourceTree = "<group>"; };
+		ACDE005919DB66150022DEF6 /* Zip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Zip.m; path = org.chromium.zip/Zip.m; sourceTree = "<group>"; };
+		ACDE005B19DB662C0022DEF6 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = org.chromium.zip/Plugins/minizip/crypt.h; sourceTree = "<group>"; };
+		ACDE005C19DB662C0022DEF6 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = org.chromium.zip/Plugins/minizip/ioapi.c; sourceTree = "<group>"; };
+		ACDE005D19DB662C0022DEF6 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = org.chromium.zip/Plugins/minizip/ioapi.h; sourceTree = "<group>"; };
+		ACDE005E19DB662C0022DEF6 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mztools.c; path = org.chromium.zip/Plugins/minizip/mztools.c; sourceTree = "<group>"; };
+		ACDE005F19DB662C0022DEF6 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mztools.h; path = org.chromium.zip/Plugins/minizip/mztools.h; sourceTree = "<group>"; };
+		ACDE006019DB662C0022DEF6 /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = org.chromium.zip/Plugins/minizip/SSZipArchive.h; sourceTree = "<group>"; };
+		ACDE006119DB662C0022DEF6 /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = org.chromium.zip/Plugins/minizip/SSZipArchive.m; sourceTree = "<group>"; };
+		ACDE006219DB662C0022DEF6 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = org.chromium.zip/Plugins/minizip/unzip.c; sourceTree = "<group>"; };
+		ACDE006319DB662C0022DEF6 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = org.chromium.zip/Plugins/minizip/unzip.h; sourceTree = "<group>"; };
+		ACDE006419DB662C0022DEF6 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = zip.c; path = org.chromium.zip/Plugins/minizip/zip.c; sourceTree = "<group>"; };
+		ACDE006519DB662C0022DEF6 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = zip.h; path = org.chromium.zip/Plugins/minizip/zip.h; sourceTree = "<group>"; };
+		BAE56E10E490456BB8CFA4EC /* ADBMobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADBMobile.h; path = ADBMobile/ADBMobile.h; sourceTree = "<group>"; };
 		BF0673D51950F2E50026C411 /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = org.apache.cordova.device/CDVDevice.h; sourceTree = "<group>"; };
 		BF0673D61950F2E50026C411 /* CDVDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = org.apache.cordova.device/CDVDevice.m; sourceTree = "<group>"; };
 		BF0673D81950F30B0026C411 /* CDVSplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVSplashScreen.h; path = org.apache.cordova.splashscreen/CDVSplashScreen.h; sourceTree = "<group>"; };
@@ -212,26 +232,6 @@
 		F72137C8735340378EFFDAE3 /* CDVCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVCapture.h; path = "org.apache.cordova.media-capture/CDVCapture.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = PhoneGap/config.xml; sourceTree = "<group>"; };
 		F9F4B3CB13C64DDFB93917E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		22858487499C477F97BEBD5B /* ADBMobile_PhoneGap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ADBMobile_PhoneGap.m"; path = "ADBMobile/ADBMobile_PhoneGap.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		723814EEF00F4BCCA442CA3D /* AdobeMobileLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "AdobeMobileLibrary.a"; path = "PhoneGap/Plugins/ADBMobile/AdobeMobileLibrary.a"; sourceTree = "<group>"; fileEncoding = 4; };
-		9722C0F717874ACF8BA756C7 /* ADBMobile_PhoneGap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ADBMobile_PhoneGap.h"; path = "ADBMobile/ADBMobile_PhoneGap.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		BAE56E10E490456BB8CFA4EC /* ADBMobile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ADBMobile.h"; path = "ADBMobile/ADBMobile.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		48DD4A4AEB7E40DBBA880A6C /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "ADBMobileConfig.json"; path = "ADBMobileConfig.json"; sourceTree = "<group>"; fileEncoding = 4; };
-		8129D0B1E7144F0B82BA362D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
-		EA24B606BA534F68A37112B2 /* Zip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Zip.m"; path = "Plugins\org.chromium.zip\Zip.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		BFC3EE4EF45B4F1EB64CBE16 /* SSZipArchive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "SSZipArchive.m"; path = "Plugins\org.chromium.zip\Plugins\minizip\SSZipArchive.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		B9AE3FB106B94838AA9EEF90 /* zip.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "zip.c"; path = "Plugins\org.chromium.zip\Plugins\minizip\zip.c"; sourceTree = "<group>"; fileEncoding = 4; };
-		E3214D70B7FC45E69122AA6F /* unzip.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "unzip.c"; path = "Plugins\org.chromium.zip\Plugins\minizip\unzip.c"; sourceTree = "<group>"; fileEncoding = 4; };
-		DB3539202A09441998A9E688 /* mztools.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "mztools.c"; path = "Plugins\org.chromium.zip\Plugins\minizip\mztools.c"; sourceTree = "<group>"; fileEncoding = 4; };
-		0C0482A00A964D4CAD6A9B70 /* ioapi.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "ioapi.c"; path = "Plugins\org.chromium.zip\Plugins\minizip\ioapi.c"; sourceTree = "<group>"; fileEncoding = 4; };
-		66FDE08AA1A745EC8510C67C /* Zip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Zip.h"; path = "Plugins\org.chromium.zip\Zip.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		B6718FEC7A1F443896D6B210 /* SSZipArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SSZipArchive.h"; path = "Plugins\org.chromium.zip\Plugins\minizip\SSZipArchive.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		A1FC83950A41418CBCC1DBC0 /* zip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "zip.h"; path = "Plugins\org.chromium.zip\Plugins\minizip\zip.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		B1918E723EF7414FB605BC34 /* unzip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "unzip.h"; path = "Plugins\org.chromium.zip\Plugins\minizip\unzip.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		9FF1CE0B2B724ED9A4D7BCB0 /* mztools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "mztools.h"; path = "Plugins\org.chromium.zip\Plugins\minizip\mztools.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		0F4F270A502E4AC39FDB7A2F /* ioapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ioapi.h"; path = "Plugins\org.chromium.zip\Plugins\minizip\ioapi.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		AEBF1FD03FD54F5CB9928183 /* crypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "crypt.h"; path = "Plugins\org.chromium.zip\Plugins\minizip\crypt.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		9367B9C2C2A44EBE8948863B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -430,19 +430,19 @@
 				22858487499C477F97BEBD5B /* ADBMobile_PhoneGap.m */,
 				9722C0F717874ACF8BA756C7 /* ADBMobile_PhoneGap.h */,
 				BAE56E10E490456BB8CFA4EC /* ADBMobile.h */,
-				EA24B606BA534F68A37112B2 /* Zip.m */,
-				BFC3EE4EF45B4F1EB64CBE16 /* SSZipArchive.m */,
-				B9AE3FB106B94838AA9EEF90 /* zip.c */,
-				E3214D70B7FC45E69122AA6F /* unzip.c */,
-				DB3539202A09441998A9E688 /* mztools.c */,
-				0C0482A00A964D4CAD6A9B70 /* ioapi.c */,
-				66FDE08AA1A745EC8510C67C /* Zip.h */,
-				B6718FEC7A1F443896D6B210 /* SSZipArchive.h */,
-				A1FC83950A41418CBCC1DBC0 /* zip.h */,
-				B1918E723EF7414FB605BC34 /* unzip.h */,
-				9FF1CE0B2B724ED9A4D7BCB0 /* mztools.h */,
-				0F4F270A502E4AC39FDB7A2F /* ioapi.h */,
-				AEBF1FD03FD54F5CB9928183 /* crypt.h */,
+				ACDE005819DB66150022DEF6 /* Zip.h */,
+				ACDE005919DB66150022DEF6 /* Zip.m */,
+				ACDE005B19DB662C0022DEF6 /* crypt.h */,
+				ACDE005C19DB662C0022DEF6 /* ioapi.c */,
+				ACDE005D19DB662C0022DEF6 /* ioapi.h */,
+				ACDE005E19DB662C0022DEF6 /* mztools.c */,
+				ACDE005F19DB662C0022DEF6 /* mztools.h */,
+				ACDE006019DB662C0022DEF6 /* SSZipArchive.h */,
+				ACDE006119DB662C0022DEF6 /* SSZipArchive.m */,
+				ACDE006219DB662C0022DEF6 /* unzip.c */,
+				ACDE006319DB662C0022DEF6 /* unzip.h */,
+				ACDE006419DB662C0022DEF6 /* zip.c */,
+				ACDE006519DB662C0022DEF6 /* zip.h */,
 			);
 			name = Plugins;
 			path = PhoneGap/Plugins;
@@ -641,8 +641,10 @@
 				BFBF2B1919899DD40078D8FA /* CDVJpegHeaderWriter.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
+				ACDE006819DB662C0022DEF6 /* SSZipArchive.m in Sources */,
 				BFBF8F7B194A543E006BD792 /* CDVLocalFilesystem.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				ACDE006619DB662C0022DEF6 /* ioapi.c in Sources */,
 				CA480DFE192E428094AA1F7F /* Insomnia.m in Sources */,
 				BF0673DF1950FA720026C411 /* CDVContact.m in Sources */,
 				BFBF8F81194A5475006BD792 /* CDVAccelerometer.m in Sources */,
@@ -652,6 +654,7 @@
 				BFBF8F79194A543E006BD792 /* CDVAssetLibraryFilesystem.m in Sources */,
 				BFBF2B1819899DD40078D8FA /* CDVCamera.m in Sources */,
 				BF0673F2195102700026C411 /* CDVVibration.m in Sources */,
+				ACDE005A19DB66150022DEF6 /* Zip.m in Sources */,
 				20C17AE247B9438996D97A8B /* CDVLogger.m in Sources */,
 				BF0673D71950F2E50026C411 /* CDVDevice.m in Sources */,
 				BF0673F5195102830026C411 /* CDVInAppBrowser.m in Sources */,
@@ -660,18 +663,15 @@
 				BFBF8F87194A54A2006BD792 /* CDVReachability.m in Sources */,
 				CF1E9DA9529D424AB9C3AF50 /* CDVCapture.m in Sources */,
 				F2D71E42781A4B61858FCB8E /* CDVStatusBar.m in Sources */,
+				ACDE006719DB662C0022DEF6 /* mztools.c in Sources */,
 				BFBF8F7E194A5446006BD792 /* CDVFileTransfer.m in Sources */,
 				BFBF8F86194A54A2006BD792 /* CDVConnection.m in Sources */,
 				BF0673E91950FAB80026C411 /* CDVSound.m in Sources */,
+				ACDE006919DB662C0022DEF6 /* unzip.c in Sources */,
 				BF0673F8195102A20026C411 /* CDVNotification.m in Sources */,
 				DA6A81B1798C488B8988F105 /* CDVBattery.m in Sources */,
+				ACDE006A19DB662C0022DEF6 /* zip.c in Sources */,
 				F81550ED37EC46618D1D248C /* ADBMobile_PhoneGap.m in Sources */,
-				A3BA54737F884892B94DC370 /* Zip.m in Sources */,
-				9805AABC3A7142D885FCF9AB /* SSZipArchive.m in Sources */,
-				534C62B14283425CAFAE13D6 /* zip.c in Resources */,
-				2562A10B7DA64F38A55B97D0 /* unzip.c in Resources */,
-				33D6D0BF1F58409EBDAA5A45 /* mztools.c in Resources */,
-				7750E305D61241ADB1036CC4 /* ioapi.c in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,6 +737,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "PhoneGap/PhoneGap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PhoneGap/Plugins/ADBMobile\"",
+				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,
@@ -754,10 +758,6 @@
 				PRODUCT_NAME = PhoneGap;
 				PROVISIONING_PROFILE = "9CC4940B-47DD-497A-93E2-466FCB17D0B9";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/PhoneGap/Plugins/ADBMobile\"",
-				);
 			};
 			name = Debug;
 		};
@@ -775,6 +775,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "PhoneGap/PhoneGap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PhoneGap/Plugins/ADBMobile\"",
+				);
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,
@@ -792,10 +796,6 @@
 				PRODUCT_NAME = PhoneGap;
 				PROVISIONING_PROFILE = "9CC4940B-47DD-497A-93E2-466FCB17D0B9";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/PhoneGap/Plugins/ADBMobile\"",
-				);
 			};
 			name = Release;
 		};

@@ -87,6 +87,9 @@
     <feature name="ADBMobile_PhoneGap">
         <param name="ios-package" value="ADBMobile_PhoneGap" />
     </feature>
+    <feature name="Zip">
+        <param name="ios-package" value="Zip" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
@@ -118,7 +121,4 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="Zip">
-        <param name="ios-package" value="Zip" />
-    </feature>
 </widget>
