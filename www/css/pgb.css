@@ -16,6 +16,9 @@ h3 {
 form#login-form div {
     margin-top: 20px;
 }
+.sub {
+    margin: -20px 0px 20px;
+}
 .login {
     display:table-cell;
     text-align:center;

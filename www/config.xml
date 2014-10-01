@@ -10,6 +10,7 @@
     <author email="support@phonegap.com" href="http://phonegap.com">
         Adobe PhoneGap Team
     </author>
+
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
@@ -30,5 +31,35 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
-    <content src="index.html" />
+
+    <!-- Phonegap Build -->
+    <preference name="phonegap-version" value="3.6.3" />
+
+    <!-- add pgb core plugins -->
+    <gap:plugin name="org.apache.cordova.battery-status" />
+    <gap:plugin name="org.apache.cordova.camera" />
+    <gap:plugin name="org.apache.cordova.media-capture" />
+    <gap:plugin name="org.apache.cordova.console" />
+    <gap:plugin name="org.apache.cordova.contacts" />
+    <gap:plugin name="org.apache.cordova.device" />
+    <gap:plugin name="org.apache.cordova.device-motion" />
+    <gap:plugin name="org.apache.cordova.device-orientation" />
+    <gap:plugin name="org.apache.cordova.file" />
+    <gap:plugin name="org.apache.cordova.file-transfer" />
+    <gap:plugin name="org.apache.cordova.geolocation" />
+    <gap:plugin name="org.apache.cordova.globalization" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="org.apache.cordova.media" />
+    <gap:plugin name="org.apache.cordova.dialogs" />
+    <gap:plugin name="org.apache.cordova.vibration" />
+    <gap:plugin name="org.apache.cordova.globalization" />
+    <gap:plugin name="org.apache.cordova.splashscreen" />
+
+    <!-- add pgb third party plugins -->
+    <gap:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
+    <gap:plugin name="com.phonegap.plugins.apploader" />
+    <gap:plugin name="com.phonegap.build.oauth">
+        <param name="CLIENT_ID" value="" />
+        <param name="CLIENT_SECRET" value="" />
+    </gap:plugin>
 </widget>
