@@ -1,215 +1,88 @@
 (function() {
 
-    // app namespace
-    window.$ = window.$ || {};
-    $.app = $.app || {};
+    /*!
+     * Create export namespace.
+     */
 
-    // global variables
+    if (!window.phonegap) window.phonegap = {};
+    if (!window.phonegap.fileUtils) window.phonegap.fileUtils = {};
+
+    /*
+     * Global variables.
+     */
+
     var fileSystem = null;
 
-    // exposed fileUtils object
-    $.app.fileUtils = {
+    /**
+     * Get Directory Handle.
+     */
 
-        getFileSystem: function() {
-            var deferred = $q.defer();
-            if (fileSystem === null) {
-                // Ask for access to the persistent file system via PhoneGap
-                requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-                    function(fs) {
-                        fileSystem = fs;
-                        deferred.resolve(fs);
-                    },
-                    function(error) {
-                        console.error("[fileUtils] failed to request access to the local file system");
-                        deferred.reject(error);
-                    }
-                );
-            } else {
-                deferred.resolve(fileSystem);
-            }
-            return deferred.promise;
-        },
-
-        download: function (remoteUrl, localUrl) {
-            console.log('[fileUtils] requesting file: ' + remoteUrl);
-            var deferred = $q.defer();
-            var fileTransfer = new FileTransfer();
-            fileTransfer.download(
-                remoteUrl,
-                localUrl,
-                function (entry) {
-                    console.log('[fileUtils] successfully downloaded to: ' + entry.fullPath);
-                    deferred.resolve(entry);
-                },
-                function (error) {
-                    console.error('[fileUtils] download error source ' + error.source);
-                    console.error('[fileUtils] download error target ' + error.target);
-                    console.error('[fileUtils] error code ' + error.code);
-                    deferred.reject(error);
-                }
-            );
-            return {
-                fileTransfer: fileTransfer,
-                promise : deferred.promise
-            };
-        },
-
-        remove: function(entry, recursive) {
-            var deferred = $q.defer();
-            if (recursive) {
-                entry.removeRecursively(function() {
-                        deferred.resolve();
-                    },
-                    function(error) {
-                        deferred.reject(error);
-                    });
-            } else {
-                entry.remove(function() {
-                        deferred.resolve();
-                    },
-                    function(error) {
-                        deferred.reject(error);
-                    });
-            }
-            return deferred.promise;
-        },
-
-        getDirectory: function(path, success, error) {
-            window.requestFileSystem(
-                LocalFileSystem.PERSISTENT,
-                0,
-                function(fileSystem) {
-                    fileSystem.root.getDirectory(path, { create: true, exclusive: false }, 
-                    function(dirEntry){
+    window.phonegap.fileUtils.getDirectory = function(path, success, error) {
+        window.requestFileSystem(
+            LocalFileSystem.PERSISTENT,
+            0,
+            function(fileSystem) {
+                fileSystem.root.getDirectory(
+                    path,
+                    { create: true, exclusive: false },
+                    function(dirEntry) {
                         success(dirEntry);
-                    }, function(){
+                    },
+                    function() {
                         console.log('[fileUtils] error: failed to getDirectory');
                         error();
-                    });
-                });
-        },
-
-        unzip: function (zipEntry, dirEntry) {
-            var self = this,
-                // FIXME: literally a hack
-                getAbsPath = function(uri) {
-                    var parser = document.createElement('a');
-                    parser.href = uri;
-                    return unescape(parser.pathname);
-                },
-                deferred = $q.defer(),
-                zipPath = getAbsPath(zipEntry.nativeURL),
-                dirPath = getAbsPath(dirEntry.nativeURL);
-            zip.unzip(zipPath, dirPath, function(statusCode) {
-                if (statusCode === 0) {
-                    console.log('[fileUtils] successfully extracted the update payload');
-                    deferred.resolve(dirEntry);
-                }
-                else {
-                    console.error('[fileUtils] error: failed to extract update payload');
-                    console.log(zipPath, dirPath);
-                    deferred.reject();
-                }
-            });
-
-            return deferred.promise;
-        },
-
-        copyDir: function(dir, destEntry, success) {
-            return copyDirToWritableDirectory(dir, destEntry, success);
-        },
-    
-        copyFiles: function(fileList, destEntry, success) {
-            var fileListCopy = fileList.splice(0);
-            (function copyOne(){
-                var file = fileListCopy.splice(0, 1)[0];
-                copyFile(file, destEntry,
-                    function(){
-                        if(fileListCopy.length==0){
-                            success();
-                        }else{
-                            copyOne();
-                        }
-                    },
-                    function(){
-                        console.error('[fileUtils][ERROR] Could not copy over files');
-                    });
-            })();
-        },
-
-        getNativePath: function(url) {
-            var deferred = $q.defer();
-            window.cordova.exec(function(path) {
-                console.log('[fileUtils] local filesystem path obtained: ' + path);
-                deferred.resolve(path);
-            }, function(error) {
-                console.log('[fileUtils][ERROR] failed to obtain local filesystem path');
-                deferred.reject(error);
-            }, "File", "_getLocalFilesystemPath", [url]);
-            return deferred.promise;
-        },
-
-        readFile: function(filepath, entry) {
-            var deferred = $q.defer();
-
-            entry.getFile(
-                filepath,
-                null,
-                function gotFileEntry(fileEntry) {
-                    fileEntry.file(
-                        function gotFile(file){
-                            var reader = new FileReader();
-                            reader.onloadend = function(evt) {
-                                deferred.resolve(evt.target.result);
-                            };
-                            reader.readAsText(file);
-                        },
-                        function(error) {
-                            deferred.reject(error);
-                        }
-                    );
-                },
-                function(error) {
-                    deferred.reject(error);
-                }
-            );
-
-            return deferred.promise;
-        }
-
+                    }
+                );
+            }
+        );
     };
 
-    //
-    // Helper functions
-    //
-    function getPathToWWWDir() {
-        var currentLocation = window.location.href;
-        var pathToWWW = currentLocation.substring(
-            0,
-            currentLocation.lastIndexOf('/') + 1
-        );
-        var indexOfWWW = currentLocation.indexOf('/www/');
-        if (indexOfWWW != -1) {
-            pathToWWW = currentLocation.substring(0, indexOfWWW + 5);
-        }
-        return pathToWWW;
-    }
+    /**
+     * Copy Files
+     */
 
-    function copyDirToWritableDirectory(dir, destinationDirectoryEntry, success, error) {
-        var absolutePathToFile = getPathToWWWDir() + dir;
-        // need to scope this out
-    }
+    window.phonegap.fileUtils.copyFiles = function(fileList, destEntry, success) {
+        var fileListCopy = fileList.splice(0);
+        (function copyOne(){
+            var file = fileListCopy.splice(0, 1)[0];
+            window.phonegap.fileUtils.copyFile(
+                file,
+                destEntry,
+                function() {
+                    if (fileListCopy.length === 0) {
+                        success();
+                    }
+                    else {
+                        copyOne();
+                    }
+                },
+                function() {
+                    console.error('[fileUtils][ERROR] Could not copy over files');
+                }
+            );
+        })();
+    };
 
-    function copyFile(filePath, destinationDirectoryEntry, success, error){
+    /**
+     * Copy a File.
+     */
+
+    window.phonegap.fileUtils.copyFile = function(filePath, destinationDirectoryEntry, success, error) {
         var relativePathToFile = filePath;
         var absolutePathToFile = getPathToWWWDir() + relativePathToFile;
-        createPath(destinationDirectoryEntry, relativePathToFile, function(e) {
-                destinationDirectoryEntry.getFile(relativePathToFile, {create: true},
+
+        window.phonegap.fileUtils.createPath(
+            destinationDirectoryEntry,
+            relativePathToFile,
+            function(e) {
+                destinationDirectoryEntry.getFile(
+                    relativePathToFile,
+                    { create: true },
                     function(newFile) {
                         console.log('[fileUtils] successfully CREATED the new file: [' + newFile.name + ']');
+                        console.log('[fileUtils] copying file from: [' + absolutePathToFile + '] to: [' + newFile.toURL() + ']');
 
                         var fileTransfer = new FileTransfer();
-                        console.log('[fileUtils] copying file from: [' + absolutePathToFile + '] to: [' + newFile.toURL() + ']');
                         fileTransfer.download(
                             absolutePathToFile,
                             newFile.toInternalURL(),
@@ -219,9 +92,11 @@
                                 success();
                             },
                             function(error) {
-                                console.log('[fileUtils][ERROR] failed to COPY the new file: [' + relativePathToFile +
+                                console.log(
+                                    '[fileUtils][ERROR] failed to COPY the new file: [' + relativePathToFile +
                                     '] error code: [' + error.code + '] source: [' + error.source +
-                                    '] target: [' + error.target + '] http_status: [' + error.http_status + ']');
+                                    '] target: [' + error.target + '] http_status: [' + error.http_status + ']'
+                                );
                                 error();
                             }
                         );
@@ -229,62 +104,17 @@
                     function(error) {
                         console.log('[fileUtils][ERROR] failed to GET a handle on the new file: [' + relativePathToFile + '] error code: [' + error.code + ']');
                         error();
-                    });
-            });
-    }
-
-    function copyFilesToWritableDirectory(fileList, destinationDirectoryEntry, success, error) {
-        var fileCount = 0,
-            copyCount = 0;
-
-        for (var i = 0; i < fileList.length; i++) {
-
-            var relativePathToFile = fileList[i];
-            var absolutePathToFile = getPathToWWWDir() + relativePathToFile;
-
-            createPath(destinationDirectoryEntry, relativePathToFile, function(e) {
-                destinationDirectoryEntry.getFile(relativePathToFile, {create: true},
-                    function(newFile) {
-                        console.log('[fileUtils] successfully CREATED the new file: [' + newFile.name + ']');
-
-                        var fileTransfer = new FileTransfer();
-                        console.log('[fileUtils] copying file from: [' + absolutePathToFile + '] to: [' + newFile.toURL() + ']');
-                        fileTransfer.download(
-                            absolutePathToFile,
-                            newFile.toInternalURL(),
-                            function() {
-                                //copy success
-                                copyCount++;
-                                console.log('[fileUtils] successfully COPIED the new file: [' + newFile.name + ']');
-                                checkPosition(success);
-                            },
-                            function(error) {
-                                console.log('[fileUtils][ERROR] failed to COPY the new file: [' + relativePathToFile +
-                                    '] error code: [' + error.code + '] source: [' + error.source +
-                                    '] target: [' + error.target + '] http_status: [' + error.http_status + ']');
-                                checkPosition();
-                            }
-                        );
-                    },
-                    function(error) {
-                        console.log('[fileUtils][ERROR] failed to GET a handle on the new file: [' + relativePathToFile + '] error code: [' + error.code + ']');
-                        checkPosition();
-                    });
-            });
-
-        }
-
-        function checkPosition(success) {
-            // All done?
-            fileCount++;
-            if (fileCount === fileList.length) {
-                console.log('[fileUtils] successfully copied ' + copyCount + ' of ' + fileList.length + ' files.');
-                success();
+                    }
+                );
             }
-        }
-    }
+        );
+    };
 
-    function createPath(entry, filename, callback) {
+    /**
+     * Create Path.
+     */
+
+    window.phonegap.fileUtils.createPath = function(entry, filename, callback) {
         var parentDirectories = filename.split("/");
         if (parentDirectories.length === 1) {
             // There are no directories in this path
@@ -306,18 +136,23 @@
                 })();
             }
         }
+    };
+
+    /*!
+     * Helper to Get WWW Directory Path.
+     */
+
+    function getPathToWWWDir() {
+        var currentLocation = window.location.href;
+        var pathToWWW = currentLocation.substring(
+            0,
+            currentLocation.lastIndexOf('/') + 1
+        );
+        var indexOfWWW = currentLocation.indexOf('/www/');
+        if (indexOfWWW != -1) {
+            pathToWWW = currentLocation.substring(0, indexOfWWW + 5);
+        }
+        return pathToWWW;
     }
 
-    function _getDirectory(parentEntry, path) {
-        var deferred = $q.defer();
-        parentEntry.getDirectory(path, { create: true, exclusive: false },
-            function (dirEntry) {
-                console.log("[fileUtils] Created directory " + path);
-                deferred.resolve(dirEntry);
-            },
-            function(error) {
-                deferred.reject(error);
-            });
-        return deferred.promise;
-    }
 })();
