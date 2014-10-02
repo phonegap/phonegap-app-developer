@@ -42,25 +42,26 @@
      */
 
     window.phonegap.fileUtils.copyFiles = function(fileList, destEntry, success) {
-        var fileListCopy = fileList.splice(0);
-        (function copyOne(){
-            var file = fileListCopy.splice(0, 1)[0];
-            window.phonegap.fileUtils.copyFile(
-                file,
-                destEntry,
-                function() {
-                    if (fileListCopy.length === 0) {
-                        success();
+        asyncLoop(
+            fileList,
+            function(i, next) {
+                var file = fileList[i];
+                window.phonegap.fileUtils.copyFile(
+                    file,
+                    destEntry,
+                    function() {
+                        next();
+                    },
+                    function(e) {
+                        console.error('[fileUtils][ERROR] Could not copy over files');
+                        next(e);
                     }
-                    else {
-                        copyOne();
-                    }
-                },
-                function() {
-                    console.error('[fileUtils][ERROR] Could not copy over files');
-                }
-            );
-        })();
+                );
+            },
+            function(e) {
+                success(e);
+            }
+        );
     };
 
     /**
@@ -91,19 +92,20 @@
                                 console.log('[fileUtils] successfully COPIED the new file: [' + newFile.name + ']');
                                 success();
                             },
-                            function(error) {
+                            function(e) {
                                 console.log(
                                     '[fileUtils][ERROR] failed to COPY the new file: [' + relativePathToFile +
-                                    '] error code: [' + error.code + '] source: [' + error.source +
-                                    '] target: [' + error.target + '] http_status: [' + error.http_status + ']'
+                                    '] error code: [' + e.code + '] source: [' + e.source +
+                                    '] target: [' + e.target + '] http_status: [' + e.http_status + ']'
                                 );
-                                error();
+                                console.log(e);
+                                error(e);
                             }
                         );
                     },
-                    function(error) {
-                        console.log('[fileUtils][ERROR] failed to GET a handle on the new file: [' + relativePathToFile + '] error code: [' + error.code + ']');
-                        error();
+                    function(e) {
+                        console.log('[fileUtils][ERROR] failed to GET a handle on the new file: [' + relativePathToFile + '] error code: [' + e.code + ']');
+                        error(e);
                     }
                 );
             }
@@ -116,25 +118,33 @@
 
     window.phonegap.fileUtils.createPath = function(entry, filename, callback) {
         var parentDirectories = filename.split("/");
-        if (parentDirectories.length === 1) {
+        parentDirectories.pop(); // remove the filename
+        if (parentDirectories.length <= 0) {
             // There are no directories in this path
             callback();
         }
         else {
-            for (var i = 0, l = parentDirectories.length - 1; i < l; ++i) {
-                (function () { // Create a closure for the path variable to be correct when logging it
+            asyncLoop(
+                parentDirectories,
+                function(i, next) {
                     var path = parentDirectories.slice(0, i+1).join("/");
-                    entry.getDirectory(path, { create: true, exclusive: true },
+                    entry.getDirectory(
+                        path,
+                        { create: true, exclusive: true },
                         function () {
                             console.log("[fileUtils] Created directory " + path);
-                            callback();
+                            next();
                         },
                         function(error) {
                             // error in this case means the directory already exists.
-                            callback(error);
-                        });
-                })();
-            }
+                            next();
+                        }
+                    );
+                },
+                function(e) {
+                    callback(e);
+                }
+            );
         }
     };
 
@@ -153,6 +163,34 @@
             pathToWWW = currentLocation.substring(0, indexOfWWW + 5);
         }
         return pathToWWW;
+    }
+
+    /*!
+     * Helper for Async Loop.
+     */
+
+    function asyncLoop(elements, callback, complete) {
+        var index = 0,
+            length = elements.length;
+
+        var nextElementCallback = function() {
+            if (index < length) {
+                callback(index, function(e) {
+                    index++;
+                    if (e) {
+                        complete(e);
+                    }
+                    else {
+                        nextElementCallback();
+                    }
+                });
+            }
+            else {
+                complete();
+            }
+        };
+
+        nextElementCallback();
     }
 
 })();
