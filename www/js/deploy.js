@@ -147,8 +147,8 @@
                 var fileTransfer = new FileTransfer();
                 var uri = encodeURI(options.address + '/__api__/zip');
                 var timeStamp = Math.round(+new Date()/1000);
-                var downloadPath = fileSystem.root.toURL() + 'app' + timeStamp + '.zip';
-                var dirPath =  fileSystem.root.toURL() + 'app' + timeStamp;
+                var downloadPath = fileSystem.root.toURL() + 'www/app' + timeStamp + '.zip';
+                var dirPath =  fileSystem.root.toURL() + 'www/app' + timeStamp;
 
                 fileTransfer.download(
                     uri,
@@ -172,9 +172,9 @@
                                     localFiles.push(plugins[i].file);
                                 }
 
-                                window.phonegap.fileUtils.getDirectory('app' + timeStamp, function(appDirEntry){
+                                window.phonegap.fileUtils.getDirectory('www/app' + timeStamp, function(appDirEntry){
                                     window.phonegap.fileUtils.copyFiles(localFiles, appDirEntry, function(){
-                                        window.location.href = dirPath + '/index.html';
+                                        window.location.href = appDirEntry.fullPath + '/index.html';
                                     }, function(){
                                         // error out copying over localFiles
                                     });
