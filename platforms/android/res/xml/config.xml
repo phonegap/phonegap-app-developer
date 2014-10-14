@@ -66,6 +66,9 @@
     <feature name="AppLoader">
         <param name="android-package" value="com.phonegap.build.AppLoader" />
     </feature>
+    <feature name="PhonegapBuildOauth">
+        <param name="android-package" value="com.phonegap.build.oauth.PhonegapBuildOauth" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers

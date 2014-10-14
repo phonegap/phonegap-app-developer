@@ -34,6 +34,8 @@ public class AppLoader extends CordovaPlugin {
                 "/hydra_app/";
         indexPath = extractPath + "index.html";
         
+        return true;
+        /*
         boolean firstRun = false;
         File indexFile = new File(indexPath);
         if (!indexFile.exists()) {
@@ -53,6 +55,7 @@ public class AppLoader extends CordovaPlugin {
             Log.d("AppLoader", "Found existing installed app");
         }
         return firstRun;
+        */
     }
 
     @Override
@@ -61,15 +64,7 @@ public class AppLoader extends CordovaPlugin {
 
         this.cb = callbackContext;
         
-        if (action.equals("initialize")) {
-            boolean firstRun = this.initialize();
-            PluginResult r = new PluginResult(
-                    PluginResult.Status.OK,
-                    firstRun);
-            r.setKeepCallback(false);
-            cb.sendPluginResult(r);
-            return true;
-        }
+        this.initialize();
         
         if (action.equals("load")) {
             File f = new File(indexPath);
@@ -161,6 +156,7 @@ public class AppLoader extends CordovaPlugin {
             
             // only write at 5% increments
             if (percentage >= nextUpdatePercent) {
+            	/*
                 PluginResult r = new PluginResult(
                         PluginResult.Status.OK,
                         AppLoader.message(
@@ -168,9 +164,10 @@ public class AppLoader extends CordovaPlugin {
                             )
                         );
                 r.setKeepCallback(true);
-                
+                */
+            	Log.d("AppLoader", Float.toString(percentage));
                 nextUpdatePercent += 5.0f;
-                cb.sendPluginResult(r);
+                //cb.sendPluginResult(r);
             }
             // force a write
             file.flush();
