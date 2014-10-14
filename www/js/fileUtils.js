@@ -153,17 +153,15 @@
      */
 
     function getPathToWWWDir() {
-        var currentLocation = window.location.href;
-        var pathToWWW = currentLocation.substring(
-            0,
-            currentLocation.lastIndexOf('/') + 1
-        );
-		if(currentLocation.indexOf('x-wmapp0') != -1){
-			pathToWWW = 'x-wmapp0:www/';
-		}else{
-			 pathToWWW = currentLocation.substring(0, indexOfWWW + 5);
-		}
+        var pathToWWW;
 
+        if(window.device.platform == 'iOS'){
+            pathToWWW = cordova.file.applicationDirectory + 'www/'
+        }else if(window.device.platform == 'Android'){
+            pathToWWW = cordova.file.applicationDirectory + 'www/';
+        }else if(window.device.platform =='wp8'){
+            pathToWWW = 'x-wmapp0:www/';
+        }
         return pathToWWW;
     }
 
