@@ -159,7 +159,7 @@
             pathToWWW = cordova.file.applicationDirectory + 'www/'
         }else if(window.device.platform == 'Android'){
             pathToWWW = cordova.file.applicationDirectory + 'www/';
-        }else if(window.device.platform =='wp8'){
+        }else if(window.device.platform =='Win32NT'){
             pathToWWW = 'x-wmapp0:www/';
         }
         return pathToWWW;

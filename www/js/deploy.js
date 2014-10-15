@@ -156,6 +156,9 @@
                 }else if(window.device.platform == 'Android'){
                     downloadPath = cordova.file.applicationStorageDirectory + 'app' + timeStamp + '.zip';
                     dirPath = cordova.file.applicationStorageDirectory + 'app' + timeStamp;
+                } else if (window.device.platform == 'Win32NT') {
+                    downloadPath = fileSystem.root.toURL() + 'www/app' + timeStamp + '.zip';
+                    dirPath = fileSystem.root.toURL() + 'www/app' + timeStamp;
                 }
 
                 fileTransfer.download(
@@ -180,13 +183,21 @@
                                     localFiles.push(plugins[i].file);
                                 }
 
-                                window.resolveLocalFileSystemURL(dirPath, function(appDirEntry){
-                                    window.phonegap.fileUtils.copyFiles(localFiles, appDirEntry, function(){
-                                        window.location.href = dirPath + '/index.html';
-                                    }, function(){
-                                        // error out copying over localFiles
+                                if (window.device.platform == 'Win32NT') {
+                                    window.phonegap.fileUtils.getDirectory('www/app' + timeStamp, function (appDirEntry) {
+                                        window.phonegap.fileUtils.copyFiles(localFiles, appDirEntry, function () {
+                                            window.location.href = appDirEntry.fullPath + '/index.html';
+                                        });
                                     });
-                                });
+                                } else {
+                                    window.resolveLocalFileSystemURL(dirPath, function (appDirEntry) {
+                                        window.phonegap.fileUtils.copyFiles(localFiles, appDirEntry, function () {
+                                            window.location.href = dirPath + '/index.html';
+                                        }, function () {
+                                            // error out copying over localFiles
+                                        });
+                                    });
+                                }
                             }
                             else {
                                 console.error('[fileUtils] error: failed to extract update payload');
