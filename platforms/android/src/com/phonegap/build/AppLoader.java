@@ -12,8 +12,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class AppLoader extends CordovaPlugin {
 
@@ -58,9 +62,10 @@ public class AppLoader extends CordovaPlugin {
         */
     }
 
-    @Override
+    @TargetApi(19)
+	@Override
     public boolean execute(
-        String action, JSONArray args, CallbackContext callbackContext ){
+        String action, JSONArray args, final CallbackContext callbackContext ){
 
         this.cb = callbackContext;
         
@@ -77,6 +82,7 @@ public class AppLoader extends CordovaPlugin {
                 cb.sendPluginResult(res);
                 return true;
             }
+            injectHomeScript(callbackContext);
             super.webView.loadUrl("file://" + extractPath + "index.html");
         }
 
@@ -219,7 +225,24 @@ public class AppLoader extends CordovaPlugin {
         cb.sendPluginResult(complete);
     }
     
-    public final void copyStream(InputStream in, OutputStream out)
+    private void injectHomeScript(final CallbackContext callbackContext) {
+
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+	            webView.setWebViewClient(new WebViewClient(){
+	    			@Override
+	    	        public void onPageFinished(WebView view, String url) {
+	    				// Michael Brooks' homepage.js (https://github.com/phonegap/connect-phonegap/blob/master/res/middleware/homepage.js)
+	    	            String javascript="javascript: console.log('adding homepage.js'); (function(){var e={},t={touchstart:'touchstart',touchend:'touchend'};if(window.navigator.msPointerEnabled){t={touchstart:'MSPointerDown',touchend:'MSPointerUp'}}document.addEventListener(t.touchstart,function(t){var n=t.touches||[t],r;for(var i=0,s=n.length;i<s;i++){r=n[i];e[r.identifier||r.pointerId]=r}},false);document.addEventListener(t.touchend,function(t){var n=Object.keys(e).length;e={};if(n===3){t.preventDefault();window.history.back(window.history.length)}},false)})(window)";
+	    	            view.loadUrl(javascript);
+	    	        }
+	    		});
+	            //callbackContext.success();
+	        }
+	    });
+    }
+    
+    private void copyStream(InputStream in, OutputStream out)
         throws IOException {
         byte[] buffer = new byte[1024];
         int len;
@@ -230,7 +253,7 @@ public class AppLoader extends CordovaPlugin {
         out.close();
     }
 
-    public static JSONObject message(String state, String status)
+    private static JSONObject message(String state, String status)
         throws JSONException {
 
         JSONObject json = new JSONObject();
