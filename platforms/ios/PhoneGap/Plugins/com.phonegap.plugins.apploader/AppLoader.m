@@ -222,34 +222,6 @@ const float updateIncrement = 2.0f;
 #pragma mark -
 #pragma mark PhoneGap commands
 
-- (void) initialize:(CDVInvokedUrlCommand*)command
-{
-    NSString* callbackId = [command callbackId];
-    NSString* appId = @"0";
-    
-    NSString* appURL = [self appUrl:appId];
-	
-	if ([[NSFileManager defaultManager] fileExistsAtPath:appURL]) {
-        
-        // TODO: this fails
-        NSDictionary* jsDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"false", nil] 
-                                                           forKeys:[NSArray arrayWithObjects:@"firstRun", nil]];
-        
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsDict];
-        [pluginResult setKeepCallbackAsBool:FALSE];
-        [super writeJavascript:[pluginResult toSuccessCallbackString:callbackId]];
-    }
-    else {
-    
-        NSString* downloadFilePath = [[NSBundle mainBundle]  pathForResource:@"startup.zip" ofType:nil];
-        
-        NSDictionary* context = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:appId, callbackId, downloadFilePath, nil] 
-                                    forKeys:[NSArray arrayWithObjects:@"appId", @"callbackId", @"filePath", nil]];
-        
-        [self __installApp:downloadFilePath :context];
-    }
-}
-
 - (void) load:(CDVInvokedUrlCommand*)command
 {
 	NSString* callbackId = [command callbackId];
@@ -275,13 +247,6 @@ const float updateIncrement = 2.0f;
 		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorString];
 		[super writeJavascript:[pluginResult toErrorCallbackString:callbackId]];
 	}	
-}
-
-- (void) pageDidLoad:(NSNotification *) notification
-{
-    // Michael Brooks' homepage.js (https://github.com/phonegap/connect-phonegap/blob/master/res/middleware/homepage.js)
-    NSString* tapScript = @"javascript: console.log('adding homepage.js'); (function(){var e={},t={touchstart:'touchstart',touchend:'touchend'};if(window.navigator.msPointerEnabled){t={touchstart:'MSPointerDown',touchend:'MSPointerUp'}}document.addEventListener(t.touchstart,function(t){var n=t.touches||[t],r;for(var i=0,s=n.length;i<s;i++){r=n[i];e[r.identifier||r.pointerId]=r}},false);document.addEventListener(t.touchend,function(t){var n=Object.keys(e).length;e={};if(n===3){t.preventDefault();window.history.back(window.history.length)}},false)})(window)";
-    [super writeJavascript:tapScript];
 }
 
 - (void) fetch:(CDVInvokedUrlCommand*)command
@@ -565,7 +530,15 @@ const float updateIncrement = 2.0f;
 	}
 	
 	return retVal;
-}	
+}
+
+- (void) pageDidLoad:(NSNotification *) notification
+{
+    // Michael Brooks' homepage.js (https://github.com/phonegap/connect-phonegap/blob/master/res/middleware/homepage.js)
+    NSString* tapScript = @"javascript: console.log('adding homepage.js'); (function(){var e={},t={touchstart:'touchstart',touchend:'touchend'};if(window.navigator.msPointerEnabled){t={touchstart:'MSPointerDown',touchend:'MSPointerUp'}}document.addEventListener(t.touchstart,function(t){var n=t.touches||[t],r;for(var i=0,s=n.length;i<s;i++){r=n[i];e[r.identifier||r.pointerId]=r}},false);document.addEventListener(t.touchend,function(t){var n=Object.keys(e).length;e={};if(n===3){t.preventDefault();window.history.back(window.history.length)}},false)})(window)";
+    [super writeJavascript:tapScript];
+}
+
 
 #pragma mark -
 #pragma StatusBarOverlayDelegate

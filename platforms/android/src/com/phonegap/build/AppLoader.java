@@ -25,41 +25,16 @@ public class AppLoader extends CordovaPlugin {
     String zipPath;
     String extractPath;
     String indexPath;
-    
     Context context;
     
-    public boolean initialize() {
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
         
         context = cordova.getActivity().getApplicationContext();
         
-        zipPath = "/data/data/" + context.getPackageName() +
-                "/app.zip";
-        extractPath = "/data/data/" + context.getPackageName() +
-                "/hydra_app/";
+        zipPath = context.getFilesDir().getPath() + "/downloads/app.zip";
+        extractPath = context.getFilesDir().getPath() + "/downloads/app_dir/";
         indexPath = extractPath + "index.html";
-        
-        return true;
-        /*
-        boolean firstRun = false;
-        File indexFile = new File(indexPath);
-        if (!indexFile.exists()) {
-            Log.d("AppLoader", "No index file, installing startup.zip");
-            firstRun = true;
-            try {
-                InputStream in = context.getAssets().open("startup.zip");
-                FileOutputStream out = new FileOutputStream(zipPath);
-                copyStream(in, out);
-                
-                this.installApp(zipPath);
-            } catch (Exception e) {
-                Log.d("AppLoader", "No startup.zip in app bundle");
-                e.printStackTrace();
-            }
-        } else {
-            Log.d("AppLoader", "Found existing installed app");
-        }
-        return firstRun;
-        */
     }
 
     @TargetApi(19)
@@ -69,14 +44,12 @@ public class AppLoader extends CordovaPlugin {
 
         this.cb = callbackContext;
         
-        this.initialize();
-        
         if (action.equals("load")) {
             File f = new File(indexPath);
             if (!f.exists()) {
                 PluginResult res = new PluginResult(
                     PluginResult.Status.ERROR,
-                    "No hydration files found at " + indexPath
+                    "App not found at " + indexPath
                     );
                 res.setKeepCallback(false);
                 cb.sendPluginResult(res);
@@ -144,25 +117,30 @@ public class AppLoader extends CordovaPlugin {
         FileOutputStream file = new FileOutputStream(zipPath);
 
         int bytesRead = 0;
-        long totalBytesRead = 0;
         long totalBytesToRead = resp.getEntity().getContentLength();
         
+        byte[] bytes = new byte[1024];
+        
         if (totalBytesToRead == 0) {
+            file.close();
             throw new Exception("... lets not divide by zero");
         }
         
-        byte[] bytes = new byte[1024];
+        /*
+        long totalBytesRead = 0;
         float percentage = 0.0f;
         float nextUpdatePercent = 5.0f;
+        */
         
         while ((bytesRead = download.read(bytes)) >= 0) {
             file.write(bytes, 0, bytesRead);
+            // Uncomment to callback with download progress
+            /*
             totalBytesRead += bytesRead;
             percentage = 100.0f * ((float) totalBytesRead / (float) totalBytesToRead);
             
             // only write at 5% increments
             if (percentage >= nextUpdatePercent) {
-            	/*
                 PluginResult r = new PluginResult(
                         PluginResult.Status.OK,
                         AppLoader.message(
@@ -170,11 +148,11 @@ public class AppLoader extends CordovaPlugin {
                             )
                         );
                 r.setKeepCallback(true);
-                */
             	Log.d("AppLoader", Float.toString(percentage));
                 nextUpdatePercent += 5.0f;
-                //cb.sendPluginResult(r);
+                cb.sendPluginResult(r);
             }
+            */
             // force a write
             file.flush();
         }
@@ -207,12 +185,12 @@ public class AppLoader extends CordovaPlugin {
         }
         zip.close();
         
-        // copy cordova.js from Hydra to downloaded app
+        // copy cordova.js to downloaded app
         InputStream in = context.getAssets().open("www/cordova.js");
         FileOutputStream out = new FileOutputStream(extractPath + "cordova.js");
         copyStream(in, out);
 
-        // copy cordova.js from Hydra to downloaded app
+        // also copy it to phonegap.js
         in = context.getAssets().open("www/cordova.js");
         out = new FileOutputStream(extractPath + "phonegap.js");
         copyStream(in, out);
