@@ -47,6 +47,22 @@ NSString* state = nil;
 
 }
 
+- (void)authorizeByCode:(CDVInvokedUrlCommand*)command
+{
+    NSString* code = [command.arguments objectAtIndex:0];
+    
+    cdvCommand = command;
+    responseData = [NSMutableData data];
+    
+    NSString *post = [NSString stringWithFormat:@"&client_id=%@&client_secret=%@&code=%@",CLIENT_ID, CLIENT_SECRET, code];
+    
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    state = @"authorize";
+    [self sendPost:postData :[NSString stringWithFormat:@"%@/authorize/token", HOSTNAME] :nil];
+    
+}
+
 -(void)sendPost:(NSData *)postData :(NSString *)url :(NSString *)authValue
 {
     NSString *postLength = [NSString stringWithFormat:@"%d",[postData length]];
@@ -100,8 +116,6 @@ NSString* state = nil;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    
     NSData *data = [NSData dataWithData:responseData];
 
     NSError *error = nil;

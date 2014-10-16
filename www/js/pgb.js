@@ -5,6 +5,13 @@ $(document).on('deviceready', function() {
 	// Avoids flicker on slower devices.
 	addListeners();
 
+	access_token = window.localStorage.getItem('access_token');
+
+	var appArray = window.localStorage.getItem('appArray');
+	if (!!appArray) {
+		renderApps(JSON.parse(appArray));
+	}
+
 	setTimeout(function() {
    	// allow the screen to dim when returning from the served app
    	window.plugins.insomnia.allowSleepAgain();
@@ -58,27 +65,31 @@ function getApps(access_token) {
 }
 
 function saveApps(appArray) {
-	appArray.forEach(function(app) {
-		apps[app.id] = app;
-	});
+	window.localStorage.setItem('appArray', JSON.stringify(appArray));
 }
 
 function renderApps(appArray) {
 	var html = "";
 
+	appArray.forEach(function(app) {
+		apps[app.id] = app;
+	});
+
 	$.get('templates/app-li.html', function(template) {
 
 		$(".apps ul")
 			.html(Mustache.render(template, { apps: appArray, access_token: access_token }))
-			.find('a').click(renderApp);
+			.find('a').click(function() {
+				renderApp($(this).attr("data-id"));
+			});
   	showView('.apps');
 
 	});
 
 }
 
-function renderApp() {
-	var app = apps[$(this).attr("data-id")];
+function renderApp(id) {
+	var app = apps[id];
 
 	$.get('templates/app-view.html', function(template) {
 
@@ -110,13 +121,30 @@ function login(e) {
 	var email = $(this).find("#email").val(),
 			pass = $(this).find("#password").val();
 
-	PhonegapBuildOauth.login(email, pass, function(a) {
-		access_token = a.access_token;
-		getApps(a.access_token);
-	}, function(a) {
-		console.log("Auth failure: " + a.message);
-		alert('login failed');
+	var authWindow = window.open("https://build.phonegap.com/authorize?client_id=b3e5cfc36aa66587b24f", "_blank", "clearcache=yes");
+
+	$(authWindow).on('loadstart', function(e) {
+		var url = e.url;
+		if (url.match(/^(https?:\/\/)phonegap\.com\/?\?(code|error)=[a-zA-Z0-9]*$/)) {
+			var qs = getQueryString(url);
+			if (qs['code']) {
+				authWindow.close();
+				PhonegapBuildOauth.authorizeByCode(qs['code'], function(a) {
+					access_token = a.access_token;
+					window.localStorage.setItem('access_token', access_token);
+					getApps(a.access_token);
+				}, function(a) {
+					console.log("Auth failure: " + a.message);
+					alert('login failed');
+				});
+			} else if (qs['error']) {
+				authWindow.close();
+				console.log("Auth failure: " + a.message);
+				alert('authorization failed');
+			}
+		}
 	});
+
 }
 
 function browse() {
@@ -132,10 +160,7 @@ function install() {
 function run() {
 	var app_id = $(this).attr("data-id");
 	console.log('running app ' + app_id);
-	getUrl(app_id);
-}
 
-function getUrl(app_id) {
 	$.ajax({
 	  dataType: "json",
 	  url:"https://build.phonegap.com/api/v1/apps/" + app_id + "/www?access_token=" + access_token,
@@ -182,14 +207,27 @@ function analyzePlugins(app_id, callback) {
 	  			return plugin;
 	  		});
 
-	  		console.log(return_obj);
-
 	  		callback(return_obj);
 	  	}
 
 	  }
 	});
 
+}
+
+function getQueryString(url) {
+		var a = url.slice((url.indexOf('?') + 1)).split('&')
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {
+        var p=a[i].split('=', 2);
+        if (p.length == 1)
+            b[p[0]] = "";
+        else
+            b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
 }
 
 })();

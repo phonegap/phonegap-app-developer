@@ -48,6 +48,17 @@ public class PhonegapBuildOauth extends CordovaPlugin {
 				return true;
 			}
 		}
+		
+		if (action.equals("authorizeByCode")) {
+			String code;
+			try {
+				code = (String) args.get(0);
+				authorizeByCode(code);
+			} catch (JSONException e1) {
+				fail(e1.getMessage());
+				return true;
+			}
+		}
 
 		PluginResult r = new PluginResult(PluginResult.Status.NO_RESULT);
 		r.setKeepCallback(true);
@@ -92,6 +103,29 @@ public class PhonegapBuildOauth extends CordovaPlugin {
 			UrlEncodedFormEntity formData = new UrlEncodedFormEntity(data);
 			String json = postData(HOSTNAME + "/authorize", null, formData);
 			Log.d("PhonegapBuildOauth", json);
+			JSONObject obj = new JSONObject(json);
+			PluginResult r = new PluginResult(PluginResult.Status.OK, obj);
+			r.setKeepCallback(false);
+			cb.sendPluginResult(r);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail(e.getMessage());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
+	
+	private void authorizeByCode(String code) {
+		List<NameValuePair> data = new ArrayList<NameValuePair>(3);
+		data.add(new BasicNameValuePair("client_id", CLIENT_ID));
+		data.add(new BasicNameValuePair("client_secret", CLIENT_SECRET));
+		data.add(new BasicNameValuePair("code", code));
+		try {
+			UrlEncodedFormEntity formData = new UrlEncodedFormEntity(data);
+			String json = postData(HOSTNAME + "/authorize/token", null, formData);
 			JSONObject obj = new JSONObject(json);
 			PluginResult r = new PluginResult(PluginResult.Status.OK, obj);
 			r.setKeepCallback(false);
