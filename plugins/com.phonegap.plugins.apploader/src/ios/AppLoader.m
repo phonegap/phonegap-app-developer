@@ -222,34 +222,6 @@ const float updateIncrement = 2.0f;
 #pragma mark -
 #pragma mark PhoneGap commands
 
-- (void) initialize:(CDVInvokedUrlCommand*)command
-{
-    NSString* callbackId = [command callbackId];
-    NSString* appId = @"0";
-    
-    NSString* appURL = [self appUrl:appId];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:appURL]) {
-        
-        // TODO: this fails
-        NSDictionary* jsDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"false", nil] 
-                                                           forKeys:[NSArray arrayWithObjects:@"firstRun", nil]];
-        
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsDict];
-        [pluginResult setKeepCallbackAsBool:FALSE];
-        [super writeJavascript:[pluginResult toSuccessCallbackString:callbackId]];
-    }
-    else {
-    
-        NSString* downloadFilePath = [[NSBundle mainBundle]  pathForResource:@"startup.zip" ofType:nil];
-        
-        NSDictionary* context = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:appId, callbackId, downloadFilePath, nil] 
-                                    forKeys:[NSArray arrayWithObjects:@"appId", @"callbackId", @"filePath", nil]];
-        
-        [self __installApp:downloadFilePath :context];
-    }
-}
-
 - (void) load:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = [command callbackId];
@@ -265,6 +237,7 @@ const float updateIncrement = 2.0f;
     {
         [self showStatusBarOverlay];
         NSURL* url = [NSURL fileURLWithPath:appURL];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pageDidLoad:) name:CDVPageDidLoadNotification object:self.webView];
         [self.webView loadRequest:([NSURLRequest requestWithURL:url])];
         [[[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];
     } 
@@ -416,24 +389,18 @@ const float updateIncrement = 2.0f;
     CDVPluginResult* pluginResult = nil;
     if (result.ok && !result.zip) { // only interested in unzip
         
-        // remove any previous existing app, since the unzip was successful
+        // wipe app directory
         [self __removeApp:appId];
-
-        // move result.target to appPath
-        [[NSFileManager defaultManager] moveItemAtPath:result.target toPath:appPath error:&error];
+        [[NSFileManager defaultManager] createDirectoryAtPath:appPath withIntermediateDirectories:true attributes:nil error:&error];
         
-        // copy cordova.js into downloaded app if its not there
-        NSString* srcPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www/cordova.js"];
-        NSString* destPath = [NSString stringWithFormat:@"%@/cordova.js", appPath];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:destPath]) 
-        {
-            [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:destPath error:&error];   
-        }
-        destPath = [NSString stringWithFormat:@"%@/phonegap.js", appPath];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:destPath]) 
-        {
-            [[NSFileManager defaultManager] copyItemAtPath:srcPath toPath:destPath error:&error];   
-        }
+        NSString* srcPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"];
+        
+        NSLog(@"Copying %@ to %@", srcPath, appPath);
+        // copy main bundle/www contents to the new app directory
+        // so that new app has access to same plugins
+        [self copyDirectoryContents:srcPath :appPath];
+        // now copy downloaded app into app directory, overwriting any existing files
+        [self copyDirectoryContents:result.target :appPath];
         
         if (error == nil) {
             NSDictionary* jsDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"complete", nil] 
@@ -456,19 +423,42 @@ const float updateIncrement = 2.0f;
     }
 }
 
+- (void) copyDirectoryContents:(NSString*)srcPath :(NSString*)destPath
+{
+    //Initialize fileManager first
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    //You should always check for errors
+    NSError *error;
+    NSArray *srcPathContents = [fileManager contentsOfDirectoryAtPath:srcPath error:&error];
+    //TODO: error handling if inboxContents is nil
+    
+    for(NSString *source in srcPathContents)
+    {
+        NSString *src = [srcPath stringByAppendingPathComponent:[source lastPathComponent]];
+        
+        //Create the path for the destination by appending the file name
+        NSString *dest = [destPath stringByAppendingPathComponent:
+                          [source lastPathComponent]];
+        
+        // overwrite
+        if ([fileManager fileExistsAtPath:dest] == YES) {
+            [fileManager removeItemAtPath:dest error:&error];
+        }
+        
+        if(![fileManager copyItemAtPath:src
+                                 toPath:dest
+                                  error:&error])
+        {
+            //TODO: Handle error
+            NSLog(@"Error: %@", error);
+            return;
+        }
+    }
+}
+
 - (void) zipProgress:(ZipProgress*)progress
 {
-    // COMMENTED OUT - since 'fetch' doesn't care about any of this
-    
-//  NSString* callbackId = [progress.context objectForKey:@"callbackId"];
-//  
-//  NSDictionary* jsDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[progress toDictionary], nil] 
-//                                                     forKeys:[NSArray arrayWithObjects:@"zipProgress", nil]];
-//  
-//  CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsDict];
-//  [super writeJavascript:[pluginResult toSuccessCallbackString:callbackId]];
-    
-    DLog(@"%@ Progress: %llu of %llu", (progress.zip? @"Zip":@"Unzip"), progress.entryNumber, progress.entryTotal);
 }
 
 #pragma mark -
@@ -540,7 +530,15 @@ const float updateIncrement = 2.0f;
     }
     
     return retVal;
-}   
+}
+
+- (void) pageDidLoad:(NSNotification *) notification
+{
+    // Michael Brooks' homepage.js (https://github.com/phonegap/connect-phonegap/blob/master/res/middleware/homepage.js)
+    NSString* tapScript = @"javascript: console.log('adding homepage.js'); (function(){var e={},t={touchstart:'touchstart',touchend:'touchend'};if(window.navigator.msPointerEnabled){t={touchstart:'MSPointerDown',touchend:'MSPointerUp'}}document.addEventListener(t.touchstart,function(t){var n=t.touches||[t],r;for(var i=0,s=n.length;i<s;i++){r=n[i];e[r.identifier||r.pointerId]=r}},false);document.addEventListener(t.touchend,function(t){var n=Object.keys(e).length;e={};if(n===3){t.preventDefault();window.history.back(window.history.length)}},false)})(window)";
+    [super writeJavascript:tapScript];
+}
+
 
 #pragma mark -
 #pragma StatusBarOverlayDelegate
