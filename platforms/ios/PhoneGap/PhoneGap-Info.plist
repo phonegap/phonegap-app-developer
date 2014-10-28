@@ -79,5 +79,7 @@
     </array>
     <key>CFBundleShortVersionString</key>
     <string>1.3.0</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string></string>
   </dict>
 </plist>
