@@ -1,9 +1,0 @@
-Release Notes for BlackBerry 10 App Measurement Library version 4:
-
-Included are notes from the latest major revision to current.
-
-For full 4.x SDK documentation, please visit:
-http://microsite.omniture.com/t2/help/en_US/mobile/bb/
-
-4.0.0 (1 Nov, 2013)
-- Initial release of 4.x
