@@ -35,6 +35,10 @@
                         {
                             "xml": "true",
                             "count": 1
+                        },
+                        {
+                            "xml": "false",
+                            "count": 1
                         }
                     ],
                     "AudioToolbox.framework": [
@@ -62,6 +66,12 @@
                         }
                     ],
                     "CoreMotion.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "libsqlite3.dylib": [
                         {
                             "xml": "false",
                             "count": 1
@@ -163,6 +173,10 @@
                         {
                             "xml": "<feature name=\"Insomnia\"><param name=\"ios-package\" value=\"Insomnia\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ADBMobile_PhoneGap\"><param name=\"ios-package\" value=\"ADBMobile_PhoneGap\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -238,6 +252,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "nl.x-services.plugins.insomnia": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "ADBMobile": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

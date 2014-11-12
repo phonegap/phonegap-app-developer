@@ -71,6 +71,10 @@
 		1505AEA8D61D45319AEDA061 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 9490F1CD057A40EDBFC4BC06 /* CDVNotification.m */; };
 		122EB8B7D65D43DEBCF35584 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D53BDB420EA0490E8C5798D5 /* CDVNotification.bundle */; };
 		2DA5FF0180BA41AAA234DE83 /* Insomnia.m in Sources */ = {isa = PBXBuildFile; fileRef = 156E66932A6048DAA30F8A88 /* Insomnia.m */; };
+		F94DDA4AFA3646BF91ECDF2B /* ADBMobile_PhoneGap.m in Sources */ = {isa = PBXBuildFile; fileRef = BC201A02C1E24E5492703742 /* ADBMobile_PhoneGap.m */; };
+		1B9297F16F1C45D7A74F448C /* AdobeMobileLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C9B7F14DF7649609D106623 /* AdobeMobileLibrary.a */; };
+		4214605BE0E94A438E387B38 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 0493C7B0474B44C48A7D74BE /* ADBMobileConfig.json */; };
+		5CCA322BE9A144948AB008F6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A881EE82D9A4D338A9C4324 /* libsqlite3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,6 +198,12 @@
 		D53BDB420EA0490E8C5798D5 /* CDVNotification.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "CDVNotification.bundle"; path = "CDVNotification.bundle"; sourceTree = "<group>"; };
 		156E66932A6048DAA30F8A88 /* Insomnia.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "Insomnia.m"; path = "nl.x-services.plugins.insomnia/Insomnia.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		7C5D0EFC755042A7AB7565A2 /* Insomnia.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Insomnia.h"; path = "nl.x-services.plugins.insomnia/Insomnia.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		BC201A02C1E24E5492703742 /* ADBMobile_PhoneGap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ADBMobile_PhoneGap.m"; path = "ADBMobile/ADBMobile_PhoneGap.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		3C9B7F14DF7649609D106623 /* AdobeMobileLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "AdobeMobileLibrary.a"; path = "PhoneGap/Plugins/ADBMobile/AdobeMobileLibrary.a"; sourceTree = "<group>"; fileEncoding = 4; };
+		5FB9F29D903C433BBAD13C5E /* ADBMobile_PhoneGap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ADBMobile_PhoneGap.h"; path = "ADBMobile/ADBMobile_PhoneGap.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		8F8CBA35D58540F0A8048B86 /* ADBMobile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ADBMobile.h"; path = "ADBMobile/ADBMobile.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		0493C7B0474B44C48A7D74BE /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "ADBMobileConfig.json"; path = "ADBMobileConfig.json"; sourceTree = "<group>"; fileEncoding = 4; };
+		8A881EE82D9A4D338A9C4324 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsqlite3.dylib"; path = "usr/lib/libsqlite3.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +222,8 @@
 				0331A4D1B9B74A618A5F7291 /* AddressBook.framework in Frameworks */,
 				4F338738FF11406BB701F3FE /* AddressBookUI.framework in Frameworks */,
 				F563AE3770174562A230B27D /* CoreMotion.framework in Frameworks */,
+				1B9297F16F1C45D7A74F448C /* AdobeMobileLibrary.a in Frameworks */,
+				5CCA322BE9A144948AB008F6 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +307,7 @@
 				8D1107310486CEB800E47090 /* PhoneGap-Info.plist */,
 				9AF8ABE141554D19879E46EC /* CDVCapture.bundle */,
 				D53BDB420EA0490E8C5798D5 /* CDVNotification.bundle */,
+				0493C7B0474B44C48A7D74BE /* ADBMobileConfig.json */,
 			);
 			name = Resources;
 			path = "PhoneGap/Resources";
@@ -313,6 +326,8 @@
 				5CF084624D1B4339B77BBA7C /* AddressBook.framework */,
 				10706F7054634025AE4D17DF /* AddressBookUI.framework */,
 				DF4776D8E9804C379B602AC6 /* CoreMotion.framework */,
+				3C9B7F14DF7649609D106623 /* AdobeMobileLibrary.a */,
+				8A881EE82D9A4D338A9C4324 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -379,6 +394,9 @@
 				2EAD505FD92343D7997796E3 /* CDVNotification.h */,
 				156E66932A6048DAA30F8A88 /* Insomnia.m */,
 				7C5D0EFC755042A7AB7565A2 /* Insomnia.h */,
+				BC201A02C1E24E5492703742 /* ADBMobile_PhoneGap.m */,
+				5FB9F29D903C433BBAD13C5E /* ADBMobile_PhoneGap.h */,
+				8F8CBA35D58540F0A8048B86 /* ADBMobile.h */,
 			);
 			name = Plugins;
 			path = "PhoneGap/Plugins";
@@ -544,6 +562,7 @@
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 				3D81A3E5C95841B0A73DA297 /* CDVCapture.bundle in Resources */,
 				122EB8B7D65D43DEBCF35584 /* CDVNotification.bundle in Resources */,
+				4214605BE0E94A438E387B38 /* ADBMobileConfig.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,6 +619,7 @@
 				C4DCF67F864C467EA738AC61 /* CDVCompass.m in Sources */,
 				1505AEA8D61D45319AEDA061 /* CDVNotification.m in Sources */,
 				2DA5FF0180BA41AAA234DE83 /* Insomnia.m in Sources */,
+				F94DDA4AFA3646BF91ECDF2B /* ADBMobile_PhoneGap.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,6 +699,10 @@
 				);
 				PRODUCT_NAME = "PhoneGap";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PhoneGap/Plugins/ADBMobile\"",
+				);
 			};
 			name = Debug;
 		};
@@ -710,6 +734,10 @@
 				);
 				PRODUCT_NAME = "PhoneGap";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/PhoneGap/Plugins/ADBMobile\"",
+				);
 			};
 			name = Release;
 		};

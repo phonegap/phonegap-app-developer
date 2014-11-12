@@ -56,6 +56,9 @@
     <feature name="Insomnia">
         <param name="android-package" value="nl.xservices.plugins.Insomnia" />
     </feature>
+    <feature name="ADBMobile_PhoneGap">
+        <param name="android-package" value="com.adobe.ADBMobile_PhoneGap" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers

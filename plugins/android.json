@@ -79,6 +79,10 @@
                         {
                             "xml": "<feature name=\"Insomnia\"><param name=\"android-package\" value=\"nl.xservices.plugins.Insomnia\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ADBMobile_PhoneGap\"><param name=\"android-package\" value=\"com.adobe.ADBMobile_PhoneGap\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -134,6 +138,14 @@
                     "/manifest": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.VIBRATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 1
                         }
                     ]
@@ -200,6 +212,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "nl.x-services.plugins.insomnia": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "ADBMobile": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

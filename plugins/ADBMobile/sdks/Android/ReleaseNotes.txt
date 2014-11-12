@@ -1,0 +1,59 @@
+Release Notes for Android App Measurement Library version 4.x:
+
+Included are notes from the latest major revision to current.
+
+For full SDK documentation, please visit:
+http://microsite.omniture.com/t2/help/en_US/mobile/android/
+
+4.2.0 (16 Oct, 2014)
+- New - In App Messaging Capabilities.
+- New - Location for config file can now be specified during app startup.
+- New - Points of Interest can now be updated automatically without requiring a new config file.
+- New - Analytics calls are now sent as HTTP POST requests.
+- Resolved issue that could cause app crashes to not be tracked in certain scenarios.
+- Cleared up log messages, added more verbose logging when debugLogging is enabled.
+- Multiple performance and stability enhancements.
+
+4.1.7 (4 Aug, 2014)
+- Resolved issue that could cause Lifecycle hit to not get sent when referrer timeout was >= 5 seconds and offline tracking was disabled.
+
+4.1.6 (17 July, 2014)
+- Added protections around exceptions that occur if the database become corrupted, or could not be created.
+- Added protections for issues that could occur when config cannot be loaded (generally due to a null context).
+- Added protections for exceptions that could occur when updating the context data of a timed action.
+
+4.1.1 (23 April, 2014)
+- Fixed a potential issue that could occur if referrer tracking is enabled and a tracking call is made prior to lifecycle.
+
+4.1.0 (17 April, 2014)
+- New - Bluetooth beacon tracking
+- New - Apps that are timestamp enabled, crash hits are backdated to the correct session.
+- New - Apps that are timestamp enabled, previous session is sent in a hit that is backdated to the correct session. (no longer previous session)
+- New - Batching
+- Fixed google play referrer tracking with a configurable timeout to allow for delayed google referrer data
+- Resolved StrictMode warnings that could occur in specific scenarios.
+- Minor bug fixes.
+- Performance enhancements.
+- Resloved an issue that could very rarely cause the library to lock if certain methods were called in a specific order.
+
+4.0.4 (24 Feb, 2014)
+- Resolved issue that could cause extended media time played if stop was called
+	and close was called later with no calls in between.
+- Resolved issue where a media close hit was sent even if the media was not
+	played for any length of time.
+
+4.0.3 (20 Feb, 2014)
+- Added safety to network code to prevent crash caused by Android bug:
+    https://code.google.com/p/android/issues/detail?id=54072
+
+4.0.2 (30 Jan, 2014)
+- Resolved issue that could cause multiple hits to be sent when database was
+	corrupted.
+- Resolved issue that could cause large session length averages if a device had
+ 	incorrect time settings.
+
+4.0.1 (14 Nov, 2013)
+- Resolved incorrect formatting of trackLocation data in specific locales.
+
+4.0.0 (26 Sept, 2013)
+- Initial Release to production of version 4.0
