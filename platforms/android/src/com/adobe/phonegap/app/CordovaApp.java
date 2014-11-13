@@ -31,5 +31,19 @@ public class CordovaApp extends CordovaActivity
         super.init();
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
+        
+        com.adobe.mobile.Config.setContext(this.getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        com.adobe.mobile.Config.collectLifecycleData();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        com.adobe.mobile.Config.pauseCollectingLifecycleData();
     }
 }
