@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Switch;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 
 import org.json.JSONArray;
@@ -586,5 +587,26 @@ public class ADBMobile_PhoneGap extends CordovaPlugin {
         HashMap<String, Object> table = new HashMap<String, Object>();
         table.putAll(map);
         return table;
+    }
+
+    // =====================
+    // Plugin life cycle events
+    // =====================
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        com.adobe.mobile.Config.setContext(this.cordova.getActivity().getApplicationContext());
+    }
+    
+    @Override
+    public void onPause(boolean multitasking) {
+        super.onPause(multitasking);
+        com.adobe.mobile.Config.pauseCollectingLifecycleData();
+    }
+
+    @Override
+    public void onResume(boolean multitasking) {
+        super.onResume(multitasking);
+        com.adobe.mobile.Config.collectLifecycleData();
     }
 }
