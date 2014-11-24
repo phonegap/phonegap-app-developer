@@ -84,7 +84,7 @@
     <preference name="auto-hide-splash-screen" value="false" />
     <preference name="AutoHideSplashScreen" value="false" />
     <preference name="disable-cursor" value="false" />
-    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-minSdkVersion" value="16" />
     <preference name="android-installLocation" value="auto" />
     <preference name="DisallowOverscroll" value="true" />
     <preference name="WebViewBounce" value="false" />
