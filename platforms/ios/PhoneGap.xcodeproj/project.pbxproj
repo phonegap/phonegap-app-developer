@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		01DC1C96F60E4448A33C0100 /* CDVAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2043FA416D114E0E8041B66F /* CDVAccelerometer.m */; };
 		0331A4D1B9B74A618A5F7291 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CF084624D1B4339B77BBA7C /* AddressBook.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
