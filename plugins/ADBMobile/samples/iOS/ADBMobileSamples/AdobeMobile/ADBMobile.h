@@ -5,7 +5,7 @@
 //  Copyright 1996-2013. Adobe, Inc. All Rights Reserved
 
 #import <Foundation/Foundation.h>
-@class CLLocation, ADBTargetLocationRequest, ADBMediaSettings, ADBMediaState;
+@class CLLocation, CLBeacon, ADBTargetLocationRequest, ADBMediaSettings, ADBMediaState;
 
 #pragma mark - ADBMobile
 
@@ -15,11 +15,11 @@
  *  @see privacyStatus
  *  @see setPrivacyStatus
  */
-typedef enum ADBMobilePrivacyStatus : NSUInteger {
+typedef NS_ENUM(NSUInteger, ADBMobilePrivacyStatus) {
     ADBMobilePrivacyStatusOptIn   = 1, /*!< Enum value ADBMobilePrivacyStatusOptIn. */
     ADBMobilePrivacyStatusOptOut  = 2, /*!< Enum value ADBMobilePrivacyStatusOptOut. */
     ADBMobilePrivacyStatusUnknown = 3  /*!< Enum value ADBMobilePrivacyStatusUnknown. @note only available in conjunction with offline tracking */
-} ADBMobilePrivacyStatus;
+};
 
 /**
  * 	@class ADBMobile
@@ -92,6 +92,13 @@ typedef enum ADBMobilePrivacyStatus : NSUInteger {
  */
 + (void) collectLifecycleData;
 
+/**
+ *	@brief allows one-time override of the path for the json config file
+ *	@note This *must* be called prior to AppDidFinishLaunching has completed and before any other interactions with the Adobe Mobile library have happened.  
+ *		Only the first call to this function will have any effect.
+ */
++ (void) overrideConfigPath: (NSString *) path;
+
 #pragma mark - Analytics
 
 /**
@@ -126,6 +133,20 @@ typedef enum ADBMobilePrivacyStatus : NSUInteger {
  *  @note This method does not increment page views.
  */
 + (void) trackLocation:(CLLocation *)location data:(NSDictionary *)data;
+
+/**
+ * 	@brief Tracks a beacon with context data.
+ * 	@param beacon a CLBeacon pointer containing the beacon information to be tracked.
+ * 	@param data a dictionary pointer containing the context data to be tracked.
+ *  @note This method does not increment page views.
+ */
++ (void) trackBeacon:(CLBeacon *)beacon data:(NSDictionary *)data;
+
+/**
+ * 	@brief Clears beacon data persisted for Target
+ */
++ (void) trackingClearCurrentBeacon;
+
 /**
  * 	@brief Tracks an increase in a user's lifetime value.
  * 	@param amount a positive NSDecimalNumber detailing the amount to increase lifetime value by.
@@ -172,6 +193,11 @@ typedef enum ADBMobilePrivacyStatus : NSUInteger {
  *	@return an NSString value containing the tracking identifier
  */
 + (NSString *) trackingIdentifier;
+
+/**
+ *	@brief Force library to send all queued hits regardless of current batch options
+ */
++ (void) trackingSendQueuedHits;
 
 /**
  *	@brief Clears any hits out of the tracking queue and removes them from the database
@@ -343,6 +369,11 @@ typedef enum ADBMobilePrivacyStatus : NSUInteger {
  * 	@param callback a block pointer to call with a response dictionary pointer parameter upon completion of the service request.
  */
 + (void) audienceSignalWithData:(NSDictionary *)data callback:(void (^)(NSDictionary *response))callback;
+
+/**
+ * 	@brief Resets audience manager UUID and purges current visitor profile
+ */
++ (void) audienceReset;
 
 @end
 

@@ -10,37 +10,25 @@
                     "AssetsLibrary.framework": [
                         {
                             "xml": "false",
-                            "count": 5
+                            "count": 3
                         }
                     ],
                     "MobileCoreServices.framework": [
                         {
                             "xml": "false",
-                            "count": 9
-                        }
-                    ],
-                    "CoreMotion.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "ImageIO.framework": [
-                        {
-                            "xml": "true",
-                            "count": 1
+                            "count": 3
                         }
                     ],
                     "CoreLocation.framework": [
                         {
                             "xml": "false",
-                            "count": 1
+                            "count": 3
                         }
                     ],
                     "CoreGraphics.framework": [
                         {
                             "xml": "false",
-                            "count": 16
+                            "count": 6
                         }
                     ],
                     "SystemConfiguration.framework": [
@@ -50,6 +38,18 @@
                         },
                         {
                             "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "AudioToolbox.framework": [
+                        {
+                            "xml": "true",
+                            "count": 2
+                        }
+                    ],
+                    "ImageIO.framework": [
+                        {
+                            "xml": "true",
                             "count": 1
                         }
                     ],
@@ -65,10 +65,10 @@
                             "count": 1
                         }
                     ],
-                    "AudioToolbox.framework": [
+                    "CoreMotion.framework": [
                         {
-                            "xml": "true",
-                            "count": 4
+                            "xml": "false",
+                            "count": 1
                         }
                     ],
                     "libsqlite3.dylib": [
@@ -83,43 +83,11 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Insomnia\"><param name=\"ios-package\" value=\"Insomnia\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Accelerometer\"><param name=\"ios-package\" value=\"CDVAccelerometer\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Compass\"><param name=\"ios-package\" value=\"CDVCompass\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
                             "count": 1
                         },
                         {
@@ -143,15 +111,19 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" onload=\"true\" value=\"CDVStatusBar\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"StatusBarBackgroundColor\" value=\"#000000\" />",
                             "count": 1
                         },
                         {
@@ -167,11 +139,39 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Contacts\"><param name=\"ios-package\" value=\"CDVContacts\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Accelerometer\"><param name=\"ios-package\" value=\"CDVAccelerometer\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Compass\"><param name=\"ios-package\" value=\"CDVCompass\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Insomnia\"><param name=\"ios-package\" value=\"Insomnia\" /></feature>",
                             "count": 1
                         },
                         {
@@ -180,35 +180,24 @@
                         }
                     ]
                 }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "NSLocationWhenInUseUsageDescription": [
+                        {
+                            "xml": "<string />",
+                            "count": 2
+                        }
+                    ]
+                }
             }
         }
     },
     "installed_plugins": {
-        "nl.x-services.plugins.insomnia": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.apache.cordova.splashscreen": {
+        "org.apache.cordova.file": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.file-transfer": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.apache.cordova.device": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.apache.cordova.network-information": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.apache.cordova.console": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.apache.cordova.device-motion": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.apache.cordova.device-orientation": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "org.apache.cordova.geolocation": {
@@ -226,6 +215,12 @@
         "org.apache.cordova.media-capture": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.splashscreen": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
         "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
@@ -235,19 +230,33 @@
         "org.apache.cordova.battery-status": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
+        "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.console": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
         "org.apache.cordova.contacts": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
-        "org.apache.cordova.camera": {
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.device-motion": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.device-orientation": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "nl.x-services.plugins.insomnia": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "ADBMobile": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },
-    "dependent_plugins": {
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        }
-    }
+    "dependent_plugins": {}
 }

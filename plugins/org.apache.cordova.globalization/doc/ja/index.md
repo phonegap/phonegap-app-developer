@@ -62,6 +62,8 @@ BCP 47 準拠の言語識別子タグを返します、 `successCallback` と、
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 *   Windows Phone 8
 
@@ -101,6 +103,8 @@ BCP 47 準拠ロケール識別子文字列を返します、 `successCallback` 
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 *   Windows Phone 8
 
@@ -150,6 +154,8 @@ BCP 47 準拠ロケール識別子文字列を返します、 `successCallback` 
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 *   Windows Phone 8
 
@@ -168,6 +174,11 @@ BCP 47 準拠ロケール識別子文字列を返します、 `successCallback` 
 ### Windows Phone 8 癖
 
 *   `formatLength`オプションをサポートするだけ `short` と `full` の値。
+
+### Firefox OS 癖
+
+*   `formatLength`識別されない `long` と`full` 
+*   日付を表示する 1 つだけメソッド （ない `long` または `full` バージョン）
 
 ## navigator.globalization.getCurrencyPattern
 
@@ -202,6 +213,7 @@ BCP 47 準拠ロケール識別子文字列を返します、 `successCallback` 
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
 *   iOS
 
 ### 例
@@ -258,6 +270,8 @@ BCP 47 準拠ロケール識別子文字列を返します、 `successCallback` 
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 *   Windows Phone 8
 
@@ -275,6 +289,10 @@ BCP 47 準拠ロケール識別子文字列を返します、 `successCallback` 
         { type: 'wide', item: 'months' }
     );
     
+
+### Firefox OS 癖
+
+*   `options.type`サポートしている、 `genitive` のいくつかの言語の重要な値
 
 ## navigator.globalization.getDatePattern
 
@@ -309,6 +327,7 @@ time`.
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
 *   iOS
 *   Windows Phone 8
 
@@ -352,6 +371,8 @@ time`.
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 *   Windows Phone 8
 
@@ -405,6 +426,7 @@ time`.
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
 *   iOS
 *   Windows Phone 8
 
@@ -463,6 +485,8 @@ time`.
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 *   Windows Phone 8
 
@@ -501,6 +525,7 @@ time`.
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
 *   iOS
 *   Windows Phone 8
 
@@ -557,6 +582,8 @@ time`.
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 *   Windows Phone 8
 
@@ -602,6 +629,7 @@ time`.
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
 *   iOS
 *   Windows Phone 8
 
@@ -638,6 +666,8 @@ time`.
 
 *   アマゾン火 OS
 *   アンドロイド
+*   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 
 ### 例

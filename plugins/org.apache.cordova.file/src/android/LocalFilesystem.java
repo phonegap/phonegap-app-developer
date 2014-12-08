@@ -96,7 +96,7 @@ public class LocalFilesystem extends Filesystem {
 	    if (isAbsolutePath) {
 	        rawPath = rawPath.substring(1);
 	    }
-	    ArrayList<String> components = new ArrayList<String>(Arrays.asList(rawPath.split("/")));
+	    ArrayList<String> components = new ArrayList<String>(Arrays.asList(rawPath.split("/+")));
 	    for (int index = 0; index < components.size(); ++index) {
 	        if (components.get(index).equals("..")) {
 	            components.remove(index);

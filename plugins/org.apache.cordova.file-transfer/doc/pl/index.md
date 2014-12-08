@@ -30,12 +30,18 @@ Plugin pozwala na przesyłanie i pobieranie plików.
 
 *   Amazon ogień OS
 *   Android
-*   Jeżyna 10 *
+*   Jeżyna 10
+*   Firefox OS **
 *   iOS
 *   Windows Phone 7 i 8 *
-*   Windows 8 *
+*   Windows 8 \***|
+*   Windows \***|
 
 * *Nie obsługują `onprogress` ani `abort()` *
+
+** *Nie obsługują `onprogress` *
+
+Częściowe wsparcie `onprogress` dla przesłać Metoda. `onprogress` jest wywoływana z zdarzenie progress pusty z powodu Windows limitations_
 
 # FileTransfer
 
@@ -65,8 +71,6 @@ Plugin pozwala na przesyłanie i pobieranie plików.
 
 *   **errorCallback**: wywołanie zwrotne, które wykonuje, jeżeli wystąpi błąd pobierania `Metadata` . Wywołany z `FileTransferError` obiektu. *(Funkcja)*
 
-*   **trustAllHosts**: parametr opcjonalny, domyślnie `false` . Jeśli zestaw `true` , to akceptuje wszystkie certyfikaty bezpieczeństwa. Jest to przydatne, ponieważ Android odrzuca Certyfikaty samopodpisane. Nie zaleca się do użytku produkcyjnego. Obsługiwane na Androida i iOS. *(wartość logiczna)*
-
 *   **Opcje**: parametry opcjonalne *(obiektu)*. Ważne klucze:
     
     *   **fileKey**: nazwa elementu form. Domyślnie `file` . (DOMString)
@@ -75,6 +79,8 @@ Plugin pozwala na przesyłanie i pobieranie plików.
     *   **Parametry**: zestaw par opcjonalny klucz/wartość w żądaniu HTTP. (Obiekt)
     *   **chunkedMode**: czy przekazać dane w trybie pakietowego przesyłania strumieniowego. Domyślnie `true` . (Wartość logiczna)
     *   **nagłówki**: Mapa wartości Nazwa/nagłówka nagłówek. Aby określić więcej niż jedną wartość, należy użyć tablicę. (Obiekt)
+
+*   **trustAllHosts**: parametr opcjonalny, domyślnie `false` . Jeśli zestaw `true` , to akceptuje wszystkie certyfikaty bezpieczeństwa. Jest to przydatne, ponieważ Android odrzuca Certyfikaty samopodpisane. Nie zaleca się do użytku produkcyjnego. Obsługiwane na Androida i iOS. *(wartość logiczna)*
 
 ### Przykład
 
@@ -192,7 +198,7 @@ A `FileUploadResult` obiekt jest przekazywany do funkcji callback sukces z `File
         uri,
         fileURL,
         function(entry) {
-            console.log("download complete: " + entry.fullPath);
+            console.log("download complete: " + entry.toURL());
         },
         function(error) {
             console.log("download error source " + error.source);
@@ -252,12 +258,15 @@ A `FileTransferError` obiekt jest przekazywany do wywołania zwrotnego błąd, g
 
 *   **HTTP_STATUS**: kod stanu HTTP. Ten atrybut jest dostępna tylko po otrzymaniu kodu odpowiedzi z połączenia HTTP. (Liczba)
 
+*   **wyjątek**: albo e.getMessage lub e.toString (String)
+
 ### Stałe
 
-*   `FileTransferError.FILE_NOT_FOUND_ERR`
-*   `FileTransferError.INVALID_URL_ERR`
-*   `FileTransferError.CONNECTION_ERR`
-*   `FileTransferError.ABORT_ERR`
+*   1 = `FileTransferError.FILE_NOT_FOUND_ERR`
+*   2 = `FileTransferError.INVALID_URL_ERR`
+*   3 = `FileTransferError.CONNECTION_ERR`
+*   4 = `FileTransferError.ABORT_ERR`
+*   5 = `FileTransferError.NOT_MODIFIED_ERR`
 
 ## Do tyłu zgodności stwierdza
 

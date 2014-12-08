@@ -172,6 +172,16 @@ namespace WPCordovaClassLib.Cordova.Commands
             this.OnCommandResult = null;
         }
 
+        public void DetachHandlers()
+        {
+            this.OnCommandResult = null;
+            this.OnCustomScript = null;
+            foreach (string callbackId in new List<string>(ResultHandlers.Keys))
+            {
+                RemoveResultHandler(callbackId);
+            }
+        }
+
         public static string GetBaseURL()
         {
 #if CORDOVA_CLASSLIB

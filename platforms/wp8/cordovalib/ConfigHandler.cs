@@ -1,4 +1,18 @@
-﻿using System;
+﻿/*  
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+    http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -176,7 +190,7 @@ namespace WPCordovaClassLib.CordovaLib
                 var res = from results in AllowedPlugins.TakeWhile(p => p.Value.isAutoLoad)
                           select results.Value.Name;
 
-                return new string[] { "", "" };
+                return res.ToArray<string>();
             }
         }
 
@@ -189,20 +203,30 @@ namespace WPCordovaClassLib.CordovaLib
             foreach (var feature in features)
             {
                 string name = (string)feature.Attribute("name");
-                var values = from results in feature.Descendants()
+                var value = (from results in feature.Descendants()
                              where results.Name.LocalName == "param" && ((string)results.Attribute("name") == "wp-package")
-                             select results;
+                             select results).FirstOrDefault();
 
-                var value = values.FirstOrDefault();
+                var autoloadNode = (from results in feature.Descendants()
+                                    where results.Name.LocalName == "param" && ((string)results.Attribute("name") == "onload")
+                                    select results).FirstOrDefault();
+                bool isAutoLoad = false;
+                if (autoloadNode != null)
+                {
+                    isAutoLoad = ((string)autoloadNode.Attribute("value") == "true");
+                }
+
                 if (value != null)
                 {
                     string key = (string)value.Attribute("value");
                     Debug.WriteLine("Adding feature.value=" + key);
-                    var onload = value.Attribute("onload");
-                  
-                    PluginConfig pConfig = new PluginConfig(key, onload != null && onload.Value == "true");
+                    PluginConfig pConfig = new PluginConfig(key, isAutoLoad);
                     AllowedPlugins[name] = pConfig;
+                  
+
                 }
+
+
             }
         }
 

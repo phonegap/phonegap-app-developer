@@ -74,10 +74,18 @@
 		if (colors.count != 2) {
 			return;
 		}
-		
-		_textView.textColor = [colors[0] color];
-		_backgroundView.backgroundColor = [colors[1] color];
+        
+        [self performSelectorOnMainThread:@selector(changeColors:) withObject:colors waitUntilDone:NO];
 	}];
+}
+
+- (void) changeColors:(NSArray *)newColors {
+    if (![newColors isKindOfClass:[NSArray class]]) {
+        return;
+    }
+    
+    _textView.textColor = [newColors[0] color];
+    _backgroundView.backgroundColor = [newColors[1] color];
 }
 
 - (void) sendLocationTrack:(CLLocation *)location {

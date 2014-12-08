@@ -68,3 +68,27 @@
 * CB-6798 Add license
 * CB-6491 add CONTRIBUTING.md
 * FFOS added to supported platforms
+
+### 0.2.9 (Aug 06, 2014)
+* [FFOS] update accelerometer.js
+* CB-6127 Updated translations for docs
+* FFOS added to supported platforms
+
+
+
+### 0.2.10 (Sep 17, 2014)
+* CB-7471 cordova-plugin-device-motion documentation translation: cordova-plugin-device-motion
+* Updated doc for browser
+* Added support for the browser
+* CB-7249 cordova-plugin-device-motion documentation translation
+* [CB-7313] minor tweak to documentation of watchAcceleration function parameters
+* CB-7160 move to tests dir, add nested plugin.xml
+* Removed js-module for tests from plugin.xml
+* CB-7160 added manual tests
+* added documentation for manual tests
+* Removed js-module for tests from plugin.xml
+* CB-7160 added manual tests
+* Changing cdvtest format to use module exports
+* register tests using new style
+* update
+* Feature Branch: First attempt at new-style-tests

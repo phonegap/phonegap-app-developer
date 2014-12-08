@@ -34,6 +34,7 @@ var IABExecs = {
         if (browserWrap) {
             browserWrap.parentNode.removeChild(browserWrap);
             browserWrap = null;
+            if (typeof(win) == "function") win({type:'exit'});
         }
     },
 
@@ -71,6 +72,7 @@ var IABExecs = {
         function updateIframeSizeNoLocation() {
             browserWrap.style.width = window.innerWidth + 'px';
             browserWrap.style.height = window.innerHeight + 'px';
+            browserWrap.style.zIndex = '999999999';
             browserWrap.browser.style.height = (window.innerHeight - 60) + 'px';
             browserWrap.browser.style.width = browserWrap.style.width;
         }
@@ -91,7 +93,8 @@ var IABExecs = {
             browserWrap.browser = browserElem;
 
             browserWrap.classList.add('inAppBrowserWrap');
-            browserWrap.style.position = 'absolute';
+            // position fixed so that it works even when page is scrolled
+            browserWrap.style.position = 'fixed';
             browserElem.style.position = 'absolute';
             browserElem.style.border = 0;
             browserElem.style.top = '60px';
@@ -135,7 +138,7 @@ var IABExecs = {
 
             close.addEventListener('click', function () {
                 setTimeout(function () {
-                    IABExecs.close();
+                    IABExecs.close(win, lose);
                 }, 0);
             }, false);
 
@@ -154,6 +157,23 @@ var IABExecs = {
             browserWrap.appendChild(menu);
             browserWrap.appendChild(browserElem);
             document.body.appendChild(browserWrap);
+
+            //we use mozbrowserlocationchange instead of mozbrowserloadstart to get the url
+            browserElem.addEventListener('mozbrowserlocationchange', function(e){
+                win({
+                    type:'loadstart',
+                    url : e.detail
+                })
+            }, false);
+            browserElem.addEventListener('mozbrowserloadend', function(e){
+                win({type:'loadstop'})
+            }, false);
+            browserElem.addEventListener('mozbrowsererror', function(e){
+                win({type:'loaderror'})
+            }, false);
+            browserElem.addEventListener('mozbrowserclose', function(e){
+                win({type:'exit'})
+            }, false);
         } else {
             window.location = strUrl;
         }
@@ -168,4 +188,4 @@ var IABExecs = {
 
 module.exports = IABExecs;
 
-require('cordova/firefoxos/commandProxy').add('InAppBrowser', module.exports);
+require('cordova/exec/proxy').add('InAppBrowser', module.exports);

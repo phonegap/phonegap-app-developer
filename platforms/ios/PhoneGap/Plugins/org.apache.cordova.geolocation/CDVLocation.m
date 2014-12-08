@@ -31,12 +31,6 @@
 #pragma mark -
 #pragma mark Categories
 
-@interface CLHeading (JSONMethods)
-
-- (NSString*)JSONRepresentation;
-
-@end
-
 @implementation CDVLocationData
 
 @synthesize locationStatus, locationInfo, locationCallbacks, watchCallbacks;
@@ -79,6 +73,11 @@
 
     if (authorizationStatusClassPropertyAvailable) {
         NSUInteger authStatus = [CLLocationManager authorizationStatus];
+#ifdef __IPHONE_8_0
+        if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {  //iOS 8.0+
+            return (authStatus == kCLAuthorizationStatusAuthorizedWhenInUse) || (authStatus == kCLAuthorizationStatusAuthorizedAlways) || (authStatus == kCLAuthorizationStatusNotDetermined);
+        }
+#endif
         return (authStatus == kCLAuthorizationStatusAuthorized) || (authStatus == kCLAuthorizationStatusNotDetermined);
     }
 
@@ -124,6 +123,21 @@
         return;
     }
 
+#ifdef __IPHONE_8_0
+    NSUInteger code = [CLLocationManager authorizationStatus];
+    if (code == kCLAuthorizationStatusNotDetermined && ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)] || [self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])) { //iOS8+
+        __highAccuracyEnabled = enableHighAccuracy;
+        if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationAlwaysUsageDescription"]){
+            [self.locationManager requestAlwaysAuthorization];
+        } else if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"NSLocationWhenInUseUsageDescription"]) {
+            [self.locationManager  requestWhenInUseAuthorization];
+        } else {
+            NSLog(@"[Warning] No NSLocationAlwaysUsageDescription or NSLocationWhenInUseUsageDescription key is defined in the Info.plist file.");
+        }
+        return;
+    }
+#endif
+    
     // Tell the location manager to start notifying us of location updates. We
     // first stop, and then start the updating to ensure we get at least one
     // update, even if our location did not change.
@@ -132,8 +146,9 @@
     __locationStarted = YES;
     if (enableHighAccuracy) {
         __highAccuracyEnabled = YES;
-        // Set to distance filter to "none" - which should be the minimum for best results.
-        self.locationManager.distanceFilter = kCLDistanceFilterNone;
+        // Set distance filter to 5 for a high accuracy. Setting it to "kCLDistanceFilterNone" could provide a
+        // higher accuracy, but it's also just spamming the callback with useless reports which drain the battery.
+        self.locationManager.distanceFilter = 5;
         // Set desired accuracy to Best.
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     } else {
@@ -252,6 +267,9 @@
 
     if (self.locationData && self.locationData.watchCallbacks && [self.locationData.watchCallbacks objectForKey:timerId]) {
         [self.locationData.watchCallbacks removeObjectForKey:timerId];
+        if([self.locationData.watchCallbacks count] == 0) {
+            [self _stopLocation];
+        }
     }
 }
 
@@ -327,6 +345,14 @@
 
     [self.locationManager stopUpdatingLocation];
     __locationStarted = NO;
+}
+
+//iOS8+
+-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if(!__locationStarted){
+        [self startLocation:__highAccuracyEnabled];
+    }
 }
 
 - (void)dealloc

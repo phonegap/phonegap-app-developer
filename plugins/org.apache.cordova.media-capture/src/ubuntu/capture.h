@@ -43,13 +43,13 @@ public:
     }
 
 public slots:
-    void captureAudio(int scId, int ecId, QVariantMap options);
-    void captureImage(int scId, int ecId, QVariantMap options);
-    void captureVideo(int scId, int ecId, QVariantMap options);
+    void captureAudio(int scId, int ecId, const QVariantMap &);
+    void captureImage(int scId, int ecId, const QVariantMap &);
+    void captureVideo(int scId, int ecId, const QVariantMap &);
 
     void recordAudio();
     void cancel();
-    void onVideoRecordEnd(QString path);
+    void onVideoRecordEnd(const QString &uri);
     void onImageSaved(const QString &path);
 
     QString generateLocation(const QString &extension) {

@@ -20,7 +20,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
            id="org.apache.cordova.inappbrowser"
-      version="0.5.0">
+      version="0.5.3">
 
     <name>InAppBrowser</name>
     <description>Cordova InAppBrowser Plugin</description>
@@ -32,7 +32,7 @@
     <engines>
       <engine name="cordova" version=">=3.1.0" /><!-- Needs cordova/urlutil -->
     </engines>
-    
+
     <!-- android -->
     <platform name="android">
         <js-module src="www/inappbrowser.js" name="inappbrowser">
@@ -65,7 +65,7 @@
         <resource-file src="src/android/res/drawable-xxhdpi/ic_action_remove.png" target="res/drawable-xxhdpi/ic_action_remove.png" />
 
     </platform>
-    
+
     <!-- amazon-fireos -->
     <platform name="amazon-fireos">
         <js-module src="www/inappbrowser.js" name="inappbrowser">
@@ -78,9 +78,26 @@
         </config-file>
 
         <source-file src="src/amazon/InAppBrowser.java" target-dir="src/org/apache/cordova/inappbrowser" />
+        <source-file src="src/android/InAppBrowserDialog.java" target-dir="src/org/apache/cordova/inappbrowser" />
         <source-file src="src/amazon/InAppChromeClient.java" target-dir="src/org/apache/cordova/inappbrowser" />
+        
+        <!--  drawable src/android/resources -->
+        <resource-file src="src/android/res/drawable-hdpi/ic_action_next_item.png" target="res/drawable-hdpi/ic_action_next_item.png" />
+        <resource-file src="src/android/res/drawable-mdpi/ic_action_next_item.png" target="res/drawable-mdpi/ic_action_next_item.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/ic_action_next_item.png" target="res/drawable-xhdpi/ic_action_next_item.png" />
+        <resource-file src="src/android/res/drawable-xxhdpi/ic_action_next_item.png" target="res/drawable-xxhdpi/ic_action_next_item.png" />
+        
+        <resource-file src="src/android/res/drawable-hdpi/ic_action_previous_item.png" target="res/drawable-hdpi/ic_action_previous_item.png" />
+        <resource-file src="src/android/res/drawable-mdpi/ic_action_previous_item.png" target="res/drawable-mdpi/ic_action_previous_item.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/ic_action_previous_item.png" target="res/drawable-xhdpi/ic_action_previous_item.png" />
+        <resource-file src="src/android/res/drawable-xxhdpi/ic_action_previous_item.png" target="res/drawable-xxhdpi/ic_action_previous_item.png" />
+        
+        <resource-file src="src/android/res/drawable-hdpi/ic_action_remove.png" target="res/drawable-hdpi/ic_action_remove.png" />
+        <resource-file src="src/android/res/drawable-mdpi/ic_action_remove.png" target="res/drawable-mdpi/ic_action_remove.png" />
+        <resource-file src="src/android/res/drawable-xhdpi/ic_action_remove.png" target="res/drawable-xhdpi/ic_action_remove.png" />
+        <resource-file src="src/android/res/drawable-xxhdpi/ic_action_remove.png" target="res/drawable-xxhdpi/ic_action_remove.png" />
     </platform>
-
+    
     <!-- ubuntu -->
     <platform name="ubuntu">
         <js-module src="www/inappbrowser.js" name="inappbrowser">
@@ -162,11 +179,21 @@
             <merges target="" />
         </js-module>
     </platform>
-        
+
+    <!-- windows universal apps (Windows 8.1, Windows Phone 8.1, Windows 8.0) -->
+    <platform name="windows">
+        <js-module src="www/inappbrowser.js" name="inappbrowser">
+            <clobbers target="window.open" />
+        </js-module>
+        <js-module src="src/windows/InAppBrowserProxy.js" name="InAppBrowserProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
+  
     <!-- firefoxos -->
     <platform name="firefoxos">
         <config-file target="config.xml" parent="/*">
-            <permission name="browser" description="Enables the app to implement a browser in an iframe." />
+            <permission name="browser" description="Enables the app to implement a browser in an iframe." privileged="true"/>
         </config-file>
         <js-module src="www/inappbrowser.js" name="inappbrowser">
             <clobbers target="window.open" />
@@ -174,6 +201,6 @@
         <js-module src="src/firefoxos/InAppBrowserProxy.js" name="InAppBrowserProxy">
             <merges target="" />
         </js-module>
-    </platform>    
+    </platform>
 
 </plugin>

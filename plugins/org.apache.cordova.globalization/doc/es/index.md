@@ -62,6 +62,8 @@ Si hay un error al obtener el idioma, entonces el `errorCallback` se ejecuta con
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -101,6 +103,8 @@ Si hay un error al obtener la configuración regional, entonces el `errorCallbac
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -150,6 +154,8 @@ El `options.selector` puede ser `date` , `time` o`date and time`.
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -168,6 +174,11 @@ Si el navegador está configurado la `en_US` local, muestra un cuadro de diálog
 ### Windows Phone 8 rarezas
 
 *   El `formatLength` los soportes de la opción `short` y `full` los valores.
+
+### Firefox OS rarezas
+
+*   `formatLength`No es distinguir `long` y`full` 
+*   Sólo un método de visualización de fecha (no `long` o `full` versión)
 
 ## navigator.globalization.getCurrencyPattern
 
@@ -202,6 +213,7 @@ Si hay un error obteniendo el patrón, entonces el `errorCallback` se ejecuta co
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
 *   iOS
 
 ### Ejemplo
@@ -258,6 +270,8 @@ El valor de `options.item` puede ser `months` o`days`.
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -275,6 +289,10 @@ Cuando el navegador se establece en el `en_US` local, este ejemplo muestra una s
         { type: 'wide', item: 'months' }
     );
     
+
+### Firefox OS rarezas
+
+*   `options.type`apoya un `genitive` valor, importante para algunos idiomas
 
 ## navigator.globalization.getDatePattern
 
@@ -309,6 +327,7 @@ time`.
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -352,6 +371,8 @@ Si hay un error obteniendo el patrón, entonces el `errorCallback` se ejecuta co
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -405,6 +426,7 @@ El `options.type` puede ser `decimal` , `percent` , o`currency`.
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -463,6 +485,8 @@ Si hay un error de lectura de la fecha, entonces el `errorCallback` se ejecuta. 
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -501,6 +525,7 @@ El `options.type` puede ser 'decimal', '%' o 'moneda'.
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -557,6 +582,8 @@ Si hay un error al analizar la cadena de fecha, entonces el `errorCallback` se e
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -602,6 +629,7 @@ El `options.type` puede ser `decimal` , `percent` , o`currency`.
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -638,6 +666,8 @@ Este objeto es creado y poblada por Córdoba y regresó a una devolución de lla
 
 *   Amazon fuego OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 
 ### Ejemplo

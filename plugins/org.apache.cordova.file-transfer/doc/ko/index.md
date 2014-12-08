@@ -30,12 +30,18 @@
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
-*   블랙베리 10 *
+*   블랙베리 10
+*   파이어 폭스 OS * *
 *   iOS
 *   Windows Phone 7과 8 *
-*   윈도우 8 *
+*   윈도우 8 \* * *|
+*   윈도 즈 \* * *|
 
 * *를 지원 하지 않는 `onprogress` 도 `abort()` *
+
+* * *를 지원 하지 않는 `onprogress` *
+
+부분적인 지원 `onprogress` 업로드 방법. `onprogress` Windows limitations_로 인해 빈 진행률 이벤트 호출
 
 # FileTransfer
 
@@ -65,8 +71,6 @@
 
 *   **errorCallback**: 콜백 검색에 오류가 발생 하면 실행 되는 `Metadata` . 로 호출을 `FileTransferError` 개체. *(기능)*
 
-*   **trustAllHosts**: 선택적 매개 변수는 기본적으로 `false` . 만약 설정 `true` , 그것은 모든 보안 인증서를 허용 합니다. 이 안 드 로이드 자체 서명 된 보안 인증서를 거부 하기 때문에 유용 합니다. 프로덕션 환경에서 사용 권장 되지 않습니다. 안 드 로이드와 iOS에서 지원. *(부울)*
-
 *   **옵션**: 선택적 매개 변수 *(개체)*. 유효한 키:
     
     *   **fileKey**: form 요소의 이름. 기본값은 `file` . (DOMString)
@@ -75,6 +79,8 @@
     *   **params**: HTTP 요청에 전달할 선택적 키/값 쌍의 집합. (개체)
     *   **chunkedMode**: 청크 스트리밍 모드에서 데이터 업로드를 합니다. 기본값은 `true` . (부울)
     *   **헤더**: 헤더 이름/헤더 값의 지도. 배열을 사용 하 여 하나 이상의 값을 지정 합니다. (개체)
+
+*   **trustAllHosts**: 선택적 매개 변수는 기본적으로 `false` . 만약 설정 `true` , 그것은 모든 보안 인증서를 허용 합니다. 이 안 드 로이드 자체 서명 된 보안 인증서를 거부 하기 때문에 유용 합니다. 프로덕션 환경에서 사용 권장 되지 않습니다. 안 드 로이드와 iOS에서 지원. *(부울)*
 
 ### 예를 들어
 
@@ -192,7 +198,7 @@ A `FileUploadResult` 개체의 성공 콜백에 전달 되는 `FileTransfer` 개
         uri,
         fileURL,
         function(entry) {
-            console.log("download complete: " + entry.fullPath);
+            console.log("download complete: " + entry.toURL());
         },
         function(error) {
             console.log("download error source " + error.source);
@@ -252,12 +258,15 @@ A `FileTransferError` 오류가 발생 하면 오류 콜백 개체 전달 됩니
 
 *   **http_status**: HTTP 상태 코드. 이 특성은 응답 코드를 HTTP 연결에서 수신에 사용할 수 있습니다. (수)
 
+*   **예외**: 어느 e.getMessage 또는 e.toString (문자열)
+
 ### 상수
 
-*   `FileTransferError.FILE_NOT_FOUND_ERR`
-*   `FileTransferError.INVALID_URL_ERR`
-*   `FileTransferError.CONNECTION_ERR`
-*   `FileTransferError.ABORT_ERR`
+*   1 = `FileTransferError.FILE_NOT_FOUND_ERR`
+*   2 = `FileTransferError.INVALID_URL_ERR`
+*   3 = `FileTransferError.CONNECTION_ERR`
+*   4 = `FileTransferError.ABORT_ERR`
+*   5 = `FileTransferError.NOT_MODIFIED_ERR`
 
 ## 이전 버전과 호환성 노트
 

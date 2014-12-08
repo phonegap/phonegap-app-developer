@@ -29,111 +29,114 @@ var Entry = require('./Entry'),
     FileSystem = require('./FileSystem'),
     LocalFileSystem = require('./LocalFileSystem');
 
+// Some private helper functions, hidden by the module
+function cordovaPathToNative(path) {
+    // turn / into \\
+    var cleanPath = path.replace(/\//g, '\\');
+    // turn  \\ into \
+    cleanPath = cleanPath.replace(/\\\\/g, '\\');
+    // strip end \\ characters
+    cleanPath = cleanPath.replace(/\\+$/g, '');
+    return cleanPath;
+};
+
+function nativePathToCordova(path) {
+    var cleanPath = path.replace(/\\/g, '/');
+    return cleanPath;
+};
+
+function getFilesystemFromPath(path) {
+    var storageFolderPermanent = Windows.Storage.ApplicationData.current.localFolder.path,
+        storageFolderTemporary = Windows.Storage.ApplicationData.current.temporaryFolder.path,
+        fs = null;
+
+    if (path.indexOf(storageFolderPermanent) === 0) {
+        fs = new FileSystem('persistent', { name: 'persistent', fullPath: storageFolderPermanent });
+    } else if (path.indexOf(storageFolderTemporary) === 0) {
+        fs = new FileSystem('temporary', { name: 'temporary', fullPath: storageFolderTemporary });
+    }
+    return fs;
+};
+
+var getFolderFromPathAsync = Windows.Storage.StorageFolder.getFolderFromPathAsync;
+var getFileFromPathAsync = Windows.Storage.StorageFile.getFileFromPathAsync;
+
+
 module.exports = {
 
-    getFileMetadata:function(win,fail,args) {
-        var fullPath = args[0];
-
-        Windows.Storage.StorageFile.getFileFromPathAsync(fullPath).done(
-            function (storageFile) {
-                storageFile.getBasicPropertiesAsync().then(
-                    function (basicProperties) {
-                        win(new File(storageFile.name, storageFile.path, storageFile.fileType, basicProperties.dateModified, basicProperties.size));
-                    }, function () {
-                        fail && fail(FileError.NOT_READABLE_ERR);
-                    }
-                );
-            }, function () {
-                fail && fail(FileError.NOT_FOUND_ERR);
-            }
-        );
+    getFileMetadata: function (success, fail, args) {
+        module.exports.getMetadata(success, fail, args);
     },
 
-    getMetadata:function(success,fail,args) {
-        var fullPath = args[0];
+    getMetadata: function (success, fail, args) {
 
-        var dealFile = function (sFile) {
-            Windows.Storage.StorageFile.getFileFromPathAsync(fullPath).then(
-                function (storageFile) {
-                    return storageFile.getBasicPropertiesAsync();
-                },
-                function () {
-                    fail && fail(FileError.NOT_READABLE_ERR);
-                }
-            // get the basic properties of the file.
-            ).then(
+        var fullPath = cordovaPathToNative(args[0]);
+
+        var getMetadataForFile = function (storageFile) {
+            storageFile.getBasicPropertiesAsync().then(
                 function (basicProperties) {
-                    success(basicProperties.dateModified);
-                },
-                function () {
-                    fail && fail(FileError.NOT_READABLE_ERR);
+                    success(new File(storageFile.name, storageFile.path, storageFile.fileType, basicProperties.dateModified, basicProperties.size));
+                }, function () {
+                    fail(FileError.NOT_READABLE_ERR);
                 }
             );
         };
 
-        var dealFolder = function (sFolder) {
-            Windows.Storage.StorageFolder.getFolderFromPathAsync(fullPath).then(
-                function (storageFolder) {
-                    return storageFolder.getBasicPropertiesAsync();
-                },
-                function () {
-                    fail && fail(FileError.NOT_READABLE_ERR);
-                }
-            // get the basic properties of the folder.
-            ).then(
+        var getMetadataForFolder = function (storageFolder) {
+            storageFolder.getBasicPropertiesAsync().then(
                 function (basicProperties) {
-                    success(basicProperties.dateModified);
+                    var metadata = {
+                        size: basicProperties.size,
+                        lastModifiedDate: basicProperties.dateModified
+                    };
+                    success(metadata);
                 },
                 function () {
-                    fail && fail(FileError.NOT_FOUND_ERR);
+                    fail(FileError.NOT_READABLE_ERR);
                 }
             );
         };
 
-        Windows.Storage.StorageFile.getFileFromPathAsync(fullPath).then(
-            // the path is file.
-            function (sFile) {
-                dealFile(sFile);
-            },
-            // the path is folder
+        getFileFromPathAsync(fullPath).then(getMetadataForFile,
             function () {
-                Windows.Storage.StorageFolder.getFolderFromPathAsync(fullPath).then(
-                    function (sFolder) {
-                        dealFolder(sFolder);
-                    }, function () {
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                getFolderFromPathAsync(fullPath).then(getMetadataForFolder,
+                    function () {
+                        fail(FileError.NOT_FOUND_ERR);
                     }
                 );
             }
         );
     },
 
-    getParent:function(win,fail,args) { // ["fullPath"]
-        var fullPath = args[0];
+    getParent: function (win, fail, args) { // ["fullPath"]
+
+        var fullPath = cordovaPathToNative(args[0]);
 
         var storageFolderPer = Windows.Storage.ApplicationData.current.localFolder;
         var storageFolderTem = Windows.Storage.ApplicationData.current.temporaryFolder;
 
         if (fullPath == storageFolderPer.path) {
-            win(new DirectoryEntry(storageFolderPer.name, storageFolderPer.path));
+            win(new DirectoryEntry(storageFolderPer.name, storageFolderPer.path, getFilesystemFromPath(storageFolderPer.path)));
             return;
         } else if (fullPath == storageFolderTem.path) {
-            win(new DirectoryEntry(storageFolderTem.name, storageFolderTem.path));
+            win(new DirectoryEntry(storageFolderTem.name, storageFolderTem.path, getFilesystemFromPath(storageFolderTem.path)));
             return;
         }
         var splitArr = fullPath.split(new RegExp(/\/|\\/g));
 
         var popItem = splitArr.pop();
 
-        var result = new DirectoryEntry(popItem, fullPath.substr(0, fullPath.length - popItem.length - 1));
-        Windows.Storage.StorageFolder.getFolderFromPathAsync(result.fullPath).done(
+        var resultPath = fullPath.substr(0, fullPath.length - popItem.length - 1);
+        var result = new DirectoryEntry(popItem, resultPath, getFilesystemFromPath(resultPath));
+        getFolderFromPathAsync(result.fullPath).done(
             function () { win(result); },
-            function () { fail && fail(FileError.INVALID_STATE_ERR); }
+            function () { fail(FileError.INVALID_STATE_ERR); }
         );
     },
 
-    readAsText:function(win,fail,args) {
-        var fileName = args[0],
+    readAsText: function (win, fail, args) {
+
+        var fileName = cordovaPathToNative(args[0]),
             enc = args[1],
             startPos = args[2],
             endPos = args[3];
@@ -145,7 +148,7 @@ module.exports = {
             encoding = Windows.Storage.Streams.UnicodeEncoding.utf16BE;
         }
 
-        Windows.Storage.StorageFile.getFileFromPathAsync(fileName).then(function(file) {
+        getFileFromPathAsync(fileName).then(function(file) {
                 return file.openReadAsync();
             }).then(function (stream) {
                 startPos = (startPos < 0) ? Math.max(stream.size + startPos, 0) : Math.min(stream.size, startPos);
@@ -159,15 +162,88 @@ module.exports = {
             }).done(function(buffer) {
                 win(Windows.Security.Cryptography.CryptographicBuffer.convertBinaryToString(encoding, buffer));
             },function() {
-                fail && fail(FileError.NOT_FOUND_ERR);
+                fail(FileError.NOT_FOUND_ERR);
             });
     },
 
-    readAsDataURL:function(win,fail,args) {
-        var fileName = args[0];
+    readAsBinaryString:function(win,fail,args) {
+        var fileName = cordovaPathToNative(args[0]),
+            startPos = args[1],
+            endPos = args[2];
 
 
-        Windows.Storage.StorageFile.getFileFromPathAsync(fileName).then(
+        getFileFromPathAsync(fileName).then(
+            function (storageFile) {
+                Windows.Storage.FileIO.readBufferAsync(storageFile).done(
+                    function (buffer) {
+                        var dataReader = Windows.Storage.Streams.DataReader.fromBuffer(buffer);
+                        // var fileContent = dataReader.readString(buffer.length);
+                        var byteArray = new Uint8Array(buffer.length),
+                            byteString = "";
+                        dataReader.readBytes(byteArray);
+                        dataReader.close();
+                        for (var i = 0; i < byteArray.length; i++) {
+                            var charByte = byteArray[i];
+                            // var charRepresentation = charByte <= 127 ? String.fromCharCode(charByte) : charByte.toString(16);
+                            var charRepresentation = String.fromCharCode(charByte);
+                            byteString += charRepresentation;
+                        }
+                        win(byteString.slice(startPos, endPos));
+                    }
+                );
+            }, function () {
+                fail(FileError.NOT_FOUND_ERR);
+            }
+        );
+    },
+
+    readAsArrayBuffer:function(win,fail,args) {
+        var fileName =cordovaPathToNative(args[0]);
+
+        getFileFromPathAsync(fileName).then(
+            function (storageFile) {
+                var blob = MSApp.createFileFromStorageFile(storageFile);
+                var url = URL.createObjectURL(blob, { oneTimeOnly: true });
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", url, true);
+                xhr.responseType = 'arraybuffer';
+                xhr.onload = function () {
+                    var resultArrayBuffer = xhr.response;
+                    // get start and end position of bytes in buffer to be returned
+                    var startPos = args[1] || 0,
+                        endPos = args[2] || resultArrayBuffer.length;
+                    // if any of them is specified, we'll slice output array
+                    if (startPos !== 0 || endPos !== resultArrayBuffer.length) {
+                        // slice method supported only on Windows 8.1, so we need to check if it's available 
+                        // see http://msdn.microsoft.com/en-us/library/ie/dn641192(v=vs.94).aspx
+                        if (resultArrayBuffer.slice) {
+                            resultArrayBuffer = resultArrayBuffer.slice(startPos, endPos);
+                        } else {
+                            // if slice isn't available, we'll use workaround method
+                            var tempArray = new Uint8Array(resultArrayBuffer),
+                                resBuffer = new ArrayBuffer(endPos - startPos),
+                                resArray = new Uint8Array(resBuffer);
+
+                            for (var i = 0; i < resArray.length; i++) {
+                                resArray[i] = tempArray[i + startPos];
+                            }
+                            resultArrayBuffer = resBuffer;
+                        }
+                    }
+                    win(resultArrayBuffer);
+                };
+                xhr.send();
+            }, function () {
+                fail(FileError.NOT_FOUND_ERR);
+            }
+        );
+    },
+
+    readAsDataURL: function (win, fail, args) {
+
+        var fileName = cordovaPathToNative(args[0]);
+
+        getFileFromPathAsync(fileName).then(
             function (storageFile) {
                 Windows.Storage.FileIO.readBufferAsync(storageFile).done(
                     function (buffer) {
@@ -182,102 +258,100 @@ module.exports = {
                     }
                 );
             }, function () {
-                fail && fail(FileError.NOT_FOUND_ERR);
+                fail(FileError.NOT_FOUND_ERR);
             }
         );
     },
 
-    getDirectory:function(win,fail,args) {
-        var fullPath = args[0];
-        var path = args[1];
+    getDirectory: function (win, fail, args) {
+
+        var fullPath = cordovaPathToNative(args[0]);
+        var path = cordovaPathToNative(args[1]);
         var options = args[2];
 
         var flag = "";
-        if (options !== null) {
+        if (options) {
             flag = new Flags(options.create, options.exclusive);
         } else {
             flag = new Flags(false, false);
         }
 
-        if (path !== null) {
-            path = path.replace("/", "\\");
-        }
-
-        Windows.Storage.StorageFolder.getFolderFromPathAsync(fullPath).then(
+        getFolderFromPathAsync(fullPath).then(
             function (storageFolder) {
                 if (flag.create === true && flag.exclusive === true) {
                     storageFolder.createFolderAsync(path, Windows.Storage.CreationCollisionOption.failIfExists).done(
                         function (storageFolder) {
-                            win(new DirectoryEntry(storageFolder.name, storageFolder.path));
+                            win(new DirectoryEntry(storageFolder.name, storageFolder.path, getFilesystemFromPath(storageFolder.path)));
                         }, function () {
-                            fail && fail(FileError.PATH_EXISTS_ERR);
+                            fail(FileError.PATH_EXISTS_ERR);
                         }
                     );
                 } else if (flag.create === true && flag.exclusive === false) {
                     storageFolder.createFolderAsync(path, Windows.Storage.CreationCollisionOption.openIfExists).done(
                         function (storageFolder) {
-                            win(new DirectoryEntry(storageFolder.name, storageFolder.path));
+                            win(new DirectoryEntry(storageFolder.name, storageFolder.path + "/", getFilesystemFromPath(storageFolder.path + "/")));
                         }, function () {
-                            fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                            fail(FileError.INVALID_MODIFICATION_ERR);
                         }
                     );
                 } else if (flag.create === false) {
                     if (/\?|\\|\*|\||\"|<|>|\:|\//g.test(path)) {
-                        fail && fail(FileError.ENCODING_ERR);
+                        fail(FileError.ENCODING_ERR);
                         return;
                     }
 
                     storageFolder.getFolderAsync(path).done(
                         function (storageFolder) {
-                            win(new DirectoryEntry(storageFolder.name, storageFolder.path));
+                            win(new DirectoryEntry(storageFolder.name, storageFolder.path, getFilesystemFromPath(storageFolder.path)));
                         }, function () {
                             // check if path actually points to a file
                             storageFolder.getFileAsync(path).done(
                                 function () {
-                                    fail && fail(FileError.TYPE_MISMATCH_ERR);
+                                    fail(FileError.TYPE_MISMATCH_ERR);
                                 }, function() {
-                                    fail && fail(FileError.NOT_FOUND_ERR);
+                                    fail(FileError.NOT_FOUND_ERR);
                                 });
                         }
                     );
                 }
             }, function () {
-                fail && fail(FileError.NOT_FOUND_ERR);
+                fail(FileError.NOT_FOUND_ERR);
             }
         );
     },
 
-    remove:function(win,fail,args) {
-        var fullPath = args[0];
+    remove: function (win, fail, args) {
 
-        Windows.Storage.StorageFile.getFileFromPathAsync(fullPath).then(
+        var fullPath = cordovaPathToNative(args[0]);
+
+        getFileFromPathAsync(fullPath).then(
             function (sFile) {
-                Windows.Storage.StorageFile.getFileFromPathAsync(fullPath).done(function (storageFile) {
+                getFileFromPathAsync(fullPath).done(function (storageFile) {
                     storageFile.deleteAsync().done(win, function () {
-                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                        fail(FileError.INVALID_MODIFICATION_ERR);
 
                     });
                 });
             },
             function () {
-                Windows.Storage.StorageFolder.getFolderFromPathAsync(fullPath).then(
+                getFolderFromPathAsync(fullPath).then(
                     function (sFolder) {
                         var removeEntry = function () {
                             var storageFolderTop = null;
 
-                            Windows.Storage.StorageFolder.getFolderFromPathAsync(fullPath).then(
+                            getFolderFromPathAsync(fullPath).then(
                                 function (storageFolder) {
                                     // FileSystem root can't be removed!
                                     var storageFolderPer = Windows.Storage.ApplicationData.current.localFolder;
                                     var storageFolderTem = Windows.Storage.ApplicationData.current.temporaryFolder;
                                     if (fullPath == storageFolderPer.path || fullPath == storageFolderTem.path) {
-                                        fail && fail(FileError.NO_MODIFICATION_ALLOWED_ERR);
+                                        fail(FileError.NO_MODIFICATION_ALLOWED_ERR);
                                         return;
                                     }
                                     storageFolderTop = storageFolder;
                                     return storageFolder.createFileQuery().getFilesAsync();
                                 }, function () {
-                                    fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                    fail(FileError.INVALID_MODIFICATION_ERR);
 
                                 }
                             // check sub-files.
@@ -286,7 +360,7 @@ module.exports = {
                                     if (fileList.length === 0) {
                                         return storageFolderTop.createFolderQuery().getFoldersAsync();
                                     } else {
-                                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                        fail(FileError.INVALID_MODIFICATION_ERR);
                                     }
                                 }
                             // check sub-folders.
@@ -294,11 +368,11 @@ module.exports = {
                                 if (folderList) {
                                     if (folderList.length === 0) {
                                         storageFolderTop.deleteAsync().done(win, function () {
-                                            fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                            fail(FileError.INVALID_MODIFICATION_ERR);
 
                                         });
                                     } else {
-                                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                        fail(FileError.INVALID_MODIFICATION_ERR);
                                     }
                                 }
 
@@ -306,88 +380,51 @@ module.exports = {
                         };
                         removeEntry();
                     }, function () {
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                        fail(FileError.NOT_FOUND_ERR);
                     }
                 );
             }
         );
     },
 
-    removeRecursively:function(successCallback,fail,args) {
-        var fullPath = args[0];
+    removeRecursively: function (successCallback, fail, args) {
 
-        Windows.Storage.StorageFolder.getFolderFromPathAsync(fullPath).done(function (storageFolder) {
-        var storageFolderPer = Windows.Storage.ApplicationData.current.localFolder;
-        var storageFolderTem = Windows.Storage.ApplicationData.current.temporaryFolder;
+        var fullPath = cordovaPathToNative(args[0]);
 
-        if (storageFolder.path == storageFolderPer.path || storageFolder.path == storageFolderTem.path) {
-            fail && fail(FileError.NO_MODIFICATION_ALLOWED_ERR);
-            return;
-        }
+        getFolderFromPathAsync(fullPath).done(function (storageFolder) {
+            var storageFolderPer = Windows.Storage.ApplicationData.current.localFolder;
+            var storageFolderTem = Windows.Storage.ApplicationData.current.temporaryFolder;
 
-        var removeFolders = function (path) {
-            return new WinJS.Promise(function (complete) {
-                var filePromiseArr = [];
-                var storageFolderTop = null;
-                Windows.Storage.StorageFolder.getFolderFromPathAsync(path).then(
-                    function (storageFolder) {
-                        var fileListPromise = storageFolder.createFileQuery().getFilesAsync();
+            if (storageFolder.path == storageFolderPer.path || storageFolder.path == storageFolderTem.path) {
+                fail(FileError.NO_MODIFICATION_ALLOWED_ERR);
+                return;
+            }
 
-                        storageFolderTop = storageFolder;
-                        return fileListPromise;
-                    }
-                // remove all the files directly under the folder.
-                ).then(function (fileList) {
-                    if (fileList !== null) {
-                        for (var i = 0; i < fileList.length; i++) {
-                            var filePromise = fileList[i].deleteAsync();
-                            filePromiseArr.push(filePromise);
-                        }
-                    }
-                    WinJS.Promise.join(filePromiseArr).then(function () {
-                        var folderListPromise = storageFolderTop.createFolderQuery().getFoldersAsync();
-                        return folderListPromise;
-                    // remove empty folders.
-                    }).then(function (folderList) {
-                        var folderPromiseArr = [];
-                        if (folderList.length !== 0) {
-                            for (var j = 0; j < folderList.length; j++) {
-
-                                folderPromiseArr.push(removeFolders(folderList[j].path));
-                            }
-                            WinJS.Promise.join(folderPromiseArr).then(function () {
-                                storageFolderTop.deleteAsync().then(complete);
-                            });
-                        } else {
-                            storageFolderTop.deleteAsync().then(complete);
-                        }
-                    }, function () { });
-                }, function () { });
+            storageFolder.deleteAsync().done(function (res) {
+                successCallback(res);
+            }, function (err) {
+                fail(err);
             });
-        };
-        removeFolders(storageFolder.path).then(function () {
-            Windows.Storage.StorageFolder.getFolderFromPathAsync(storageFolder.path).then(
-                function () {},
-                function () {
-                    if (typeof successCallback !== 'undefined' && successCallback !== null) { successCallback(); }
-                });
-            });
+
+        }, function () {
+            fail(FileError.FILE_NOT_FOUND_ERR);
         });
     },
 
-    getFile:function(win,fail,args) {
-		//not sure why, but it won't work with normal slashes...
-		var fullPath = args[0].replace(/\//g, '\\');
-        var path = args[1].replace(/\//g, '\\');
+    getFile: function (win, fail, args) {
+
+        //not sure why, but it won't work with normal slashes...
+        var fullPath = cordovaPathToNative(args[0]);
+        var path = cordovaPathToNative(args[1]);
         var options = args[2];
 
         var completePath = fullPath + '\\' + path;
-		//handles trailing slash and leading slash, or just one or the other
+        //handles trailing slash and leading slash, or just one or the other
         completePath = completePath.replace(/\\\\\\/g, '/').replace(/\\\\/g, '\\');
 
         var fileName = completePath.substring(completePath.lastIndexOf('\\'));
-		
-		//final adjustment
+        
+        //final adjustment
         fullPath = completePath.substring(0, completePath.lastIndexOf('\\'));
         path = fileName.replace(/\\/g, '');
 
@@ -398,68 +435,69 @@ module.exports = {
             flag = new Flags(false, false);
         }
 
-        Windows.Storage.StorageFolder.getFolderFromPathAsync(fullPath).then(
+        getFolderFromPathAsync(fullPath).then(
             function (storageFolder) {
                 if (flag.create === true && flag.exclusive === true) {
                     storageFolder.createFileAsync(path, Windows.Storage.CreationCollisionOption.failIfExists).done(
                         function (storageFile) {
-                            win(new FileEntry(storageFile.name, storageFile.path));
+                            win(new FileEntry(storageFile.name, nativePathToCordova(storageFile.path), getFilesystemFromPath(storageFile.path)));
                         }, function () {
-                            fail && fail(FileError.PATH_EXISTS_ERR);
+                            fail(FileError.PATH_EXISTS_ERR);
                         }
                     );
                 } else if (flag.create === true && flag.exclusive === false) {
                     storageFolder.createFileAsync(path, Windows.Storage.CreationCollisionOption.openIfExists).done(
                         function (storageFile) {
-                            win(new FileEntry(storageFile.name, storageFile.path));
+                            win(new FileEntry(storageFile.name, nativePathToCordova(storageFile.path), getFilesystemFromPath(storageFile.path)));
                         }, function () {
-                            fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                            fail(FileError.INVALID_MODIFICATION_ERR);
                         }
                     );
                 } else if (flag.create === false) {
                     if (/\?|\\|\*|\||\"|<|>|\:|\//g.test(path)) {
-                        fail && fail(FileError.ENCODING_ERR);
+                        fail(FileError.ENCODING_ERR);
                         return;
                     }
                     storageFolder.getFileAsync(path).done(
                         function (storageFile) {
-                            win(new FileEntry(storageFile.name, storageFile.path));
+                            win(new FileEntry(storageFile.name, nativePathToCordova(storageFile.path), getFilesystemFromPath(storageFile.path)));
                         }, function () {
                             // check if path actually points to a folder
                             storageFolder.getFolderAsync(path).done(
                                 function () {
-                                    fail && fail(FileError.TYPE_MISMATCH_ERR);
+                                    fail(FileError.TYPE_MISMATCH_ERR);
                                 }, function () {
-                                    fail && fail(FileError.NOT_FOUND_ERR);
+                                    fail(FileError.NOT_FOUND_ERR);
                                 });
                         }
                     );
                 }
             }, function () {
-                fail && fail(FileError.NOT_FOUND_ERR);
+                fail(FileError.NOT_FOUND_ERR);
             }
         );
     },
 
-    readEntries:function(win,fail,args) { // ["fullPath"]
-        var path = args[0];
+    readEntries: function (win, fail, args) { // ["fullPath"]
+
+        var path = cordovaPathToNative(args[0]);
 
         var result = [];
 
-        Windows.Storage.StorageFolder.getFolderFromPathAsync(path).then(function (storageFolder) {
+        getFolderFromPathAsync(path).then(function (storageFolder) {
             var promiseArr = [];
             var index = 0;
             promiseArr[index++] = storageFolder.createFileQuery().getFilesAsync().then(function (fileList) {
                 if (fileList !== null) {
                     for (var i = 0; i < fileList.length; i++) {
-                        result.push(new FileEntry(fileList[i].name, fileList[i].path));
+                        result.push(new FileEntry(fileList[i].name, fileList[i].path, getFilesystemFromPath (fileList[i].path)));
                     }
                 }
             });
             promiseArr[index++] = storageFolder.createFolderQuery().getFoldersAsync().then(function (folderList) {
                 if (folderList !== null) {
                     for (var j = 0; j < folderList.length; j++) {
-                        result.push(new DirectoryEntry(folderList[j].name, folderList[j].path));
+                        result.push(new DirectoryEntry(folderList[j].name, folderList[j].path, getFilesystemFromPath(folderList[j].path)));
                     }
                 }
             });
@@ -467,11 +505,12 @@ module.exports = {
                 win(result);
             });
 
-        }, function () { fail && fail(FileError.NOT_FOUND_ERR); });
+        }, function () { fail(FileError.NOT_FOUND_ERR); });
     },
 
-    write:function(win,fail,args) {
-        var fileName = args[0],
+    write: function (win, fail, args) {
+
+        var fileName = cordovaPathToNative(args[0]),
             data = args[1],
             position = args[2],
             isBinary = args[3];
@@ -491,7 +530,7 @@ module.exports = {
             file = fileName.split('\\').pop();
         
 
-        Windows.Storage.StorageFolder.getFolderFromPathAsync(path).done(
+        getFolderFromPathAsync(path).done(
             function(storageFolder) {
                 storageFolder.createFileAsync(file, Windows.Storage.CreationCollisionOption.openIfExists).done(
                     function(storageFile) {
@@ -499,23 +538,24 @@ module.exports = {
                             done(function () {
                                 win(data.length);
                             }, function () {
-                                fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                fail(FileError.INVALID_MODIFICATION_ERR);
                             });
                     }, function() {
-                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                        fail(FileError.INVALID_MODIFICATION_ERR);
                     }
                 );
                 
             }, function() {
-                fail && fail(FileError.NOT_FOUND_ERR);
+                fail(FileError.NOT_FOUND_ERR);
             });
     },
 
-    truncate:function(win,fail,args) { // ["fileName","size"]
-        var fileName = args[0];
+    truncate: function (win, fail, args) { // ["fileName","size"]
+
+        var fileName = cordovaPathToNative(args[0]);
         var size = args[1];
 
-        Windows.Storage.StorageFile.getFileFromPathAsync(fileName).done(function(storageFile){
+        getFileFromPathAsync(fileName).done(function(storageFile){
             //the current length of the file.
             var leng = 0;
 
@@ -530,62 +570,65 @@ module.exports = {
                         fileContent = fileContent.substr(0, size);
                         var fullPath = storageFile.path;
                         var name = storageFile.name;
-                        var entry = new Entry(true, false, name, fullPath);
+                        var entry = new Entry(true, false, name, fullPath, getFilesystemFromPath(fullPath));
                         var parentPath = "";
                         var successCallBack = function (entry) {
                             parentPath = entry.fullPath;
                             storageFile.deleteAsync().then(function () {
-                                return Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath);
+                                return getFolderFromPathAsync(parentPath);
                             }).then(function (storageFolder) {
                                 storageFolder.createFileAsync(name).then(function (newStorageFile) {
                                     Windows.Storage.FileIO.writeTextAsync(newStorageFile, fileContent).done(function () {
                                         win(String(fileContent).length);
                                     }, function () {
-                                        fail && fail(FileError.NO_MODIFICATION_ALLOWED_ERR);
+                                        fail(FileError.NO_MODIFICATION_ALLOWED_ERR);
                                     });
+                                }, function() {
+                                    fail(FileError.NO_MODIFICATION_ALLOWED_ERR);
                                 });
                             });
                         };
                         entry.getParent(successCallBack, null);
-                    }, function () { fail && fail(FileError.NOT_FOUND_ERR); });
+                    }, function () { fail(FileError.NOT_FOUND_ERR); });
                 }
             });
-        }, function () { fail && fail(FileError.NOT_FOUND_ERR); });
+        }, function () { fail(FileError.NOT_FOUND_ERR); });
     },
 
-    copyTo:function(success,fail,args) { // ["fullPath","parent", "newName"]
-        var srcPath = args[0];
-        var parentFullPath = args[1];
+    copyTo: function (success, fail, args) { // ["fullPath","parent", "newName"]
+
+        var srcPath = cordovaPathToNative(args[0]);
+        var parentFullPath = cordovaPathToNative(args[1]);
         var name = args[2];
 
         //name can't be invalid
         if (/\?|\\|\*|\||\"|<|>|\:|\//g.test(name)) {
-            fail && fail(FileError.ENCODING_ERR);
+            fail(FileError.ENCODING_ERR);
             return;
         }
         // copy
         var copyFiles = "";
-        Windows.Storage.StorageFile.getFileFromPathAsync(srcPath).then(
+        getFileFromPathAsync(srcPath).then(
             function (sFile) {
                 copyFiles = function (srcPath, parentPath) {
                     var storageFileTop = null;
-                    Windows.Storage.StorageFile.getFileFromPathAsync(srcPath).then(function (storageFile) {
+                    getFileFromPathAsync(srcPath).then(function (storageFile) {
                         storageFileTop = storageFile;
-                        return Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath);
+                        return getFolderFromPathAsync(parentPath);
                     }, function () {
 
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                        fail(FileError.NOT_FOUND_ERR);
                     }).then(function (storageFolder) {
                         storageFileTop.copyAsync(storageFolder, name, Windows.Storage.NameCollisionOption.failIfExists).then(function (storageFile) {
 
-                            success(new FileEntry(storageFile.name, storageFile.path));
+                            success(new FileEntry(storageFile.name, nativePathToCordova(storageFile.path), getFilesystemFromPath(storageFile.path)));
                         }, function () {
 
-                            fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                            fail(FileError.INVALID_MODIFICATION_ERR);
                         });
                     }, function () {
 
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                        fail(FileError.NOT_FOUND_ERR);
                     });
                 };
                 var copyFinish = function (srcPath, parentPath) {
@@ -594,7 +637,7 @@ module.exports = {
                 copyFinish(srcPath, parentFullPath);
             },
             function () {
-                Windows.Storage.StorageFolder.getFolderFromPathAsync(srcPath).then(
+                getFolderFromPathAsync(srcPath).then(
                     function (sFolder) {
                         copyFiles = function (srcPath, parentPath) {
                             var coreCopy = function (storageFolderTop, complete) {
@@ -602,7 +645,7 @@ module.exports = {
                                     var folderPromiseArr = [];
                                     if (folderList.length === 0) { complete(); }
                                     else {
-                                        Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath).then(function (storageFolderTarget) {
+                                        getFolderFromPathAsync(parentPath).then(function (storageFolderTarget) {
                                             var tempPromiseArr = [];
                                             var index = 0;
                                             for (var j = 0; j < folderList.length; j++) {
@@ -622,13 +665,13 @@ module.exports = {
                                 var storageFolderTop = null;
                                 var filePromiseArr = [];
                                 var fileListTop = null;
-                                Windows.Storage.StorageFolder.getFolderFromPathAsync(srcPath).then(function (storageFolder) {
+                                getFolderFromPathAsync(srcPath).then(function (storageFolder) {
                                     storageFolderTop = storageFolder;
                                     return storageFolder.createFileQuery().getFilesAsync();
                                 }).then(function (fileList) {
                                     fileListTop = fileList;
                                     if (fileList) {
-                                        return Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath);
+                                        return getFolderFromPathAsync(parentPath);
                                     }
                                 }).then(function (targetStorageFolder) {
                                     for (var i = 0; i < fileListTop.length; i++) {
@@ -637,80 +680,81 @@ module.exports = {
                                     WinJS.Promise.join(filePromiseArr).done(function () {
                                         coreCopy(storageFolderTop, complete);
                                     }, function() {
-                                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                        fail(FileError.INVALID_MODIFICATION_ERR);
                                     });
                                 });
                             });
                         };
                         var copyFinish = function (srcPath, parentPath) {
-                            Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath).then(function (storageFolder) {
+                            getFolderFromPathAsync(parentPath).then(function (storageFolder) {
                                 storageFolder.createFolderAsync(name, Windows.Storage.CreationCollisionOption.openIfExists).then(function (newStorageFolder) {
                                     //can't copy onto itself
                                     if (srcPath == newStorageFolder.path) {
-                                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                        fail(FileError.INVALID_MODIFICATION_ERR);
                                         return;
                                     }
                                     //can't copy into itself
                                     if (srcPath == parentPath) {
-                                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                        fail(FileError.INVALID_MODIFICATION_ERR);
                                         return;
                                     }
                                     copyFiles(srcPath, newStorageFolder.path).then(function () {
-                                        Windows.Storage.StorageFolder.getFolderFromPathAsync(newStorageFolder.path).done(
+                                        getFolderFromPathAsync(newStorageFolder.path).done(
                                             function (storageFolder) {
-                                                success(new DirectoryEntry(storageFolder.name, storageFolder.path));
+                                                success(new DirectoryEntry(storageFolder.name, nativePathToCordova(storageFolder.path), getFilesystemFromPath(storageFolder.path)));
                                             },
-                                            function () { fail && fail(FileError.NOT_FOUND_ERR); }
+                                            function () { fail(FileError.NOT_FOUND_ERR); }
                                         );
                                     });
-                                }, function () { fail && fail(FileError.INVALID_MODIFICATION_ERR); });
-                            }, function () { fail && fail(FileError.INVALID_MODIFICATION_ERR); });
+                                }, function () { fail(FileError.INVALID_MODIFICATION_ERR); });
+                            }, function () { fail(FileError.INVALID_MODIFICATION_ERR); });
                         };
                         copyFinish(srcPath, parentFullPath);
                     }, function () {
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                        fail(FileError.NOT_FOUND_ERR);
                     }
                 );
             }
         );
     },
 
-    moveTo:function(success,fail,args) {
-        var srcPath = args[0];
-        var parentFullPath = args[1];
+    moveTo: function (success, fail, args) {
+
+        var srcPath = cordovaPathToNative(args[0]);
+        var parentFullPath = cordovaPathToNative(args[1]);
         var name = args[2];
 
 
         //name can't be invalid
         if (/\?|\\|\*|\||\"|<|>|\:|\//g.test(name)) {
-            fail && fail(FileError.ENCODING_ERR);
+            fail(FileError.ENCODING_ERR);
             return;
         }
 
         var moveFiles = "";
-        Windows.Storage.StorageFile.getFileFromPathAsync(srcPath).then(
+        getFileFromPathAsync(srcPath).then(
             function (sFile) {
                 moveFiles = function (srcPath, parentPath) {
                     var storageFileTop = null;
-                    Windows.Storage.StorageFile.getFileFromPathAsync(srcPath).then(function (storageFile) {
+                    getFileFromPathAsync(srcPath).then(function (storageFile) {
                         storageFileTop = storageFile;
-                        return Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath);
+                        return getFolderFromPathAsync(parentPath);
                     }, function () {
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                        fail(FileError.NOT_FOUND_ERR);
                     }).then(function (storageFolder) {
                         storageFileTop.moveAsync(storageFolder, name, Windows.Storage.NameCollisionOption.replaceExisting).then(function () {
-                            success(new FileEntry(name, storageFileTop.path));
+                            success(new FileEntry(name, nativePathToCordova(storageFileTop.path), getFilesystemFromPath(storageFolder.path)));
                         }, function () {
-                            fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                            fail(FileError.INVALID_MODIFICATION_ERR);
                         });
                     }, function () {
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                        fail(FileError.NOT_FOUND_ERR);
                     });
                 };
                 var moveFinish = function (srcPath, parentPath) {
                     //can't copy onto itself
                     if (srcPath == parentPath + "\\" + name) {
-                        fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                        fail(FileError.INVALID_MODIFICATION_ERR);
                         return;
                     }
                     moveFiles(srcPath, parentFullPath);
@@ -718,7 +762,7 @@ module.exports = {
                 moveFinish(srcPath, parentFullPath);
             },
             function () {
-                Windows.Storage.StorageFolder.getFolderFromPathAsync(srcPath).then(
+                getFolderFromPathAsync(srcPath).then(
                     function (sFolder) {
                         moveFiles = function (srcPath, parentPath) {
                             var coreMove = function (storageFolderTop, complete) {
@@ -729,7 +773,7 @@ module.exports = {
                                         complete();
                                     }
                                     else {
-                                        Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath).then(function (storageFolderTarget) {
+                                        getFolderFromPathAsync(parentPath).then(function (storageFolderTarget) {
                                             var tempPromiseArr = [];
                                             var index = 0;
                                             for (var j = 0; j < folderList.length; j++) {
@@ -746,12 +790,12 @@ module.exports = {
                             };
                             return new WinJS.Promise(function (complete) {
                                 var storageFolderTop = null;
-                                Windows.Storage.StorageFolder.getFolderFromPathAsync(srcPath).then(function (storageFolder) {
+                                getFolderFromPathAsync(srcPath).then(function (storageFolder) {
                                     storageFolderTop = storageFolder;
                                     return storageFolder.createFileQuery().getFilesAsync();
                                 }).then(function (fileList) {
                                     var filePromiseArr = [];
-                                    Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath).then(function (dstStorageFolder) {
+                                    getFolderFromPathAsync(parentPath).then(function (dstStorageFolder) {
                                         if (fileList) {
                                             for (var i = 0; i < fileList.length; i++) {
                                                 filePromiseArr.push(fileList[i].moveAsync(dstStorageFolder));
@@ -766,48 +810,49 @@ module.exports = {
                         };
                         var moveFinish = function (srcPath, parentPath) {
                             var originFolderTop = null;
-                            Windows.Storage.StorageFolder.getFolderFromPathAsync(srcPath).then(function (originFolder) {
+                            getFolderFromPathAsync(srcPath).then(function (originFolder) {
                                 originFolderTop = originFolder;
-                                return Windows.Storage.StorageFolder.getFolderFromPathAsync(parentPath);
+                                return getFolderFromPathAsync(parentPath);
                             }, function () {
-                                fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                fail(FileError.INVALID_MODIFICATION_ERR);
                             }).then(function (storageFolder) {
                                 return storageFolder.createFolderAsync(name, Windows.Storage.CreationCollisionOption.openIfExists);
                             }, function () {
-                                fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                fail(FileError.INVALID_MODIFICATION_ERR);
                             }).then(function (newStorageFolder) {
                                 //can't move onto directory that is not empty
                                 newStorageFolder.createFileQuery().getFilesAsync().then(function (fileList) {
                                     newStorageFolder.createFolderQuery().getFoldersAsync().then(function (folderList) {
                                         if (fileList.length !== 0 || folderList.length !== 0) {
-                                            fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                            fail(FileError.INVALID_MODIFICATION_ERR);
                                             return;
                                         }
                                         //can't copy onto itself
                                         if (srcPath == newStorageFolder.path) {
-                                            fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                            fail(FileError.INVALID_MODIFICATION_ERR);
                                             return;
                                         }
                                         //can't copy into itself
                                         if (srcPath == parentPath) {
-                                            fail && fail(FileError.INVALID_MODIFICATION_ERR);
+                                            fail(FileError.INVALID_MODIFICATION_ERR);
                                             return;
                                         }
                                         moveFiles(srcPath, newStorageFolder.path).then(function () {
                                             var successCallback = function () {
-                                                success(new DirectoryEntry(name, newStorageFolder.path));
+                                                success(new DirectoryEntry(name, nativePathToCordova(newStorageFolder.path), getFilesystemFromPath(newStorageFolder.path)));
                                             };
-                                            var temp = new DirectoryEntry(originFolderTop.name, originFolderTop.path).removeRecursively(successCallback, fail);
+
+                                            originFolderTop.deleteAsync().done(successCallback, fail);
 
                                         }, function () { console.log("error!"); });
                                     });
                                 });
-                            }, function () { fail && fail(FileError.INVALID_MODIFICATION_ERR); });
+                            }, function () { fail(FileError.INVALID_MODIFICATION_ERR); });
 
                         };
                         moveFinish(srcPath, parentFullPath);
                     }, function () {
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                        fail(FileError.NOT_FOUND_ERR);
                     }
                 );
             }
@@ -817,7 +862,8 @@ module.exports = {
 
     persistentFileSystem:null,
 
-    requestFileSystem:function(win,fail,args) {
+    requestFileSystem: function (win, fail, args) {
+
         var type = args[0];
         var size = args[1];
 
@@ -838,17 +884,18 @@ module.exports = {
 
         var MAX_SIZE = 10000000000;
         if (size > MAX_SIZE) {
-            fail && fail(FileError.QUOTA_EXCEEDED_ERR);
+            fail(FileError.QUOTA_EXCEEDED_ERR);
             return;
         }
 
-        var fileSystem = new FileSystem(fsTypeName, new DirectoryEntry(fsTypeName, filePath));
+        var fileSystem = new FileSystem(fsTypeName, new DirectoryEntry(fsTypeName, nativePathToCordova(filePath)));
         result = fileSystem;
         win(result);
     },
 
-    resolveLocalFileSystemURI:function(success,fail,args) {
-        var uri = args[0];
+    resolveLocalFileSystemURI: function (success, fail, args) {
+
+        var uri = cordovaPathToNative(args[0]);
 
         var path = uri;
 
@@ -869,23 +916,21 @@ module.exports = {
             // method should not let read files outside of the [APP HASH]/Local or [APP HASH]/temp folders
             if (path.indexOf(Windows.Storage.ApplicationData.current.temporaryFolder.path) != 0 &&
                 path.indexOf(Windows.Storage.ApplicationData.current.localFolder.path) != 0) {
-                fail && fail(FileError.ENCODING_ERR);
+                fail(FileError.NOT_FOUND_ERR);
                 return;
             }
         }
-        
-        // refine path format to make sure it is correct
-        path = path.split("/").join("\\");
 
-        Windows.Storage.StorageFile.getFileFromPathAsync(path).then(
+        getFileFromPathAsync(path).then(
             function (storageFile) {
-                success(new FileEntry(storageFile.name, storageFile.path));
+                success(new FileEntry(storageFile.name, nativePathToCordova(storageFile.path), getFilesystemFromPath(storageFile.path)));
             }, function () {
-                Windows.Storage.StorageFolder.getFolderFromPathAsync(path).then(
+                getFolderFromPathAsync(path).then(
                     function (storageFolder) {
-                        success(new DirectoryEntry(storageFolder.name, storageFolder.path));
+                        var cordovaPath = nativePathToCordova(storageFolder.path);
+                        success(new DirectoryEntry(storageFolder.name, cordovaPath, getFilesystemFromPath(storageFolder.path), cordovaPath));
                     }, function () {
-                        fail && fail(FileError.NOT_FOUND_ERR);
+                        fail(FileError.NOT_FOUND_ERR);
                     }
                 );
             }

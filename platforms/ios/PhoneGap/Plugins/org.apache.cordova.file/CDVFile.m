@@ -426,7 +426,7 @@ NSString* const kCDVFilesystemURLPrefix = @"cdvfile";
     } else {
         NSString* fullPath = @"/";
         // check for avail space for size request
-        NSNumber* pNumAvail = [self checkFreeDiskSpace:fullPath];
+        NSNumber* pNumAvail = [self checkFreeDiskSpace:self.rootDocsPath];
         // NSLog(@"Free space: %@", [NSString stringWithFormat:@"%qu", [ pNumAvail unsignedLongLongValue ]]);
         if (pNumAvail && ([pNumAvail unsignedLongLongValue] < size)) {
             result = [CDVPluginResult resultWithStatus:CDVCommandStatus_IO_EXCEPTION messageAsInt:QUOTA_EXCEEDED_ERR];
@@ -538,6 +538,8 @@ NSString* const kCDVFilesystemURLPrefix = @"cdvfile";
     // arguments
     NSString* localURIstr = [command.arguments objectAtIndex:0];
     CDVPluginResult* result;
+    
+    localURIstr = [self encodePath:localURIstr]; //encode path before resolving
     CDVFilesystemURL* inputURI = [self fileSystemURLforArg:localURIstr];
     
     if (inputURI == nil || inputURI.fileSystemName == nil) {
@@ -551,6 +553,13 @@ NSString* const kCDVFilesystemURLPrefix = @"cdvfile";
         }
     }
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+//encode path with percent escapes
+-(NSString *)encodePath:(NSString *)path
+{
+    NSString *decodedPath = [path stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]; //decode incase it's already encoded to avoid encoding twice
+    return [decodedPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
 
@@ -643,21 +652,6 @@ NSString* const kCDVFilesystemURLPrefix = @"cdvfile";
     CDVPluginResult* result = [fs getParentForURL:localURI];
 
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-}
-
-/*
- * get MetaData of entry
- * Currently MetaData only includes modificationTime.
- */
-- (void)getMetadata:(CDVInvokedUrlCommand*)command
-{
-    // arguments
-    CDVFilesystemURL* localURI = [self fileSystemURLforArg:command.arguments[0]];
-    NSObject<CDVFileSystem> *fs = [self filesystemForURL:localURI];
-    [fs getMetadataForURL:localURI callback:^(CDVPluginResult* result) {
-        [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
-    }];
-
 }
 
 /*

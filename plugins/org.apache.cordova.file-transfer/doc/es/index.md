@@ -30,12 +30,18 @@ Este plugin te permite cargar y descargar archivos.
 
 *   Amazon fuego OS
 *   Android
-*   BlackBerry 10 *
+*   BlackBerry 10
+*   Firefox OS **
 *   iOS
 *   Windows Phone 7 y 8 *
-*   Windows 8 *
+*   Windows 8 \***|
+*   Windows \***|
 
 * *No son compatibles con `onprogress` ni `abort()` *
+
+** *No son compatibles con `onprogress` *
+
+Apoyo parcial de `onprogress` para subir método `onprogress` se llama con el evento progress vacía debido a Windows limitations_
 
 # File Transfer
 
@@ -65,8 +71,6 @@ El `FileTransfer` objeto proporciona una manera de subir archivos mediante una s
 
 *   **errorCallback**: una devolución de llamada que se ejecuta si se produce un error recuperar la `Metadata` . Invocado con un `FileTransferError` objeto. *(Función)*
 
-*   **trustAllHosts**: parámetro opcional, por defecto es `false` . Si establece en `true` , acepta todos los certificados de seguridad. Esto es útil ya que Android rechaza certificados autofirmados seguridad. No se recomienda para uso productivo. Compatible con iOS y Android. *(boolean)*
-
 *   **Opciones**: parámetros opcionales *(objeto)*. Teclas válidas:
     
     *   **fileKey**: el nombre del elemento de formulario. Por defecto es `file` . (DOMString)
@@ -75,6 +79,8 @@ El `FileTransfer` objeto proporciona una manera de subir archivos mediante una s
     *   **params**: un conjunto de pares clave/valor opcional para pasar en la petición HTTP. (Objeto)
     *   **chunkedMode**: Si desea cargar los datos en modo de transmisión fragmentado. Por defecto es `true` . (Boolean)
     *   **cabeceras**: un mapa de valores de encabezado nombre/cabecera. Utilice una matriz para especificar más de un valor. (Objeto)
+
+*   **trustAllHosts**: parámetro opcional, por defecto es `false` . Si establece en `true` , acepta todos los certificados de seguridad. Esto es útil ya que Android rechaza certificados autofirmados seguridad. No se recomienda para uso productivo. Compatible con iOS y Android. *(boolean)*
 
 ### Ejemplo
 
@@ -192,7 +198,7 @@ A `FileUploadResult` objeto se pasa a la devolución del éxito de la `FileTrans
         uri,
         fileURL,
         function(entry) {
-            console.log("download complete: " + entry.fullPath);
+            console.log("download complete: " + entry.toURL());
         },
         function(error) {
             console.log("download error source " + error.source);
@@ -252,12 +258,15 @@ A `FileTransferError` objeto se pasa a un callback de error cuando se produce un
 
 *   **HTTP_STATUS**: código de estado HTTP. Este atributo sólo está disponible cuando se recibe un código de respuesta de la conexión HTTP. (Número)
 
+*   **excepción**: cualquier e.getMessage o e.toString (String)
+
 ### Constantes
 
-*   `FileTransferError.FILE_NOT_FOUND_ERR`
-*   `FileTransferError.INVALID_URL_ERR`
-*   `FileTransferError.CONNECTION_ERR`
-*   `FileTransferError.ABORT_ERR`
+*   1 = `FileTransferError.FILE_NOT_FOUND_ERR`
+*   2 = `FileTransferError.INVALID_URL_ERR`
+*   3 = `FileTransferError.CONNECTION_ERR`
+*   4 = `FileTransferError.ABORT_ERR`
+*   5 = `FileTransferError.NOT_MODIFIED_ERR`
 
 ## Al revés notas de compatibilidad
 

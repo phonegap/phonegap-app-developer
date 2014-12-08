@@ -19,7 +19,7 @@
 
 # org.apache.cordova.inappbrowser
 
-Este plugin proporciona una vista de navegador web que se muestra cuando se llama a `window.open()` , o cuando abre un enlace formado como`<a target="_blank">`.
+Este plugin proporciona una vista de navegador web que se muestra cuando se llama a`window.open()`.
 
     var ref = window.open('http://apache.org', '_blank', 'location=yes');
     
@@ -31,22 +31,11 @@ Este plugin proporciona una vista de navegador web que se muestra cuando se llam
     cordova plugin add org.apache.cordova.inappbrowser
     
 
-### Firefox OS
-
-Crear **www/manifest.webapp** como se describe en [Manifestar Docs][1]. Agregar permisos pertinentes.
-
- [1]: https://developer.mozilla.org/en-US/Apps/Developing/Manifest
-
-    "permissions": {
-        "browser": {}
-    }
-    
-
 ## window.open
 
 Se abre una dirección URL en una nueva `InAppBrowser` ejemplo, la instancia actual del navegador o el navegador del sistema.
 
-    var ref = window.open (url, target, opciones);
+    var ref = window.open(url, target, options);
     
 
 *   **ref**: referencia a la `InAppBrowser` ventana. *(InAppBrowser)*
@@ -85,18 +74,19 @@ Se abre una dirección URL en una nueva `InAppBrowser` ejemplo, la instancia act
     *   **allowInlineMediaPlayback**: A `yes` o `no` para permitir la reproducción de los medios de comunicación en línea HTML5, mostrando en la ventana del navegador en lugar de una interfaz específica del dispositivo de reproducción. El código de HTML `video` elemento también debe incluir la `webkit-playsinline` atributo (por defecto`no`)
     *   **keyboardDisplayRequiresUserAction**: A `yes` o `no` para abrir el teclado cuando elementos de formulario reciben el foco mediante JavaScript `focus()` llamada (por defecto`yes`).
     *   **suppressesIncrementalRendering**: A `yes` o `no` que esperar a que todo el contenido nuevo vista es recibido antes de ser prestados (por defecto`no`).
-    *   **presentationstyle**: A `pagesheet` , `formsheet` o `fullscreen` para establecer el [estilo de la presentación][2] (por defecto`fullscreen`).
-    *   **transitionstyle**: A `fliphorizontal` , `crossdissolve` o `coververtical` para establecer el [estilo de transición][3] (por defecto`coververtical`).
+    *   **presentationstyle**: A `pagesheet` , `formsheet` o `fullscreen` para establecer el [estilo de la presentación][1] (por defecto`fullscreen`).
+    *   **transitionstyle**: A `fliphorizontal` , `crossdissolve` o `coververtical` para establecer el [estilo de transición][2] (por defecto`coververtical`).
     *   **toolbarposition**: A `top` o `bottom` (valor por defecto es `bottom` ). Hace que la barra de herramientas en la parte superior o inferior de la ventana.
 
- [2]: http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalPresentationStyle
- [3]: http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalTransitionStyle
+ [1]: http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalPresentationStyle
+ [2]: http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalTransitionStyle
 
 ### Plataformas soportadas
 
 *   Amazon fuego OS
 *   Android
 *   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 7 y 8
 
@@ -104,6 +94,36 @@ Se abre una dirección URL en una nueva `InAppBrowser` ejemplo, la instancia act
 
     var ref = window.open('http://apache.org', '_blank', 'location=yes');
     var ref2 = window.open(encodeURI('http://ja.m.wikipedia.org/wiki/ハングル'), '_blank', 'location=yes');
+    
+
+### Firefox OS rarezas
+
+Como plugin no cumplir cualquier diseño es necesario añadir algunas reglas CSS si abre con `target='_blank'` . Las reglas pueden parecerse a estos
+
+     css
+    .inAppBrowserWrap {
+      background-color: rgba(0,0,0,0.75);
+      color: rgba(235,235,235,1.0);
+    }
+    .inAppBrowserWrap menu {
+      overflow: auto;
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .inAppBrowserWrap menu li {
+      font-size: 25px;
+      height: 25px;
+      float: left;
+      margin: 0 10px;
+      padding: 3px 10px;
+      text-decoration: none;
+      color: #ccc;
+      display: block;
+      background: rgba(30,30,30,0.50);
+    }
+    .inAppBrowserWrap menu li.disabled {
+        color: #777;
+    }
     
 
 ## InAppBrowser
@@ -206,6 +226,7 @@ El objeto devuelto desde una llamada a`window.open`.
 
 *   Amazon fuego OS
 *   Android
+*   Firefox OS
 *   iOS
 *   Windows Phone 7 y 8
 

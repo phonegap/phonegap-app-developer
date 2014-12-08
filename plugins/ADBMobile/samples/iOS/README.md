@@ -24,6 +24,11 @@ http://microsite.omniture.com/t2/help/en_US/mobile/ios/
 
 **Recent Changes**
 
+_1.2 (Oct 16, 2014)_
+
+* Updated Adobe Mobile Library to latest version (4.2.0)
+* iOS 8 compatability
+
 _(Feb 04, 2014)_
 
 * Updated Adobe Mobile Library to latest version (4.0.1)

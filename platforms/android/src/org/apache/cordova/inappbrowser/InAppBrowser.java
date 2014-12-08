@@ -120,21 +120,24 @@ public class InAppBrowser extends CordovaPlugin {
                         // load in webview
                         if (url.startsWith("file://") || url.startsWith("javascript:") 
                                 || Config.isUrlWhiteListed(url)) {
+                            Log.d(LOG_TAG, "loading in webview");
                             webView.loadUrl(url);
                         }
                         //Load the dialer
                         else if (url.startsWith(WebView.SCHEME_TEL))
                         {
                             try {
+                                Log.d(LOG_TAG, "loading in dialer");
                                 Intent intent = new Intent(Intent.ACTION_DIAL);
                                 intent.setData(Uri.parse(url));
-                               cordova.getActivity().startActivity(intent);
+                                cordova.getActivity().startActivity(intent);
                             } catch (android.content.ActivityNotFoundException e) {
                                 LOG.e(LOG_TAG, "Error dialing " + url + ": " + e.toString());
                             }
                         }
                         // load in InAppBrowser
                         else {
+                            Log.d(LOG_TAG, "loading in InAppBrowser");
                             result = showWebPage(url, features);
                         }
                     }

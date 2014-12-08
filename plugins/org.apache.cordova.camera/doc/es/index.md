@@ -28,7 +28,7 @@ Este plugin proporciona una API para tomar fotografías y por elegir imágenes d
 
 Toma una foto con la cámara, o recupera una foto de Galería de imágenes del dispositivo. La imagen se pasa a la devolución de llamada de éxito como un codificado en base64 `String` , o como el URI para el archivo de imagen. El método se devuelve un `CameraPopoverHandle` objeto que puede utilizarse para volver a colocar el popover de selección de archivo.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### Descripción
@@ -60,11 +60,19 @@ Puedes hacer lo que quieras con la imagen codificada o URI, por ejemplo:
 *   Amazon fuego OS
 *   Android
 *   BlackBerry 10
+*   Explorador
 *   Firefox OS
 *   iOS
 *   Tizen
 *   Windows Phone 7 y 8
 *   Windows 8
+
+### Preferencias (iOS)
+
+*   **CameraUsesGeolocation** (booleano, el valor predeterminado de false). Para la captura de imágenes JPEG, establecido en true para obtener datos de geolocalización en la cabecera EXIF. Esto activará la solicitud de permisos de geolocalización si establecido en true.
+    
+        <preference name="CameraUsesGeolocation" value="false" />
+        
 
 ### Amazon fuego OS rarezas
 
@@ -73,6 +81,10 @@ Amazon fuego OS utiliza los intentos para poner en marcha la actividad de la cá
 ### Rarezas Android
 
 Android utiliza los intentos para iniciar la actividad de la cámara del dispositivo para capturar imágenes, y en los teléfonos con poca memoria, puede matar la actividad Cordova. En este escenario, la imagen no aparezca cuando se restaura la actividad Cordova.
+
+### Navegador rarezas
+
+Sólo puede devolver fotos como imagen codificada en base64.
 
 ### Firefox OS rarezas
 
@@ -134,37 +146,57 @@ Tomar una foto y recuperar la ubicación del archivo de la imagen:
 
 Parámetros opcionales para personalizar la configuración de la cámara.
 
-    {calidad: destinationType 75,: Camera.DestinationType.DATA_URL, sourceType: Camera.PictureSourceType.CAMERA, allowEdit: true, encodingType: Camera.EncodingType.JPEG, targetWidth: 100, targetHeight: 100, popoverOptions: CameraPopoverOptions, saveToPhotoAlbum: falsa};
+    { quality : 75,
+      destinationType : Camera.DestinationType.DATA_URL,
+      sourceType : Camera.PictureSourceType.CAMERA,
+      allowEdit : true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 100,
+      targetHeight: 100,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false };
     
 
 ### Opciones
 
-*   **calidad**: calidad de la imagen guardada, expresada en un rango de 0-100, donde 100 es típicamente resolución sin pérdida de compresión del archivo. *(Número)* (Tenga en cuenta que no está disponible información sobre resolución de la cámara).
+*   **calidad**: calidad de la imagen guardada, expresada en un rango de 0-100, donde 100 es típicamente resolución sin pérdida de compresión del archivo. El valor predeterminado es 50. *(Número)* (Tenga en cuenta que no está disponible información sobre resolución de la cámara).
 
-*   **destinationType**: elegir el formato del valor devuelto. Definido en `navigator.camera.DestinationType` *(número)* 
+*   **destinationType**: elegir el formato del valor devuelto. El valor predeterminado es FILE_URI. Definido en `navigator.camera.DestinationType` *(número)*
     
-        Camera.DestinationType = {DATA_URL: 0, / / devolver la imagen como cadena codificada en base64 FILE_URI: 1, / / retorno de archivo de imagen URI NATIVE_URI: 2 / / retorno de la imagen nativa URI (por ejemplo, biblioteca de activos: / / on iOS o contenido: / / on Android)};
+        Camera.DestinationType = {
+            DATA_URL : 0,      // Return image as base64-encoded string
+            FILE_URI : 1,      // Return image file URI
+            NATIVE_URI : 2     // Return image native URI (e.g., assets-library:// on iOS or content:// on Android)
+        };
         
 
-*   **sourceType**: establecer el origen de la imagen. Definido en `navigator.camera.PictureSourceType` *(número)* 
+*   **sourceType**: establecer el origen de la imagen. El valor predeterminado es cámara. Definido en `navigator.camera.PictureSourceType` *(número)*
     
-        Camera.PictureSourceType = {Fototeca: 0, cámara: 1, SAVEDPHOTOALBUM: 2};
+        Camera.PictureSourceType = {
+            PHOTOLIBRARY : 0,
+            CAMERA : 1,
+            SAVEDPHOTOALBUM : 2
+        };
         
 
 *   **allowEdit**: permite edición sencilla de imagen antes de la selección. *(Booleano)*
 
-*   **encodingType**: elegir la codificación del archivo de imagen devuelta. Definido en `navigator.camera.EncodingType` *(número)* 
+*   **encodingType**: elegir la codificación del archivo de imagen devuelta. Por defecto es JPEG. Definido en `navigator.camera.EncodingType` *(número)*
     
-        Camera.EncodingType = {JPEG: 0 / / retorno JPEG imagen PNG codificada: 1 / / retorno PNG imagen codificada};
+        Camera.EncodingType = {
+            JPEG : 0,               // Return JPEG encoded image
+            PNG : 1                 // Return PNG encoded image
+        };
         
 
 *   **targetWidth**: ancho en píxeles a escala de la imagen. Debe usarse con **targetHeight**. Proporción se mantiene constante. *(Número)*
 
 *   **targetHeight**: altura en píxeles a escala de la imagen. Debe usarse con **targetWidth**. Proporción se mantiene constante. *(Número)*
 
-*   **mediaType**: definir el tipo de medios para seleccionar. Sólo funciona cuando `PictureSourceType` es `PHOTOLIBRARY` o `SAVEDPHOTOALBUM` . Definido en `nagivator.camera.MediaType` *(número)* 
+*   **mediaType**: definir el tipo de medios para seleccionar. Sólo funciona cuando `PictureSourceType` es `PHOTOLIBRARY` o `SAVEDPHOTOALBUM` . Definido en `nagivator.camera.MediaType` *(número)*
     
-        Camera.MediaType = {imagen: 0, / / permiten la selección de imágenes fijas solamente. DE FORMA PREDETERMINADA. Will return format specified via DestinationType
+        Camera.MediaType = {
+            PICTURE: 0,    // allow selection of still pictures only. DE FORMA PREDETERMINADA. Will return format specified via DestinationType
             VIDEO: 1,      // allow selection of video only, WILL ALWAYS RETURN FILE_URI
             ALLMEDIA : 2   // allow selection from all media types
         };
@@ -176,12 +208,15 @@ Parámetros opcionales para personalizar la configuración de la cámara.
 
 *   **popoverOptions**: opciones sólo iOS que especifican popover ubicación en iPad. Definido en`CameraPopoverOptions`.
 
-*   **cameraDirection**: elegir la cámara para usar (o parte posterior-frontal). Definido en `navigator.camera.Direction` *(número)* 
+*   **cameraDirection**: elegir la cámara para usar (o parte posterior-frontal). El valor predeterminado es atrás. Definido en `navigator.camera.Direction` *(número)*
     
-        Camera.Direction = {atrás: 0, / / usar la cámara trasera frente: 1 / / usar la cámara frontal};
+        Camera.Direction = {
+            BACK : 0,      // Use the back-facing camera
+            FRONT : 1      // Use the front-facing camera
+        };
         
 
-### Amazon fuego OSQuirks
+### Amazon fuego OS rarezas
 
 *   Cualquier `cameraDirection` valor resultados en una foto orientada hacia atrás.
 
@@ -201,8 +236,6 @@ Parámetros opcionales para personalizar la configuración de la cámara.
 
 *   Ignora el `quality` parámetro.
 
-*   Ignora el `sourceType` parámetro.
-
 *   Ignora el `allowEdit` parámetro.
 
 *   `Camera.MediaType`No se admite.
@@ -219,7 +252,7 @@ Parámetros opcionales para personalizar la configuración de la cámara.
 
 *   Ignora el `allowEdit` parámetro.
 
-*   Ignora el `PictureSourceType` parámetro (usuario elige en una ventana de diálogo)
+*   Ignora el `PictureSourceType` parámetro (el usuario lo elige en una ventana de diálogo)
 
 *   Ignora el`encodingType`
 
@@ -235,7 +268,7 @@ Parámetros opcionales para personalizar la configuración de la cámara.
 
 *   Establecer `quality` por debajo de 50 para evitar errores de memoria en algunos dispositivos.
 
-*   Cuando se utiliza `destinationType.FILE_URI` , fotos se guardan en el directorio temporal de la aplicación. Puedes borrar el contenido de este directorio mediante la `navigator.fileMgr` API si el espacio de almacenamiento es un motivo de preocupación.
+*   Cuando se utiliza `destinationType.FILE_URI` , fotos se guardan en el directorio temporal de la aplicación. El contenido del directorio temporal de la aplicación se eliminará cuando finalice la aplicación.
 
 ### Rarezas Tizen
 
@@ -251,7 +284,11 @@ Parámetros opcionales para personalizar la configuración de la cámara.
 
 *   Ignora el `cameraDirection` parámetro.
 
-*   Ignora el `mediaType` propiedad de `cameraOptions` como el SDK de Windows Phone no proporciona una manera para elegir videos fototeca.
+*   Ignora el `saveToPhotoAlbum` parámetro. IMPORTANTE: Todas las imágenes tomadas con la cámara wp7/8 cordova API siempre se copian en rollo de cámara del teléfono. Dependiendo de la configuración del usuario, esto podría significar también que la imagen es auto-subido a su OneDrive. Esto potencialmente podría significar que la imagen está disponible a una audiencia más amplia que su aplicación previsto. Si un bloqueador para su aplicación, usted necesitará aplicar el CameraCaptureTask como se documenta en msdn: <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx> también puede comentar o votar hasta el tema relacionado en el [issue tracker de][3]
+
+*   Ignora el `mediaType` propiedad de `cameraOptions` como el SDK de Windows Phone no proporciona una manera para elegir vídeos fototeca.
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 
@@ -328,7 +365,12 @@ Establecer la posición de la popover.
 
 Sólo iOS parámetros que especifican la dirección ancla elemento ubicación y la flecha de la popover al seleccionar imágenes de biblioteca o álbum de un iPad.
 
-    {x: 0, y: 32, ancho: 320, altura: 480, arrowDir: Camera.PopoverArrowDirection.ARROW_ANY};
+    { x : 0,
+      y :  32,
+      width : 320,
+      height : 480,
+      arrowDir : Camera.PopoverArrowDirection.ARROW_ANY
+    };
     
 
 ### CameraPopoverOptions
@@ -341,9 +383,15 @@ Sólo iOS parámetros que especifican la dirección ancla elemento ubicación y 
 
 *   **altura**: alto, en píxeles, del elemento sobre el que anclar el popover pantalla. *(Número)*
 
-*   **arrowDir**: dirección de la flecha en el popover debe apuntar. Definido en `Camera.PopoverArrowDirection` *(número)* 
+*   **arrowDir**: dirección de la flecha en el popover debe apuntar. Definido en `Camera.PopoverArrowDirection` *(número)*
     
-            Camera.PopoverArrowDirection = {ARROW_UP: 1 / / coincide con iOS UIPopoverArrowDirection constantes ARROW_DOWN: 2, ARROW_LEFT: 4, ARROW_RIGHT: 8, ARROW_ANY: 15};
+            Camera.PopoverArrowDirection = {
+                ARROW_UP : 1,        // matches iOS UIPopoverArrowDirection constants
+                ARROW_DOWN : 2,
+                ARROW_LEFT : 4,
+                ARROW_RIGHT : 8,
+                ARROW_ANY : 15
+            };
         
 
 Tenga en cuenta que puede cambiar el tamaño de la popover para ajustar la dirección de la flecha y orientación de la pantalla. Asegúrese de que para tener en cuenta los cambios de orientación cuando se especifica la ubicación del elemento de anclaje.

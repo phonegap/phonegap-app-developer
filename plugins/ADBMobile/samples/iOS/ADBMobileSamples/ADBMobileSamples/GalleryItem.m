@@ -25,7 +25,7 @@
 	self = [super init];
 	if (self){
 		self.title = title;
-		self.description = description;
+		self.theDescription = description;
 		self.assetName = asset;
         self.s7params = params;
 		

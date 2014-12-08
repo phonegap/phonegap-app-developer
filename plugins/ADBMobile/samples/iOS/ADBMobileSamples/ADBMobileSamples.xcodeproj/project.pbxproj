@@ -726,11 +726,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ADBMobileSamples/ADBMobileSamples-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/ADBMobileSamples/ADBMobileSamples - Dev-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/AdobeMobile\\\"",
-					/Users/hpeterso/Development/forks/absinthe/iOS/demo/ADBMobileSamples/AdobeMobile,
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "ADBMobileSamples - Dev";
 				WRAPPER_EXTENSION = app;
@@ -744,11 +739,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ADBMobileSamples/ADBMobileSamples-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/ADBMobileSamples/ADBMobileSamples - Dev-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/AdobeMobile\\\"",
-					/Users/hpeterso/Development/forks/absinthe/iOS/demo/ADBMobileSamples/AdobeMobile,
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "ADBMobileSamples - Dev";
 				WRAPPER_EXTENSION = app;
@@ -762,11 +752,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ADBMobileSamples/ADBMobileSamples-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/ADBMobileSamples/ADBMobileSamples - Bloodhound-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/AdobeMobile\\\"",
-					/Users/hpeterso/Development/forks/absinthe/iOS/demo/ADBMobileSamples/AdobeMobile,
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "ADBMobileSamples - Bloodhound";
 				WRAPPER_EXTENSION = app;
@@ -780,11 +765,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ADBMobileSamples/ADBMobileSamples-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/ADBMobileSamples/ADBMobileSamples - Bloodhound-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/AdobeMobile\\\"",
-					/Users/hpeterso/Development/forks/absinthe/iOS/demo/ADBMobileSamples/AdobeMobile,
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "ADBMobileSamples - Bloodhound";
 				WRAPPER_EXTENSION = app;
@@ -856,11 +836,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ADBMobileSamples/ADBMobileSamples-Prefix.pch";
 				INFOPLIST_FILE = "ADBMobileSamples/ADBMobileSamples-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/AdobeMobile\\\"",
-					/Users/hpeterso/Development/forks/absinthe/iOS/demo/ADBMobileSamples/AdobeMobile,
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -874,11 +849,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ADBMobileSamples/ADBMobileSamples-Prefix.pch";
 				INFOPLIST_FILE = "ADBMobileSamples/ADBMobileSamples-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/AdobeMobile\\\"",
-					/Users/hpeterso/Development/forks/absinthe/iOS/demo/ADBMobileSamples/AdobeMobile,
-				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

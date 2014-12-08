@@ -17,22 +17,48 @@
  *
 */
 
-#include <QFeedbackHapticsEffect>
 #include "vibration.h"
 
 void Vibration::vibrate(int, int, int mills) {
-    QFeedbackHapticsEffect *vibrate = new QFeedbackHapticsEffect;
+    QSharedPointer<QFeedbackHapticsEffect> vibrate = QSharedPointer<QFeedbackHapticsEffect>::create();
     vibrate->setIntensity(1.0);
     vibrate->setDuration(mills);
 
-    connect(vibrate, &QFeedbackHapticsEffect::stateChanged, [&]() {
-        QFeedbackEffect *effect = qobject_cast<QFeedbackEffect *>(sender());
-        if (!effect)
-            return;
-        if (effect->state() == QFeedbackEffect::Stopped)
-            effect->deleteLater();
-    });
-
     vibrate->start();
+
+    _effects.append(vibrate);
 }
 
+void Vibration::cancelVibration(int, int) {
+    _timers.clear();
+    _effects.clear();
+}
+
+void Vibration::vibrateWithPattern(int, int, const QList<int> &pattern, int repeat) {
+    QSharedPointer<QTimer> timer = QSharedPointer<QTimer>::create();
+    QSharedPointer<int> k = QSharedPointer<int>::create();
+
+    QSharedPointer<QFeedbackHapticsEffect> vibrate = QSharedPointer<QFeedbackHapticsEffect>::create();
+    vibrate->setIntensity(1.0);
+
+    _effects.append(vibrate);
+    _timers.append(timer);
+
+    timer->connect(timer.data(), &QTimer::timeout, [=, timer = timer.data()] () {
+        if (*k >= pattern.size()) {
+            if (repeat < 0 || repeat >= pattern.size()) {
+                timer->stop();
+                return;
+            }
+            *k = repeat;
+        }
+        bool idle = (*k % 2 == 0);
+        if (!idle) {
+            vibrate->setDuration(pattern[*k]);
+            vibrate->start();
+        }
+        timer->start(pattern[*k]);
+        (*k)++;
+    });
+    timer->start(1);
+}

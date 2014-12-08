@@ -5,6 +5,18 @@ Included are notes from the latest major revision to current.
 For full SDK documentation, please visit:
 http://microsite.omniture.com/t2/help/en_US/mobile/android/
 
+4.2.0 (16 Oct, 2014)
+- New - In App Messaging Capabilities.
+- New - Location for config file can now be specified during app startup.
+- New - Points of Interest can now be updated automatically without requiring a new config file.
+- New - Analytics calls are now sent as HTTP POST requests.
+- Resolved issue that could cause app crashes to not be tracked in certain scenarios.
+- Cleared up log messages, added more verbose logging when debugLogging is enabled.
+- Multiple performance and stability enhancements.
+
+4.1.7 (4 Aug, 2014)
+- Resolved issue that could cause Lifecycle hit to not get sent when referrer timeout was >= 5 seconds and offline tracking was disabled.
+
 4.1.6 (17 July, 2014)
 - Added protections around exceptions that occur if the database become corrupted, or could not be created.
 - Added protections for issues that could occur when config cannot be loaded (generally due to a null context).

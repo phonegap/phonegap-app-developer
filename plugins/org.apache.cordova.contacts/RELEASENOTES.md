@@ -82,3 +82,49 @@
 * CB-6212: [iOS] fix warnings compiled under arm64 64-bit
 * CB-6460: Update license headers
 * Add NOTICE file
+
+### 0.2.11 (Jul 2, 2014)
+* CB-6127 Spanish and French Translations added. Github close #25
+* Remove deprecated symbols for iOS < 6
+* CB-6797 Add license
+* [wp8] now pupulates contact photos
+* Update license headers format
+* Add pickContact functionality to cordova contacts plugin
+* CB-5416 - Adding support for auto-managing permissions
+* CB-6682 move windows8 command proxy into it's missing platform tag. This closes #30
+* Add ContactError codes to index.md doc (closes #28)
+* CB-6491 add CONTRIBUTING.md
+* Docs typo: navigator.contacts.length -> contacts.length
+* CB-5698 ios: Check to see if photoData exists before using
+* CB-7003 android: Make pickContact pick correct contact on Android 4.3 and 4.4.3
+
+### 0.2.12 (Aug 06, 2014)
+* fixes .find method when 'options' param is not passed. Will return all contacts on missing 'options' param
+* [FFOS] update ContactsProxy.js
+* Removing a stray unicode character
+* CB-6127 Updated translations for docs
+* CB-5698 ios: Check to see if photoData exists before using
+
+### 0.2.13 (Sep 17, 2014)
+* CB-7546 [Contacts][iOS] pickContact shows exception in the console log
+* CB-6374 Fix iOS 6 deprecation warnings in Contacts
+* CB-7544 [Contacts][iOS 8] Contact picker is read-only in iOS 8
+* CB-7523 Fixing "ContactFieldType" error in the config.xml
+* CB-6724 Empty may be expected.
+* CB-7249 cordova-plugin-contacts documentation translation
+* Add missing test, skip some specs on wp
+* rm old test folder and merged with renamed tests folder
+* CB-7290 Adds support for universal Windows platform.
+* Renamed test dir, added nested plugin.xml
+* CB-7148 Added manual tests
+* Removed js-module for tests from plugin.xml
+* Changing cdvtest format to use module exports
+* register tests using new style
+* convert test to new style
+* added documentation for manual tests
+* merged changes for test framework plugin
+
+### 0.2.14 (Oct 03, 2014)
+* CB-7373 Removes unnecessary Error object creation
+* CB-7373 Adds additional output if method is not supported.
+* CB-7357 Adds missing 'capability' element to phone's appxmanifest.

@@ -31,6 +31,7 @@
 *   アマゾン火 OS
 *   アンドロイド
 *   ブラックベリー 10
+*   ブラウザー
 *   Firefox の OS
 *   iOS
 *   Tizen
@@ -72,6 +73,10 @@
     navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
     
 
+### ブラウザーの癖
+
+値 X、Y、Z モーションは、加速度計をシミュレートするためにすべてのランダムに生成される順序です。
+
 ### iOS の癖
 
 *   iOS は、任意の時点で現在の加速度を得ることの概念を認識しません。
@@ -88,11 +93,11 @@
 
     var watchID = navigator.accelerometer.watchAcceleration(accelerometerSuccess,
                                                            accelerometerError,
-                                                           [accelerometerOptions]);
+                                                           accelerometerOptions);
     
 
 *   **accelerometerOptions**: 次のオプションのキーを持つオブジェクト: 
-    *   **周波数**: 取得する頻度、 `Acceleration` (ミリ秒単位)。*(数)*(デフォルト: 10000）
+    *   **期間**: ミリ秒単位での加速度データと accelerometerSuccess への呼び出しの要求された期間。*(数)*(デフォルト: 10000）
 
 ### 例
 

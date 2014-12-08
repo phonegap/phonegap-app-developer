@@ -62,6 +62,8 @@ Wenn ein Fehler immer die Sprache der `errorCallback` führt mit ein `Globalizat
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -101,6 +103,8 @@ Wenn es ist ein Fehler, der immer des Gebietsschemas, dann die `errorCallback` f
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -150,6 +154,8 @@ Die `options.selector` kann `date` , `time` oder`date and time`.
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -168,6 +174,11 @@ Wenn der Browser so, dass eingestellt ist die `en_US` Gebietsschema, das zeigt e
 ### Windows Phone 8 Macken
 
 *   Die `formatLength` option unterstützt nur `short` und `full` Werte.
+
+### Firefox OS Macken
+
+*   `formatLength`ist keine Unterscheidung `long` und`full` 
+*   nur eine Methode der Anzeige von Datum (keine `long` oder `full` Version)
 
 ## navigator.globalization.getCurrencyPattern
 
@@ -202,6 +213,7 @@ Wenn es einen Fehler erhalten das Muster, dann die `errorCallback` führt mit ei
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
 *   iOS
 
 ### Beispiel
@@ -258,6 +270,8 @@ Der Wert des `options.item` kann `months` oder`days`.
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -275,6 +289,10 @@ Wenn der Browser auf festgelegt ist die `en_US` Gebietsschema, in diesem Beispie
         { type: 'wide', item: 'months' }
     );
     
+
+### Firefox OS Macken
+
+*   `options.type`unterstützt einen `genitive` Wert, wichtig für einige Sprachen
 
 ## navigator.globalization.getDatePattern
 
@@ -309,6 +327,7 @@ time`.
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -352,6 +371,8 @@ Wenn es einen Fehler erhalten das Muster, dann die `errorCallback` führt mit ei
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -405,6 +426,7 @@ Die `options.type` kann `decimal` , `percent` , oder`currency`.
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -463,6 +485,8 @@ Wenn gibt es einen Lesefehler das Datum der `errorCallback` führt. Die erwartet
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -501,6 +525,7 @@ Die `options.type` kann sein "decimal", "Prozent" oder "Währung".
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -557,6 +582,8 @@ Wenn es ist ein Fehler beim Analysieren der Datumszeichenfolge dann die `errorCa
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 *   Windows Phone 8
 
@@ -602,6 +629,7 @@ Die `options.type` kann `decimal` , `percent` , oder`currency`.
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
 *   iOS
 *   Windows Phone 8
 
@@ -638,6 +666,8 @@ Dieses Objekt ist erstellt und bevölkert von Cordova und kehrte nach einem Rüc
 
 *   Amazon Fire OS
 *   Android
+*   BlackBerry 10
+*   Firefox OS
 *   iOS
 
 ### Beispiel

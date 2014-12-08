@@ -45,3 +45,20 @@
 * CB-6465: Add license headers to Tizen code
 * CB-6460: Update license headers
 * Add NOTICE file
+
+### 0.2.9 (Jun 05, 2014)
+* CB-6721 Test for batterycritical change before batterylow change
+* CB-5611 firefoxos: battery-status plugin support added
+* CB-4519, CB-4520 low+critical weren't firing when level went from 21->19, and were when level went 19->20
+* CB-6491 add CONTRIBUTING.md
+
+### 0.2.10 (Aug 06, 2014)
+* CB-6957 Ported Battery-status manual & automated
+* CB-6127 Updated translations for docs
+
+### 0.2.11 (Sep 17, 2014)
+* CB-7249 cordova-plugin-battery-status documentation translation: cordova-plugin-battery-status
+* CB-6724 re-add accidental removed of var keyword
+* CB-6957 renamed folder to tests + added nested plugin.xml
+* added documentation for manual tests
+* CB-6957 Style improvements on Manual tests

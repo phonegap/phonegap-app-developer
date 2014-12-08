@@ -80,3 +80,22 @@
 * CB-6808 Add license
 * CB-6706: Relax dependency on file plugin
 * CB-6491 add CONTRIBUTING.md
+
+### 0.3.2 (Aug 06, 2014)
+* ubuntu: fix compler warnings
+* ubuntu: support qt 5.2
+* CB-6127 Updated translations for docs
+* CB-6978 captureImage() function fails in Android
+* CB-6890: Fix pluginManager access for 4.0.x branch
+
+### 0.3.3 (Sep 17, 2014)
+* Renamed test dir, added nested plugin.xml
+* added documentation for manual tests
+* CB-6959 Added manual tests
+* CB-6959 Port capture tests to plugin-test-framework
+
+### 0.3.4 (Oct 03, 2014)
+* CB-7453 Adds fallback to m4a audio format when mp3 recording fails.
+* CB-7429 Fixes image capture manual tests on windows
+* CB-7429 Move windows8 and windows Proxies into one file
+* CB-7429 Adds media capture support for windows

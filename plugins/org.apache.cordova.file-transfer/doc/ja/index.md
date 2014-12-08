@@ -30,12 +30,18 @@
 
 *   アマゾン火 OS
 *   アンドロイド
-*   ブラックベリー 10 *
+*   ブラックベリー 10
+*   Firefox の OS * *
 *   iOS
 *   Windows Phone 7 と 8 *
-*   Windows 8 *
+*   Windows 8 \* * *|
+*   Windows \* * *|
 
 **サポートしていない `onprogress` も `abort()` *
+
+* **サポートしていない `onprogress` *
+
+部分的なサポート `onprogress` のアップロード方法 `onprogress` は Windows limitations_ のための空のプログレスのイベントで呼び出されます。
 
 # ファイル転送
 
@@ -65,8 +71,6 @@
 
 *   **解り**: エラー取得が発生した場合に実行されるコールバック、 `Metadata` 。呼び出されると、 `FileTransferError` オブジェクト。*(機能)*
 
-*   **trustAllHosts**: 省略可能なパラメーターは、デフォルト `false` 。 場合設定 `true` 、セキュリティ証明書をすべて受け付けます。 これは Android の自己署名入りセキュリティ証明書を拒否するので便利です。 運用環境で使用しないでください。 Android と iOS でサポートされています。 *(ブール値)*
-
 *   **オプション**: 省略可能なパラメーター *(オブジェクト)*。有効なキー:
     
     *   **fileKey**: フォーム要素の名前。既定値は `file` です。（，）
@@ -75,6 +79,8 @@
     *   **params**: HTTP リクエストに渡すために任意のキー/値ペアのセット。(オブジェクト)
     *   **chunkedMode**: チャンク ストリーミング モードでデータをアップロードするかどうか。既定値は `true` です。(ブール値)
     *   **ヘッダー**: ヘッダーの名前/ヘッダー値のマップ。1 つ以上の値を指定するには、配列を使用します。(オブジェクト)
+
+*   **trustAllHosts**: 省略可能なパラメーターは、デフォルト `false` 。 場合設定 `true` 、セキュリティ証明書をすべて受け付けます。 これは Android の自己署名入りセキュリティ証明書を拒否するので便利です。 運用環境で使用しないでください。 Android と iOS でサポートされています。 *(ブール値)*
 
 ### 例
 
@@ -192,7 +198,7 @@ A `FileUploadResult` オブジェクトの成功時のコールバックに渡�
         uri,
         fileURL,
         function(entry) {
-            console.log("download complete: " + entry.fullPath);
+            console.log("download complete: " + entry.toURL());
         },
         function(error) {
             console.log("download error source " + error.source);
@@ -252,12 +258,15 @@ A `FileTransferError` オブジェクトは、エラーが発生エラー コー
 
 *   **http_status**: HTTP ステータス コード。この属性は、HTTP 接続から応答コードを受信したときにのみ使用できます。(数)
 
+*   **例外**: どちらか e.getMessage または e.toString (文字列)
+
 ### 定数
 
-*   `FileTransferError.FILE_NOT_FOUND_ERR`
-*   `FileTransferError.INVALID_URL_ERR`
-*   `FileTransferError.CONNECTION_ERR`
-*   `FileTransferError.ABORT_ERR`
+*   1 = `FileTransferError.FILE_NOT_FOUND_ERR`
+*   2 = `FileTransferError.INVALID_URL_ERR`
+*   3 = `FileTransferError.CONNECTION_ERR`
+*   4 = `FileTransferError.ABORT_ERR`
+*   5 = `FileTransferError.NOT_MODIFIED_ERR`
 
 ## 後方互換性をノートします。
 

@@ -5,22 +5,22 @@
         "server" : "",
         "charset" : "UTF-8",
         "ssl" : false,
-		"offlineEnabled" : false,
+        "offlineEnabled" : false,
         "lifecycleTimeout" : 300,
-		"referrerTimeout" : 0,
+        "referrerTimeout" : 0,
         "batchLimit" : 0,
         "privacyDefault" : "optedin",
-		"poi" : []
+        "poi" : []
     },
-	"target" : {
-		"clientCode" : "",
-		"timeout" : 5
-	},
-	"audienceManager" : {
-		"server" : ""
-	},
-	"acquisition" : {
-		"server" : "",
-		"appid" : ""
-	}
+    "target" : {
+        "clientCode" : "",
+        "timeout" : 5
+    },
+    "audienceManager" : {
+		    "server" : ""
+    },
+    "acquisition" : {
+		    "server" : "",
+        "appid" : ""
+    }
 }

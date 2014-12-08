@@ -18,7 +18,6 @@
 */
 package org.apache.cordova;
 
-import java.io.ByteArrayInputStream;
 import java.util.Hashtable;
 
 import org.apache.cordova.CordovaInterface;
@@ -28,18 +27,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.net.http.SslError;
-import android.util.Log;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -58,7 +53,6 @@ import android.webkit.WebViewClient;
 public class CordovaWebViewClient extends WebViewClient {
 
 	private static final String TAG = "CordovaWebViewClient";
-	private static final String CORDOVA_EXEC_URL_PREFIX = "http://cdv_exec/";
     CordovaInterface cordova;
     CordovaWebView appView;
     CordovaUriHelper helper;
@@ -68,11 +62,7 @@ public class CordovaWebViewClient extends WebViewClient {
     /** The authorization tokens. */
     private Hashtable<String, AuthenticationToken> authenticationTokens = new Hashtable<String, AuthenticationToken>();
 
-    /**
-     * Constructor.
-     *
-     * @param cordova
-     */
+    @Deprecated
     public CordovaWebViewClient(CordovaInterface cordova) {
         this.cordova = cordova;
     }
@@ -94,29 +84,11 @@ public class CordovaWebViewClient extends WebViewClient {
      *
      * @param view
      */
+    @Deprecated
     public void setWebView(CordovaWebView view) {
         this.appView = view;
         helper = new CordovaUriHelper(cordova, view);
     }
-
-
-    // Parses commands sent by setting the webView's URL to:
-    // cdvbrg:service/action/callbackId#jsonArgs
-	private void handleExecUrl(String url) {
-		int idx1 = CORDOVA_EXEC_URL_PREFIX.length();
-		int idx2 = url.indexOf('#', idx1 + 1);
-		int idx3 = url.indexOf('#', idx2 + 1);
-		int idx4 = url.indexOf('#', idx3 + 1);
-		if (idx1 == -1 || idx2 == -1 || idx3 == -1 || idx4 == -1) {
-			Log.e(TAG, "Could not decode URL command: " + url);
-			return;
-		}
-		String service    = url.substring(idx1, idx2);
-		String action     = url.substring(idx2 + 1, idx3);
-		String callbackId = url.substring(idx3 + 1, idx4);
-		String jsonArgs   = url.substring(idx4 + 1);
-        appView.pluginManager.exec(service, action, callbackId, jsonArgs);
-	}
 
     /**
      * Give the host application a chance to take over the control when a new url
@@ -169,7 +141,7 @@ public class CordovaWebViewClient extends WebViewClient {
         isCurrentlyLoading = true;
         LOG.d(TAG, "onPageStarted(" + url + ")");
         // Flush stale messages.
-        this.appView.jsMessageQueue.reset();
+        this.appView.bridge.reset(url);
 
         // Broadcast message that page has loaded
         this.appView.postMessage("onPageStarted", url);

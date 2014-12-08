@@ -58,3 +58,25 @@
 * Android should return BCP47 tag, not localized string
 * CB-6491 add CONTRIBUTING.md
 * CB-5980 Updated version and RELEASENOTES.md for release 0.2.6
+
+### 0.3.0 (Aug 06, 2014)
+* The right Apache License 2.0 added
+* Update headers and NOTICE file
+* [BlackBerry10] Implement Globalization for BB10
+* Initial implementation for **FirefoxOS**
+* CB-4602 ios: Use normalized values for getPreferredLanguage.
+* CB-6127 Updated translations for docs
+* CB-4602 geolocation.getPreferredLanguage and geolocation.getLocaleName now return strings with hypen (-) to stay compliant with current standards
+
+### 0.3.1 (Sep 17, 2014)
+* CB-6490 [BlackBerry10] Use hyphen instead of underscore in getLocaleName().
+* CB-7548 [BlackBerry10] Allow any numeric type as date in dateToString method.
+* Hold the information if L10n was ready before.
+* CB-7233 [BlackBerry10] Globalization is now supported
+* Renamed test dir, added nested plugin.xml
+* Clean-up: removed duplicate code
+* Added test to complete CB-7064, added tests that check for W3C compliance in language tags generated from PreferredLanguage and GetLocale methods
+* CB-6962 Ported globalization tests to framework
+
+### 0.3.2 (Oct 03, 2014)
+* CB-7548 [BlackBerry10] Re-implement getPreferredLanguage() and getLocaleName().

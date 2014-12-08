@@ -40,6 +40,22 @@
     NSString* language = [[NSLocale preferredLanguages] objectAtIndex:0];
 
     if (language) {
+        //Format to match other devices
+        if(language.length <= 2) {
+            NSLocale* locale = [NSLocale currentLocale];
+            NSRange underscoreIndex = [[locale localeIdentifier] rangeOfString:@"_" options:NSBackwardsSearch];
+            NSRange atSignIndex = [[locale localeIdentifier] rangeOfString:@"@"];
+            //If localeIdentifier did not contain @, i.e. did not have calendar other than Gregoarian selected
+            if(atSignIndex.length == 0)
+                language = [NSString stringWithFormat:@"%@%@", language, [[locale localeIdentifier] substringFromIndex:underscoreIndex.location]];
+            else {
+                NSRange localeRange = NSMakeRange(underscoreIndex.location, atSignIndex.location-underscoreIndex.location);
+                language = [NSString stringWithFormat:@"%@%@", language, [[locale localeIdentifier] substringWithRange:localeRange]];
+            }
+        }
+        
+        language = [language stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
+
         NSDictionary* dictionary = [NSDictionary dictionaryWithObject:language forKey:@"value"];
 
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
@@ -63,7 +79,9 @@
     NSLocale* locale = [NSLocale currentLocale];
 
     if (locale) {
-        dictionary = [NSDictionary dictionaryWithObject:[locale localeIdentifier] forKey:@"value"];
+        NSString *localeIdentifier = [[locale localeIdentifier] stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
+
+        dictionary = [NSDictionary dictionaryWithObject:localeIdentifier forKey:@"value"];
 
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dictionary];
     } else {

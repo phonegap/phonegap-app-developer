@@ -15,11 +15,11 @@
  *  @see privacyStatus
  *  @see setPrivacyStatus
  */
-typedef enum ADBMobilePrivacyStatus : NSUInteger {
+typedef NS_ENUM(NSUInteger, ADBMobilePrivacyStatus) {
     ADBMobilePrivacyStatusOptIn   = 1, /*!< Enum value ADBMobilePrivacyStatusOptIn. */
     ADBMobilePrivacyStatusOptOut  = 2, /*!< Enum value ADBMobilePrivacyStatusOptOut. */
     ADBMobilePrivacyStatusUnknown = 3  /*!< Enum value ADBMobilePrivacyStatusUnknown. @note only available in conjunction with offline tracking */
-} ADBMobilePrivacyStatus;
+};
 
 /**
  * 	@class ADBMobile
@@ -91,6 +91,13 @@ typedef enum ADBMobilePrivacyStatus : NSUInteger {
  *  @note This should be the first method called upon app launch.
  */
 + (void) collectLifecycleData;
+
+/**
+ *	@brief allows one-time override of the path for the json config file
+ *	@note This *must* be called prior to AppDidFinishLaunching has completed and before any other interactions with the Adobe Mobile library have happened.  
+ *		Only the first call to this function will have any effect.
+ */
++ (void) overrideConfigPath: (NSString *) path;
 
 #pragma mark - Analytics
 
@@ -362,6 +369,11 @@ typedef enum ADBMobilePrivacyStatus : NSUInteger {
  * 	@param callback a block pointer to call with a response dictionary pointer parameter upon completion of the service request.
  */
 + (void) audienceSignalWithData:(NSDictionary *)data callback:(void (^)(NSDictionary *response))callback;
+
+/**
+ * 	@brief Resets audience manager UUID and purges current visitor profile
+ */
++ (void) audienceReset;
 
 @end
 

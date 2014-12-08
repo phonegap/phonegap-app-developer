@@ -18,6 +18,7 @@ using System.Threading;
 using Microsoft.Devices;
 using Microsoft.Phone.Controls;
 using WPCordovaClassLib.Cordova.Commands;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace WPCordovaClassLib.Cordova
@@ -34,6 +35,11 @@ namespace WPCordovaClassLib.Cordova
         private readonly WebBrowser webBrowser;
 
         /// <summary>
+        /// List of commands with attached handlers
+        /// </summary>
+        private List<BaseCommand> commands;
+
+        /// <summary>
         /// Creates new instance of a NativeExecution class.
         /// </summary>
         /// <param name="browser">Reference to web part where application is hosted</param>
@@ -45,6 +51,22 @@ namespace WPCordovaClassLib.Cordova
             }
 
             this.webBrowser = browser;
+            this.commands = new List<BaseCommand>();
+            webBrowser.Unloaded += webBrowser_Unloaded;
+        }
+
+        /// <summary>
+        /// Detaches event handlers to prevent memory leak on page navigation
+        /// </summary>
+        void webBrowser_Unloaded(object sender, RoutedEventArgs e)
+        {
+            for (int i = commands.Count - 1; i >= 0; i--)
+            {
+                if (commands[i] != null)
+                {
+                    commands[i].DetachHandlers();
+                }
+            }
         }
 
         /// <summary>
@@ -120,6 +142,7 @@ namespace WPCordovaClassLib.Cordova
                     try
                     {
                         bc.InvokeMethodNamed(commandCallParams.CallbackId, commandCallParams.Action, commandCallParams.Args);
+                        commands.Add(bc);
                     }
                     catch (Exception ex)
                     {

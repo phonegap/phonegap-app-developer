@@ -19,7 +19,7 @@
 
 # org.apache.cordova.inappbrowser
 
-호출할 때 표시 하는 웹 브라우저 보기를 제공 하는이 플러그인 `window.open()` , 또는 때로 형성 된 링크 열기`<a target="_blank">`.
+이 플러그인은를 호출할 때 표시 하는 웹 브라우저 보기를 제공 합니다.`window.open()`.
 
     var ref = window.open('http://apache.org', '_blank', 'location=yes');
     
@@ -31,22 +31,11 @@
     cordova plugin add org.apache.cordova.inappbrowser
     
 
-### Firefox 운영 체제
-
-[참고 문서][1]에 설명 된 대로 **www/manifest.webapp** 를 만듭니다. 관련 부여할 추가 합니다.
-
- [1]: https://developer.mozilla.org/en-US/Apps/Developing/Manifest
-
-    "permissions": {
-        "browser": {}
-    }
-    
-
 ## window.open
 
 새 URL을 엽니다 `InAppBrowser` 인스턴스, 현재 브라우저 인스턴스 또는 시스템 브라우저.
 
-    var ref = window.open (url, 대상, 옵션);
+    var ref = window.open(url, target, options);
     
 
 *   **심판**:에 대 한 참조는 `InAppBrowser` 창. *(InAppBrowser)*
@@ -85,18 +74,19 @@
     *   **allowInlineMediaPlayback**: 설정 `yes` 또는 `no` 인라인 HTML5 미디어 재생, 장치 전용 재생 인터페이스 보다는 브라우저 창 내에서 표시할 수 있도록 합니다. HTML의 `video` 요소가 포함 되어야 합니다는 `webkit-playsinline` 특성 (기본값:`no`)
     *   **keyboardDisplayRequiresUserAction**: 설정 `yes` 또는 `no` 양식 요소는 자바 스크립트를 통해 포커스를 받을 때 키보드를 열고 `focus()` 전화 (기본값:`yes`).
     *   **suppressesIncrementalRendering**: 설정 `yes` 또는 `no` (기본값을 렌더링 하기 전에 모든 새로운 보기 콘텐츠를 받을 때까지 기다려야`no`).
-    *   **presentationstyle**: 설정 `pagesheet` , `formsheet` 또는 `fullscreen` [프레 젠 테이 션 스타일][2] (기본값을 설정 하려면`fullscreen`).
-    *   **transitionstyle**: 설정 `fliphorizontal` , `crossdissolve` 또는 `coververtical` [전환 스타일][3] (기본값을 설정 하려면`coververtical`).
+    *   **presentationstyle**: 설정 `pagesheet` , `formsheet` 또는 `fullscreen` [프레 젠 테이 션 스타일][1] (기본값을 설정 하려면`fullscreen`).
+    *   **transitionstyle**: 설정 `fliphorizontal` , `crossdissolve` 또는 `coververtical` [전환 스타일][2] (기본값을 설정 하려면`coververtical`).
     *   **toolbarposition**: 설정 `top` 또는 `bottom` (기본값은 `bottom` ). 위쪽 또는 아래쪽 창에 도구 모음을 발생 합니다.
 
- [2]: http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalPresentationStyle
- [3]: http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalTransitionStyle
+ [1]: http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalPresentationStyle
+ [2]: http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalTransitionStyle
 
 ### 지원 되는 플랫폼
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
 *   블랙베리 10
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 7과 8
 
@@ -104,6 +94,36 @@
 
     var ref = window.open('http://apache.org', '_blank', 'location=yes');
     var ref2 = window.open(encodeURI('http://ja.m.wikipedia.org/wiki/ハングル'), '_blank', 'location=yes');
+    
+
+### 파이어 폭스 OS 단점
+
+플러그인 어떤 디자인을 적용 하지 않는 경우 열 일부 CSS의 규칙을 추가할 필요가 있다 `target='_blank'` . 이 같이 규칙
+
+     css
+    .inAppBrowserWrap {
+      background-color: rgba(0,0,0,0.75);
+      color: rgba(235,235,235,1.0);
+    }
+    .inAppBrowserWrap menu {
+      overflow: auto;
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .inAppBrowserWrap menu li {
+      font-size: 25px;
+      height: 25px;
+      float: left;
+      margin: 0 10px;
+      padding: 3px 10px;
+      text-decoration: none;
+      color: #ccc;
+      display: block;
+      background: rgba(30,30,30,0.50);
+    }
+    .inAppBrowserWrap menu li.disabled {
+        color: #777;
+    }
     
 
 ## InAppBrowser
@@ -206,6 +226,7 @@
 
 *   아마존 화재 운영 체제
 *   안 드 로이드
+*   Firefox 운영 체제
 *   iOS
 *   Windows Phone 7과 8
 

@@ -30,16 +30,22 @@ Ce plugin vous permet de télécharger des fichiers.
 
 *   Amazon Fire OS
 *   Android
-*   BlackBerry 10 *
+*   BlackBerry 10
+*   Firefox OS **
 *   iOS
 *   Windows Phone 7 et 8 *
-*   Windows 8 *
+*   Windows 8 \***|
+*   Windows \***|
 
 * *Ne supportent pas `onprogress` ni `abort()` *
 
+** *Ne prennent pas en charge `onprogress` *
+
+Prise en charge partielle des `onprogress` pour télécharger méthode. `onprogress` est appelée avec l'événement de progression vide à cause de Windows limitations_
+
 # Transfert de fichiers
 
-L'objet `FileTransfer` fournit un moyen de tranférer des fichiers sur un serveur HTTP avec une requête multi-part POST, et aussi pour télécharger des fichiers.
+Le `FileTransfer` objet fournit un moyen de télécharger des fichiers à l'aide d'une requête HTTP de la poste plusieurs partie et pour télécharger des fichiers aussi bien.
 
 ## Propriétés
 
@@ -65,16 +71,16 @@ L'objet `FileTransfer` fournit un moyen de tranférer des fichiers sur un serveu
 
 *   **errorCallback** : callback d'erreur s'exécutant si une erreur survient lors de la récupération de l'objet `Metadata` . Appelée avec un objet `FileTransferError`. *(Function)*
 
-*   **trustAllHosts** : paramètre facultatif, sa valeur par défaut est `false`. Si sa valeur est réglée à `true`, tous les certificats de sécurité sont acceptés. Ceci peut être utile car Android rejette les certificats auto-signés. N'est pas recommandé pour une utilisation en production. Supporté sous Android et iOS. *(boolean)*
-
 *   **options**: paramètres facultatifs *(objet)*. Clés valides :
     
-    *   **fileKey** : le nom de l'élément form. La valeur par défaut est `file`. (DOMString)
-    *   **fileName** : le nom de fichier à utiliser pour l'enregistrement sur le serveur. La valeur par défaut est `image.jpg`. (DOMString)
-    *   **mimeType** : le type mime des données à envoyer. La valeur par défaut est `image/jpeg`. (DOMString)
-    *   **params** : un ensemble de paires clé/valeur facultative à passer dans la requête HTTP. (Objet)
-    *   **chunkedMode** : s'il faut transmettre ou non les données en mode streaming de bloc. La valeur par défaut est `true`. (Boolean)
-    *   **headers** : un objet représentant les noms et valeurs d'en-têtes à transmettre. Utiliser un tableau permet de spécifier plusieurs valeurs. (Objet)
+    *   **fileKey**: le nom de l'élément form. Valeur par défaut est `file` . (DOMString)
+    *   **fileName**: le nom de fichier à utiliser lorsque vous enregistrez le fichier sur le serveur. Valeur par défaut est `image.jpg` . (DOMString)
+    *   **type MIME**: le type mime des données à télécharger. Valeur par défaut est `image/jpeg` . (DOMString)
+    *   **params**: un ensemble de paires clé/valeur facultative pour passer dans la requête HTTP. (Objet)
+    *   **chunkedMode**: s'il faut télécharger les données en mode streaming mémorisé en bloc. Valeur par défaut est `true` . (Boolean)
+    *   **en-têtes**: une carte des valeurs d'en-tête en-tête/nom. Un tableau permet de spécifier plusieurs valeurs. (Objet)
+
+*   **trustAllHosts**: paramètre facultatif, valeur par défaut est `false` . Si la valeur `true` , il accepte tous les certificats de sécurité. Ceci est utile car Android rejette des certificats auto-signés. Non recommandé pour une utilisation de production. Supporté sur Android et iOS. *(boolean)*
 
 ### Exemple
 
@@ -146,7 +152,7 @@ L'objet `FileTransfer` fournit un moyen de tranférer des fichiers sur un serveu
 
 ## FileUploadResult
 
-Un objet `FileUploadResult` est passé à la callback de succès de la méthode `upload()` de l'objet `FileTransfer`.
+A `FileUploadResult` objet est passé au rappel de succès la `FileTransfer` de l'objet `upload()` méthode.
 
 ### Propriétés
 
@@ -192,7 +198,7 @@ Un objet `FileUploadResult` est passé à la callback de succès de la méthode 
         uri,
         fileURL,
         function(entry) {
-            console.log("download complete: " + entry.fullPath);
+            console.log("download complete: " + entry.toURL());
         },
         function(error) {
             console.log("download error source " + error.source);
@@ -210,7 +216,7 @@ Un objet `FileUploadResult` est passé à la callback de succès de la méthode 
 
 ## abort
 
-Abandonne un transfert en cours. Un objet FileTransferError avec un code d'erreur FileTransferError.ABORT_ERR est passé à la callback d'erreur onerror.
+Abandonne un transfert en cours. Le rappel onerror est passé à un objet FileTransferError qui a un code d'erreur de FileTransferError.ABORT_ERR.
 
 ### Exemple
 
@@ -240,7 +246,7 @@ Abandonne un transfert en cours. Un objet FileTransferError avec un code d'erreu
 
 ## FileTransferError
 
-Un objet `FileTransferError` est passé à une callback d'erreur lorsqu'une erreur survient.
+A `FileTransferError` objet est passé à un rappel d'erreur lorsqu'une erreur survient.
 
 ### Propriétés
 
@@ -252,30 +258,33 @@ Un objet `FileTransferError` est passé à une callback d'erreur lorsqu'une erre
 
 *   **http_status** : code d'état HTTP. Cet attribut n'est disponible que lorsqu'un code de réponse est fourni via la connexion HTTP. (Number)
 
+*   **exception**: soit e.getMessage ou e.toString (String)
+
 ### Constantes
 
-*   `FileTransferError.FILE_NOT_FOUND_ERR`
-*   `FileTransferError.INVALID_URL_ERR`
-*   `FileTransferError.CONNECTION_ERR`
-*   `FileTransferError.ABORT_ERR`
+*   1 = `FileTransferError.FILE_NOT_FOUND_ERR`
+*   2 = `FileTransferError.INVALID_URL_ERR`
+*   3 = `FileTransferError.CONNECTION_ERR`
+*   4 = `FileTransferError.ABORT_ERR`
+*   5 = `FileTransferError.NOT_MODIFIED_ERR`
 
 ## Backwards Compatibility Notes
 
-Les versions précédentes de ce plugin accepte seulement les chemins de fichiers périphérique absolus comme source pour les chargement, ou comme cible pour les téléchargements. Ces chemins sont généralement de la forme
+Les versions précédentes de ce plugin n'accepterait périphérique--fichier-chemins d'accès absolus comme source pour les téléchargements, ou comme cible pour les téléchargements. Ces chemins seraient généralement de la forme
 
     /var/mobile/Applications/<application UUID>/Documents/path/to/file  (iOS)
     /storage/emulated/0/path/to/file                                    (Android)
     
 
-Pour la compatibilité ascendante, ces chemins sont toujours acceptés, et si votre application a enregistré des chemins comme ceux-ci dans un stockage persistant, alors ils peuvent continuer à être utilisé.
+Pour vers l'arrière la compatibilité, ces chemins sont toujours acceptés, et si votre application a enregistré des chemins comme celles-ci dans un stockage persistant, alors ils peuvent continuer à être utilisé.
 
-Ces chemins ont été précédemment exposés dans la propriété `fullPath` de `FileEntry` et objets `DirectoryEntry` retournés par le fichier plugin. Nouvelles versions du fichier plugin, cependant, ne plus exposer ces chemins à JavaScript.
+Ces chemins ont été précédemment exposés dans le `fullPath` propriété de `FileEntry` et `DirectoryEntry` les objets retournés par le fichier plugin. Nouvelles versions du fichier plugin, cependant, ne plus exposent ces chemins à JavaScript.
 
-Si vous migrez vers une nouvelle version du fichier (1.0.0 ou plus récent) et que vous utilisiez précédemment `entry.fullPath` en tant qu'arguments à `download()` ou `upload()`, alors vous aurez besoin de modifier votre code pour utiliser le système de fichiers URL à la place.
+Si vous migrez vers une nouvelle (1.0.0 ou plus récent) version de fichier et vous avez précédemment utilisé `entry.fullPath` comme arguments à `download()` ou `upload()` , alors vous aurez besoin de modifier votre code pour utiliser le système de fichiers URL au lieu de cela.
 
-`FileEntry.toURL()` et `DirectoryEntry.toURL()` retournent une URL de système de fichier de formulaire
+`FileEntry.toURL()`et `DirectoryEntry.toURL()` retournent une URL de système de fichiers du formulaire
 
     cdvfile://localhost/persistent/path/to/file
     
 
-qui peut être utilisé à la place du chemin d'accès absolu au fichier dans les méthodes `download()` et `upload()`.
+qui peut être utilisé à la place le chemin d'accès absolu au fichier dans les deux `download()` et `upload()` méthodes.

@@ -30,9 +30,9 @@ Dialog {
     property string button3Text
     property bool promptVisible
     property string defaultPromptText
-    TextInput {// FIXME: swith to TextField(TextField should support visible property)
+
+    TextField {
         id: prompt
-        color: "white"
         text: defaultPromptText
         visible: promptVisible
         focus: true
@@ -41,7 +41,7 @@ Dialog {
         text: button1Text
         color: "orange"
         onClicked: {
-            root.exec("Notification", "notificationDialogButtonPressed", [1, prompt.text]);
+            root.exec("Notification", "notificationDialogButtonPressed", [1, prompt.text, promptVisible]);
             PopupUtils.close(dialogue)
         }
     }
@@ -50,7 +50,7 @@ Dialog {
         visible: button2Text.length > 0
         color: "orange"
         onClicked: {
-            root.exec("Notification", "notificationDialogButtonPressed", [2, prompt.text]);
+            root.exec("Notification", "notificationDialogButtonPressed", [2, prompt.text, promptVisible]);
             PopupUtils.close(dialogue)
         }
     }
@@ -58,7 +58,7 @@ Dialog {
         text: button3Text
         visible: button3Text.length > 0
         onClicked: {
-            root.exec("Notification", "notificationDialogButtonPressed", [3, prompt.text]);
+            root.exec("Notification", "notificationDialogButtonPressed", [3, prompt.text, promptVisible]);
             PopupUtils.close(dialogue)
         }
     }

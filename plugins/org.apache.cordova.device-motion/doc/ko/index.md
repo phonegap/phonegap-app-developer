@@ -31,6 +31,7 @@
 *   아마존 화재 운영 체제
 *   안 드 로이드
 *   블랙베리 10
+*   브라우저
 *   Firefox 운영 체제
 *   iOS
 *   Tizen
@@ -72,6 +73,10 @@
     navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
     
 
+### 브라우저 만지면
+
+X, Y 값 Z 모션은가 속도계 시뮬레이션 모든에 임의로 생성 된 순서입니다.
+
 ### iOS 단점
 
 *   iOS는 어떤 주어진된 시점에서 현재 가속도의 개념을 인식 하지 못합니다.
@@ -88,11 +93,11 @@
 
     var watchID = navigator.accelerometer.watchAcceleration(accelerometerSuccess,
                                                            accelerometerError,
-                                                           [accelerometerOptions]);
+                                                           accelerometerOptions);
     
 
 *   **accelerometerOptions**: 다음 선택적 키 개체: 
-    *   **주파수**: 검색 하는 `Acceleration` (밀리초)입니다. *(수)* (기본: 10000)
+    *   **기간**: 밀리초에서 가속 데이터와 accelerometerSuccess에 대 한 호출의 요청된 기간. *(수)* (기본: 10000)
 
 ### 예를 들어
 

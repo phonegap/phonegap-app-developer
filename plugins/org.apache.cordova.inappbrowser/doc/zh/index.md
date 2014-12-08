@@ -19,7 +19,7 @@
 
 # org.apache.cordova.inappbrowser
 
-這個外掛程式提供了一個 web 瀏覽器視圖，顯示時調用 `window.open()` ，或當打開連結形成的作為`<a target="_blank">`.
+這個外掛程式提供了一個 web 瀏覽器視圖，顯示在調用時`window.open()`.
 
     var ref = window.open('http://apache.org', '_blank', 'location=yes');
     
@@ -31,22 +31,11 @@
     cordova plugin add org.apache.cordova.inappbrowser
     
 
-### 火狐瀏覽器作業系統
-
-在[清單檔][1]中所述創建**www/manifest.webapp** 。添加相關許可權。
-
- [1]: https://developer.mozilla.org/en-US/Apps/Developing/Manifest
-
-    "permissions": {
-        "browser": {}
-    }
-    
-
 ## window.open
 
-在一個新的中打開 URL `InAppBrowser` 實例，當前的瀏覽器實例或系統瀏覽器。
+在一個新打開一個 URL `InAppBrowser` 實例，當前的瀏覽器實例或系統瀏覽器。
 
-    var ref = window.open (url、 目標、 選項） ；
+    var ref = window.open(url, target, options);
     
 
 *   **ref**： 參考 `InAppBrowser` 視窗。*() InAppBrowser*
@@ -85,18 +74,19 @@
     *   **allowInlineMediaPlayback**： 將設置為 `yes` 或 `no` ，讓線在 HTML5 播放媒體，在瀏覽器視窗中，而不是特定于設備播放介面內顯示。 HTML 的 `video` 元素還必須包括 `webkit-playsinline` 屬性 （預設為`no`)
     *   **keyboardDisplayRequiresUserAction**： 將設置為 `yes` 或 `no` 時，要打開鍵盤表單元素接收焦點通過 JavaScript 的 `focus()` 調用 （預設為`yes`).
     *   **suppressesIncrementalRendering**： 將設置為 `yes` 或 `no` 等待，直到所有新查看的內容正在呈現 （預設為前收到`no`).
-    *   **presentationstyle**： 將設置為 `pagesheet` ， `formsheet` 或 `fullscreen` 來設置[演示文稿樣式][2](預設為`fullscreen`).
-    *   **transitionstyle**： 將設置為 `fliphorizontal` ， `crossdissolve` 或 `coververtical` 設置[過渡樣式][3](預設為`coververtical`).
+    *   **presentationstyle**： 將設置為 `pagesheet` ， `formsheet` 或 `fullscreen` 來設置[演示文稿樣式][1](預設為`fullscreen`).
+    *   **transitionstyle**： 將設置為 `fliphorizontal` ， `crossdissolve` 或 `coververtical` 設置[過渡樣式][2](預設為`coververtical`).
     *   **toolbarposition**： 將設置為 `top` 或 `bottom` （預設值是 `bottom` ）。使工具列，則在頂部或底部的視窗。
 
- [2]: http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalPresentationStyle
- [3]: http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalTransitionStyle
+ [1]: http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalPresentationStyle
+ [2]: http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalTransitionStyle
 
 ### 支援的平臺
 
 *   亞馬遜火 OS
 *   Android 系統
 *   黑莓 10
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 7 和 8
 
@@ -104,6 +94,36 @@
 
     var ref = window.open('http://apache.org', '_blank', 'location=yes');
     var ref2 = window.open(encodeURI('http://ja.m.wikipedia.org/wiki/ハングル'), '_blank', 'location=yes');
+    
+
+### 火狐瀏覽器作業系統的怪癖
+
+外掛程式不會執行任何的設計是需要添加一些 CSS 規則，如果打開的 `target='_blank'` 。規則 》 可能看起來像這些
+
+     css
+    .inAppBrowserWrap {
+      background-color: rgba(0,0,0,0.75);
+      color: rgba(235,235,235,1.0);
+    }
+    .inAppBrowserWrap menu {
+      overflow: auto;
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .inAppBrowserWrap menu li {
+      font-size: 25px;
+      height: 25px;
+      float: left;
+      margin: 0 10px;
+      padding: 3px 10px;
+      text-decoration: none;
+      color: #ccc;
+      display: block;
+      background: rgba(30,30,30,0.50);
+    }
+    .inAppBrowserWrap menu li.disabled {
+        color: #777;
+    }
     
 
 ## InAppBrowser
@@ -206,6 +226,7 @@
 
 *   亞馬遜火 OS
 *   Android 系統
+*   火狐瀏覽器的作業系統
 *   iOS
 *   Windows Phone 7 和 8
 

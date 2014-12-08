@@ -42,30 +42,24 @@ Ce plugin affiche et masque un écran de démarrage lors du lancement de l'appli
 
 ### Quirks Android
 
-Dans votre fichier config.xml, vous devez ajouter la préférence suivante
+Dans votre fichier config.xml, vous devez ajouter les préférences suivantes :
 
-`<preference name="splashscreen" value="foo" />`
+`<preference name="SplashScreen" value="foo" />` `<preference name="SplashScreenDelay" value="10000" />`
 
-Où foo est le nom du fichier splashscreen. Préférence un fichier de 9 correctif. Assurez-vous d'ajouter vos fichiers splashcreen dans votre répertoire res/xml dans les dossiers appropriés.
+Où foo est le nom du fichier splashscreen, préférablement un fichier de 9 correctif. Assurez-vous d'ajouter vos fichiers splashcreen dans votre répertoire res/xml dans les dossiers appropriés. Le deuxième paramètre représente combien de temps le splashscreen apparaîtra en millisecondes. Il est par défaut à 3000 ms. Pour plus d'informations, consultez [icônes et écrans de démarrage][1] .
 
-Pour Android, vous devez également modifier votre fichier java principal de projets. Vous devez ajouter un deuxième paramètre, ce qui représente un temps de retard à votre super.loadUrl.
-
-`super.loadUrl(Config.getStartUrl(), 10000);`
+ [1]: http://cordova.apache.org/docs/en/edge/config_ref_images.md.html
 
 ## splashscreen.Hide
 
-Fait disparaître l'écran de démarrage.
+Faire disparaître de l'écran de démarrage.
 
     navigator.splashscreen.hide();
     
 
-### BlackBerry 10 Quirk
+### BlackBerry 10, WP8, iOS Quirk
 
-La `config.xml` du fichier `AutoHideSplashScreen` doit être`false`.
-
-### iOS Quirk
-
-Le paramètre `AutoHideSplashScreen</code du fichier <code>config.xml` doit être réglé à `false` . Pour retarder la disparition de l'écran de démarrage de deux secondes, ajoute un minuteur comme ci-dessous dans le gestionnaire d'événements `deviceready` :
+La `config.xml` du fichier `AutoHideSplashScreen` doit être `false` . Pour retarder la cacher l'écran de démarrage pendant deux secondes, ajouter un minuteur comme suit dans la `deviceready` gestionnaire d'événements :
 
         setTimeout(function() {
             navigator.splashscreen.hide();
@@ -80,5 +74,3 @@ Affiche l'écran de démarrage.
     
 
 Votre application ne peut pas appeler `navigator.splashscreen.show()` jusqu'à ce que l'application a commencé et le `deviceready` événement a été déclenché. Mais puisqu'en général, l'écran de démarrage est destiné à être visible avant que votre application a commencé, qui semblerait à l'encontre des objectifs de l'écran de démarrage. Fournir une configuration en `config.xml` sera automatiquement `show` l'écran de démarrage immédiatement après votre lancement de l'app et avant qu'il a complètement démarré et a reçu le `deviceready` événement. Voir les [icônes et les écrans de démarrage][1] pour plus d'informations sur la conduite de cette configuration. Pour cette raison, il est peu probable que vous devez appeler `navigator.splashscreen.show()` pour rendre l'écran de démarrage visible pour le démarrage de l'application.
-
- [1]: http://cordova.apache.org/docs/en/edge/config_ref_images.md.html

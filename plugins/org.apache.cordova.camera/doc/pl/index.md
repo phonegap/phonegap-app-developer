@@ -28,7 +28,7 @@ Wtyczka dostarcza API do robienia zdjęć i wybór zdjęć z biblioteki obrazu s
 
 Pobiera zdjęcia za pomocą aparatu lub z galerii zdjęć w urządzeniu. Obraz jest przekazywany do funkcji zwrotnej success jako `String` kodowany za pomocą base64 lub jako URI do pliku. Sama metoda zwraca obiekt `CameraPopoverHandle`, który może służyć do zmiany położenia wyskakującego okna wyboru pliku.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### Opis
@@ -60,19 +60,31 @@ Z zakodowanym obrazem lub URI możesz zrobić co zechcesz, na przykład:
 *   Amazon ogień OS
 *   Android
 *   Jeżyna 10
+*   Przeglądarka
 *   Firefox OS
 *   iOS
 *   Tizen
 *   Windows Phone 7 i 8
 *   Windows 8
 
+### Preferencje (iOS)
+
+*   **CameraUsesGeolocation** (boolean, wartość domyślna to false). Do przechwytywania JPEG, zestaw do true, aby uzyskać danych geolokalizacyjnych w nagłówku EXIF. To spowoduje wniosek o geolokalizacji uprawnienia, jeśli zestaw na wartość true.
+    
+        <preference name="CameraUsesGeolocation" value="false" />
+        
+
 ### Amazon ogień OS dziwactwa
 
 Amazon ogień OS używa intencje do rozpoczęcia działalności aparatu na urządzenie do przechwytywania obrazów, i na telefony z pamięci, Cordova aktywność może zostać zabity. W takim scenariuszu obrazy mogą nie być wyświetlane po przywróceniu aktywności Cordovy.
 
-### Android dziwactwach
+### Android dziwactwa
 
 Android używa intencje do rozpoczęcia działalności aparatu na urządzenie do przechwytywania obrazów, i na telefony z pamięci, Cordova aktywność może zostać zabity. W tym scenariuszu obraz mogą nie być wyświetlane po przywróceniu aktywności Cordova.
+
+### Quirks przeglądarki
+
+Może zwracać tylko zdjęcia jako obraz w formacie algorytmem base64.
 
 ### Firefox OS dziwactwa
 
@@ -93,7 +105,7 @@ Tym JavaScript `alert()` w jednej z wywołania zwrotnego funkcji może powodowa�
 
 Wywoływanie aparat native aplikacji, podczas gdy urządzenie jest podłączone przez Zune nie działa i powoduje błąd wywołania zwrotnego.
 
-### Tizen dziwactwa
+### Osobliwości Tizen
 
 Tizen obsługuje tylko `destinationType` z `Camera.DestinationType.FILE_URI` i `sourceType` z`Camera.PictureSourceType.PHOTOLIBRARY`.
 
@@ -147,9 +159,9 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 ### Opcje
 
-*   **quality**: Jakość zapisywanego obrazu, wyrażona w przedziale 0-100, gdzie 100 zazwyczaj jest maksymalną rozdzielczością bez strat w czasie kompresji pliku. *(Liczba)* (Pamiętaj, że informacja o rozdzielczości aparatu jest niedostępna.)
+*   **jakość**: jakość zapisany obraz, wyrażona jako zakres od 0 do 100, gdzie 100 jest zazwyczaj pełnej rozdzielczości bez utraty z kompresji plików. Wartością domyślną jest 50. *(Liczba)* (Należy zauważyć, że informacje o rozdzielczość kamery jest niedostępny).
 
-*   **destinationType**: Wybierz format zwracanej wartości. Zdefiniowane w `navigator.camera.DestinationType` *(numer)*
+*   **destinationType**: Wybierz format zwracanej wartości. Wartością domyślną jest FILE_URI. Zdefiniowane w `navigator.camera.DestinationType` *(numer)*
     
         Camera.DestinationType = {
             DATA_URL : 0,      // Return image as base64-encoded string
@@ -158,7 +170,7 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
         };
         
 
-*   **sourceType**: Ustaw źródło obrazu. Zdefiniowane w `navigator.camera.PictureSourceType` *(numer)*
+*   **sourceType**: Ustaw źródło obrazu. Wartością domyślną jest aparat fotograficzny. Zdefiniowane w `navigator.camera.PictureSourceType` *(numer)*
     
         Camera.PictureSourceType = {
             PHOTOLIBRARY : 0,
@@ -167,9 +179,9 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
         };
         
 
-*   **allowEdit**: Pozwala na prostą edycję obrazu przed zaznaczeniem. *(Boolean)*
+*   **allowEdit**: umożliwia łatwą edycję obrazu przed zaznaczeniem. *(Wartość logiczna)*
 
-*   **encodingType**: Wybierz plik obrazu zwracany jest kodowanie. Zdefiniowane w `navigator.camera.EncodingType` *(numer)*
+*   **encodingType**: Wybierz plik obrazu zwracany jest kodowanie. Domyślnie jest JPEG. Zdefiniowane w `navigator.camera.EncodingType` *(numer)*
     
         Camera.EncodingType = {
             JPEG : 0,               // Return JPEG encoded image
@@ -177,40 +189,40 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
         };
         
 
-*   **targetWidth**: Szerokość w pikselach skalowanego obrazu. Musi być użyte z **targetHeight**. Współczynnik proporcji pozostaje stały. *(Liczba)*
+*   **targetWidth**: szerokość w pikselach na obraz skali. Musi być używany z **targetHeight**. Współczynnik proporcji pozostaje stała. *(Liczba)*
 
-*   **targetHeight**: Wysokość w pikselach skalowanego obrazu. Musi być użyte z **targetWidth**. Współczynnik proporcji pozostaje stały. *(Liczba)*
+*   **targetHeight**: wysokość w pikselach na obraz skali. Musi być używany z **targetWidth**. Współczynnik proporcji pozostaje stała. *(Liczba)*
 
-*   **mediaType**: Ustawia typ nośnika, z którego będzie wybrany. Działa tylko wtedy, gdy `PictureSourceType` jest `PHOTOLIBRARY` lub `SAVEDPHOTOALBUM`. Zdefiniowane w `nagivator.camera.MediaType` *(Liczba)*
+*   **mediaType**: zestaw typ nośnika, do wyboru. Działa tylko, gdy `PictureSourceType` jest `PHOTOLIBRARY` lub `SAVEDPHOTOALBUM` . Zdefiniowane w `nagivator.camera.MediaType` *(numer)*
     
         Camera.MediaType = {
-            PICTURE: 0,    // umożliwia wybór tylko zdjęcia. DOMYŚLNIE. Will return format specified via DestinationType
+            PICTURE: 0,    // allow selection of still pictures only. DOMYŚLNIE. Will return format specified via DestinationType
             VIDEO: 1,      // allow selection of video only, WILL ALWAYS RETURN FILE_URI
             ALLMEDIA : 2   // allow selection from all media types
         };
         
 
-*   **correctOrientation**: Obraca obraz aby skorygować orientację urządzenia podczas przechwytywania. *(Boolean)*
+*   **correctOrientation**: obracanie obrazu dla orientacji urządzenia podczas przechwytywania. *(Wartość logiczna)*
 
-*   **saveToPhotoAlbum**: Po przechwyceniu zapisuje na urządzeniu obraz w albumie na zdjęcia. *(Boolean)*
+*   **saveToPhotoAlbum**: Zapisz obraz do albumu fotograficznego na urządzenie po przechwytywania. *(Wartość logiczna)*
 
-*   **popoverOptions**: Opcja tylko dla platformy iOS, która określa położenie wyskakującego okna na iPadzie. Zdefiniowane w `CameraPopoverOptions`.
+*   **popoverOptions**: tylko do iOS opcje, które określają położenie popover w iPad. Zdefiniowane w`CameraPopoverOptions`.
 
-*   **cameraDirection**: Wybierz aparat do korzystania (lub z powrotem przodem). Zdefiniowane w `navigator.camera.Direction` *(numer)*
+*   **cameraDirection**: Wybierz aparat do korzystania (lub z powrotem przodem). Wartością domyślną jest z powrotem. Zdefiniowane w `navigator.camera.Direction` *(numer)*
     
         Camera.Direction = {
-            BACK : 0,      // Używa tylnej kamery
-            FRONT : 1      // Używa przedniej kamery
+            BACK : 0,      // Use the back-facing camera
+            FRONT : 1      // Use the front-facing camera
         };
         
 
-### Amazon ognia OSQuirks
+### Amazon ogień OS dziwactwa
 
-*   Jakakolwiek wartość w `cameraDirection` skutkuje użyciem tylnej kamery.
+*   Wszelkie `cameraDirection` wartość wyników w zdjęcie tyłu do kierunku jazdy.
 
-*   Parametr `allowEdit` jest ignorowany.
+*   Ignoruje `allowEdit` parametr.
 
-*   Oba parametry `Camera.PictureSourceType.PHOTOLIBRARY` oraz `Camera.PictureSourceType.SAVEDPHOTOALBUM` wyświetlają ten sam album ze zdjęciami.
+*   `Camera.PictureSourceType.PHOTOLIBRARY`i `Camera.PictureSourceType.SAVEDPHOTOALBUM` wyświetlać ten sam album zdjęć.
 
 ### Android dziwactwa
 
@@ -222,17 +234,15 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 ### Jeżyna 10 dziwactwa
 
-*   Parametr `quality` jest ignorowany.
-
-*   Parametr `sourceType` jest ignorowany.
+*   Ignoruje `quality` parametr.
 
 *   Ignoruje `allowEdit` parametr.
 
-*   Nie jest wspierane `Camera.MediaType`.
+*   `Camera.MediaType`nie jest obsługiwane.
 
-*   Parametr `correctOrientation` jest ignorowany.
+*   Ignoruje `correctOrientation` parametr.
 
-*   Parametr `cameraDirection` jest ignorowany.
+*   Ignoruje `cameraDirection` parametr.
 
 ### Firefox OS dziwactwa
 
@@ -256,15 +266,15 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 ### iOS dziwactwa
 
-*   Ustaw `quality` poniżej 50 aby uniknąć błędów pamięci na niektórych urządzeniach.
+*   Zestaw `quality` poniżej 50 do uniknięcia błędy pamięci na niektóre urządzenia.
 
-*   Jeśli użyjesz `destinationType.FILE_URI` zdjęcia zostaną zapisane w katalogu tymczasowym aplikacji. Jeżeli masz problemy z miejscem, możesz usunąć zawartość tego katalogu używając API `navigator.fileMgr`.
+*   Podczas korzystania z `destinationType.FILE_URI` , zdjęcia są zapisywane w katalogu tymczasowego stosowania. Zawartość katalogu tymczasowego stosowania jest usuwany po zakończeniu aplikacji.
 
 ### Osobliwości Tizen
 
 *   opcje nie są obsługiwane
 
-*   zawsze zwraca FILE URI
+*   zawsze zwraca identyfikator URI pliku
 
 ### Windows Phone 7 i 8 dziwactwa
 
@@ -274,7 +284,11 @@ Opcjonalne parametry, aby dostosować ustawienia aparatu.
 
 *   Ignoruje `cameraDirection` parametr.
 
+*   Ignoruje `saveToPhotoAlbum` parametr. Ważne: Wszystkie zdjęcia zrobione aparatem wp7/8 cordova API są zawsze kopiowane do telefonu w kamerze. W zależności od ustawień użytkownika może to też oznaczać że obraz jest automatycznie przesłane do ich OneDrive. Potencjalnie może to oznaczać, że obraz jest dostępne dla szerszego grona odbiorców niż Twoja aplikacja przeznaczona. Jeśli ten bloker aplikacji, trzeba będzie wdrożenie CameraCaptureTask, opisane na msdn: <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx> można także komentarz lub górę głosowanie powiązanych kwestii w [śledzenia błędów][3]
+
 *   Ignoruje `mediaType` Właściwość `cameraOptions` jako SDK Windows Phone nie umożliwiają wybór filmów z PHOTOLIBRARY.
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 
@@ -287,7 +301,7 @@ funkcja wywołania zwrotnego PrzyBłędzie, która zawiera komunikat o błędzie
 
 ### Parametry
 
-*   **message**: Natywny kod komunikatu zapewniany przez urządzenie. *(Ciąg znaków)*
+*   **wiadomość**: wiadomość jest świadczone przez urządzenie w kodzie macierzystym. *(String)*
 
 ## cameraSuccess
 
@@ -300,7 +314,7 @@ onSuccess funkcji wywołania zwrotnego, który dostarcza dane obrazu.
 
 ### Parametry
 
-*   **imageData**: Dane obrazu kodowane przy pomocy Base64 *lub* URI pliku obrazu, w zależności od użycia `cameraOptions`. *(Ciąg znaków)*
+*   **imageData**: kodowanie Base64 danych obrazu, *lub* plik obrazu URI, w zależności od `cameraOptions` w życie. *(String)*
 
 ### Przykład
 
@@ -318,7 +332,7 @@ Uchwyt do okna dialogowego popover, stworzony przez`navigator.camera.getPicture`
 
 ### Metody
 
-*   **setPosition**: Ustawia pozycję wyskakującego okna.
+*   **setPosition**: Ustaw pozycję popover.
 
 ### Obsługiwane platformy
 
@@ -330,7 +344,7 @@ Ustaw pozycję popover.
 
 **Parametry**:
 
-*   `cameraPopoverOptions`: `CameraPopoverOptions`, która określa nową pozycję
+*   `cameraPopoverOptions`: `CameraPopoverOptions` , określ nowe położenie
 
 ### Przykład
 
@@ -361,15 +375,15 @@ tylko do iOS parametrami, które określić kotwicy element lokalizacji i strza�
 
 ### CameraPopoverOptions
 
-*   **x**: współrzędna piksela x elementu ekranu, na którym zakotwiczone jest wyskakujące okno. *(Liczba)*
+*   **x**: x współrzędnych pikseli ekran element na którym kotwica popover. *(Liczba)*
 
-*   **y**: współrzędna piksela y elementu ekranu, na którym zakotwiczone jest wyskakujące okno. *(Liczba)*
+*   **y**: Współrzędna y pikseli ekran element na którym kotwica popover. *(Liczba)*
 
-*   **width**: szerokość w pikselach elementu ekranu, na którym zakotwiczone jest wyskakujące okno. *(Liczba)*
+*   **szerokość**: szerokość w pikselach, ekran element na którym kotwica popover. *(Liczba)*
 
-*   **height**: wysokość w pikselach elementu ekranu, na którym zakotwiczone jest wyskakujące okno. *(Liczba)*
+*   **wysokość**: wysokość w pikselach elementów ekranu na którym kotwica popover. *(Liczba)*
 
-*   **arrowDir**: Kierunek, który powinna wskazywać strzałka na wyskakującym oknie. Zdefiniowane w `Camera.PopoverArrowDirection` *(Liczba)*
+*   **arrowDir**: kierunek strzałki na popover powinien wskazywać. Zdefiniowane w `Camera.PopoverArrowDirection` *(numer)*
     
             Camera.PopoverArrowDirection = {
                 ARROW_UP : 1,        // matches iOS UIPopoverArrowDirection constants

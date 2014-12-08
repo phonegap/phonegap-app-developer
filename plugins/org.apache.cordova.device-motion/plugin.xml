@@ -20,7 +20,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
            id="org.apache.cordova.device-motion"
-      version="0.2.8">
+      version="0.2.10">
 	
     <name>Device Motion</name>
     <description>Cordova Device Motion Plugin</description>
@@ -36,7 +36,7 @@
     <js-module src="www/accelerometer.js" name="accelerometer">
         <clobbers target="navigator.accelerometer" />
     </js-module>
-    
+
     <!-- firefoxos -->
     <platform name="firefoxos">
         <config-file target="config.xml" parent="/*">
@@ -146,6 +146,17 @@
     <platform name="tizen">
         <js-module src="src/tizen/AccelerometerProxy.js" name="AccelerometerProxy">
             <runs/>
+        </js-module>
+    </platform>
+
+    <!-- browser -->
+    <platform name="browser">
+        <js-module src="src/browser/AccelerometerProxy.js" name="AccelerometerProxy">
+            <runs/>
+        </js-module>
+
+        <js-module src="src/browser/accelerometer.js" name="accelerometer">
+            <merges target="navigator.accelerometer" />
         </js-module>
     </platform>
 </plugin>

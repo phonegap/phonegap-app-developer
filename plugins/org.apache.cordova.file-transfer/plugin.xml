@@ -21,7 +21,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="org.apache.cordova.file-transfer"
-    version="0.4.4">
+    version="0.4.7">
     <name>File Transfer</name>
     <description>Cordova File Transfer Plugin</description>
     <license>Apache 2.0</license>
@@ -139,9 +139,26 @@
 
     <!-- windows8 -->
     <platform name="windows8">
-        <js-module src="www/windows8/FileTransferProxy.js" name="FileTransferProxy">
+        <js-module src="src/windows/FileTransferProxy.js" name="FileTransferProxy">
             <clobbers target="" />
         </js-module>
     </platform>
 
+    <!-- windows -->
+    <platform name="windows">
+        <js-module src="src/windows/FileTransferProxy.js" name="FileTransferProxy">
+            <clobbers target="" />
+        </js-module>
+    </platform>
+
+    <!-- firefoxOS -->
+    <platform name="firefoxos">
+        <config-file target="config.xml" parent="/*">
+            <permission name="systemXHR" privileged="true"/>
+        </config-file>
+
+        <js-module src="www/firefoxos/FileTransferProxy.js" name="FileTransferProxy">
+            <runs/>
+        </js-module>
+    </platform>
 </plugin>

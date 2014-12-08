@@ -28,7 +28,7 @@ Ce plugin fournit une API pour la prise de photos et de choisir des images de la
 
 Prend une photo à l'aide de la caméra, ou récupère une photo de la Galerie d'images de l'appareil. L'image est passée au callback "succès" comme une `String` encodée en base64 ou l'URI du fichier de l'image. La méthode elle-même renvoie un objet `CameraPopoverHandle` qui permet de repositionner la boite de dialogue de selection d'image.
 
-    navigator.camera.getPicture( cameraSuccess, cameraError, [ cameraOptions ] );
+    navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### Description
@@ -60,19 +60,31 @@ Vous pouvez faire ce que vous voulez avec l'image encodée ou l'URI, par exemple
 *   Amazon Fire OS
 *   Android
 *   BlackBerry 10
+*   Navigateur
 *   Firefox OS
 *   iOS
 *   Paciarelli
 *   Windows Phone 7 et 8
 *   Windows 8
 
+### Préférences (iOS)
+
+*   **CameraUsesGeolocation** (boolean, par défaut, false). Pour capturer des images JPEG, true pour obtenir des données de géolocalisation dans l'en-tête EXIF. Cela va déclencher une demande d'autorisations de géolocalisation si défini à true.
+    
+        <preference name="CameraUsesGeolocation" value="false" />
+        
+
 ### Amazon Fire OS Quirks
 
 Amazon Fire OS utilise des intentions pour lancer l'activité de l'appareil photo sur l'appareil pour capturer des images et sur les téléphones avec peu de mémoire, l'activité de Cordova peut être tuée. Dans ce scénario, l'image peut ne pas apparaître lorsque l'activité de cordova est restaurée.
 
-### Spécificités Android
+### Quirks Android
 
 Android utilise des intentions pour lancer l'activité de l'appareil photo sur l'appareil pour capturer des images et sur les téléphones avec peu de mémoire, l'activité de Cordova peut être tuée. Dans ce scénario, l'image peut ne pas apparaître lorsque l'activité de Cordova est restaurée.
+
+### Bizarreries navigateur
+
+Peut retourner uniquement les photos comme image codée en base64.
 
 ### Firefox OS Quirks
 
@@ -87,11 +99,11 @@ Y compris un JavaScript `alert()` dans les deux le rappel fonctions peuvent caus
     setTimeout(function() {/ / votre code ici!}, 0) ;
     
 
-### Spécificités Windows Phone 7
+### Windows Phone 7 Quirks
 
 Invoquant l'application native caméra alors que l'appareil est connecté via Zune ne fonctionne pas et déclenche un rappel de l'erreur.
 
-### Spécificités Tizen
+### Bizarreries de paciarelli
 
 Paciarelli prend uniquement en charge un `destinationType` de `Camera.DestinationType.FILE_URI` et un `sourceType` de`Camera.PictureSourceType.PHOTOLIBRARY`.
 
@@ -145,18 +157,18 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 ### Options
 
-*   **quality** : Qualité de l'image enregistrée, comprise entre 0 et 100, où 100 correspond à la pleine résolution de l'appareil, sans perte liée à la compression. *(Number)* (Notez que les informations sur la résolution de l'appareil photo sont indisponibles.)
+*   **qualité**: qualité de l'image enregistrée, exprimée en une gamme de 0 à 100, 100 étant généralement pleine résolution sans perte de compression de fichiers. La valeur par défaut est 50. *(Nombre)* (Notez que les informations sur la résolution de la caméra sont indisponibles).
 
-*   **destinationType**: choisissez le format de la valeur de retour. Définies dans `navigator.camera.DestinationType` *(nombre)* 
+*   **destinationType**: choisissez le format de la valeur de retour. La valeur par défaut est FILE_URI. Définies dans `navigator.camera.DestinationType` *(nombre)*
     
         Camera.DestinationType = {
-            DATA_URL : 0,      // Retourne l'image sous la forme d'une chaîne encodée en base-64
-            FILE_URI : 1,      // Retourne l'URI du fichier image
-            NATIVE_URI : 2     // Retourne l'URI native de l'image (ex. assets-library:// sur iOS ou content:// pour Android)
+            DATA_URL : 0,      // Return image as base64-encoded string
+            FILE_URI : 1,      // Return image file URI
+            NATIVE_URI : 2     // Return image native URI (e.g., assets-library:// on iOS or content:// on Android)
         };
         
 
-*   **sourceType**: définissez la source de l'image. Définies dans `navigator.camera.PictureSourceType` *(nombre)* 
+*   **sourceType**: définissez la source de l'image. La valeur par défaut est la caméra. Définies dans `navigator.camera.PictureSourceType` *(nombre)*
     
         Camera.PictureSourceType = {
             PHOTOLIBRARY : 0,
@@ -165,23 +177,24 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
         };
         
 
-*   **allowEdit**: Autoriser une modification simple de l'image avant sa sélection. *(Boolean)*
+*   **allowEdit**: permettre un montage simple d'image avant la sélection. *(Booléen)*
 
-*   **encodingType**: choisir le fichier image retournée de codage. Définies dans `navigator.camera.EncodingType` *(nombre)* 
+*   **encodingType**: choisir le fichier image retournée de codage. Valeur par défaut est JPEG. Définies dans `navigator.camera.EncodingType` *(nombre)*
     
         Camera.EncodingType = {
-            JPEG : 0,               // Renvoie l'image au format JPEG
-            PNG : 1                 // Renvoie l'image au format PNG
+            JPEG : 0,               // Return JPEG encoded image
+            PNG : 1                 // Return PNG encoded image
         };
         
 
-*   **targetWidth**: largeur de sortie en pixels de l'image . Doit être utilisé avec **targetHeight**. Le ratio de l'aspect reste constant. *(Nombre)*
+*   **targetWidth**: largeur en pixels de l'image de l'échelle. Doit être utilisé avec **targetHeight**. Aspect ratio reste constant. *(Nombre)*
 
-*   **targetHeight**: hauteur de sortie en pixels de l'image. Doit être utilisé avec **targetWidth**. Aspect ratio reste constant. *(Nombre)*
+*   **targetHeight**: hauteur en pixels de l'image de l'échelle. Doit être utilisé avec **targetWidth**. Aspect ratio reste constant. *(Nombre)*
 
-*   **mediaType**: définit le type de média à choisir. Ne fonctionne que quand `PictureSourceType` vaut `PHOTOLIBRARY` ou `SAVEDPHOTOALBUM` . Définie dans `nagivator.camera.MediaType` *(nombre)* 
+*   **mediaType**: définir le type de média pour choisir de. Ne fonctionne que quand `PictureSourceType` est `PHOTOLIBRARY` ou `SAVEDPHOTOALBUM` . Définies dans `nagivator.camera.MediaType` *(nombre)*
     
-        Camera.MediaType = {photo: 0, / / permettre la sélection de photos seulement. PAR DÉFAUT. Will return format specified via DestinationType
+        Camera.MediaType = {
+            PICTURE: 0,    // allow selection of still pictures only. PAR DÉFAUT. Will return format specified via DestinationType
             VIDEO: 1,      // allow selection of video only, WILL ALWAYS RETURN FILE_URI
             ALLMEDIA : 2   // allow selection from all media types
         };
@@ -191,18 +204,21 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 *   **saveToPhotoAlbum**: enregistrer l'image sur l'album photo sur l'appareil après la capture. *(Booléen)*
 
-*   **popoverOptions**: options pour iOS uniquement qui spécifient l'emplacement de la boîte de dialogue sur iPad. Définie dans`CameraPopoverOptions`.
+*   **popoverOptions**: iOS uniquement des options qui spécifient l'emplacement de kangourou dans iPad. Défini dans`CameraPopoverOptions`.
 
-*   **cameraDirection**: choisissez la caméra à utiliser (ou dos-face). Définies dans `navigator.camera.Direction` *(nombre)* 
+*   **cameraDirection**: choisissez la caméra à utiliser (ou dos-face). La valeur par défaut est de retour. Définies dans `navigator.camera.Direction` *(nombre)*
     
-        Camera.Direction = {BACK: 0, // utiliser la caméra arrière FRONT: 1 // utiliser la caméra frontale} ;
+        Camera.Direction = {
+            BACK : 0,      // Use the back-facing camera
+            FRONT : 1      // Use the front-facing camera
+        };
         
 
-### Amazon Fire OSQuirks
+### Amazon Fire OS Quirks
 
 *   Tout `cameraDirection` résultats dans le back-face photo de valeur.
 
-*   Ignore le paramètre `allowEdit`.
+*   Ignore la `allowEdit` paramètre.
 
 *   `Camera.PictureSourceType.PHOTOLIBRARY`et `Camera.PictureSourceType.SAVEDPHOTOALBUM` les deux affichent le même album photo.
 
@@ -216,17 +232,15 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 ### BlackBerry 10 Quirks
 
-*   Ignore le paramètre `quality`.
-
-*   Ignore le paramètre `sourceType`.
+*   Ignore la `quality` paramètre.
 
 *   Ignore la `allowEdit` paramètre.
 
-*   `Camera.MediaType` n'est pas pris en charge.
+*   `Camera.MediaType`n'est pas pris en charge.
 
-*   Ignore le paramètre `correctOrientation`.
+*   Ignore la `correctOrientation` paramètre.
 
-*   Ignore le paramètre `cameraDirection`.
+*   Ignore la `cameraDirection` paramètre.
 
 ### Firefox OS Quirks
 
@@ -250,9 +264,9 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 ### iOS Quirks
 
-*   Choisir la valeur `quality` en dessous de 50 pour éviter les erreurs de mémoire sur certains appareils.
+*   La valeur `quality` inférieur à 50 pour éviter les erreurs de mémoire sur certains appareils.
 
-*   Lorsque vous utilisez `destinationType.FILE_URI` , les photos sont sauvegardées dans le répertoire temporaire de l'application. Vous pouvez supprimer le contenu de ce répertoire en utilisant l'API `navigator.fileMgr` si l'espace de stockage est un sujet de préoccupation.
+*   Lorsque vous utilisez `destinationType.FILE_URI` , les photos sont sauvegardées dans le répertoire temporaire de l'application. Le contenu du répertoire temporaire de l'application est supprimé lorsque l'application se termine.
 
 ### Bizarreries de paciarelli
 
@@ -268,7 +282,11 @@ Paramètres optionnels pour personnaliser les réglages de l'appareil.
 
 *   Ignore la `cameraDirection` paramètre.
 
+*   Ignore la `saveToPhotoAlbum` paramètre. IMPORTANT : Toutes les images prises avec la caméra de cordova wp7/8 API sont toujours copiés au rôle d'appareil photo du téléphone. Selon les paramètres de l'utilisateur, cela pourrait également signifier que l'image est auto-téléchargées à leur OneDrive. Potentiellement, cela pourrait signifier que l'image est disponible à un public plus large que votre application destinée. Si ce un bloqueur pour votre application, vous devrez implémenter le CameraCaptureTask tel que documenté sur msdn : <http://msdn.microsoft.com/en-us/library/windowsphone/develop/hh394006.aspx> vous pouvez aussi commenter ou haut-vote la question connexe dans le [gestionnaire d'incidents][3]
+
 *   Ignore la `mediaType` propriété de `cameraOptions` comme le kit de développement Windows Phone ne fournit pas un moyen de choisir les vidéos de PHOTOLIBRARY.
+
+ [3]: https://issues.apache.org/jira/browse/CB-2083
 
 ## CameraError
 
@@ -281,7 +299,7 @@ fonction de rappel onError qui fournit un message d'erreur.
 
 ### Paramètres
 
-*   **message** : le message est fourni par du code natif de l'appareil. *(String)*
+*   **message**: le message est fourni par du code natif de l'appareil. *(String)*
 
 ## cameraSuccess
 
@@ -294,7 +312,7 @@ fonction de rappel onSuccess qui fournit les données d'image.
 
 ### Paramètres
 
-*   **imageData**: codage Base64 de l'image, *ou* le fichier image URI, selon `cameraOptions` utilisé. *(String)*
+*   **imageData**: codage Base64 de l'image, *ou* le fichier image URI, selon `cameraOptions` en vigueur. *(String)*
 
 ### Exemple
 
@@ -312,7 +330,7 @@ Un handle vers la boîte de dialogue de kangourou créé par`navigator.camera.ge
 
 ### Méthodes
 
-*   **setPosition**: Définit la position de la boite de dialogue.
+*   **setPosition**: définir la position de la kangourou.
 
 ### Plates-formes prises en charge
 
@@ -324,7 +342,7 @@ Définir la position de la kangourou.
 
 **Paramètres**:
 
-*   `cameraPopoverOptions`: l'objet `CameraPopoverOptions` spécifiant la nouvelle position
+*   `cameraPopoverOptions`: la `CameraPopoverOptions` qui spécifie la nouvelle position
 
 ### Exemple
 
@@ -350,18 +368,18 @@ iOS uniquement les paramètres qui spécifient la direction ancre élément empl
 
 ### CameraPopoverOptions
 
-*   **x**: coordonnée en x (pixels) de l'élément à l'écran sur lequel accrocher la boite de dialogue. *(Number)*
+*   **x**: coordonnée de pixel de l'élément de l'écran sur lequel ancrer le kangourou x. *(Nombre)*
 
-*   **y**: coordonnée en y (pixels) de l'élément à l'écran sur lequel accrocher la boite de dialogue. *(Number)*
+*   **y**: coordonnée de y pixels de l'élément de l'écran sur lequel ancrer le kangourou. *(Nombre)*
 
-*   **width**: largeur en pixels de l'élément à l'écran sur lequel accrocher la boite de dialogue. *(Number)*
+*   **largeur**: largeur, en pixels, de l'élément de l'écran sur lequel ancrer le kangourou. *(Nombre)*
 
-*   **height**: hauteur en pixels de l'élément à l'écran sur lequel accrocher la boite de dialogue. *(Number)*
+*   **hauteur**: hauteur, en pixels, de l'élément de l'écran sur lequel ancrer le kangourou. *(Nombre)*
 
-*   **arrowDir**: Direction vers laquelle la flèche de la boîte de dialogue doit pointer. Définie dans `Camera.PopoverArrowDirection` *(Number)*
+*   **arrowDir**: Direction de la flèche sur le kangourou doit pointer. Définies dans `Camera.PopoverArrowDirection` *(nombre)*
     
             Camera.PopoverArrowDirection = {
-                ARROW_UP : 1,        // correspondent aux constantes iOS UIPopoverArrowDirection
+                ARROW_UP : 1,        // matches iOS UIPopoverArrowDirection constants
                 ARROW_DOWN : 2,
                 ARROW_LEFT : 4,
                 ARROW_RIGHT : 8,

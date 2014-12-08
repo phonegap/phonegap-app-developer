@@ -26,6 +26,11 @@ using Microsoft.Phone.Info;
 using System.Windows.Controls.Primitives;
 using System.Diagnostics;
 using System.Windows.Media.Imaging;
+using System.Windows.Resources;
+using System.IO;
+using System.Xml.Linq;
+using System.Linq;
+using System.Windows.Threading;
 
 namespace WPCordovaClassLib.Cordova.Commands
 {
@@ -36,6 +41,9 @@ namespace WPCordovaClassLib.Cordova.Commands
     public class SplashScreen : BaseCommand
     {
         private Popup popup;
+        private bool autohide = true;
+
+        private static bool WasShown = false;
 
         public SplashScreen()
         {
@@ -45,24 +53,114 @@ namespace WPCordovaClassLib.Cordova.Commands
             SplashScreen.Source = splash_image;
 
             // Instansiate the popup and set the Child property of Popup to SplashScreen
-            this.popup = new Popup() {IsOpen = false, Child = SplashScreen };
+            popup = new Popup() {IsOpen = false, Child = SplashScreen };
             // Orient the popup accordingly
-            this.popup.HorizontalAlignment = HorizontalAlignment.Stretch;
-            this.popup.VerticalAlignment = VerticalAlignment.Center;
+            popup.HorizontalAlignment = HorizontalAlignment.Stretch;
+            popup.VerticalAlignment = VerticalAlignment.Center;
+            
+
+            LoadConfigValues();
         }
 
-        public void show(string options)
+        public override void OnInit()
+        {
+            // we only want to autoload the first time a page is loaded.
+            if (!WasShown)
+            {
+                WasShown = true;
+                show();
+            }
+        }
+
+        void LoadConfigValues()
+        {
+            StreamResourceInfo streamInfo = Application.GetResourceStream(new Uri("config.xml", UriKind.Relative));
+
+            if (streamInfo != null)
+            {
+                StreamReader sr = new StreamReader(streamInfo.Stream);
+                //This will Read Keys Collection for the xml file
+                XDocument document = XDocument.Parse(sr.ReadToEnd());
+
+                var preferences = from results in document.Descendants()
+                                  where (string)results.Attribute("name") == "AutoHideSplashScreen"
+                                  select (string)results.Attribute("value") == "true";
+
+                if (preferences.Count() > 0 &&  preferences.First() == false)
+                {
+                    autohide = false;
+                }
+            }
+        }
+
+        public void show(string options = null)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                this.popup.IsOpen = true;
+                if (popup.IsOpen)
+                {
+                    return;
+                }
+
+                popup.Child.Opacity = 0;
+
+                Storyboard story = new Storyboard();
+                DoubleAnimation animation;
+                animation = new DoubleAnimation();
+                animation.From = 0.0;
+                animation.To = 1.0;
+                animation.Duration = new Duration(TimeSpan.FromSeconds(0.2));
+
+                Storyboard.SetTarget(animation, popup.Child);
+                Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+                story.Children.Add(animation);
+
+                Debug.WriteLine("Fading the splash screen in");
+
+                story.Begin();
+
+                popup.IsOpen = true;
+
+                if (autohide)
+                {
+                    DispatcherTimer timer = new DispatcherTimer();
+                    timer.Tick += (object sender, EventArgs e) =>
+                    {
+                        hide();
+                    };
+                    timer.Interval = TimeSpan.FromSeconds(1.2);
+                    timer.Start();
+                }
             }); 
         }
-        public void hide(string options)
+
+
+        public void hide(string options = null)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                this.popup.IsOpen = false;
+                if (!popup.IsOpen)
+                {
+                    return;
+                }
+
+                popup.Child.Opacity = 1.0;
+
+                Storyboard story = new Storyboard();
+                DoubleAnimation animation;
+                animation = new DoubleAnimation();
+                animation.From = 1.0;
+                animation.To = 0.0;
+                animation.Duration = new Duration(TimeSpan.FromSeconds(0.4));
+
+                Storyboard.SetTarget(animation, popup.Child);
+                Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+                story.Children.Add(animation);
+                story.Completed += (object sender, EventArgs e) =>
+                {
+                    popup.IsOpen = false;
+                };
+                story.Begin();
             });
         }
     }

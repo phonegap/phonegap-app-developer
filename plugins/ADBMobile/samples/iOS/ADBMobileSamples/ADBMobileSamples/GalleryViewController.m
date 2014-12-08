@@ -139,7 +139,7 @@
 	// get the current item and update the view controller
 	[self setGalleryItem:[_galleryItems objectAtIndex:_currentIndex]];
 	
-	_lblProgress.text = [NSString stringWithFormat:@"%d of %d", _currentIndex+1, kGalleryItemsCount];
+	_lblProgress.text = [NSString stringWithFormat:@"%ld of %lu", _currentIndex+1, (unsigned long)kGalleryItemsCount];
 	
 	// handle animations to show new gallery item
 	_imgGallery.alpha = 0.8f;

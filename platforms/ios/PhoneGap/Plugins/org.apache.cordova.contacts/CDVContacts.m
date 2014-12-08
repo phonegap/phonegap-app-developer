@@ -91,13 +91,7 @@
 
         UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:npController];
 
-        SEL selector = NSSelectorFromString(@"presentViewController:animated:completion:");
-        if ([weakSelf.viewController respondsToSelector:selector]) {
-            [weakSelf.viewController presentViewController:navController animated:YES completion:nil];
-        } else {
-            // deprecated as of iOS >= 6.0
-            [weakSelf.viewController presentModalViewController:navController animated:YES];
-        }
+        [weakSelf.viewController presentViewController:navController animated:YES completion:nil];
     }];
 }
 
@@ -112,11 +106,7 @@
         recordId = ABRecordGetRecordID(person);
     }
 
-    if ([newPersonViewController respondsToSelector:@selector(presentingViewController)]) {
-        [[newPersonViewController presentingViewController] dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        [[newPersonViewController parentViewController] dismissModalViewControllerAnimated:YES];
-    }
+    [[newPersonViewController presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:recordId];
     [self.commandDelegate sendPluginResult:result callbackId:callbackId];
@@ -153,13 +143,7 @@
 
             [navController pushViewController:personController animated:YES];
 
-            SEL selector = NSSelectorFromString(@"presentViewController:animated:completion:");
-            if ([self.viewController respondsToSelector:selector]) {
-                [self.viewController presentViewController:navController animated:YES completion:nil];
-            } else {
-                // deprecated as of iOS >= 6.0
-                [self.viewController presentModalViewController:navController animated:YES];
-            }
+            [self.viewController presentViewController:navController animated:YES completion:nil];
 
             if (bEdit) {
                 // create the editing controller and push it onto the stack
@@ -202,46 +186,36 @@
     }
     pickerController.allowsEditing = allowsEditing;
 
-    SEL selector = NSSelectorFromString(@"presentViewController:animated:completion:");
-    if ([self.viewController respondsToSelector:selector]) {
-        [self.viewController presentViewController:pickerController animated:YES completion:nil];
-    } else {
-        // deprecated as of iOS >= 6.0
-        [self.viewController presentModalViewController:pickerController animated:YES];
+    [self.viewController presentViewController:pickerController animated:YES completion:nil];
+}
+
+- (void)pickContact:(CDVInvokedUrlCommand *)command
+{
+    // mimic chooseContact method call with required for us parameters
+    NSArray* desiredFields = [command.arguments objectAtIndex:0 withDefault:[NSArray array]];
+    if (desiredFields == nil || desiredFields.count == 0) {
+        desiredFields = [NSArray arrayWithObjects:@"*", nil];
     }
+    NSMutableDictionary* options = [NSMutableDictionary dictionaryWithCapacity:2];
+    
+    [options setObject: desiredFields forKey:@"fields"];
+    [options setObject: [NSNumber numberWithBool: FALSE] forKey:@"allowsEditing"];
+    
+    NSArray* args = [NSArray arrayWithObjects:options, nil];
+    
+    CDVInvokedUrlCommand* newCommand = [[CDVInvokedUrlCommand alloc] initWithArguments:args
+                 callbackId:command.callbackId
+                  className:command.className
+                 methodName:command.methodName];
+    
+    [self chooseContact:newCommand];
+    
 }
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
-    CDVContactsPicker* picker = (CDVContactsPicker*)peoplePicker;
-    NSNumber* pickedId = [NSNumber numberWithInt:ABRecordGetRecordID(person)];
-
-    if (picker.allowsEditing) {
-        ABPersonViewController* personController = [[ABPersonViewController alloc] init];
-        personController.displayedPerson = person;
-        personController.personViewDelegate = self;
-        personController.allowsEditing = picker.allowsEditing;
-        // store id so can get info in peoplePickerNavigationControllerDidCancel
-        picker.pickedContactDictionary = [NSDictionary dictionaryWithObjectsAndKeys:pickedId, kW3ContactId, nil];
-
-        [peoplePicker pushViewController:personController animated:YES];
-    } else {
-        // Retrieve and return pickedContact information
-        CDVContact* pickedContact = [[CDVContact alloc] initFromABRecord:(ABRecordRef)person];
-        NSArray* fields = [picker.options objectForKey:@"fields"];
-        NSDictionary* returnFields = [[CDVContact class] calcReturnFields:fields];
-        picker.pickedContactDictionary = [pickedContact toDictionary:returnFields];
-
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:picker.pickedContactDictionary];
-        [self.commandDelegate sendPluginResult:result callbackId:picker.callbackId];
-
-        if ([picker respondsToSelector:@selector(presentingViewController)]) {
-            [[picker presentingViewController] dismissViewControllerAnimated:YES completion:nil];
-        } else {
-            [[picker parentViewController] dismissModalViewControllerAnimated:YES];
-        }
-    }
+    [self peoplePickerNavigationController:peoplePicker didSelectPerson:person];
     return NO;
 }
 
@@ -259,16 +233,7 @@
     if (picker.allowsEditing) {
         // get the info after possible edit
         // if we got this far, user has already approved/ disapproved addressBook access
-        ABAddressBookRef addrBook = nil;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
-            if (&ABAddressBookCreateWithOptions != NULL) {
-                addrBook = ABAddressBookCreateWithOptions(NULL, NULL);
-            } else
-#endif
-        {
-            // iOS 4 & 5
-            addrBook = ABAddressBookCreate();
-        }
+        ABAddressBookRef addrBook = ABAddressBookCreateWithOptions(NULL, NULL);
         ABRecordRef person = ABAddressBookGetPersonWithRecordID(addrBook, (int)[[picker.pickedContactDictionary objectForKey:kW3ContactId] integerValue]);
         if (person) {
             CDVContact* pickedContact = [[CDVContact alloc] initFromABRecord:(ABRecordRef)person];
@@ -281,11 +246,42 @@
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:picker.pickedContactDictionary];
     [self.commandDelegate sendPluginResult:result callbackId:picker.callbackId];
 
-    if ([peoplePicker respondsToSelector:@selector(presentingViewController)]) {
-        [[peoplePicker presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+    [[peoplePicker presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+// Called after a person has been selected by the user.
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person
+{
+    CDVContactsPicker* picker = (CDVContactsPicker*)peoplePicker;
+    NSNumber* pickedId = [NSNumber numberWithInt:ABRecordGetRecordID(person)];
+    
+    if (picker.allowsEditing) {
+        ABPersonViewController* personController = [[ABPersonViewController alloc] init];
+        personController.displayedPerson = person;
+        personController.personViewDelegate = self;
+        personController.allowsEditing = picker.allowsEditing;
+        // store id so can get info in peoplePickerNavigationControllerDidCancel
+        picker.pickedContactDictionary = [NSDictionary dictionaryWithObjectsAndKeys:pickedId, kW3ContactId, nil];
+        
+        [peoplePicker pushViewController:personController animated:YES];
     } else {
-        [[peoplePicker parentViewController] dismissModalViewControllerAnimated:YES];
+        // Retrieve and return pickedContact information
+        CDVContact* pickedContact = [[CDVContact alloc] initFromABRecord:(ABRecordRef)person];
+        NSArray* fields = [picker.options objectForKey:@"fields"];
+        NSDictionary* returnFields = [[CDVContact class] calcReturnFields:fields];
+        picker.pickedContactDictionary = [pickedContact toDictionary:returnFields];
+        
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:picker.pickedContactDictionary];
+        [self.commandDelegate sendPluginResult:result callbackId:picker.callbackId];
+        
+        [[picker presentingViewController] dismissViewControllerAnimated:YES completion:nil];
     }
+}
+
+// Called after a property has been selected by the user.
+- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+{
+    // not implemented
 }
 
 - (void)search:(CDVInvokedUrlCommand*)command
@@ -313,6 +309,7 @@
             // get the findOptions values
             BOOL multiple = NO;         // default is false
             NSString* filter = nil;
+            NSArray* desiredFields = nil;
             if (![findOptions isKindOfClass:[NSNull class]]) {
                 id value = nil;
                 filter = (NSString*)[findOptions objectForKey:@"filter"];
@@ -322,9 +319,15 @@
                     multiple = [(NSNumber*)value boolValue];
                     // NSLog(@"multiple is: %d", multiple);
                 }
+                desiredFields = [findOptions objectForKey:@"desiredFields"];
+                // return all fields if desired fields are not explicitly defined
+                if (desiredFields == nil || desiredFields.count == 0) {
+                    desiredFields = [NSArray arrayWithObjects:@"*", nil];
+                }
             }
 
-            NSDictionary* returnFields = [[CDVContact class] calcReturnFields:fields];
+            NSDictionary* searchFields = [[CDVContact class] calcReturnFields:fields];
+            NSDictionary* returnFields = [[CDVContact class] calcReturnFields:desiredFields];
 
             NSMutableArray* matches = nil;
             if (!filter || [filter isEqualToString:@""]) {
@@ -351,7 +354,7 @@
                 for (int j = 0; j < testCount; j++) {
                     CDVContact* testContact = [[CDVContact alloc] initFromABRecord:(__bridge ABRecordRef)[foundRecords objectAtIndex:j]];
                     if (testContact) {
-                        bFound = [testContact foundValue:filter inFields:returnFields];
+                        bFound = [testContact foundValue:filter inFields:searchFields];
                         if (bFound) {
                             [matches addObject:testContact];
                         }
@@ -538,11 +541,7 @@
 {
     [super viewWillDisappear:animated];
 
-    if ([self respondsToSelector:@selector(presentingViewController)]) {
-        [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        [[self parentViewController] dismissModalViewControllerAnimated:YES];
-    }
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
@@ -573,32 +572,23 @@
     // "Important: Instances of ABAddressBookRef cannot be used by multiple threads. Each thread must make its own instance."
     ABAddressBookRef addressBook;
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
-        if (&ABAddressBookCreateWithOptions != NULL) {
-            CFErrorRef error = nil;
-            // CFIndex status = ABAddressBookGetAuthorizationStatus();
-            addressBook = ABAddressBookCreateWithOptions(NULL, &error);
-            // NSLog(@"addressBook access: %lu", status);
-            ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-                    // callback can occur in background, address book must be accessed on thread it was created on
-                    dispatch_sync(dispatch_get_main_queue(), ^{
-                        if (error) {
-                            workerBlock(NULL, [[CDVAddressBookAccessError alloc] initWithCode:UNKNOWN_ERROR]);
-                        } else if (!granted) {
-                            workerBlock(NULL, [[CDVAddressBookAccessError alloc] initWithCode:PERMISSION_DENIED_ERROR]);
-                        } else {
-                            // access granted
-                            workerBlock(addressBook, [[CDVAddressBookAccessError alloc] initWithCode:UNKNOWN_ERROR]);
-                        }
-                    });
-                });
-        } else
-#endif
-    {
-        // iOS 4 or 5 no checks needed
-        addressBook = ABAddressBookCreate();
-        workerBlock(addressBook, NULL);
-    }
+    CFErrorRef error = nil;
+    // CFIndex status = ABAddressBookGetAuthorizationStatus();
+    addressBook = ABAddressBookCreateWithOptions(NULL, &error);
+    // NSLog(@"addressBook access: %lu", status);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            // callback can occur in background, address book must be accessed on thread it was created on
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if (error) {
+                    workerBlock(NULL, [[CDVAddressBookAccessError alloc] initWithCode:UNKNOWN_ERROR]);
+                } else if (!granted) {
+                    workerBlock(NULL, [[CDVAddressBookAccessError alloc] initWithCode:PERMISSION_DENIED_ERROR]);
+                } else {
+                    // access granted
+                    workerBlock(addressBook, [[CDVAddressBookAccessError alloc] initWithCode:UNKNOWN_ERROR]);
+                }
+            });
+        });
 }
 
 @end

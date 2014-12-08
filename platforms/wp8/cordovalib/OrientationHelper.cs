@@ -72,7 +72,7 @@ namespace WPCordovaClassLib.Cordova
 
             try
             {
-                Browser.InvokeScript("execScript", new string[] { jsCallback });
+                Browser.InvokeScript("eval", new string[] { jsCallback });
             }
             catch (Exception)
             {
@@ -106,14 +106,14 @@ namespace WPCordovaClassLib.Cordova
             try
             {
 
-                Browser.InvokeScript("execScript", new string[] { jsCallback });
+                Browser.InvokeScript("eval", new string[] { jsCallback });
 
                 jsCallback = "var evt = document.createEvent('HTMLEvents');";
                 jsCallback += "evt.initEvent( 'orientationchange', true, false );";
                 jsCallback += "window.dispatchEvent(evt);";
                 jsCallback += "if(window.onorientationchange){window.onorientationchange(evt);}";
 
-                Browser.InvokeScript("execScript", new string[] {jsCallback});
+                Browser.InvokeScript("eval", new string[] {jsCallback});
             }
             catch (Exception)
             {

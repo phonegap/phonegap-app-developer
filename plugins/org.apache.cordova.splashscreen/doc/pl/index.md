@@ -42,15 +42,13 @@ Ten plugin wyświetla i ukrywa ekran powitalny podczas uruchamiania aplikacji.
 
 ### Android dziwactwa
 
-W pliku config.xml musisz dodać następujące preferencje
+W pliku config.xml musisz dodać następujące preferencje:
 
-`<preference name="splashscreen" value="foo" />`
+`<preference name="SplashScreen" value="foo" />` `<preference name="SplashScreenDelay" value="10000" />`
 
-Gdzie foo jest nazwą pliku ekranu powitalnego. Najlepiej plik poprawki 9. Upewnij się dodać pliki splashcreen do katalogu res/xml w odpowiednich folderach.
+Gdzie foo jest nazwą pliku ekranu powitalnego, najlepiej 9 łatce. Upewnij się dodać pliki splashcreen do katalogu res/xml w odpowiednich folderach. Drugi parametr reprezentuje, jak długo ekranu powitalnego pojawi się w milisekundach. Domyślnie 3000 ms. Aby uzyskać więcej informacji, zobacz [ikony i ekrany powitalne w aplikacjach][1] .
 
-Dla Androida należy edytować plik java głównych projektów. Należy dodać drugi parametr reprezentujących opóźnienie do Twojej super.loadUrl.
-
-`super.loadUrl(Config.getStartUrl(), 10000);`
+ [1]: http://cordova.apache.org/docs/en/edge/config_ref_images.md.html
 
 ## splashscreen.Hide
 
@@ -59,11 +57,7 @@ Odrzucić ten opryskaæ têcza.
     navigator.splashscreen.hide();
     
 
-### Zrządzenie blackBerry 10
-
-`config.xml`Pliku `AutoHideSplashScreen` ustawienie musi być`false`.
-
-### iOS dziwactwo
+### Jeżyna 10, WP8, iOS dziwactwo
 
 `config.xml`Pliku `AutoHideSplashScreen` ustawienie musi być `false` . Opóźnienia, ukrywanie ekranu powitalnego przez dwie sekundy, dodać timer następujących w `deviceready` obsługa zdarzeń:
 
@@ -80,5 +74,3 @@ Wyświetla ekran powitalny.
     
 
 Aplikacja nie może wywołać `navigator.splashscreen.show()` aż aplikacja została uruchomiona i `deviceready` imprezy został zwolniony. Ale ponieważ zazwyczaj opryskać tęcza ma być widoczne przed rozpoczęciem aplikacji, wydaje się sprzeczne z celem ekranu powitalnego. Dostarczanie niektórych konfiguracji w `config.xml` będzie automatycznie `show` ekran powitalny, natychmiast po uruchomienie aplikacji i przed pełni rozpoczął i otrzymał `deviceready` zdarzenie. Aby uzyskać więcej informacji na robienie tej konfiguracji, zobacz [ikony i ekrany powitalne w aplikacjach][1] . Z tego powodu, jest mało prawdopodobne, należy zadzwonić `navigator.splashscreen.show()` Aby wyświetlić ekran powitalny dla uruchamiania aplikacji.
-
- [1]: http://cordova.apache.org/docs/en/edge/config_ref_images.md.html

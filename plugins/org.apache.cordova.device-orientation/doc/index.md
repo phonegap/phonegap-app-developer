@@ -33,6 +33,7 @@ from the top of the device.  It measures the heading in degrees from 0 to
 - Amazon Fire OS
 - Android
 - BlackBerry 10
+- Browser
 - Firefox OS
 - iOS
 - Tizen
@@ -96,6 +97,10 @@ ID can be used with `navigator.compass.clearWatch` to stop watching the navigato
 
     var watchID = navigator.compass.watchHeading(onSuccess, onError, options);
 
+
+### Browser Quirks
+
+Values for current heading are randomly generated in order to simulate the compass.
 
 ### iOS Quirks
 

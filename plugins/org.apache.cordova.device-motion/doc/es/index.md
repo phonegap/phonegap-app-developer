@@ -31,6 +31,7 @@ Este plugin proporciona acceso a acelerómetro del dispositivo. El acelerómetro
 *   Amazon fuego OS
 *   Android
 *   BlackBerry 10
+*   Explorador
 *   Firefox OS
 *   iOS
 *   Tizen
@@ -72,6 +73,10 @@ Estos valores de aceleración son devueltos a la `accelerometerSuccess` función
     navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
     
 
+### Navegador rarezas
+
+Los valores para X, Y, movimiento Z son todo generada aleatoriamente en orden para simular el acelerómetro.
+
 ### iOS rarezas
 
 *   iOS no reconoce el concepto de conseguir la aceleración actual en cualquier momento dado.
@@ -88,11 +93,11 @@ El vuelto ver referencias ID intervalo del acelerómetro reloj y puede ser utili
 
     var watchID = navigator.accelerometer.watchAcceleration(accelerometerSuccess,
                                                            accelerometerError,
-                                                           [accelerometerOptions]);
+                                                           accelerometerOptions);
     
 
 *   **accelerometerOptions**: Un objeto con las llaves opcionales siguientes: 
-    *   **frecuencia**: frecuencia con la que recuperar la `Acceleration` en milisegundos. *(Número)* (Por defecto: 10000)
+    *   **periodo**: periodo solicitado de llamadas a accelerometerSuccess con los datos de aceleración en milisegundos. *(Número)* (Por defecto: 10000)
 
 ### Ejemplo
 
@@ -114,11 +119,11 @@ El vuelto ver referencias ID intervalo del acelerómetro reloj y puede ser utili
 
 ### iOS rarezas
 
-La API llama a la función de devolución de llamada de éxito en el intervalo solicitado, pero restringe la gama de solicitudes que el dispositivo entre 40ms y 1000ms. Por ejemplo, si usted solicita un intervalo de 3 segundos, (3000ms), la API pide datos desde el dispositivo cada 1 segundo, pero sólo ejecuta el callback de éxito cada 3 segundos.
+La API llama a la función de devolución de llamada de éxito en el intervalo solicitado, pero restringe la gama de solicitudes que el dispositivo entre 40ms y 1000ms. Por ejemplo, si usted solicita un intervalo de 3 segundos, (3000ms), la API solicita datos desde el dispositivo cada 1 segundo, pero sólo ejecuta el callback de éxito cada 3 segundos.
 
 ## navigator.accelerometer.clearWatch
 
-Dejar de ver la `Acceleration` que se hace referencia por la `watchID` parámetro.
+Dejar de mirar el `Acceleration` referenciado por el `watchID` parámetro.
 
     navigator.accelerometer.clearWatch(watchID);
     

@@ -19,7 +19,7 @@
 
 # org.apache.cordova.inappbrowser
 
-このプラグインを呼び出すときに表示される web ブラウザーのビューを提供します `window.open()` 、または時として形成されたリンクを開く`<a target="_blank">`.
+このプラグインを呼び出すときに表示される web ブラウザーのビューを提供します`window.open()`.
 
     var ref = window.open('http://apache.org', '_blank', 'location=yes');
     
@@ -31,22 +31,11 @@
     cordova plugin add org.apache.cordova.inappbrowser
     
 
-### Firefox の OS
-
-[マニフェストのドキュメント][1]で説明されているように、 **www/manifest.webapp**を作成します。関連する権限を追加します。
-
- [1]: https://developer.mozilla.org/en-US/Apps/Developing/Manifest
-
-    "permissions": {
-        "browser": {}
-    }
-    
-
 ## window.open
 
 新しい URL を開き `InAppBrowser` インスタンス、現在のブラウザー インスタンスまたはシステムのブラウザー。
 
-    var ref = window.open url、ターゲット （オプション）;
+    var ref = window.open(url, target, options);
     
 
 *   **ref**: への参照を `InAppBrowser` ウィンドウ。*(InAppBrowser)*
@@ -85,18 +74,19 @@
     *   **allowInlineMediaPlayback**： に設定されている `yes` または `no` ラインで HTML5 メディア再生には、デバイス固有再生インターフェイスではなく、ブラウザー ウィンドウ内に表示するようにします。 HTML の `video` 要素を含める必要がありますまた、 `webkit-playsinline` 属性 (デフォルトは`no`)
     *   **keyboardDisplayRequiresUserAction**： に設定されている `yes` または `no` をフォーム要素の JavaScript を介してフォーカスを受け取るときに、キーボードを開く `focus()` コール （デフォルトは`yes`).
     *   **suppressesIncrementalRendering**： に設定されている `yes` または `no` (デフォルトでは表示される前にビューのすべての新しいコンテンツを受信するまで待機するには`no`).
-    *   **presentationstyle**： に設定されている `pagesheet` 、 `formsheet` または `fullscreen` (デフォルトでは、[プレゼンテーション スタイル][2]を設定するには`fullscreen`).
-    *   **transitionstyle**： に設定されている `fliphorizontal` 、 `crossdissolve` または `coververtical` (デフォルトでは、[トランジションのスタイル][3]を設定するには`coververtical`).
+    *   **presentationstyle**： に設定されている `pagesheet` 、 `formsheet` または `fullscreen` (デフォルトでは、[プレゼンテーション スタイル][1]を設定するには`fullscreen`).
+    *   **transitionstyle**： に設定されている `fliphorizontal` 、 `crossdissolve` または `coververtical` (デフォルトでは、[トランジションのスタイル][2]を設定するには`coververtical`).
     *   **toolbarposition**： に設定されている `top` または `bottom` (既定値は `bottom` )。上部またはウィンドウの下部にツールバーが発生します。
 
- [2]: http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalPresentationStyle
- [3]: http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalTransitionStyle
+ [1]: http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalPresentationStyle
+ [2]: http://developer.apple.com/library/ios/#documentation/UIKit/Reference/UIViewController_Class/Reference/Reference.html#//apple_ref/occ/instp/UIViewController/modalTransitionStyle
 
 ### サポートされているプラットフォーム
 
 *   アマゾン火 OS
 *   アンドロイド
 *   ブラックベリー 10
+*   Firefox の OS
 *   iOS
 *   Windows Phone 7 と 8
 
@@ -104,6 +94,36 @@
 
     var ref = window.open('http://apache.org', '_blank', 'location=yes');
     var ref2 = window.open(encodeURI('http://ja.m.wikipedia.org/wiki/ハングル'), '_blank', 'location=yes');
+    
+
+### Firefox OS 癖
+
+開かれた場合にいくつかの CSS ルールを追加する必要があるプラグインは任意のデザインを適用しないよう `target='_blank'` 。これらのような規則になります。
+
+     css
+    .inAppBrowserWrap {
+      background-color: rgba(0,0,0,0.75);
+      color: rgba(235,235,235,1.0);
+    }
+    .inAppBrowserWrap menu {
+      overflow: auto;
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .inAppBrowserWrap menu li {
+      font-size: 25px;
+      height: 25px;
+      float: left;
+      margin: 0 10px;
+      padding: 3px 10px;
+      text-decoration: none;
+      color: #ccc;
+      display: block;
+      background: rgba(30,30,30,0.50);
+    }
+    .inAppBrowserWrap menu li.disabled {
+        color: #777;
+    }
     
 
 ## InAppBrowser
@@ -206,6 +226,7 @@
 
 *   アマゾン火 OS
 *   アンドロイド
+*   Firefox の OS
 *   iOS
 *   Windows Phone 7 と 8
 

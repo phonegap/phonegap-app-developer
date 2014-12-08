@@ -32,24 +32,23 @@ function newProgressEvent(result) {
     return pe;
 }
 
+function getUrlCredentials(urlString) {
+    var credentialsPattern = /^http\:\/\/((.*?)\:(.*?))@.*$/g,
+        credentials = credentialsPattern.exec(urlString);
+
+    return credentials && credentials[1];
+}
+
 function getBasicAuthHeader(urlString) {
     var header =  null;
 
+
+    // This is changed due to MS Windows doesn't support credentials in http uris
+    // so we detect them by regexp and strip off from result url
+    // Proof: http://social.msdn.microsoft.com/Forums/windowsapps/en-US/a327cf3c-f033-4a54-8b7f-03c56ba3203f/windows-foundation-uri-security-problem
+
     if (window.btoa) {
-        // parse the url using the Location object
-        var url = document.createElement('a');
-        url.href = urlString;
-
-        var credentials = null;
-        var protocol = url.protocol + "//";
-        var origin = protocol + url.host.replace(":" + url.port, ""); // Windows 8 (IE10) append :80 or :443 to url.host
-
-        // check whether there are the username:password credentials in the url
-        if (url.href.indexOf(origin) !== 0) { // credentials found
-            var atIndex = url.href.indexOf("@");
-            credentials = url.href.substring(protocol.length, atIndex);
-        }
-
+        var credentials = getUrlCredentials(urlString);
         if (credentials) {
             var authHeader = "Authorization";
             var authHeaderValue = "Basic " + window.btoa(credentials);
@@ -97,6 +96,8 @@ FileTransfer.prototype.upload = function(filePath, server, successCallback, erro
     var httpMethod = null;
     var basicAuthHeader = getBasicAuthHeader(server);
     if (basicAuthHeader) {
+        server = server.replace(getUrlCredentials(server) + '@', '');
+
         options = options || {};
         options.headers = options.headers || {};
         options.headers[basicAuthHeader.name] = basicAuthHeader.value;
@@ -125,7 +126,7 @@ FileTransfer.prototype.upload = function(filePath, server, successCallback, erro
     }
 
     var fail = errorCallback && function(e) {
-        var error = new FileTransferError(e.code, e.source, e.target, e.http_status, e.body);
+        var error = new FileTransferError(e.code, e.source, e.target, e.http_status, e.body, e.exception);
         errorCallback(error);
     };
 
@@ -157,6 +158,8 @@ FileTransfer.prototype.download = function(source, target, successCallback, erro
 
     var basicAuthHeader = getBasicAuthHeader(source);
     if (basicAuthHeader) {
+        source = source.replace(getUrlCredentials(source) + '@', '');
+
         options = options || {};
         options.headers = options.headers || {};
         options.headers[basicAuthHeader.name] = basicAuthHeader.value;
@@ -191,7 +194,7 @@ FileTransfer.prototype.download = function(source, target, successCallback, erro
     };
 
     var fail = errorCallback && function(e) {
-        var error = new FileTransferError(e.code, e.source, e.target, e.http_status, e.body);
+        var error = new FileTransferError(e.code, e.source, e.target, e.http_status, e.body, e.exception);
         errorCallback(error);
     };
 

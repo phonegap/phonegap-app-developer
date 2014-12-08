@@ -18,7 +18,7 @@
  */
 
 #import "CDVCompass.h"
-#import <Cordova/NSArray+Comparisons.h> 
+#import <Cordova/NSArray+Comparisons.h>
 
 #pragma mark Constants
 
@@ -27,17 +27,6 @@
 #define kPGLocationForcePromptKey @"forcePrompt"
 #define kPGLocationDistanceFilterKey @"distanceFilter"
 #define kPGLocationFrequencyKey @"frequency"
-
-#pragma mark -
-#pragma mark Categories
-
-@interface CLHeading (JSONMethods)
-
-- (NSString*)JSONRepresentation;
-
-@end
- 
-
 
 #pragma mark -
 #pragma mark CDVHeadingData

@@ -45,6 +45,9 @@ public class NetworkManager extends CordovaPlugin {
     public static final String WIMAX = "wimax";
     // mobile
     public static final String MOBILE = "mobile";
+    
+    // Android L calls this Cellular, because I have no idea! 
+    public static final String CELLULAR = "cellular";
     // 2G network types
     public static final String GSM = "gsm";
     public static final String GPRS = "gprs";
@@ -189,6 +192,7 @@ public class NetworkManager extends CordovaPlugin {
      */
     private JSONObject getConnectionInfo(NetworkInfo info) {
         String type = TYPE_NONE;
+        String extraInfo = "";
         if (info != null) {
             // If we are not connected to any network set type to none
             if (!info.isConnected()) {
@@ -197,8 +201,8 @@ public class NetworkManager extends CordovaPlugin {
             else {
                 type = getType(info);
             }
+            extraInfo = info.getExtraInfo();
         }
-        String extraInfo = info.getExtraInfo();
 
         Log.d("CordovaNetworkManager", "Connection Type: " + type);
         Log.d("CordovaNetworkManager", "Connection Extra Info: " + extraInfo);
@@ -240,7 +244,7 @@ public class NetworkManager extends CordovaPlugin {
             if (type.toLowerCase().equals(WIFI)) {
                 return TYPE_WIFI;
             }
-            else if (type.toLowerCase().equals(MOBILE)) {
+            else if (type.toLowerCase().equals(MOBILE) || type.toLowerCase().equals(CELLULAR)) {
                 type = info.getSubtypeName();
                 if (type.toLowerCase().equals(GSM) ||
                         type.toLowerCase().equals(GPRS) ||

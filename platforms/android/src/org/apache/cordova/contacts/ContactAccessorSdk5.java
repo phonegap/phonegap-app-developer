@@ -16,26 +16,8 @@
        specific language governing permissions and limitations
        under the License.
 */
-
+ 
 package org.apache.cordova.contacts;
-
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.content.ContentProviderOperation;
-import android.content.ContentProviderResult;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.OperationApplicationException;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.RemoteException;
-import android.provider.ContactsContract;
-import android.util.Log;
-
-import org.apache.cordova.CordovaInterface;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -49,8 +31,24 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-//import android.app.Activity;
-//import android.content.Context;
+
+import org.apache.cordova.CordovaInterface;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.OperationApplicationException;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.RemoteException;
+import android.provider.ContactsContract;
+import android.util.Log;
 
 /**
  * An implementation of {@link ContactAccessor} that uses current Contacts API.
@@ -84,6 +82,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
      * A static map that converts the JavaScript property name to Android database column name.
      */
     private static final Map<String, String> dbMap = new HashMap<String, String>();
+
     static {
         dbMap.put("id", ContactsContract.Data.CONTACT_ID);
         dbMap.put("displayName", ContactsContract.Contacts.DISPLAY_NAME);
@@ -126,7 +125,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
     public ContactAccessorSdk5(CordovaInterface context) {
         mApp = context;
     }
-
+    
     /**
      * This method takes the fields required and search options in order to produce an
      * array of contacts that matches the criteria provided.
@@ -169,7 +168,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
         //Log.d(LOG_TAG, "Fields = " + fields.toString());
 
         // Loop through the fields the user provided to see what data should be returned.
-        HashMap<String, Boolean> populate = buildPopulationSet(fields);
+        HashMap<String, Boolean> populate = buildPopulationSet(options);
 
         // Build the ugly where clause and where arguments for one big query.
         WhereOptions whereOptions = buildWhereClause(fields, searchTerm);
@@ -268,7 +267,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
                 idOptions.getWhere(),
                 idOptions.getWhereArgs(),
                 ContactsContract.Data.CONTACT_ID + " ASC");
-
+         
         JSONArray contacts = populateContactArray(limit, populate, c);
         return contacts;
     }
@@ -281,17 +280,23 @@ public class ContactAccessorSdk5 extends ContactAccessor {
      * @throws JSONException
      */
     public JSONObject getContactById(String id) throws JSONException {
+        // Call overloaded version with no desiredFields 
+        return getContactById(id, null); 
+    }
+    
+    @Override
+    public JSONObject getContactById(String id, JSONArray desiredFields) throws JSONException {
         // Do the id query
-        Cursor c = mApp.getActivity().getContentResolver().query(ContactsContract.Data.CONTENT_URI,
+        Cursor c = mApp.getActivity().getContentResolver().query(
+                ContactsContract.Data.CONTENT_URI,
                 null,
                 ContactsContract.Data.RAW_CONTACT_ID + " = ? ",
                 new String[] { id },
                 ContactsContract.Data.RAW_CONTACT_ID + " ASC");
 
-        JSONArray fields = new JSONArray();
-        fields.put("*");
-
-        HashMap<String, Boolean> populate = buildPopulationSet(fields);
+        HashMap<String, Boolean> populate = buildPopulationSet(
+                new JSONObject().put("desiredFields", desiredFields)
+                );
 
         JSONArray contacts = populateContactArray(1, populate, c);
 
@@ -383,7 +388,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
                     // Grab the mimetype of the current row as it will be used in a lot of comparisons
                     mimetype = c.getString(colMimetype);
                     
-                    if (mimetype.equals(ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)) {
+                    if (mimetype.equals(ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE) && isRequired("name", populate)) {
                         contact.put("displayName", c.getString(colDisplayName));
                     }
 
@@ -894,7 +899,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
             photo.put("id", cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Photo._ID)));
             photo.put("pref", false);
             photo.put("type", "url");
-            Uri person = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, (new Long(contactId)));
+            Uri person = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, (Long.valueOf(contactId)));
             Uri photoUri = Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
             photo.put("value", photoUri.toString());
         } catch (JSONException e) {
@@ -968,7 +973,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
     private String modifyContact(String id, JSONObject contact, String accountType, String accountName) {
         // Get the RAW_CONTACT_ID which is needed to insert new values in an already existing contact.
         // But not needed to update existing values.
-        int rawId = (new Integer(getJsonString(contact, "rawId"))).intValue();
+        int rawId = (Integer.valueOf(getJsonString(contact, "rawId"))).intValue();
 
         // Create a list of attributes to add to the contact database
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
@@ -1098,8 +1103,8 @@ public class ContactAccessorSdk5 extends ContactAccessor {
                         }
                         // This is an existing email so do a DB update
                         else {
-                        	String emailValue=getJsonString(email, "value");
-                        	if(!emailValue.isEmpty()) {
+                         String emailValue=getJsonString(email, "value");
+                         if(!emailValue.isEmpty()) {
                                 ops.add(ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
                                     .withSelection(ContactsContract.CommonDataKinds.Email._ID + "=? AND " +
                                             ContactsContract.Data.MIMETYPE + "=?",
@@ -1107,13 +1112,13 @@ public class ContactAccessorSdk5 extends ContactAccessor {
                                     .withValue(ContactsContract.CommonDataKinds.Email.DATA, getJsonString(email, "value"))
                                     .withValue(ContactsContract.CommonDataKinds.Email.TYPE, getContactType(getJsonString(email, "type")))
                                     .build());
-                        	} else {
+                         } else {
                                 ops.add(ContentProviderOperation.newDelete(ContactsContract.Data.CONTENT_URI)
                                         .withSelection(ContactsContract.CommonDataKinds.Email._ID + "=? AND " +
                                                 ContactsContract.Data.MIMETYPE + "=?",
                                                 new String[] { emailId, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE })
                                         .build());
-                        	}
+                         }
                         }
                     }
                 }
@@ -2177,5 +2182,5 @@ public class ContactAccessorSdk5 extends ContactAccessor {
         }
         return stringType;
     }
-}
 
+}

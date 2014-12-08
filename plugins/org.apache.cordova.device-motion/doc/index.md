@@ -33,6 +33,7 @@ axis.
 - Amazon Fire OS
 - Android
 - BlackBerry 10
+- Browser
 - Firefox OS
 - iOS
 - Tizen
@@ -74,6 +75,10 @@ callback function.
 
     navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
 
+### Browser Quirks
+
+Values for X, Y, Z motion are all randomly generated in order to simulate the accelerometer.
+
 ### iOS Quirks
 
 - iOS doesn't recognize the concept of getting the current acceleration at any given point.
@@ -94,10 +99,10 @@ accelerometer.
 
     var watchID = navigator.accelerometer.watchAcceleration(accelerometerSuccess,
                                                            accelerometerError,
-                                                           [accelerometerOptions]);
+                                                           accelerometerOptions);
 
 - __accelerometerOptions__: An object with the following optional keys:
-  - __frequency__: How often to retrieve the `Acceleration` in milliseconds. _(Number)_ (Default: 10000)
+  - __period__: requested period of calls to accelerometerSuccess with acceleration data in Milliseconds. _(Number)_ (Default: 10000)
 
 
 ###  Example

@@ -31,6 +31,7 @@ Dieses Plugin ermöglicht den Zugriff auf das Gerät Beschleunigungsmesser. Der 
 *   Amazon Fire OS
 *   Android
 *   BlackBerry 10
+*   Browser
 *   Firefox OS
 *   iOS
 *   Tizen
@@ -72,6 +73,10 @@ Diese Beschleunigungswerte werden zurückgegeben die `accelerometerSuccess` Call
     navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
     
 
+### Browser-Eigenheiten
+
+Werte für X, Y, Z-Bewegung sind alle zufällig generierten in Ordnung, den Beschleunigungsmesser zu simulieren.
+
 ### iOS Macken
 
 *   iOS erkennt nicht das Konzept die aktuelle Beschleunigung zu einem bestimmten Zeitpunkt zu bekommen.
@@ -88,11 +93,11 @@ Das zurückgegebene ID Referenzen der Beschleunigungsmesser Uhr Intervall zu seh
 
     var watchID = navigator.accelerometer.watchAcceleration(accelerometerSuccess,
                                                            accelerometerError,
-                                                           [accelerometerOptions]);
+                                                           accelerometerOptions);
     
 
 *   **accelerometerOptions**: Ein Objekt mit den folgenden optionalen Elementen: 
-    *   **Häufigkeit**: wie oft abgerufen werden die `Acceleration` in Millisekunden. *(Anzahl)* (Default: 10000)
+    *   **Zeitraum**: gewünschten Zeitraum der Aufrufe von AccelerometerSuccess mit Beschleunigungsdaten in Millisekunden. *(Anzahl)* (Default: 10000)
 
 ### Beispiel
 
@@ -114,7 +119,7 @@ Das zurückgegebene ID Referenzen der Beschleunigungsmesser Uhr Intervall zu seh
 
 ### iOS Macken
 
-Die API ruft die Erfolg-Callback-Funktion im Intervall angefordert, aber schränkt den Bereich der Anforderungen an das Gerät zwischen 40ms und 1000ms. Beispielsweise wenn Sie ein Intervall von 3 Sekunden, (3000ms), beantragen die API fordert Daten vom Gerät jede Sekunde, aber nur den Erfolg-Rückruf führt alle 3 Sekunden.
+Die API ruft die Erfolg-Callback-Funktion im Intervall angefordert, aber schränkt den Bereich der Anforderungen an das Gerät zwischen 40ms und 1000ms. Beispielsweise wenn Sie ein Intervall von 3 Sekunden, (3000ms), beantragen die API fordert Daten vom Gerät jede 1 Sekunde, aber nur den Erfolg-Rückruf führt alle 3 Sekunden.
 
 ## navigator.accelerometer.clearWatch
 
@@ -136,7 +141,7 @@ Beenden, beobachten die `Acceleration` verwiesen wird, durch die `watchID` Param
 
 ## Beschleunigung
 
-Zu einem bestimmten Zeitpunkt erfasste `Beschleunigungsmesser`-Daten. Beschleunigungswerte sind die Auswirkungen der Schwerkraft (9.81 m/s ^ 2), so dass wenn ein Gerät flach und nach oben, *X*, *y liegt*, und *Z* -Werte zurückgegeben werden sollte `` , `` , und`9.81`.
+Enthält `Accelerometer` in der Zeit zu einem bestimmten Zeitpunkt erfassten Daten. Beschleunigungswerte sind die Auswirkungen der Schwerkraft (9.81 m/s ^ 2), so dass wenn ein Gerät flach und nach oben, *X*, *y liegt*, und *Z* -Werte zurückgegeben werden sollte `` , `` , und`9.81`.
 
 ### Eigenschaften
 

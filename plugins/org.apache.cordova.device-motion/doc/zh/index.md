@@ -31,9 +31,10 @@
 *   亞馬遜火 OS
 *   Android 系統
 *   黑莓 10
-*   火狐瀏覽器作業系統
+*   瀏覽器
+*   火狐瀏覽器的作業系統
 *   iOS
-*   Tizen
+*   泰
 *   Windows Phone 7 和 8
 *   Windows 8
 
@@ -72,6 +73,10 @@
     navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
     
 
+### 瀏覽器的怪癖
+
+值 X、 Y、 Z 議案是所有中隨機生成的訂單來類比加速度感應器。
+
 ### iOS 的怪癖
 
 *   iOS 不會認識到在任何給定的點獲取當前加速度的概念。
@@ -82,17 +87,17 @@
 
 ## navigator.accelerometer.watchAcceleration
 
-檢索該設備的當前 `Acceleration` 間隔時間定期，執行 `accelerometerSuccess` 回呼函數每次。 指定的時間間隔，以毫秒為單位通過 `acceleratorOptions` 物件的 `frequency` 參數。
+檢索設備的當前 `Acceleration` 的間隔時間定期，執行 `accelerometerSuccess` 回呼函數每次。 指定的時間間隔，以毫秒為單位通過 `acceleratorOptions` 物件的 `frequency` 參數。
 
-返回的觀看 ID 引用加速度計的手錶時間間隔，並可以用 `navigator.accelerometer.clearWatch` 來停止看加速度計。
+返回觀看 ID 引用了加速度計的手錶時間間隔，並可以用 `navigator.accelerometer.clearWatch` 來停止觀看了加速度計。
 
     var watchID = navigator.accelerometer.watchAcceleration(accelerometerSuccess,
                                                            accelerometerError,
-                                                           [accelerometerOptions]);
+                                                           accelerometerOptions);
     
 
 *   **accelerometerOptions**： 具有以下可選的鍵的物件： 
-    *   **頻率**： 經常如何檢索 `Acceleration` 以毫秒為單位。*（人數）*（預設值： 10000）
+    *   **期間**： 請求的期間的調用的 accelerometerSuccess 與加速度資料以毫秒為單位。*（人數）*（預設值： 10000）
 
 ### 示例
 
@@ -114,11 +119,11 @@
 
 ### iOS 的怪癖
 
-API 呼叫成功的回呼函數的時間間隔的要求，但到 40ms年之間設備限制所請求的範圍和 1000ms。 例如，如果請求的時間間隔為 3 秒，(3000ms) API 請求資料從設備每隔 1 秒，但只有執行成功回檔每隔 3 秒。
+API 呼叫成功的回呼函數在時間間隔的要求，但將請求的範圍限制為 40ms年之間裝置和 1000ms。 例如，如果您請求的時間間隔為 3 秒，（3000ms），API 請求資料從設備每隔 1 秒，但只是執行成功回檔每 3 秒。
 
 ## navigator.accelerometer.clearWatch
 
-停止看 `Acceleration` 引用的 `watchID` 參數。
+別看 `Acceleration` 引用的 `watchID` 參數。
 
     navigator.accelerometer.clearWatch(watchID);
     
@@ -136,7 +141,7 @@ API 呼叫成功的回呼函數的時間間隔的要求，但到 40ms年之間�
 
 ## 加速度
 
-包含 `Accelerometer` 在時間中的特定點捕獲的資料。 加速度值包括引力的影響 (9.81 m/s ^2)，因此當設備謊言平面和麵朝上， *x*、 *y*，和*z*返回的值應該是 `` ， `` ，和`9.81`.
+包含 `Accelerometer` 在時間中的特定點捕獲的資料。 加速度值包括重力的作用 (9.81 m/s ^2），這樣當設備在於扁和朝上， *x*， *y*， *z*返回的值應該是 `` ， `` ，和`9.81`.
 
 ### 屬性
 

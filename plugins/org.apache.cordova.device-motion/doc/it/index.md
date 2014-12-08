@@ -31,6 +31,7 @@ Questo plugin consente di accedere all'accelerometro del dispositivo. L'accelero
 *   Amazon fuoco OS
 *   Android
 *   BlackBerry 10
+*   Browser
 *   Firefox OS
 *   iOS
 *   Tizen
@@ -72,6 +73,10 @@ I valori di accelerazione vengono restituiti per la `accelerometerSuccess` funzi
     navigator.accelerometer.getCurrentAcceleration(onSuccess, onError);
     
 
+### Stranezze browser
+
+I valori per X, Y, movimento Z sono tutti generati casualmente in ordine per simulare l'accelerometro.
+
 ### iOS stranezze
 
 *   iOS non riconosce il concetto di ottenere l'accelerazione della corrente in un dato punto.
@@ -88,11 +93,11 @@ L'oggetto restituito guardare ID riferimenti intervallo orologio di accelerometr
 
     var watchID = navigator.accelerometer.watchAcceleration(accelerometerSuccess,
                                                            accelerometerError,
-                                                           [accelerometerOptions]);
+                                                           accelerometerOptions);
     
 
 *   **accelerometerOptions**: Un oggetto con le seguenti chiavi opzionali: 
-    *   **frequenza**: la frequenza di recuperare il `Acceleration` in millisecondi. *(Numero)* (Default: 10000)
+    *   **periodo**: periodo richiesto di chiamate a accelerometerSuccess con i dati di accelerazione in millisecondi. *(Numero)* (Default: 10000)
 
 ### Esempio
 

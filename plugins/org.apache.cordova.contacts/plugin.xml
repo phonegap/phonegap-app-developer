@@ -22,7 +22,7 @@
     xmlns:rim="http://www.blackberry.com/ns/widgets"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="org.apache.cordova.contacts"
-    version="0.2.10">
+    version="0.2.14">
 
     <name>Contacts</name>
     <description>Cordova Contacts Plugin</description>
@@ -63,8 +63,9 @@
         <clobbers target="ContactOrganization" />
     </js-module>
 
-
-
+    <js-module src="www/ContactFieldType.js" name="ContactFieldType">
+        <merges target="" />
+    </js-module>
 
     <!-- android -->
     <platform name="android">
@@ -83,6 +84,7 @@
         <source-file src="src/android/ContactAccessor.java" target-dir="src/org/apache/cordova/contacts" />
         <source-file src="src/android/ContactAccessorSdk5.java" target-dir="src/org/apache/cordova/contacts" />
         <source-file src="src/android/ContactManager.java" target-dir="src/org/apache/cordova/contacts" />
+        <source-file src="src/android/ContactInfoDTO.java" target-dir="src/org/apache/cordova/contacts" />
     </platform>
 
     <!-- amazon-fireos -->
@@ -178,6 +180,7 @@
         </config-file>
 
         <source-file src="src/wp/Contacts.cs" />
+        <source-file src="src/wp/ContactsHelper.cs" />
     </platform>
 
     <!-- wp8 -->
@@ -193,23 +196,38 @@
         </config-file>
 
         <source-file src="src/wp/Contacts.cs" />
+        <source-file src="src/wp/ContactsHelper.cs" />
+        <source-file src="src/wp/ContactPicker.xaml" />
+        <source-file src="src/wp/ContactPicker.xaml.cs" />
+        <source-file src="src/wp/ContactPickerTask.cs" />
     </platform>
     
     <!-- firefoxos -->
     <platform name="firefoxos">
         <config-file target="config.xml" parent="/*">
-            <feature name="Contacts">
-                <param name="firefoxos-package" value="Contacts" />
-            </feature>
-        </config-file>                                         
+            <permission name="contacts" access="readwrite" description="Required for accessing address book."
+                        privileged="true"/>
+        </config-file>
         <js-module src="src/firefoxos/ContactsProxy.js" name="ContactsProxy">
             <runs />
         </js-module>
-    </platform>  
+    </platform>    
 
-        <!-- wp8 -->
-    <js-module src="src/windows8/ContactProxy.js" name="ContactProxy">
-        <merges target="" />
-    </js-module>
+    <!-- Windows 8 -->
+    <platform name="windows8">
+        <js-module src="src/windows8/ContactProxy.js" name="ContactProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
+
+    <!-- Windows -->
+    <platform name="windows">
+        <js-module src="src/windows/ContactProxy.js" name="ContactProxy">
+            <merges target="" />
+        </js-module>
+        <config-file target="package.phone.appxmanifest" parent="/Package/Capabilities">
+            <m3:Capability Name="contacts" />
+        </config-file>
+    </platform>
 
 </plugin>

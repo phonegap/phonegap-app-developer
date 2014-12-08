@@ -1,4 +1,3 @@
-//cordova.define("org.apache.cordova.contacts.ContactProxy", function (require, exports, module) {
 /*
  *
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -17,122 +16,88 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
- *
-*/
+ * 
+ */
 
+var ContactField = require('./ContactField'),
+    ContactAddress = require('./ContactAddress'),
+    ContactName = require('./ContactName'),
+    Contact = require('./Contact');
+
+
+function convertToContact(windowsContact) {
+    var contact = new Contact();
+
+    // displayName & nickname
+    contact.displayName = windowsContact.name;
+    contact.nickname = windowsContact.name;
+
+    // name
+    contact.name = new ContactName(windowsContact.name);
+
+    // phoneNumbers
+    contact.phoneNumbers = [];
+    for (var i = 0; i < windowsContact.phoneNumbers.size; i++) {
+        var phone = new ContactField(windowsContact.phoneNumbers[i].category, windowsContact.phoneNumbers[i].value);
+        contact.phoneNumbers.push(phone);
+    }
+
+    // emails
+    contact.emails = [];
+    for (var i = 0; i < windowsContact.emails.size; i++) {
+        var email = new ContactField(windowsContact.emails[i].category, windowsContact.emails[i].value);
+        contact.emails.push(email);
+    }
+
+    // addressres
+    contact.addresses = [];
+    for (var i = 0; i < windowsContact.locations.size; i++) {
+        var address = new ContactAddress(null, windowsContact.locations[i].category,
+            windowsContact.locations[i].unstructuredAddress, windowsContact.locations[i].street,
+            null, windowsContact.locations[i].region, windowsContact.locations[i].postalCode,
+            windowsContact.locations[i].country);
+        contact.addresses.push(address);
+    }
+
+    // ims
+    contact.ims = [];
+    for (var i = 0; i < windowsContact.instantMessages.size; i++) {
+        var im = new ContactField(windowsContact.instantMessages[i].category, windowsContact.instantMessages[i].userName);
+        contact.ims.push(im);
+    }
+
+    return contact;
+};
 
 module.exports = {
-    search:function(win,fail,args){
-        var fields = args[0]; // ignored, always returns entire object
-        var options = args[1];
-
-        var filter = options.filter;   // ignored
-        var multiple = true;//options.multiple;
+    pickContact: function(win, fail, args) {
 
         var picker = new Windows.ApplicationModel.Contacts.ContactPicker();
-        picker.selectionMode = Windows.ApplicationModel.Contacts.ContactSelectionMode.contacts;   // select entire contact
+        picker.selectionMode = Windows.ApplicationModel.Contacts.ContactSelectionMode.contacts; // select entire contact
+
+        // pickContactAsync is available on Windows 8.1 or later, instead of
+        // pickSingleContactAsync, which is deprecated after Windows 8,
+        // so try to use newer method, if available.
+        // see http://msdn.microsoft.com/en-us/library/windows/apps/windows.applicationmodel.contacts.contactpicker.picksinglecontactasync.aspx
         if (picker.pickContactAsync) {
             // TODO: 8.1 has better contact support via the 'Contact' object
-        }
-        else {
-            // 8.0 use the ContactInformation class
-            // decide which function we will call
-            var pickerFunkName = multiple ? 'pickMultipleContactsAsync' : 'pickSingleContactAsync';
-            picker[pickerFunkName]().done(function (res) {
-                if (!res) {
-                    fail && setTimeout(function () {
+        } else {
+
+            function success(con) {
+                // if contact was not picked
+                if (!con) {
+                    fail && setTimeout(function() {
                         fail(new Error("User did not pick a contact."));
                     }, 0);
                     return;
                 }
 
-                var contactResults = [];
-
-                for (var i = 0; i < res.length; i++) {
-
-
-                    var index,
-                        contactResult = res[i],
-                        contact = {
-                            id: "",
-                            name: { formatted: contactResult.name },  // ContactName
-                            displayName: contactResult.name,          // DOMString
-                            nickname: contactResult.name,             // DOMString
-                            phoneNumbers: contactResult.phoneNumbers, // ContactField[]
-                            addresses: contactResult.locations,       // ContactAddress[]
-                            emails: [],                               // ContactField
-                            ims: contactResult.instantMessages,       // ContactField[]
-                            organizations: [],              // ContactOrganization[]
-                            birthday: null,                 // Date
-                            note: "",                       // DOMString
-                            photos: [],                     // ContactField[]
-                            categories: [],                 // ContactField[]
-                            urls: []                        // ContactField[]
-                        };
-
-                    // Win8-ContactField is {category, name, type, value};
-                    // Cordova ContactField is {type,value, pref:bool };
-                    // Win8 type means 'email' cordova type means 'work|home|...' so we convert them
-                    if (contact.emails && contact.emails.length) {
-                        contact.emails[0].pref = true; // add a preferred prop 
-                        for (index = 0; index < contacts.emails.length; index++) {
-                            contact.emails[index].type = contact.emails[index].category;
-                        }
-                    }
-
-                    if (contact.phoneNumbers && contact.phoneNumbers.length) {
-                        contact.phoneNumbers[0].pref = true; // cordova contact field needs a 'prefered' property on  a contact
-                        // change the meaning of type from 'telephonenumber' to 'work|home|...'
-                        for (index = 0; index < contact.phoneNumbers.length; index++) {
-                            contact.phoneNumbers[index].type = contact.phoneNumbers[index].category;
-                        }
-                    }
-
-                    if (contact.addresses && contact.addresses.length) {
-
-                        // convert addresses/locations to Cordova.ContactAddresses                    
-                        // constr: ContactAddress(pref, type, formatted, streetAddress, locality, region, postalCode, country)
-                        var address, formatted;
-                        for (index = 0; index < contact.addresses.length; index++) {
-                            address = contact.addresses[index];   // make an alias
-                            var formattedArray = [];
-                            // get rid of the empty fields.
-                            var fields = [address.street, address.city, address.region, address.country, address.postalCode];
-                            for (var n = 0; n < fields.length; n++) {
-                                if (fields[n].length > 0) {
-                                    formattedArray.push(fields[n]);
-                                }
-                            }
-                            formattedAddress = formattedArray.join(", ");
-                            console.log(contact.name.formatted + " formatted looks like " + formattedAddress);
-                            contact.addresses[index] = new ContactAddress(false,
-                                                                          address.name,
-                                                                          formattedAddress,
-                                                                          address.street,
-                                                                          address.city,
-                                                                          address.region,
-                                                                          address.postalCode,
-                                                                          address.country);
-                        }
-
-                    }
-
-                    // convert ims to ContactField
-                    if (contact.ims && contact.ims.length) {
-                        // MS ContactInstantMessageField has : displayText, launchUri, service, userName, category, type
-                        contact.ims[0].pref = true;
-                        for (index = 0; index < contact.ims.length; index++) {
-                            contact.ims[index] = new ContactField(contact.ims[index].type, contact.ims[index].value, false);
-                        }
-                    }
-
-                    contactResults.push(contact);
-
-                }
                 // send em back
-                win(contactResults);
+                win(convertToContact(con));
 
-            });
+            }
+
+            picker.pickSingleContactAsync().done(success, fail);
         }
     },
 
@@ -141,11 +106,16 @@ module.exports = {
         fail && setTimeout(function () {
             fail(new Error("Contact create/save not supported on Windows 8"));
         }, 0);
+    },
 
+    search: function(win, fail, args) {
+        console && console.error && console.error("Error : Windows 8 does not support searching contacts");
+        fail && setTimeout(function() {
+            fail(new Error("Contact search not supported on Windows 8"));
+        }, 0);
     }
 
 
 }
 
 require("cordova/exec/proxy").add("Contacts", module.exports);
-// });

@@ -2,5 +2,4 @@
 *.perspectivev3
 *.pbxuser
 .DS_Store
-build
-www/phonegap.js
+build/

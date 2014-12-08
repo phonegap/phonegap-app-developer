@@ -22,7 +22,7 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:rim="http://www.blackberry.com/ns/widgets"
            id="org.apache.cordova.media-capture"
-      version="0.3.1">
+      version="0.3.4">
     <name>Capture</name>
 
     <description>Cordova Media Capture Plugin</description>
@@ -198,14 +198,45 @@ xmlns:rim="http://www.blackberry.com/ns/widgets"
     <!-- windows8 -->
     <platform name="windows8">
 
-        <js-module src="src/windows8/MediaFile.js" name="MediaFile2">
+        <config-file target="package.appxmanifest" parent="/Package/Capabilities">
+            <DeviceCapability Name="microphone" />
+            <DeviceCapability Name="webcam" />
+        </config-file>
+
+        <js-module src="src/windows/MediaFile.js" name="MediaFile2">
             <merges target="MediaFile" />
         </js-module>
 
-        <js-module src="src/windows8/CaptureProxy.js" name="CaptureProxy">
+        <js-module src="src/windows/CaptureProxy.js" name="CaptureProxy">
             <merges target="" />
         </js-module>
+    </platform>
+
+    <!-- windows -->
+    <platform name="windows">
         
-    </platform>    
+        <config-file target="package.phone.appxmanifest" parent="/Package/Capabilities">
+            <DeviceCapability Name="microphone" />
+            <DeviceCapability Name="webcam" />
+        </config-file>
         
+        <config-file target="package.windows.appxmanifest" parent="/Package/Capabilities">
+            <DeviceCapability Name="microphone" />
+            <DeviceCapability Name="webcam" />
+        </config-file>
+        
+        <config-file target="package.windows80.appxmanifest" parent="/Package/Capabilities">
+            <DeviceCapability Name="microphone" />
+            <DeviceCapability Name="webcam" />
+        </config-file>
+
+        <js-module src="src/windows/MediaFile.js" name="MediaFile2">
+            <merges target="MediaFile" />
+        </js-module>
+
+        <js-module src="src/windows/CaptureProxy.js" name="CaptureProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
+
 </plugin>

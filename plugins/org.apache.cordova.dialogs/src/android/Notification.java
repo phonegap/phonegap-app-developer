@@ -32,9 +32,16 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.widget.EditText;
+import android.widget.TextView;
+
 
 /**
  * This class provides access to notifications on the device.
+ *
+ * Be aware that this implementation gets called on 
+ * navigator.notification.{alert|confirm|prompt}, and that there is a separate
+ * implementation in org.apache.cordova.CordovaChromeClient that gets
+ * called on a simple window.{alert|confirm|prompt}.
  */
 public class Notification extends CordovaPlugin {
 
@@ -113,24 +120,28 @@ public class Notification extends CordovaPlugin {
      *
      * @param count     Number of times to play notification
      */
-    public void beep(long count) {
-        Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Ringtone notification = RingtoneManager.getRingtone(this.cordova.getActivity().getBaseContext(), ringtone);
+    public void beep(final long count) {
+        cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+                Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone notification = RingtoneManager.getRingtone(cordova.getActivity().getBaseContext(), ringtone);
 
-        // If phone is not set to silent mode
-        if (notification != null) {
-            for (long i = 0; i < count; ++i) {
-                notification.play();
-                long timeout = 5000;
-                while (notification.isPlaying() && (timeout > 0)) {
-                    timeout = timeout - 100;
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
+                // If phone is not set to silent mode
+                if (notification != null) {
+                    for (long i = 0; i < count; ++i) {
+                        notification.play();
+                        long timeout = 5000;
+                        while (notification.isPlaying() && (timeout > 0)) {
+                            timeout = timeout - 100;
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                            }
+                        }
                     }
                 }
             }
-        }
+        });
     }
 
     /**
@@ -146,7 +157,7 @@ public class Notification extends CordovaPlugin {
         Runnable runnable = new Runnable() {
             public void run() {
 
-                AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity());
+                AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
                 dlg.setMessage(message);
                 dlg.setTitle(title);
                 dlg.setCancelable(true);
@@ -166,7 +177,9 @@ public class Notification extends CordovaPlugin {
                 });
 
                 dlg.create();
-                dlg.show();
+                AlertDialog dialog =  dlg.show();
+                TextView messageview = (TextView)dialog.findViewById(android.R.id.message);
+                messageview.setTextDirection(android.view.View.TEXT_DIRECTION_LOCALE);
             };
         };
         this.cordova.getActivity().runOnUiThread(runnable);
@@ -187,7 +200,7 @@ public class Notification extends CordovaPlugin {
 
         Runnable runnable = new Runnable() {
             public void run() {
-                AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity());
+                AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
                 dlg.setMessage(message);
                 dlg.setTitle(title);
                 dlg.setCancelable(true);
@@ -239,7 +252,9 @@ public class Notification extends CordovaPlugin {
                 });
 
                 dlg.create();
-                dlg.show();
+                AlertDialog dialog =  dlg.show();
+                TextView messageview = (TextView)dialog.findViewById(android.R.id.message);
+                messageview.setTextDirection(android.view.View.TEXT_DIRECTION_LOCALE);
             };
         };
         this.cordova.getActivity().runOnUiThread(runnable);
@@ -265,7 +280,7 @@ public class Notification extends CordovaPlugin {
             public void run() {
                 final EditText promptInput =  new EditText(cordova.getActivity());
                 promptInput.setHint(defaultText);
-                AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity());
+                AlertDialog.Builder dlg = new AlertDialog.Builder(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
                 dlg.setMessage(message);
                 dlg.setTitle(title);
                 dlg.setCancelable(true);
@@ -336,8 +351,9 @@ public class Notification extends CordovaPlugin {
                 });
 
                 dlg.create();
-                dlg.show();
-
+                AlertDialog dialog =  dlg.show();
+                TextView messageview = (TextView)dialog.findViewById(android.R.id.message);
+                messageview.setTextDirection(android.view.View.TEXT_DIRECTION_LOCALE);
             };
         };
         this.cordova.getActivity().runOnUiThread(runnable);
@@ -393,7 +409,7 @@ public class Notification extends CordovaPlugin {
         final CordovaInterface cordova = this.cordova;
         Runnable runnable = new Runnable() {
             public void run() {
-                notification.progressDialog = new ProgressDialog(cordova.getActivity());
+                notification.progressDialog = new ProgressDialog(cordova.getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
                 notification.progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 notification.progressDialog.setTitle(title);
                 notification.progressDialog.setMessage(message);

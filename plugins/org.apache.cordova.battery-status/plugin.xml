@@ -20,7 +20,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
       id="org.apache.cordova.battery-status"
-      version="0.2.8">
+      version="0.2.11">
     <name>Battery</name>
     <description>Cordova Battery Plugin</description>
     <license>Apache 2.0</license>
@@ -105,6 +105,13 @@
     <platform name="tizen">
         <js-module src="src/tizen/BatteryStatusProxy.js" name="BatteryStatusProxy">
             <runs/>
+        </js-module>
+    </platform>
+
+    <!-- firefoxos -->
+    <platform name="firefoxos">
+        <js-module src="src/firefoxos/BatteryProxy.js" name="Battery">
+            <runs />
         </js-module>
     </platform>
 </plugin>

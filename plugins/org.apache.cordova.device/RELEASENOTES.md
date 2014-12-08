@@ -69,3 +69,18 @@
 * added firefoxos version
 * CB-6800 Add license
 * CB-6491 add CONTRIBUTING.md
+
+### 0.2.11 (Aug 06, 2014)
+* [FFOS] update DeviceProxy.js
+* CB-6127 Updated translations for docs
+* Use Windows system calls to get better info
+
+### 0.2.12 (Sep 17, 2014)
+* CB-7471 cordova-plugin-device documentation translation
+* CB-7552 device.name docs have not been removed
+* [fxos] Fix cordova version
+* added status box and documentation to manual tests
+* [fxos] Fix cordova version
+* added status box and documentation to manual tests
+* Added plugin support for the browser
+* CB-7262 Adds support for universal windows apps.

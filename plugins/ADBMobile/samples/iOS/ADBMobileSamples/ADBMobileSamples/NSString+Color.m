@@ -23,7 +23,7 @@
 
 // returns a UIColor given rgb in ###### format
 - (UIColor *)color {
-	NSUInteger value = 0;
+	unsigned value = 0;
 	
 	NSScanner *scanner = [NSScanner scannerWithString: self];
 	

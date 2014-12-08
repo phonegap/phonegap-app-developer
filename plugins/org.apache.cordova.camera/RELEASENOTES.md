@@ -100,3 +100,53 @@
 * CB-6491 add CONTRIBUTING.md
 * CB-6546 android: Fix a couple bugs with allowEdit pull request
 * CB-6546 android: Add support for allowEdit Camera option
+
+### 0.3.1 (Aug 06, 2014)
+* **FFOS** update CameraProxy.js
+* CB-7187 ios: Add explicit dependency on CoreLocation.framework
+* [BlackBerry10] Doc correction - sourceType is supported
+* CB-7071 android: Fix callback firing before CROP intent is sent when allowEdit=true
+* CB-6875 android: Handle exception when SDCard is not mounted
+* ios: Delete postImage (dead code)
+* Prevent NPE on processResiultFromGallery when intent comes null
+* Remove iOS doc reference to non-existing navigator.fileMgr API
+* Docs updated with some default values
+* Removes File plugin dependency from windows8 code.
+* Use WinJS functionality to resize image instead of File plugin functionality
+* CB-6127 Updated translations for docs
+
+### 0.3.2 (Sep 17, 2014)
+* CB-7551 [Camera][iOS 8] Scaled images show a white line
+* CB-7558 hasPendingOperation flag in Camera plugin's takePicture should be reversed to fix memory errors
+* CB-7557 Camera plugin tests is missing a File dependency
+* CB-7423 do cleanup after copyImage manual test
+* CB-7471 cordova-plugin-camera documentation translation: cordova-plugin-camera
+* CB-7413 Resolve 'ms-appdata' URIs with File plugin
+* Fixed minor bugs with the browser
+* CB-7433 Adds missing window reference to prevent manual tests failure on Android and iOS
+* CB-7249 cordova-plugin-camera documentation translation: cordova-plugin-camera
+* CB-4003 Add config option to not use location information in Camera plugin (and default to not use it)
+* CB-7461 Geolocation fails in Camera plugin in iOS 8
+* CB-7378 Use single Proxy for both windows8 and windows.
+* CB-7378 Adds support for windows platform
+* CB-7433 Fixes manual tests failure on windows
+* CB-6958 Get the correct default for "quality" in the test
+* add documentation for manual tests
+* CB-7249 cordova-plugin-camera documentation translation: cordova-plugin-camera
+* CB-4003 Add config option to not use location information in Camera plugin (and default to not use it)
+* CB-7461 Geolocation fails in Camera plugin in iOS 8
+* CB-7433 Fixes manual tests failure on windows
+* CB-7378 Use single Proxy for both windows8 and windows.
+* CB-7378 Adds support for windows platform
+* CB-6958 Get the correct default for "quality" in the test
+* add documentation for manual tests
+* Updated docs for browser
+* Added support for the browser
+* CB-7286 [BlackBerry10] Use getUserMedia if camera card is unavailable
+* CB-7180 Update Camera plugin to support generic plugin webView UIView (which can be either a UIWebView or WKWebView)
+* Renamed test dir, added nested plugin.xml
+* CB-6958 added manual tests
+* CB-6958 Port camera tests to plugin-test-framework
+
+### 0.3.3 (Oct 03, 2014)
+* CB-7600 Adds informative message to error callback in manual test.
