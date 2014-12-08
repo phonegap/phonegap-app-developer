@@ -220,9 +220,6 @@
     <ItemGroup />
     <ItemGroup />
     <ItemGroup>
-        <Compile Include="Plugins\org.chromium.zip\UnZip.cs" />
-    </ItemGroup>
-    <ItemGroup>
         <Compile Include="Plugins\nl.x-services.plugins.insomnia\Insomnia.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -319,6 +316,9 @@
         <Content Include="www\cordova.js" />
     </ItemGroup>
     <ItemGroup>
+        <Content Include="www\cordova_plugins.js" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\css\app.css" />
     </ItemGroup>
     <ItemGroup>
@@ -361,22 +361,19 @@
         <Content Include="www\plugins\nl.x-services.plugins.insomnia\www\Insomnia.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.splashscreen\www\splashscreen.js" />
+        <Content Include="www\plugins\org.apache.cordova.battery-status\www\battery.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file-transfer\www\FileTransferError.js" />
+        <Content Include="www\plugins\org.apache.cordova.camera\www\Camera.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file-transfer\www\FileTransfer.js" />
+        <Content Include="www\plugins\org.apache.cordova.camera\www\CameraConstants.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.device\www\device.js" />
+        <Content Include="www\plugins\org.apache.cordova.camera\www\CameraPopoverHandle.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.network-information\www\network.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.network-information\www\Connection.js" />
+        <Content Include="www\plugins\org.apache.cordova.camera\www\CameraPopoverOptions.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.console\www\console-via-logger.js" />
@@ -385,70 +382,7 @@
         <Content Include="www\plugins\org.apache.cordova.console\www\logger.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.device-motion\www\Acceleration.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.device-motion\www\accelerometer.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.device-orientation\www\CompassError.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.device-orientation\www\CompassHeading.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.device-orientation\www\compass.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.dialogs\www\notification.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.globalization\www\GlobalizationError.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.globalization\www\globalization.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.inappbrowser\www\inappbrowser.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media\www\MediaError.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media\www\Media.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureAudioOptions.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureImageOptions.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureVideoOptions.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureError.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\MediaFileData.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\MediaFile.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.media-capture\www\capture.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.statusbar\www\statusbar.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.vibration\www\vibration.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.battery-status\www\battery.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.contacts\www\contacts.js" />
+        <Content Include="www\plugins\org.apache.cordova.contacts\src\windows8\ContactProxy.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.contacts\www\Contact.js" />
@@ -472,25 +406,28 @@
         <Content Include="www\plugins\org.apache.cordova.contacts\www\ContactOrganization.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.contacts\src\windows8\ContactProxy.js" />
+        <Content Include="www\plugins\org.apache.cordova.contacts\www\contacts.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.camera\www\CameraConstants.js" />
+        <Content Include="www\plugins\org.apache.cordova.device\www\device.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.camera\www\CameraPopoverOptions.js" />
+        <Content Include="www\plugins\org.apache.cordova.device-motion\www\Acceleration.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.camera\www\Camera.js" />
+        <Content Include="www\plugins\org.apache.cordova.device-motion\www\accelerometer.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.camera\www\CameraPopoverHandle.js" />
+        <Content Include="www\plugins\org.apache.cordova.device-orientation\www\compass.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\wp\FileUploadOptions.js" />
+        <Content Include="www\plugins\org.apache.cordova.device-orientation\www\CompassError.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.chromium.zip\zip.js" />
+        <Content Include="www\plugins\org.apache.cordova.device-orientation\www\CompassHeading.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.dialogs\www\notification.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\DirectoryEntry.js" />
@@ -517,6 +454,9 @@
         <Content Include="www\plugins\org.apache.cordova.file\www\FileSystem.js" />
     </ItemGroup>
     <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file\www\fileSystems.js" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\FileUploadOptions.js" />
     </ItemGroup>
     <ItemGroup>
@@ -538,9 +478,6 @@
         <Content Include="www\plugins\org.apache.cordova.file\www\ProgressEvent.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\plugins\org.apache.cordova.file\www\fileSystems.js" />
-    </ItemGroup>
-    <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.file\www\requestFileSystem.js" />
     </ItemGroup>
     <ItemGroup>
@@ -550,6 +487,60 @@
         <Content Include="www\plugins\org.apache.cordova.file\www\wp\FileUploadOptions.js" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="www\cordova_plugins.js" />
+        <Content Include="www\plugins\org.apache.cordova.file-transfer\www\FileTransfer.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.file-transfer\www\FileTransferError.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.globalization\www\globalization.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.globalization\www\GlobalizationError.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.inappbrowser\www\inappbrowser.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media\www\Media.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media\www\MediaError.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\capture.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureAudioOptions.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureError.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureImageOptions.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\CaptureVideoOptions.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\MediaFile.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.media-capture\www\MediaFileData.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.network-information\www\Connection.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.network-information\www\network.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.splashscreen\www\splashscreen.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.statusbar\www\statusbar.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\plugins\org.apache.cordova.vibration\www\vibration.js" />
     </ItemGroup>
 </Project>

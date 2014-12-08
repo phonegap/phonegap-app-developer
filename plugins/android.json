@@ -84,12 +84,6 @@
                             "xml": "<feature name=\"ADBMobile_PhoneGap\"><param name=\"android-package\" value=\"com.adobe.ADBMobile_PhoneGap\" /></feature>",
                             "count": 1
                         }
-                    ],
-                    "/widget": [
-                        {
-                            "xml": "<feature name=\"Zip\"><param name=\"android-package\" value=\"org.apache.cordova.Zip\" /></feature>",
-                            "count": 1
-                        }
                     ]
                 }
             },
@@ -218,9 +212,6 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "ADBMobile": {
-            "PACKAGE_NAME": "com.adobe.phonegap.app"
-        },
-        "org.chromium.zip": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },
