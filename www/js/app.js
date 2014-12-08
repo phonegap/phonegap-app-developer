@@ -56,15 +56,7 @@ $(document).on('deviceready', function() {
         $('.footer').removeClass('faded');
 
         // Load configuration
-        window.phonegap.app.config.load(function(data) {
-            // store the config data
-            config = data;
-
-            // load server address
-            if (config.address) {
-                $('#address').val(config.address);
-            }
-
+        loadConfig(function() {
             setTimeout( function() {
                 $('.alert').removeClass('alert');
                 $('.visor').removeClass('pulse');
@@ -79,6 +71,120 @@ $(document).on('deviceready', function() {
         });
     }, 350);
 });
+
+/*---------------------------------------------------
+    App - Configuration
+---------------------------------------------------*/
+
+function loadConfig(callback) {
+    readFile('config.json', function(e, text) {
+        config = parseAsJSON(text);
+
+        // load defaults
+        config.address = config.address || '127.0.0.1:3000';
+
+        // load server address
+        if (config.address) {
+            $('#address').val(config.address);
+        }
+
+        callback();
+    });
+}
+
+function saveConfig(callback) {
+    // this URL
+    config.URL = document.URL;
+
+    // server address
+    config.address = getAddressField();
+
+    // save config
+    saveFile('config.json', config, function(e) {
+        callback();
+    });
+}
+
+function readFile(filepath, callback) {
+    window.requestFileSystem(
+        LocalFileSystem.PERSISTENT,
+        0,
+        function(fileSystem) {
+            fileSystem.root.getFile(
+                filepath,
+                null,
+                function gotFileEntry(fileEntry) {
+                    fileEntry.file(
+                        function gotFile(file){
+                            var reader = new FileReader();
+                            reader.onloadend = function(evt) {
+                                // #72 - Fix WP8 loading of config.json
+                                // On WP8, `evt.target.result` is returned as an object instead
+                                // of a string. Since WP8 is using a newer version of the File API
+                                // this may be a platform quirk or an API update.
+                                var text = evt.target.result;
+                                text = (typeof text === 'object') ? JSON.stringify(text) : text;
+                                callback(null, text); // text is a string
+                            };
+                            reader.readAsText(file);
+                        },
+                        function(error) {
+                            callback(error);
+                        }
+                    );
+                },
+                function(error) {
+                    callback(error);
+                }
+            );
+        },
+        function(error) {
+            callback(error);
+        }
+    );
+}
+
+function saveFile(filepath, data, callback) {
+    data = (typeof data === 'string') ? data : JSON.stringify(data);
+
+    window.requestFileSystem(
+        LocalFileSystem.PERSISTENT,
+        0,
+        function(fileSystem) {
+            fileSystem.root.getFile(
+                filepath,
+                { create: true, exclusive: false },
+                function(fileEntry) {
+                    fileEntry.createWriter(
+                        function(writer) {
+                            writer.onwriteend = function(evt) {
+                                callback();
+                            };
+                            writer.write(data);
+                        },
+                        function(e) {
+                            callback(e);
+                        }
+                    );
+                },
+                function(e) {
+                    callback(e);
+                }
+            );
+        },
+        function(e) {
+            callback(e);
+        }
+    );
+}
+
+function parseAsJSON(text) {
+    try {
+        return JSON.parse(text);
+    } catch(e) {
+        return {};
+    }
+}
 
 /*---------------------------------------------------
     UI - General
@@ -134,38 +240,22 @@ function buildSubmit() {
     updateMessage('');
     setTimeout(function() {
         pulsingMessage( 'Connecting...' );
-        onBuildSubmitSuccess();
+        registerWithServer();
     }, 500);
 
+    // Placeholder
+    //setTimeout(onBuildSubmitError,2000);
     return false;
 }
 
 function onBuildSubmitSuccess() {
     updateMessage( 'Success!' );
-
-    // update config data
-    config.URL = document.URL;
-    config.address = getAddressField();
-
-    window.phonegap.app.config.save(config, function() {
+    saveConfig(function() {
         // don't allow the screen to dim when serving an app
         window.plugins.insomnia.keepAwake();
 
         setTimeout( function() {
-            window.phonegap.app.downloadZip({
-                address: getAddress(),
-                onDownloadError: function(e) {
-                    onBuildSubmitError('Upgrade CLI');
-                    setTimeout(function() {
-                        navigator.notification.alert(
-                            'Hi! We\'ve recently improved the PhoneGap Developer App.\n\n' +
-                            'Please update the PhoneGap CLI on your development machine to take advantage of the new features.',
-                            function() {},
-                            'Upgrade PhoneGap CLI'
-                        );
-                    }, 4000);
-                }
-            });
+            window.location = getAddress();
         }, 1000 );
     });
 }
@@ -173,8 +263,7 @@ function onBuildSubmitSuccess() {
 function onBuildSubmitError(message) {
     errorMessage('Error!');
     setTimeout(function() {
-        message = message || 'Timed out!';
-        errorMessage(message);
+        errorMessage('Timed out!');
     }, 1500);
 
     setTimeout(function() {
@@ -182,6 +271,38 @@ function onBuildSubmitError(message) {
         updateMessage('');
         openBot();
     }, 3500);
+}
+
+function registerWithServer() {
+    $.ajax({
+        type: 'POST',
+        url: getAddress('/__api__/register'),
+        dataType: 'json',
+        data: {
+            platform: device.platform,
+            version: device.cordova
+        },
+        timeout: 1000 * 10,
+        success: function(data) {
+            onBuildSubmitSuccess();
+        },
+        error: function(xhr, type) {
+            // support older servers that do not support /register
+            $.ajax({
+                type: 'GET',
+                url: getAddress(),
+                dataType: 'text',
+                timeout: 1000 * 10,
+                success: function(data) {
+                    onBuildSubmitSuccess();
+                },
+                error: function(xhr, type) {
+                    onBuildSubmitError();
+                }
+            });
+
+        }
+    });
 }
 
 function getAddressField() {
