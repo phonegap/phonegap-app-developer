@@ -17,6 +17,10 @@ For more information, see [app.phonegap.com][3].
 - [Apple AppStore][2]
 - [Windows Phone store][7]
 
+## Documentation
+
+- [FAQ](https://github.com/phonegap/phonegap-app-developer/blob/master/FAQ.md)
+
 ## Development
 
 ### Compile and Run the Application
