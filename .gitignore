@@ -1,6 +1,9 @@
 # Mac
 .DS_Store
 
+# vim
+*.sw[po]
+
 # Node
 npm-debug.log
 /node_modules
@@ -31,6 +34,11 @@ platforms/wp8/www
 platforms/wp8/.staging
 platforms/wp8/*.suo
 platforms/wp8/*.csproj.user
+
+# firefoxos
+platforms/firefoxos/build/
+platforms/firefoxos/www/
+platforms/firefoxos/cordova/console.log
 
 # res
 resources/signing
