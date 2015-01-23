@@ -136,6 +136,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                                 }
                             }
                         }
+                        zipStream.Close();
                         DispatchCommandResult(new PluginResult(PluginResult.Status.OK), callbackId);
                     }
                     catch (Exception)
