@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		01DC1C96F60E4448A33C0100 /* CDVAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2043FA416D114E0E8041B66F /* CDVAccelerometer.m */; };
 		0331A4D1B9B74A618A5F7291 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CF084624D1B4339B77BBA7C /* AddressBook.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -527,6 +528,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 510;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = D42HQMA488;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "PhoneGap" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -716,7 +722,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Adobe Systems, Inc. (JQ525L2MZD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -745,7 +752,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "be4d0145-3619-4c15-8587-fe34b9d21f61";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -755,7 +762,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Adobe Systems, Inc. (JQ525L2MZD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhoneGap/PhoneGap-Prefix.pch";
@@ -782,7 +790,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = PhoneGap;
-				PROVISIONING_PROFILE = "be4d0145-3619-4c15-8587-fe34b9d21f61";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
