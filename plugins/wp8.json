@@ -83,6 +83,10 @@
                         {
                             "xml": "<feature name=\"Insomnia\"><param name=\"wp-package\" value=\"Insomnia\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Sync\"><param name=\"wp-package\" value=\"Sync\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -197,6 +201,9 @@
             "PACKAGE_NAME": "{a4662b20-5edd-11e4-b7a8-67dfdc48afb0}"
         },
         "ADBMobile": {
+            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
+        },
+        "com.adobe.phonegap.contentsync": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         }
     },

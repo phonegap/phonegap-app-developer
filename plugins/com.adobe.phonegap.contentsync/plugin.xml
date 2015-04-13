@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+xmlns:android="http://schemas.android.com/apk/res/android"
+           id="com.adobe.phonegap.contentsync"
+      version="0.0.2">
+    <name>content-sync</name>
+    <description>PhoneGap Content Sync Plugin</description>
+    <license></license>
+    <keywords>phonegap,content sync</keywords>
+    <repo>https://github.com/phonegap/phonegap-plugin-contentsync</repo>
+    <issue>https://github.com/phonegap/phonegap-plugin-contentsync/issues</issue>
+
+    <js-module src="www/index.js" name="ContentSync">
+        <clobbers target="window.ContentSync" />
+        <clobbers target="window.Zip" />
+    </js-module>
+
+	<platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Sync" >
+                <param name="android-package" value="com.adobe.phonegap.contentsync.Sync"/>
+            </feature>
+            <feature name="Zip" >
+                <param name="android-package" value="com.adobe.phonegap.contentsync.Sync"/>
+            </feature>
+        </config-file>
+        <source-file src="src/android/Sync.java" target-dir="src/com/adobe/phonegap/contentsync" />
+	</platform>
+
+    <platform name="wp8">
+        <config-file target="config.xml" parent="/*">
+            <feature name = "Sync">
+                <param name="wp-package" value = "Sync" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/wp8/Sync.cs" />
+        <source-file src="src/wp8/Unzip.cs" />
+    </platform>
+
+    <platform name="ios">
+        <source-file src="src/ios/ContentSync.m" />
+        <header-file src="src/ios/ContentSync.h" />
+        <source-file src="src/ios/SSZipArchive.m" target-dir="minizip" />
+        <header-file src="src/ios/SSZipArchive.h" target-dir="minizip" />
+        <source-file src="src/ios/minizip/zip.c" target-dir="minizip" />
+        <header-file src="src/ios/minizip/zip.h" target-dir="minizip" />
+        <source-file src="src/ios/minizip/unzip.c" target-dir="minizip" />
+        <header-file src="src/ios/minizip/unzip.h" target-dir="minizip" />
+        <source-file src="src/ios/minizip/mztools.c" target-dir="minizip" />
+        <header-file src="src/ios/minizip/mztools.h" target-dir="minizip" />
+        <source-file src="src/ios/minizip/ioapi.c" target-dir="minizip" />
+        <header-file src="src/ios/minizip/ioapi.h" target-dir="minizip" />
+        <header-file src="src/ios/minizip/crypt.h" target-dir="minizip" />
+        <config-file target="config.xml" parent="/*">
+            <feature name="Sync">
+                <param name="ios-package" value="ContentSync" />
+            </feature>
+            <feature name="Zip">
+                <param name="ios-package" value="ContentSync" />
+            </feature>
+        </config-file>
+        <framework src="libz.dylib" />
+    </platform>
+</plugin>

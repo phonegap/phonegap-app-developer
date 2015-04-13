@@ -118,4 +118,10 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Sync">
+        <param name="ios-package" value="ContentSync" />
+    </feature>
+    <feature name="Zip">
+        <param name="ios-package" value="ContentSync" />
+    </feature>
 </widget>
