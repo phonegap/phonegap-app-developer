@@ -141,7 +141,7 @@ function buildSubmit() {
 }
 
 function onBuildSubmitSuccess() {
-    updateMessage( 'Success!' );
+    updateMessage( 'Downloading...' );
 
     // update config data
     config.URL = document.URL;
@@ -154,6 +154,13 @@ function onBuildSubmitSuccess() {
         setTimeout( function() {
             window.phonegap.app.downloadZip({
                 address: getAddress(),
+                onProgress: function(data) {
+                    if(data.status === 2) {
+                        updateMessage('Extracting...');
+                    }else if(data.status === 3) {
+                        updateMessage('Success!');
+                    }
+                },
                 onDownloadError: function(e) {
                     onBuildSubmitError('Upgrade CLI');
                     setTimeout(function() {

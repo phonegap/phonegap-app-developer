@@ -143,10 +143,14 @@
         var uri = encodeURI(options.address + '/__api__/zip');
         var sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'replace', copyCordovaAssets: true });
         
-        sync.on('complete', function(data){
-            // TODO: need to set this to either first changing into the dir OR refresh for a reload
-            console.log('chaning into: ' + data.localPath + '/www/index.html');
+        sync.on('complete', function(data) {
             window.location.href = data.localPath + '/www/index.html';
+        });
+
+        sync.on('progress', function(data) {
+            if(options.onProgress) {
+                options.onProgress(data);
+            }
         });
 
         sync.on('error', function(e){
