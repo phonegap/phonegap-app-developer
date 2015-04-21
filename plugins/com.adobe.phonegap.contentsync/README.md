@@ -160,6 +160,27 @@ Integer | Description
 `2`     | `EXTRACTING`
 `3`     | `COMPLETE`
 
+
+### ContentSync.unzip || Zip.unzip - ContentSync.download
+
+If you are using the [Chromium Zip plugin](https://github.com/MobileChromeApps/zip) this plugin won't work for you on iOS. However, it supports the same interface so you don't have to install both.
+
+```javascript
+
+zip.unzip(<source zip>, <destination dir>, <callback>, [<progressCallback>]);
+
+```
+
+There is also an extra convenience method that can be used to download an archive
+
+```javascript
+
+ContentSync.download(url, headers, cb)
+
+```
+
+The progress events described above also apply for these methods.
+
 #### Example
 
 ```javascript

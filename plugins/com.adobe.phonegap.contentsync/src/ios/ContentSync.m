@@ -18,10 +18,6 @@
 
 @implementation ContentSync
 
-- (void)pluginInitialize {
-    self.session = [self backgroundSession];
-}
-
 - (CDVPluginResult*) preparePluginResult:(NSInteger)progress status:(NSInteger)status {
     CDVPluginResult *pluginResult = nil;
     
@@ -43,6 +39,9 @@
 }
 
 - (void)startDownload:(CDVInvokedUrlCommand*)command extractArchive:(BOOL)extractArchive {
+    
+    self.session = [self backgroundSession];
+    
     CDVPluginResult* pluginResult = nil;
     NSString* src = [command.arguments objectAtIndex:0];
     
@@ -241,7 +240,9 @@
         }
         [pluginResult setKeepCallbackAsBool:YES];
         
-        [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
+        });
     }];
 }
 

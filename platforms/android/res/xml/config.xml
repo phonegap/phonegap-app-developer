@@ -59,12 +59,6 @@
     <feature name="ADBMobile_PhoneGap">
         <param name="android-package" value="com.adobe.ADBMobile_PhoneGap" />
     </feature>
-    <feature name="Sync">
-        <param name="android-package" value="com.adobe.phonegap.contentsync.Sync" />
-    </feature>
-    <feature name="Zip">
-        <param name="android-package" value="com.adobe.phonegap.contentsync.Sync" />
-    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
@@ -96,4 +90,10 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="Sync">
+        <param name="android-package" value="com.adobe.phonegap.contentsync.Sync" />
+    </feature>
+    <feature name="Zip">
+        <param name="android-package" value="com.adobe.phonegap.contentsync.Sync" />
+    </feature>
 </widget>

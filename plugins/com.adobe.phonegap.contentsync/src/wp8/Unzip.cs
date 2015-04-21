@@ -91,9 +91,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                     {
                         foreach (string filename in zipArch.FileNames)
                         {
-                            // flatten the file path since the zip will always include its original filename
-                            string flattenPath = filename.Substring(filename.IndexOf("/"));
-                            string destFilePath = destPath + flattenPath;
+                            string destFilePath = destPath + "/" + filename;
 
                             string directoryName = getDirectoryName(destFilePath);
 
