@@ -165,10 +165,10 @@ function onBuildSubmitSuccess() {
                     onBuildSubmitError('Upgrade CLI');
                     setTimeout(function() {
                         navigator.notification.alert(
-                            'Hi! We\'ve recently improved the PhoneGap Developer App.\n\n' +
-                            'Please update the PhoneGap CLI on your development machine to take advantage of the new features.',
+                            'Unable to download archive from the server.\n\n' +
+                            'Please check your network settings.',
                             function() {},
-                            'Upgrade PhoneGap CLI'
+                            'Ok'
                         );
                     }, 4000);
                 }
