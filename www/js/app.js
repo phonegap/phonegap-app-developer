@@ -162,7 +162,7 @@ function onBuildSubmitSuccess() {
                     }
                 },
                 onDownloadError: function(e) {
-                    onBuildSubmitError('Upgrade CLI');
+                    onBuildSubmitError('Download Error!');
                     setTimeout(function() {
                         navigator.notification.alert(
                             'Unable to download archive from the server.\n\n' +
