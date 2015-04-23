@@ -627,8 +627,8 @@ namespace WPCordovaClassLib.Cordova.Commands
 
         private void copyCordovaAssets(string destFilePath)
         {
-            copyCordovaPlugins("x-wmapp0:www/cordova.js", destFilePath + "/cordova.js");
-            copyCordovaPlugins("x-wmapp0:www/cordova_plugins.js", destFilePath + "/cordova_plugins.js");
+            copyCordovaPlugins("x-wmapp0:www/cordova.js", destFilePath + "/www/cordova.js");
+            copyCordovaPlugins("x-wmapp0:www/cordova_plugins.js", destFilePath + "/www/cordova_plugins.js");
 
             Uri uri = new Uri("x-wmapp0:www/cordova_plugins.js", UriKind.RelativeOrAbsolute);
             Uri relUri = new Uri(uri.AbsolutePath, UriKind.Relative);
@@ -654,7 +654,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                 for(var i=0;i<pluginsJSON.Length;i++)
                 {
                     //Debug.WriteLine("x-wmapp0:www/" + pluginsJSON[i].file + " to " + destFilePath + "/" + pluginsJSON[i].file);
-                    copyCordovaPlugins("x-wmapp0:www/" + pluginsJSON[i].file, destFilePath + "/" + pluginsJSON[i].file);
+                    copyCordovaPlugins("x-wmapp0:www/" + pluginsJSON[i].file, destFilePath + "/www/" + pluginsJSON[i].file);
                 }
             }
         }

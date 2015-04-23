@@ -29,13 +29,20 @@
     return pluginResult;
 }
 
-- (void)sync:(CDVInvokedUrlCommand*)command
-{
-    [self startDownload:command extractArchive:YES];
+- (void)sync:(CDVInvokedUrlCommand*)command {
+    __weak ContentSync* weakSelf = self;
+    
+    [self.commandDelegate runInBackground:^{
+        [weakSelf startDownload:command extractArchive:YES];
+    }];
 }
 
 - (void) download:(CDVInvokedUrlCommand*)command {
-    [self startDownload:command extractArchive:NO];
+    __weak ContentSync* weakSelf = self;
+    
+    [self.commandDelegate runInBackground:^{
+        [weakSelf startDownload:command extractArchive:NO];
+    }];
 }
 
 - (void)startDownload:(CDVInvokedUrlCommand*)command extractArchive:(BOOL)extractArchive {
@@ -49,7 +56,7 @@
         NSLog(@"startDownload from %@", src);
         NSURL *downloadURL = [NSURL URLWithString:src];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:downloadURL];
-        
+        request.timeoutInterval = 15.0;
         // Setting headers
         NSDictionary *headers = [command argumentAtIndex:3 withDefault:nil andClass:[NSDictionary class]];
         if(headers != nil) {
@@ -330,6 +337,8 @@
         {
             configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:@"com.example.apple-samplecode.SimpleBackgroundTransfer.BackgroundSession"];
         }
+        configuration.timeoutIntervalForRequest = 15.0;
+        configuration.timeoutIntervalForResource = 30.0;
         session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     });
     return session;
