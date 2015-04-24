@@ -1,4 +1,4 @@
-#phonegap-plugin-contentsync [![Build Status][travis-ci-img]][travis-ci-url]
+#phonegap-plugin-contentsync [![Build Status][travis-ci-img]][travis-ci-url] [![bitHound Score][bithound-img]][bithound-url]
 
 > Download and cache remotely hosted content.
 
@@ -232,3 +232,6 @@ or on-edit linting.
 
 [travis-ci-img]: https://travis-ci.org/phonegap/phonegap-plugin-contentsync.svg?branch=master
 [travis-ci-url]: http://travis-ci.org/phonegap/phonegap-plugin-contentsync
+[bithound-img]: https://www.bithound.io/github/phonegap/phonegap-plugin-contentsync/badges/score.svg
+[bithound-url]: https://www.bithound.io/github/phonegap/phonegap-plugin-contentsync
+

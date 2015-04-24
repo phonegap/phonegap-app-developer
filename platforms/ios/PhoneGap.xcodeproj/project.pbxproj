@@ -75,13 +75,13 @@
 		F891CEEF4D634AD8836CB37B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8307D30EB995426BAD8CA132 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F94DDA4AFA3646BF91ECDF2B /* ADBMobile_PhoneGap.m in Sources */ = {isa = PBXBuildFile; fileRef = BC201A02C1E24E5492703742 /* ADBMobile_PhoneGap.m */; };
 		FC7D4FBB37954033B3134B95 /* CDVFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB5882AFF0A49479BC87461 /* CDVFileTransfer.m */; };
-		6F729E577425438C96A93481 /* ContentSync.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D7596B4F3C4A8E86490EAE /* ContentSync.m */; };
-		CBB631B7E4FF4D8E87A180F0 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BA1932237F4082B444B55E /* SSZipArchive.m */; };
-		EB170C3D787B4B6FAFF3BE93 /* zip.c in Resources */ = {isa = PBXBuildFile; fileRef = 0062D429ACDA41788C398A20 /* zip.c */; };
-		9420843D4CC8449783754E65 /* unzip.c in Resources */ = {isa = PBXBuildFile; fileRef = 942129237DAA410AAAB585B9 /* unzip.c */; };
-		A5E3798E32004ACCBE71174E /* mztools.c in Resources */ = {isa = PBXBuildFile; fileRef = 483A79F65FC0417EB8373DBD /* mztools.c */; };
-		769AE491911640F7925014F6 /* ioapi.c in Resources */ = {isa = PBXBuildFile; fileRef = E6688D07634D4E5DB855A1EC /* ioapi.c */; };
-		8669F8F59D934D329BEC36E9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 42885DFE620D4182856D51D4 /* libz.dylib */; };
+		43C326E268C34088B91C73F8 /* ContentSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E099359B86C4B1983589FBF /* ContentSync.m */; };
+		E65808D27ECC4771985325C2 /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = E13A5CA9CF514A008DE7CA5A /* SSZipArchive.m */; };
+		BBD3ED79E56940A1AF76A093 /* zip.c in Resources */ = {isa = PBXBuildFile; fileRef = 896D2CD3284E4C07B04A9D75 /* zip.c */; };
+		757F5D3C79974F829FE00062 /* unzip.c in Resources */ = {isa = PBXBuildFile; fileRef = C411D260DEA84707A2098FCC /* unzip.c */; };
+		59C01B81CBB34871A82D939F /* mztools.c in Resources */ = {isa = PBXBuildFile; fileRef = 6B6BD302354F4716BB23D9B6 /* mztools.c */; };
+		0C43F136FC8846A9A892675D /* ioapi.c in Resources */ = {isa = PBXBuildFile; fileRef = 4923325A5B7C43DE9560BA32 /* ioapi.c */; };
+		6BEC9544AB5343648C3FC74A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 40A0E3CE00144D7E8C23B507 /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,20 +211,20 @@
 		F7CFD999956F4D13867B2C33 /* CoreLocation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = PhoneGap/config.xml; sourceTree = "<group>"; };
 		FD48CED150144861B05F661A /* CDVVibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVVibration.h; path = org.apache.cordova.vibration/CDVVibration.h; sourceTree = "<group>"; };
-		D1D7596B4F3C4A8E86490EAE /* ContentSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ContentSync.m"; path = "com.adobe.phonegap.contentsync/ContentSync.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		F9BA1932237F4082B444B55E /* SSZipArchive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "SSZipArchive.m"; path = "com.adobe.phonegap.contentsync/minizip/SSZipArchive.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		0062D429ACDA41788C398A20 /* zip.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "zip.c"; path = "com.adobe.phonegap.contentsync/minizip/zip.c"; sourceTree = "<group>"; fileEncoding = 4; };
-		942129237DAA410AAAB585B9 /* unzip.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "unzip.c"; path = "com.adobe.phonegap.contentsync/minizip/unzip.c"; sourceTree = "<group>"; fileEncoding = 4; };
-		483A79F65FC0417EB8373DBD /* mztools.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "mztools.c"; path = "com.adobe.phonegap.contentsync/minizip/mztools.c"; sourceTree = "<group>"; fileEncoding = 4; };
-		E6688D07634D4E5DB855A1EC /* ioapi.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "ioapi.c"; path = "com.adobe.phonegap.contentsync/minizip/ioapi.c"; sourceTree = "<group>"; fileEncoding = 4; };
-		A9A20A16F951443EBA63C4A4 /* ContentSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ContentSync.h"; path = "com.adobe.phonegap.contentsync/ContentSync.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		383EFC96271040ECBB72614D /* SSZipArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SSZipArchive.h"; path = "com.adobe.phonegap.contentsync/minizip/SSZipArchive.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		FFB6AC5C2260407A9A537A5B /* zip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "zip.h"; path = "com.adobe.phonegap.contentsync/minizip/zip.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		407979579E894A3F9391C5DC /* unzip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "unzip.h"; path = "com.adobe.phonegap.contentsync/minizip/unzip.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		FF8B724127A04F66A981757E /* mztools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "mztools.h"; path = "com.adobe.phonegap.contentsync/minizip/mztools.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		99C47851DA33426980D13753 /* ioapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ioapi.h"; path = "com.adobe.phonegap.contentsync/minizip/ioapi.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		63721B8FB1D84B2D9D171B1C /* crypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "crypt.h"; path = "com.adobe.phonegap.contentsync/minizip/crypt.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		42885DFE620D4182856D51D4 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
+		7E099359B86C4B1983589FBF /* ContentSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "ContentSync.m"; path = "com.adobe.phonegap.contentsync/ContentSync.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		E13A5CA9CF514A008DE7CA5A /* SSZipArchive.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "SSZipArchive.m"; path = "com.adobe.phonegap.contentsync/minizip/SSZipArchive.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		896D2CD3284E4C07B04A9D75 /* zip.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "zip.c"; path = "com.adobe.phonegap.contentsync/minizip/zip.c"; sourceTree = "<group>"; fileEncoding = 4; };
+		C411D260DEA84707A2098FCC /* unzip.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "unzip.c"; path = "com.adobe.phonegap.contentsync/minizip/unzip.c"; sourceTree = "<group>"; fileEncoding = 4; };
+		6B6BD302354F4716BB23D9B6 /* mztools.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "mztools.c"; path = "com.adobe.phonegap.contentsync/minizip/mztools.c"; sourceTree = "<group>"; fileEncoding = 4; };
+		4923325A5B7C43DE9560BA32 /* ioapi.c */ = {isa = PBXFileReference; lastKnownFileType = unknown; name = "ioapi.c"; path = "com.adobe.phonegap.contentsync/minizip/ioapi.c"; sourceTree = "<group>"; fileEncoding = 4; };
+		B4636A1138E44A4983E36C0C /* ContentSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ContentSync.h"; path = "com.adobe.phonegap.contentsync/ContentSync.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		72755B6A1BCF4675B51852BD /* SSZipArchive.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SSZipArchive.h"; path = "com.adobe.phonegap.contentsync/minizip/SSZipArchive.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		23EAF7911B3E48F980031156 /* zip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "zip.h"; path = "com.adobe.phonegap.contentsync/minizip/zip.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		8187CC340DC447A29ED68BB5 /* unzip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "unzip.h"; path = "com.adobe.phonegap.contentsync/minizip/unzip.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		5A82C41D41B34F1CB7AB62F3 /* mztools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "mztools.h"; path = "com.adobe.phonegap.contentsync/minizip/mztools.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		B3CF41B13E0B4B3ABD8A5F77 /* ioapi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ioapi.h"; path = "com.adobe.phonegap.contentsync/minizip/ioapi.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		C46043C7C43642FDAE250AA9 /* crypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "crypt.h"; path = "com.adobe.phonegap.contentsync/minizip/crypt.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		40A0E3CE00144D7E8C23B507 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libz.dylib"; path = "usr/lib/libz.dylib"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,7 +245,7 @@
 				F563AE3770174562A230B27D /* CoreMotion.framework in Frameworks */,
 				1B9297F16F1C45D7A74F448C /* AdobeMobileLibrary.a in Frameworks */,
 				5CCA322BE9A144948AB008F6 /* libsqlite3.dylib in Frameworks */,
-				8669F8F59D934D329BEC36E9 /* libz.dylib in Frameworks */,
+				6BEC9544AB5343648C3FC74A /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,7 +350,7 @@
 				DF4776D8E9804C379B602AC6 /* CoreMotion.framework */,
 				3C9B7F14DF7649609D106623 /* AdobeMobileLibrary.a */,
 				8A881EE82D9A4D338A9C4324 /* libsqlite3.dylib */,
-				42885DFE620D4182856D51D4 /* libz.dylib */,
+				40A0E3CE00144D7E8C23B507 /* libz.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -420,19 +420,19 @@
 				BC201A02C1E24E5492703742 /* ADBMobile_PhoneGap.m */,
 				5FB9F29D903C433BBAD13C5E /* ADBMobile_PhoneGap.h */,
 				8F8CBA35D58540F0A8048B86 /* ADBMobile.h */,
-				D1D7596B4F3C4A8E86490EAE /* ContentSync.m */,
-				F9BA1932237F4082B444B55E /* SSZipArchive.m */,
-				0062D429ACDA41788C398A20 /* zip.c */,
-				942129237DAA410AAAB585B9 /* unzip.c */,
-				483A79F65FC0417EB8373DBD /* mztools.c */,
-				E6688D07634D4E5DB855A1EC /* ioapi.c */,
-				A9A20A16F951443EBA63C4A4 /* ContentSync.h */,
-				383EFC96271040ECBB72614D /* SSZipArchive.h */,
-				FFB6AC5C2260407A9A537A5B /* zip.h */,
-				407979579E894A3F9391C5DC /* unzip.h */,
-				FF8B724127A04F66A981757E /* mztools.h */,
-				99C47851DA33426980D13753 /* ioapi.h */,
-				63721B8FB1D84B2D9D171B1C /* crypt.h */,
+				7E099359B86C4B1983589FBF /* ContentSync.m */,
+				E13A5CA9CF514A008DE7CA5A /* SSZipArchive.m */,
+				896D2CD3284E4C07B04A9D75 /* zip.c */,
+				C411D260DEA84707A2098FCC /* unzip.c */,
+				6B6BD302354F4716BB23D9B6 /* mztools.c */,
+				4923325A5B7C43DE9560BA32 /* ioapi.c */,
+				B4636A1138E44A4983E36C0C /* ContentSync.h */,
+				72755B6A1BCF4675B51852BD /* SSZipArchive.h */,
+				23EAF7911B3E48F980031156 /* zip.h */,
+				8187CC340DC447A29ED68BB5 /* unzip.h */,
+				5A82C41D41B34F1CB7AB62F3 /* mztools.h */,
+				B3CF41B13E0B4B3ABD8A5F77 /* ioapi.h */,
+				C46043C7C43642FDAE250AA9 /* crypt.h */,
 			);
 			name = Plugins;
 			path = PhoneGap/Plugins;
@@ -656,12 +656,12 @@
 				1505AEA8D61D45319AEDA061 /* CDVNotification.m in Sources */,
 				2DA5FF0180BA41AAA234DE83 /* Insomnia.m in Sources */,
 				F94DDA4AFA3646BF91ECDF2B /* ADBMobile_PhoneGap.m in Sources */,
-				6F729E577425438C96A93481 /* ContentSync.m in Sources */,
-				CBB631B7E4FF4D8E87A180F0 /* SSZipArchive.m in Sources */,
-				EB170C3D787B4B6FAFF3BE93 /* zip.c in Resources */,
-				9420843D4CC8449783754E65 /* unzip.c in Resources */,
-				A5E3798E32004ACCBE71174E /* mztools.c in Resources */,
-				769AE491911640F7925014F6 /* ioapi.c in Resources */,
+				43C326E268C34088B91C73F8 /* ContentSync.m in Sources */,
+				E65808D27ECC4771985325C2 /* SSZipArchive.m in Sources */,
+				BBD3ED79E56940A1AF76A093 /* zip.c in Resources */,
+				757F5D3C79974F829FE00062 /* unzip.c in Resources */,
+				59C01B81CBB34871A82D939F /* mztools.c in Resources */,
+				0C43F136FC8846A9A892675D /* ioapi.c in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -231,6 +231,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                 downloadOptions.TrustAllHosts = trustAll;
 
                 downloadOptions.Id = optionStrings[1];
+
                 downloadOptions.FilePath = "content_sync/downloads/" + downloadOptions.Id;
 
                 if (String.Equals(optionStrings[2], "replace"))
@@ -472,7 +473,12 @@ namespace WPCordovaClassLib.Cordova.Commands
                         isoFile.CreateDirectory(directoryName);
                     }
 
-                    // create the file if not exists
+                    // make sure we delete the file if it exists
+                    if(isoFile.FileExists(reqState.options.FilePath))
+                    {
+                        isoFile.DeleteFile(reqState.options.FilePath);
+                    }
+
                     if (!isoFile.FileExists(reqState.options.FilePath))
                     {
                         var file = isoFile.CreateFile(reqState.options.FilePath);
