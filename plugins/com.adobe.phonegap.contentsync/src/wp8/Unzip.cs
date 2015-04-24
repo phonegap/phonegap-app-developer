@@ -65,6 +65,11 @@ namespace WPCordovaClassLib.Cordova.Commands
                     }
                 }
 
+                if(type == Replace)
+                {
+                    DeleteDirectoryRecursively(appStorage, destPath);
+                }
+
                 IsolatedStorageFileStream zipStream = null;
                 ZipArchive zipArch = null;
 
@@ -192,6 +197,22 @@ namespace WPCordovaClassLib.Cordova.Commands
             return directoryName;
         }
 
+        // helper function from: http://stackoverflow.com/questions/18422331/easy-way-to-recursively-delete-directories-in-isolatedstorage-on-wp7-8
+        private void DeleteDirectoryRecursively(IsolatedStorageFile storageFile, String dirName)
+        {
+            String pattern = dirName + @"\*";
+            String[] files = storageFile.GetFileNames(pattern);
+            foreach (var fName in files)
+            {
+                storageFile.DeleteFile(Path.Combine(dirName, fName));
+            }
+            String[] dirs = storageFile.GetDirectoryNames(pattern);
+            foreach (var dName in dirs)
+            {
+                DeleteDirectoryRecursively(storageFile, Path.Combine(dirName, dName));
+            }
+            storageFile.DeleteDirectory(dirName);
+        }
 
         /// <summary>
         /// Class used for storing file entry information when
