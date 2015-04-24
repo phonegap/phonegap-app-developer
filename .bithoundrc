@@ -2,6 +2,7 @@
   "ignore": [
     "platforms/**",
     "plugins/**",
+    "tests/www/**",
     "**/deps/**",
     "**/node_modules/**",
     "**/thirdparty/**",
