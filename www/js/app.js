@@ -167,8 +167,7 @@ function onBuildSubmitSuccess() {
                         navigator.notification.alert(
                             'Unable to download archive from the server.\n\n' +
                             'Please check your network settings.',
-                            function() {},
-                            'Ok'
+                            function() {}
                         );
                     }, 4000);
                 }
