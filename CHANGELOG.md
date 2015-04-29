@@ -1,4 +1,23 @@
+# 1.5.0
+
+- [ios] - fixed provisioning profile
+- [#266] - added in ios orientation fix
+- Removed download error header text
+- Fix for windows not properly disposing of stale content
+- Fix for windows not over-writing zip
+- Fixes for ios and windows
+- [#282] - forgot to update message as well
+- [#282] - updated download error alert
+- Updated content sync plugin
+- Added progress events
+- Added content sync plugin
+- [#283] Ignore mobile-spec tests in Bithound.
+- [#283] Add Bithound badge.
+- Changed to use new content sync methods
+- [#246] Add FAQ.md
+
 # 1.4.0
+
 - [#233] - added in provision profile and updated app id
 - [#240] - fixed tile icon for windows
 - [#238] - include in android icons
