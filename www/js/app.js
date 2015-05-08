@@ -166,7 +166,7 @@ function onBuildSubmitSuccess() {
                     setTimeout(function() {
                         navigator.notification.alert(
                             'Unable to download archive from the server.\n\n' +
-                            'Please check your network settings.',
+                            'Please upgrade the PhoneGap CLI or check your network settings.',
                             function() {}
                         );
                     }, 4000);
