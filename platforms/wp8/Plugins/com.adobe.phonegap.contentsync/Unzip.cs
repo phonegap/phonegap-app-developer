@@ -200,18 +200,28 @@ namespace WPCordovaClassLib.Cordova.Commands
         // helper function from: http://stackoverflow.com/questions/18422331/easy-way-to-recursively-delete-directories-in-isolatedstorage-on-wp7-8
         private void DeleteDirectoryRecursively(IsolatedStorageFile storageFile, String dirName)
         {
-            String pattern = dirName + @"\*";
-            String[] files = storageFile.GetFileNames(pattern);
-            foreach (var fName in files)
+            try
             {
-                storageFile.DeleteFile(Path.Combine(dirName, fName));
+                String pattern = dirName + @"\*";
+                String[] files = storageFile.GetFileNames(pattern);
+                foreach (var fName in files)
+                {
+                    storageFile.DeleteFile(Path.Combine(dirName, fName));
+                }
+                String[] dirs = storageFile.GetDirectoryNames(pattern);
+                foreach (var dName in dirs)
+                {
+                    DeleteDirectoryRecursively(storageFile, Path.Combine(dirName, dName));
+                }
+                if (storageFile.DirectoryExists(dirName))
+                {
+                    storageFile.DeleteDirectory(dirName);
+                }
             }
-            String[] dirs = storageFile.GetDirectoryNames(pattern);
-            foreach (var dName in dirs)
+            catch(Exception e)
             {
-                DeleteDirectoryRecursively(storageFile, Path.Combine(dirName, dName));
+                Debug.WriteLine("Unable to delete directory : " + dirName);
             }
-            storageFile.DeleteDirectory(dirName);
         }
 
         /// <summary>
