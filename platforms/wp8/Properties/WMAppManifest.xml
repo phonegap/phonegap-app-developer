@@ -4,7 +4,7 @@
     <Languages xmlns="">
         <Language code="en-US" />
     </Languages>
-    <App Author="Adobe PhoneGap Team" BitsPerPixel="32" Description="The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework." Genre="apps.normal" ProductID="{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}" Publisher="Adobe" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="PhoneGap Developer" Version="1.5.1" xmlns="">
+    <App Author="Adobe PhoneGap Team" BitsPerPixel="32" Description="The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework." Genre="apps.normal" ProductID="{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}" Publisher="Adobe" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="PhoneGap Developer" Version="1.5.2" xmlns="">
         <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
         <Capabilities>
             <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
