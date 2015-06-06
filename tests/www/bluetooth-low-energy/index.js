@@ -1,6 +1,6 @@
 var deviceReady = false;
 
-var log = function(message) {    
+var log = function(message) {
     message = message.replace(/\n/g, "<br/>");
     console.log(message);
     info.innerHTML += message + "<br/>";
@@ -19,8 +19,8 @@ var isEnabled = function() {
 };
 
 var showSettings = function() {
-    
-    if (cordova.platformId === 'android') {
+
+    if (cordova.platformId !== 'ios') {
         ble.showBluetoothSettings();
     } else {
         log("Show Bluetooth Settings is not available on " + cordova.platformId);
@@ -28,7 +28,7 @@ var showSettings = function() {
 };
 
 var enable = function() {
-    
+
     if (cordova.platformId === 'android') {
         ble.enable(
             function() {
@@ -41,7 +41,7 @@ var enable = function() {
     } else {
         log("Enable Bluetooth is not available on " + cordova.platformId);
     }
-    
+
 };
 
 var scan = function() {
@@ -73,7 +73,7 @@ function init() {
             alert("Error: Apache Cordova did not initialize.  Demo will not run correctly.");
         }
     },1000);
-    
+
 }
 
 window.onload = function() {
@@ -81,7 +81,7 @@ window.onload = function() {
   addListenerToClass('settings', showSettings);
   addListenerToClass('enable', enable);
   addListenerToClass('scan', scan);
-  
+
   addListenerToClass('backBtn', backHome);
   init();
 };
