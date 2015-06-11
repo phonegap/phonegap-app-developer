@@ -163,10 +163,26 @@ function onBuildSubmitSuccess() {
                 },
                 onDownloadError: function(e) {
                     onBuildSubmitError('Download Error!');
+                    var errorString = 'Unable to download archive from the server.\n\n';
+                    if(e)
+                    {
+                        if(e === 1)
+                        {
+                            errorString += 'Please enter a valid url to connect to.';
+                        }
+                        else if(e === 2)
+                        {
+                            errorString += 'Unable to properly connect to the server.';
+                        }
+                        else if(e === 3)
+                        {
+                            errorString += 'Unable to properly unzip the archive.';
+                        }
+                    }
+
                     setTimeout(function() {
                         navigator.notification.alert(
-                            'Unable to download archive from the server.\n\n' +
-                            'Please upgrade the PhoneGap CLI or check your network settings.',
+                            errorString,
                             function() {}
                         );
                     }, 4000);
