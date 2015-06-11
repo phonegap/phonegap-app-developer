@@ -142,7 +142,7 @@
     window.phonegap.app.downloadZip = function(options) {
         var uri = encodeURI(options.address + '/__api__/appzip');
         var sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'replace', copyCordovaAssets: true });
-        
+
         sync.on('complete', function(data) {
             window.location.href = data.localPath + '/www/index.html';
         });
