@@ -176,8 +176,22 @@ module.exports = {
      *
      */
 
-    unzip: function(fileUrl, dirUrl, callback) {
-        exec(callback, callback, 'Zip', 'unzip', [fileUrl, dirUrl]);
+    unzip: function(fileUrl, dirUrl, callback, progressCallback) {
+        var win = function(result) {
+            if (result && result.progress) {
+                if (progressCallback) {
+                    progressCallback(result);
+                }
+            } else if (callback) {
+                callback(0);
+            }
+        };
+        var fail = function(result) {
+            if (callback) {
+                callback(-1);
+            }
+        };
+        exec(win, fail, 'Zip', 'unzip', [fileUrl, dirUrl]);
     },
 
     /**
@@ -216,5 +230,19 @@ module.exports = {
         1: 'DOWNLOADING',
         2: 'EXTRACTING',
         3: 'COMPLETE'
+    },
+
+    /**
+     * ERROR_STATE enumeration.
+     *
+     * Maps to the `error` event's `status` object.
+     * The plugin user can customize the enumeration's mapped string
+     * to a value that's appropriate for their app.
+     */
+
+    ERROR_STATE: {
+        1: 'INVALID_URL_ERR',
+        2: 'CONNECTION_ERR',
+        3: 'UNZIP_ERR'
     }
 };

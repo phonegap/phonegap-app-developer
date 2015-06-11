@@ -338,9 +338,9 @@
         <Compile Include="Plugins\nl.x-services.plugins.insomnia\Insomnia.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\com.adobe.phonegap.contentsync\Sync.cs" />
+        <Compile Include="Plugins\phonegap-plugin-contentsync\Sync.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\com.adobe.phonegap.contentsync\Unzip.cs" />
+        <Compile Include="Plugins\phonegap-plugin-contentsync\Unzip.cs" />
     </ItemGroup>
 </Project>

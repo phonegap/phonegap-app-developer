@@ -1,0 +1,48 @@
+{
+    "name": "phonegap-plugin-contentsync",
+    "description": "Fetch and cache content for your PhoneGap app.",
+    "version": "1.1.0",
+    "homepage": "http://github.com/phonegap/phonegap-plugin-contentsync#readme",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/phonegap/phonegap-plugin-contentsync.git"
+    },
+    "bugs": {
+      "url": "https://github.com/phonegap/phonegap-plugin-contentsync/issues"
+    },
+    "cordova": {
+      "id": "phonegap-plugin-contentsync",
+      "platforms": [
+        "ios",
+        "android",
+        "windows8",
+        "windows",
+        "wp8",
+        "browser"
+      ]
+    },
+    "keywords": [
+      "ecosystem:cordova",
+      "ecosystem:phonegap",
+      "cordova-ios",
+      "cordova-android",
+      "cordova-windows8",
+      "cordova-windows",
+      "cordova-wp8",
+      "cordova-browser"
+    ],
+    "engines": [
+      {
+        "name": "cordova",
+        "version": ">=3.0.0"
+      }
+    ],
+    "author": "Adobe PhoneGap Team",
+    "license": "APL",
+    "scripts": {
+        "test": "jasmine-node --color spec"
+    },
+    "devDependencies": {
+        "jasmine-node": "1.14.5"
+    }
+}

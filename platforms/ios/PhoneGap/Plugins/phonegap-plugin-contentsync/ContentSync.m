@@ -18,6 +18,11 @@
 
 @implementation ContentSync
 
+- (CDVPlugin*)initWithWebView:(UIWebView*)theWebView {
+    [NSURLProtocol registerClass:[NSURLProtocolNoCache class]];
+    return self;
+}
+
 - (CDVPluginResult*) preparePluginResult:(NSInteger)progress status:(NSInteger)status {
     CDVPluginResult *pluginResult = nil;
     
@@ -30,6 +35,33 @@
 }
 
 - (void)sync:(CDVInvokedUrlCommand*)command {
+    
+    NSString* type = [command argumentAtIndex:2];
+    BOOL local = [type isEqualToString:@"local"];
+    
+    if(local == YES) {
+        NSString* appId = [command argumentAtIndex:1];
+        NSLog(@"Requesting local copy of %@", appId);
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSArray *URLs = [fileManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask];
+        NSURL *libraryDirectoryUrl = [URLs objectAtIndex:0];
+        
+        NSURL *appPath = [libraryDirectoryUrl URLByAppendingPathComponent:appId];
+        
+        if([fileManager fileExistsAtPath:[appPath path]]) {
+            NSLog(@"Found local copy %@", [appPath path]);
+            CDVPluginResult *pluginResult = nil;
+            
+            NSMutableDictionary* message = [NSMutableDictionary dictionaryWithCapacity:2];
+            [message setObject:[appPath path] forKey:@"localPath"];
+            [message setObject:@"true" forKey:@"cached"];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:message];
+            
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            return;
+        }
+    }
+    
     __weak ContentSync* weakSelf = self;
     
     [self.commandDelegate runInBackground:^{
@@ -55,36 +87,43 @@
     if(src != nil) {
         NSLog(@"startDownload from %@", src);
         NSURL *downloadURL = [NSURL URLWithString:src];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:downloadURL];
-        request.timeoutInterval = 15.0;
-        // Setting headers
-        NSDictionary *headers = [command argumentAtIndex:3 withDefault:nil andClass:[NSDictionary class]];
-        if(headers != nil) {
-            for (NSString* header in [headers allKeys]) {
-                NSLog(@"Setting header %@ %@", header, [headers objectForKey:header]);
-                [request addValue:[headers objectForKey:header] forHTTPHeaderField:header];
+        
+        // downloadURL is nil if malformed URL
+        if(downloadURL == nil) {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:INVALID_URL_ERR];
+        } else {
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:downloadURL];
+            request.timeoutInterval = 15.0;
+            // Setting headers
+            NSDictionary *headers = [command argumentAtIndex:3 withDefault:nil andClass:[NSDictionary class]];
+            if(headers != nil) {
+                for (NSString* header in [headers allKeys]) {
+                    NSLog(@"Setting header %@ %@", header, [headers objectForKey:header]);
+                    [request addValue:[headers objectForKey:header] forHTTPHeaderField:header];
+                }
             }
+            
+            if(!self.syncTasks) {
+                self.syncTasks = [NSMutableArray arrayWithCapacity:1];
+            }
+            NSURLSessionDownloadTask *downloadTask = [self.session downloadTaskWithRequest:request];
+            
+            ContentSyncTask* sData = [[ContentSyncTask alloc] init];
+            
+            sData.downloadTask = downloadTask;
+            sData.command = command;
+            sData.progress = 0;
+            sData.extractArchive = extractArchive;
+            
+            [self.syncTasks addObject:sData];
+            
+            [downloadTask resume];
+            
+            pluginResult = [self preparePluginResult:sData.progress status:Downloading];
         }
         
-        if(!self.syncTasks) {
-            self.syncTasks = [NSMutableArray arrayWithCapacity:1];
-        }
-        NSURLSessionDownloadTask *downloadTask = [self.session downloadTaskWithRequest:request];
-        
-        ContentSyncTask* sData = [[ContentSyncTask alloc] init];
-        
-        sData.downloadTask = downloadTask;
-        sData.command = command;
-        sData.progress = 0;
-        sData.extractArchive = extractArchive;
-        
-        [self.syncTasks addObject:sData];
-        
-        [downloadTask resume];
-        
-        pluginResult = [self preparePluginResult:sData.progress status:Downloading];
     } else {
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Arg was null"];
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:INVALID_URL_ERR];
     }
     
     [pluginResult setKeepCallbackAsBool:YES];
@@ -171,10 +210,9 @@
                 // FIXME there is probably a better way to do this
                 NSString* appId = [sTask.command.arguments objectAtIndex:1];
                 NSURL *extractURL = [libraryDirectory URLByAppendingPathComponent:appId];
-                NSString* type = [sTask.command.arguments objectAtIndex:2];
-                bool overwrite = ([type compare:@"replace"] ? YES : NO);
+                NSString* type = [sTask.command argumentAtIndex:2 withDefault:@"replace"];
                 
-                CDVInvokedUrlCommand* command = [CDVInvokedUrlCommand commandFromJson:[NSArray arrayWithObjects:sTask.command.callbackId, @"Zip", @"unzip", [NSMutableArray arrayWithObjects:[sourceURL absoluteString], [extractURL absoluteString], overwrite, nil], nil]];
+                CDVInvokedUrlCommand* command = [CDVInvokedUrlCommand commandFromJson:[NSArray arrayWithObjects:sTask.command.callbackId, @"Zip", @"unzip", [NSMutableArray arrayWithObjects:[sourceURL absoluteString], [extractURL absoluteString], type, nil], nil]];
                 [self unzip:command];
             } else {
                 sTask.archivePath = [sourceURL absoluteString];
@@ -211,7 +249,7 @@
             }
         } else {
             NSLog(@"Task: %@ completed with error: %@", task, [error localizedDescription]);
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:CONNECTION_ERR];
         }
         [self.commandDelegate sendPluginResult:pluginResult callbackId:sTask.command.callbackId];
     }
@@ -230,20 +268,21 @@
         
         NSURL* sourceURL = [NSURL URLWithString:[command argumentAtIndex:0]];
         NSURL* destinationURL = [NSURL URLWithString:[command argumentAtIndex:1]];
-        BOOL overwrite = [command argumentAtIndex:2 withDefault:@(YES)];
+        NSString* type = [command argumentAtIndex:2 withDefault:@"replace"];
+        BOOL overwrite = [type isEqualToString:@"replace"];
         
         @try {
             NSError *error;
             if(![SSZipArchive unzipFileAtPath:[sourceURL path] toDestination:[destinationURL path] overwrite:overwrite password:nil error:&error delegate:weakSelf]) {
                 NSLog(@"%@ - %@", @"Error occurred during unzipping", [error localizedDescription]);
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Error occurred during unzipping"];
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:UNZIP_ERR];
             } else {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             }
         }
         @catch (NSException *exception) {
             NSLog(@"%@ - %@", @"Error occurred during unzipping", [exception debugDescription]);
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Error occurred during unzipping"];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:UNZIP_ERR];
         }
         [pluginResult setKeepCallbackAsBool:YES];
         
@@ -287,8 +326,9 @@
         [self.commandDelegate sendPluginResult:pluginResult callbackId:sTask.command.callbackId];
         // END
 
-        NSMutableDictionary* message = [NSMutableDictionary dictionaryWithCapacity:1];
+        NSMutableDictionary* message = [NSMutableDictionary dictionaryWithCapacity:2];
         [message setObject:unzippedPath forKey:@"localPath"];
+        [message setObject:@"false" forKey:@"cached"];
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:message];
         [pluginResult setKeepCallbackAsBool:NO];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:sTask.command.callbackId];
@@ -342,6 +382,84 @@
         session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     });
     return session;
+}
+
+@end
+
+/**
+ * NSURLProtocolNoCache
+ *
+ * URL Protocol handler to prevent caching of local assets.
+ */
+
+@implementation NSURLProtocolNoCache
+
+
+/**
+ * Should this request be handled by this protocol handler?
+ *
+ * We disable caching on requests using the file:// protocol.
+ * In the future, we may want to limit this or enable it based on configuration.
+ *
+ * @param theRequest is the inbound NSURLRequest.
+ * @return YES to handle this request with the this NSURLProtocol handler.
+ */
+
++ (BOOL)canInitWithRequest:(NSURLRequest*)theRequest {
+    return [theRequest.URL.scheme isEqualToString:@"file"];
+}
+
+/**
+ * Canonical request definition.
+ *
+ * We keep it simple and map each request directly to itself.
+ *
+ * @param theRequest is the inbound NSURLRequest.
+ * @return the same inbound NSURLRequest object.
+ */
+
++ (NSURLRequest*)canonicalRequestForRequest:(NSURLRequest*)theRequest {
+    return theRequest;
+}
+
+/**
+ * Start loading the request.
+ *
+ * When loading a request, the HEADERs are altered to prevent browser caching.
+ */
+
+- (void)startLoading {
+    NSData *data = [NSData dataWithContentsOfFile:self.request.URL.path];
+
+    // add the no-cache HEADERs to the request while preserving the existing HEADER values.
+    NSDictionary *headers = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [self.request.allHTTPHeaderFields objectForKey:@"Accept"], @"Accept",
+                             @"no-cache", @"Cache-Control",
+                             @"no-cache", @"Pragma",
+                             [NSString stringWithFormat:@"%d", (int)[data length]], @"Content-Length",
+                             nil];
+
+    // create a response using the request and our new HEADERs
+    NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                              statusCode:200
+                                                             HTTPVersion:@"1.1"
+                                                            headerFields:headers];
+
+    // deliver the response and enable in-memory caching (we may want to completely disable this if issues arise)
+    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowedInMemoryOnly];
+    [self.client URLProtocol:self didLoadData:data];
+    [self.client URLProtocolDidFinishLoading:self];
+}
+
+/**
+ * Stop loading the request.
+ *
+ * When the request is cancelled, we have an opportunity to clean up and/or recover. However, for our purpose
+ * the ContentSync class will notify the user that the connection failed.
+ */
+
+- (void)stopLoading {
+    NSLog(@"NSURLProtocolNoCache request was cancelled.");
 }
 
 @end

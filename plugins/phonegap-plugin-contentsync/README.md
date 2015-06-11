@@ -1,10 +1,16 @@
-#phonegap-plugin-contentsync [![Build Status][travis-ci-img]][travis-ci-url] [![bitHound Score][bithound-img]][bithound-url]
+#phonegap-plugin-contentsync [![Build Status](https://travis-ci.org/phonegap/phonegap-plugin-contentsync.svg?branch=master)](https://travis-ci.org/phonegap/phonegap-plugin-contentsync) [![bitHound Score][bithound-img]][bithound-url]
 
 > Download and cache remotely hosted content.
 
-_This plugin is a work in progress and it is not production ready._
-
 ## Installation
+
+This requires phonegap 5.0+ ( current stable v1.0.0 )
+
+```
+phonegap plugin add phonegap-plugin-contentsync
+```
+
+It is also possible to install via repo url directly ( unstable )
 
 ```
 phonegap plugin add https://github.com/phonegap/phonegap-plugin-contentsync
@@ -31,7 +37,7 @@ sync.on('complete', function(data) {
 });
 
 sync.on('error', function(e) {
-    // e.message
+    // e
 });
 
 sync.on('cancel', function() {
@@ -47,7 +53,7 @@ Parameter | Description
 --------- | ------------
 `options.src` | `String` URL to the remotely hosted content.
 `options.id` | `String` Unique identifer to reference the cached content.
-`options.type` | `String` _(Optional)_ Defines the copy strategy for the cached content.<br/>The type `replace` is the default behaviour that deletes the old content and caches the new content.<br/> The type `merge` will add the new content to the existing content. This will replace existing files, add new files, but never delete files.
+`options.type` | `String` _(Optional)_ Defines the copy strategy for the cached content.<br/>The type `replace` is the default behaviour that deletes the old content and caches the new content.<br/> The type `merge` will add the new content to the existing content. This will replace existing files, add new files, but never delete files.<br/>The type `local` returns the full path to the cached content if it exists or downloads it from `options.src` if it doesn't. `options.src` is not required if cached content actually exists.
 `options.headers` | `Object` _(Optional)_ Set of headers to use when requesting the remote content from `options.src`.
 `options.copyCordovaAssets` | `Boolean` _(Optional)_ Copies `cordova.js`, `cordova_plugins.js` and `plugins/` to sync'd folder. This operation happens after the source content has been cached, so it will override any existing Cordova assets. Default is `false`.
 
@@ -93,12 +99,14 @@ The event `complete` will be triggered when the content has been successfully ca
 Callback Parameter | Description
 ------------------ | -----------
 `data.localPath` | `String` The file path to the cached content. The file path will be different on each platform and may be relative or absolute. However, it is guaraneteed to be a compatible reference in the browser.
+`data.cached` | `Boolean` Set to `true` if options.type is set to `local` and cached content exists. Set to `false` otherwise.
 
 #### Example
 
 ```javascript
 sync.on('complete', function(data) {
     // data.localPath
+    // data.cached
 });
 ```
 
@@ -108,13 +116,13 @@ The event `error` will trigger when an internal error occurs and the cache is ab
 
 Callback Parameter | Description
 ------------------ | -----------
-`e` | `Error` Standard JavaScript error object that describes the error.
+`e` | `Integer` Enumeration of `ERROR_STATE` to describe the current error 
 
 #### Example
 
 ```javascript
 sync.on('error', function(e) {
-    // e.message
+    // e
 });
 ```
 
@@ -160,6 +168,16 @@ Integer | Description
 `2`     | `EXTRACTING`
 `3`     | `COMPLETE`
 
+### ContentSync.ERROR_STATE
+
+An enumeration that describes the received error. The mapped `String`
+values can be customized for the user's app.
+
+Error Code | Description
+------------------ | -----------
+`1` | `INVALID_URL_ERR`
+`2` | `CONNECTION_ERR`
+`3` | `UNZIP_ERR`
 
 ### ContentSync.unzip || Zip.unzip - ContentSync.download
 

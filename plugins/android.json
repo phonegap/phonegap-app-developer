@@ -225,7 +225,7 @@
         "ADBMobile": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
-        "com.adobe.phonegap.contentsync": {
+        "phonegap-plugin-contentsync": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

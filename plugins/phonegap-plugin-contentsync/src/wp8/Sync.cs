@@ -81,9 +81,9 @@ namespace WPCordovaClassLib.Cordova.Commands
         private string Boundary = "----------------------------" + DateTime.Now.Ticks.ToString("x");
 
         // Error codes
-        public const int FileNotFoundError = 1;
-        public const int InvalidUrlError = 2;
-        public const int ConnectionError = 3;
+        public const int InvalidUrlError = 1;
+        public const int ConnectionError = 2;
+        public const int UnzipError = 3;
         public const int AbortError = 4; // not really an error, but whatevs
 
         // Sync strategy codes
@@ -378,7 +378,8 @@ namespace WPCordovaClassLib.Cordova.Commands
                 }
                 catch (WebException)
                 {
-                    // eat it
+                    DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR,
+                                      new SyncError(InvalidUrlError, downloadOptions.Url, null, 0)));
                 }
                 // dispatch an event for progress ( 0 )
                 lock (state)
@@ -550,13 +551,13 @@ namespace WPCordovaClassLib.Cordova.Commands
             catch (IsolatedStorageException)
             {
                 // Trying to write the file somewhere within the IsoStorage.
-                DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, new SyncError(FileNotFoundError)),
+                DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, new SyncError(UnzipError)),
                                       callbackId);
             }
             catch (SecurityException)
             {
                 // Trying to write the file somewhere not allowed.
-                DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, new SyncError(FileNotFoundError)),
+                DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, new SyncError(UnzipError)),
                                       callbackId);
             }
             catch (WebException webex)
@@ -605,7 +606,7 @@ namespace WPCordovaClassLib.Cordova.Commands
             catch (Exception)
             {
                 DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR,
-                                                        new SyncError(FileNotFoundError)),
+                                                        new SyncError(UnzipError)),
                                       callbackId);
             }
 

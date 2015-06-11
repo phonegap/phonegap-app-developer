@@ -2,8 +2,8 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 xmlns:android="http://schemas.android.com/apk/res/android"
-           id="com.adobe.phonegap.contentsync"
-      version="0.0.2">
+           id="phonegap-plugin-contentsync"
+      version="1.1.0">
     <name>content-sync</name>
     <description>PhoneGap Content Sync Plugin</description>
     <license></license>
@@ -14,6 +14,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <js-module src="www/index.js" name="ContentSync">
         <clobbers target="window.ContentSync" />
         <clobbers target="window.Zip" />
+        <clobbers target="window.zip" />
     </js-module>
 
 	<platform name="android">

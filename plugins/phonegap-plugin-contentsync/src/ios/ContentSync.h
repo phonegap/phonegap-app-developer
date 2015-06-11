@@ -10,6 +10,13 @@ enum ProgressState {
 };
 typedef NSUInteger ProgressState;
 
+enum ErrorCodes {
+    INVALID_URL_ERR = 1,
+    CONNECTION_ERR,
+    UNZIP_ERR,
+};
+typedef NSUInteger ErrorCodes;
+
 @interface ContentSyncTask: NSObject
 
 @property (nonatomic) CDVInvokedUrlCommand* command;
@@ -31,4 +38,13 @@ typedef NSUInteger ProgressState;
 - (void) download:(CDVInvokedUrlCommand*)command;
 - (void) unzip:(CDVInvokedUrlCommand*)command;
 
+@end
+
+/**
+ * NSURLProtocolNoCache
+ *
+ * Custom URL Protocol handler to prevent caching of local assets.
+ */
+
+@interface NSURLProtocolNoCache : NSURLProtocol
 @end
