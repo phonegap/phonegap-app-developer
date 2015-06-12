@@ -166,6 +166,9 @@ function onBuildSubmitSuccess() {
                     var errorString = 'Unable to download archive from the server.\n\n';
                     if(e)
                     {
+                        // fix for wp8 since it returns an object as opposed to just an int
+                        if(e.code) e = e.code;
+
                         if(e === 1)
                         {
                             errorString += 'Please enter a valid url to connect to.';
