@@ -10,6 +10,7 @@ platforms/ios/build/
 platforms/ios/www/
 platforms/ios/cordova/console.log
 *.xcuserdatad
+*.xcworkspace
 
 # android
 platforms/android/assets/www
