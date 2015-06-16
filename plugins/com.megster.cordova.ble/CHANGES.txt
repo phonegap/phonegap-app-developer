@@ -1,0 +1,52 @@
+= 0.1.9 =
+Add start of WP8 for PGDA
+
+= 0.1.8 =
+Remove SDK version from config.xml (user is responsible for adding)
+Add tests for plugin
+Fix BluetoothLE example for Adafruit nRF8001 #57
+
+= 0.1.7 =
+Add showBluetoothSettings and enable for Android #43
+Update documentation about UUIDs #38
+
+= 0.1.6 =
+startNotification handles both notifications and indications
+
+= 0.1.5 =
+add startScan and stopScan #40
+update to RFduino example
+
+= 0.1.4 =
+Change Android behavior for leScan without service list
+
+= 0.1.3 =
+Remove NO_RESULT on iOS fixes #32
+
+= 0.1.2 =
+Ensure connect success callback is only called 1x on iOS #30
+Rename notify to startNotification
+Add stopNotification (iOS only)
+
+= 0.1.1 =
+Return reason code when write fails on iOS #29
+
+= 0.1.0 =
+Return advertising data in scan results #6, #7, #18
+Connect success returns service, characteristic and descriptor info #6
+iOS connectCallbackId is stored in Peripheral #17
+Move plugin directory to top level for phonegap build compatibility #20
+Rename writeCommand to writeWithoutResponse #21
+Services callback latch is per peripheral  #19
+Connect callback is per peripheral #17
+Fix iOS crash when scanning 2x #5
+Add ble.isEnabled method #11
+Add RedBearLab example
+Add BatteryService example
+
+= 0.0.2 =
+iOS - fix bug read callback was being called 2x
+iOS - fix bug write callback wasn't being called
+
+= 0.0.1 =
+initial release

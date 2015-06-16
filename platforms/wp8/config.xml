@@ -92,4 +92,7 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <feature name="BLE">
+        <param name="wp-package" value="BLECentralPlugin" />
+    </feature>
 </widget>

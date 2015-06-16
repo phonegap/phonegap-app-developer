@@ -87,6 +87,10 @@
                         {
                             "xml": "<feature name=\"Sync\"><param name=\"wp-package\" value=\"Sync\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"BLE\"><param name=\"wp-package\" value=\"BLECentralPlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -133,6 +137,10 @@
                         {
                             "xml": "<Capability Name=\"ID_CAP_SENSORS\" />",
                             "count": 2
+                        },
+                        {
+                            "xml": "<Capability Name=\"ID_CAP_PROXIMITY\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -204,6 +212,9 @@
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
         "phonegap-plugin-contentsync": {
+            "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
+        },
+        "com.megster.cordova.ble": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         }
     },

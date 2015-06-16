@@ -86,6 +86,12 @@
                             "xml": false,
                             "count": 1
                         }
+                    ],
+                    "CoreBluetooth.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -196,6 +202,12 @@
                             "xml": "<feature name=\"Zip\"><param name=\"ios-package\" value=\"ContentSync\" /></feature>",
                             "count": 1
                         }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"BLE\"><param name=\"ios-package\" onload=\"true\" value=\"BLECentralPlugin\" /></feature>",
+                            "count": 1
+                        }
                     ]
                 }
             },
@@ -276,6 +288,9 @@
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
         "phonegap-plugin-contentsync": {
+            "PACKAGE_NAME": "com.adobe.phonegap.app"
+        },
+        "com.megster.cordova.ble": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

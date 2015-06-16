@@ -343,4 +343,7 @@
     <ItemGroup>
         <Compile Include="Plugins\phonegap-plugin-contentsync\Unzip.cs" />
     </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\com.megster.cordova.ble\BLECentralPlugin.cs" />
+    </ItemGroup>
 </Project>

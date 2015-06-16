@@ -65,6 +65,9 @@
     <feature name="Zip">
         <param name="android-package" value="com.adobe.phonegap.contentsync.Sync" />
     </feature>
+    <feature name="BLE">
+        <param name="android-package" value="com.megster.cordova.ble.central.BLECentralPlugin" />
+    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
