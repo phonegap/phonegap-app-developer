@@ -255,7 +255,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                 bool.TryParse(optionStrings[5], out copyRootApp);
                 downloadOptions.CopyRootApp = copyRootApp;
 
-                downloadOptions.Timeout = optionStrings[6];
+                downloadOptions.Timeout = Convert.ToInt32(optionStrings[6]);
 
                 downloadOptions.CallbackId = callbackId = optionStrings[7];
             }

@@ -1,7 +1,7 @@
 {
     "name": "phonegap-plugin-contentsync",
     "description": "Fetch and cache content for your PhoneGap app.",
-    "version": "1.1.4",
+    "version": "1.1.5",
     "homepage": "http://github.com/phonegap/phonegap-plugin-contentsync#readme",
     "repository": {
         "type": "git",
