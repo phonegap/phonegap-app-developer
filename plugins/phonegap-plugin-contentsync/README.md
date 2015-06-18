@@ -56,6 +56,8 @@ Parameter | Description
 `options.type` | `String` _(Optional)_ Defines the copy strategy for the cached content.<br/>The type `replace` is the default behaviour that deletes the old content and caches the new content.<br/> The type `merge` will add the new content to the existing content. This will replace existing files, add new files, but never delete files.<br/>The type `local` returns the full path to the cached content if it exists or downloads it from `options.src` if it doesn't. `options.src` is not required if cached content actually exists.
 `options.headers` | `Object` _(Optional)_ Set of headers to use when requesting the remote content from `options.src`.
 `options.copyCordovaAssets` | `Boolean` _(Optional)_ Copies `cordova.js`, `cordova_plugins.js` and `plugins/` to sync'd folder. This operation happens after the source content has been cached, so it will override any existing Cordova assets. Default is `false`.
+`options.copyRootApp` | `Boolean` _(Optional)_ Copies the `www` folder to sync'd folder. This operation happens before the source content has been cached, then the source content is cached and finally it copies `cordova.js`, `cordova_plugins.js` and `plugins/` to sync'd folder to remain consistent with the installed plugins. Default is `false`.
+`options.timeout` | `Double` Request timeout. 
 
 #### Returns
 

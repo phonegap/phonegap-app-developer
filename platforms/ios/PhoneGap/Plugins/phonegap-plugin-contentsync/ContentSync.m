@@ -11,7 +11,7 @@
         self.progress = 0;
         self.extractArchive = YES;
     }
-    
+
     return self;
 }
 @end
@@ -25,45 +25,45 @@
 
 - (CDVPluginResult*) preparePluginResult:(NSInteger)progress status:(NSInteger)status {
     CDVPluginResult *pluginResult = nil;
-    
+
     NSMutableDictionary* message = [NSMutableDictionary dictionaryWithCapacity:2];
     [message setObject:[NSNumber numberWithInteger:progress] forKey:@"progress"];
     [message setObject:[NSNumber numberWithInteger:status] forKey:@"status"];
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:message];
-    
+
     return pluginResult;
 }
 
 - (void)sync:(CDVInvokedUrlCommand*)command {
-    
+
     NSString* type = [command argumentAtIndex:2];
     BOOL local = [type isEqualToString:@"local"];
-    
+
     if(local == YES) {
         NSString* appId = [command argumentAtIndex:1];
         NSLog(@"Requesting local copy of %@", appId);
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSArray *URLs = [fileManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask];
         NSURL *libraryDirectoryUrl = [URLs objectAtIndex:0];
-        
+
         NSURL *appPath = [libraryDirectoryUrl URLByAppendingPathComponent:appId];
-        
+
         if([fileManager fileExistsAtPath:[appPath path]]) {
             NSLog(@"Found local copy %@", [appPath path]);
             CDVPluginResult *pluginResult = nil;
-            
+
             NSMutableDictionary* message = [NSMutableDictionary dictionaryWithCapacity:2];
             [message setObject:[appPath path] forKey:@"localPath"];
             [message setObject:@"true" forKey:@"cached"];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:message];
-            
+
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             return;
         }
     }
-    
+
     __weak ContentSync* weakSelf = self;
-    
+
     [self.commandDelegate runInBackground:^{
         [weakSelf startDownload:command extractArchive:YES];
     }];
@@ -71,23 +71,24 @@
 
 - (void) download:(CDVInvokedUrlCommand*)command {
     __weak ContentSync* weakSelf = self;
-    
+
     [self.commandDelegate runInBackground:^{
         [weakSelf startDownload:command extractArchive:NO];
     }];
 }
 
 - (void)startDownload:(CDVInvokedUrlCommand*)command extractArchive:(BOOL)extractArchive {
-    
-    self.session = [self backgroundSession];
-    
+
     CDVPluginResult* pluginResult = nil;
     NSString* src = [command.arguments objectAtIndex:0];
-    
+    NSNumber* timeout = [command argumentAtIndex:6 withDefault:[NSNumber numberWithDouble:15]];
+
+    self.session = [self backgroundSession:timeout];
+
     if(src != nil) {
         NSLog(@"startDownload from %@", src);
         NSURL *downloadURL = [NSURL URLWithString:src];
-        
+
         // downloadURL is nil if malformed URL
         if(downloadURL == nil) {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:INVALID_URL_ERR];
@@ -102,30 +103,30 @@
                     [request addValue:[headers objectForKey:header] forHTTPHeaderField:header];
                 }
             }
-            
+
             if(!self.syncTasks) {
                 self.syncTasks = [NSMutableArray arrayWithCapacity:1];
             }
             NSURLSessionDownloadTask *downloadTask = [self.session downloadTaskWithRequest:request];
-            
+
             ContentSyncTask* sData = [[ContentSyncTask alloc] init];
-            
+
             sData.downloadTask = downloadTask;
             sData.command = command;
             sData.progress = 0;
             sData.extractArchive = extractArchive;
-            
+
             [self.syncTasks addObject:sData];
-            
+
             [downloadTask resume];
-            
+
             pluginResult = [self preparePluginResult:sData.progress status:Downloading];
         }
-        
+
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:INVALID_URL_ERR];
     }
-    
+
     [pluginResult setKeepCallbackAsBool:YES];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 
@@ -169,11 +170,11 @@
 }
 
 - (void)URLSession:(NSURLSession*)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
-    
+
     CDVPluginResult* pluginResult = nil;
-    
+
     ContentSyncTask* sTask = [self findSyncDataByDownloadTask:(NSURLSessionDownloadTask*)downloadTask];
-    
+
     if(sTask) {
         double progress = (double)totalBytesWritten / (double)totalBytesExpectedToWrite;
         //NSLog(@"DownloadTask: %@ progress: %lf callbackId: %@", downloadTask, progress, sTask.command.callbackId);
@@ -188,30 +189,38 @@
 }
 
 - (void) URLSession:(NSURLSession*)session downloadTask:(NSURLSessionDownloadTask*)downloadTask didFinishDownloadingToURL:(NSURL *)downloadURL {
-    
-    
+
+
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *URLs = [fileManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask];
     NSURL *libraryDirectory = [URLs objectAtIndex:0];
-    
+
     NSURL *originalURL = [[downloadTask originalRequest] URL];
     NSURL *sourceURL = [libraryDirectory URLByAppendingPathComponent:[originalURL lastPathComponent]];
     NSError *errorCopy;
-    
+
     [fileManager removeItemAtURL:sourceURL error:NULL];
     BOOL success = [fileManager copyItemAtURL:downloadURL toURL:sourceURL error:&errorCopy];
-    
+
     if(success) {
         ContentSyncTask* sTask = [self findSyncDataByDownloadTask:downloadTask];
-        
+
         if(sTask) {
             if(sTask.extractArchive == YES) {
                 sTask.archivePath = [sourceURL path];
                 // FIXME there is probably a better way to do this
                 NSString* appId = [sTask.command.arguments objectAtIndex:1];
-                NSURL *extractURL = [libraryDirectory URLByAppendingPathComponent:appId];
+                NSURL *extractURL = [libraryDirectory URLByAppendingPathComponent:[@"files" stringByAppendingPathComponent:appId]];
                 NSString* type = [sTask.command argumentAtIndex:2 withDefault:@"replace"];
-                
+
+                // copy root app right before we extract
+                if([[[sTask command] argumentAtIndex:5 withDefault:@(NO)] boolValue] == YES) {
+                    NSLog(@"Copying Cordova Root App to %@ as requested", [extractURL path]);
+                    if(![self copyCordovaAssets:[extractURL path] copyRootApp:YES]) {
+                        NSLog(@"Error copying Cordova Root App");
+                    };
+                }
+
                 CDVInvokedUrlCommand* command = [CDVInvokedUrlCommand commandFromJson:[NSArray arrayWithObjects:sTask.command.callbackId, @"Zip", @"unzip", [NSMutableArray arrayWithObjects:[sourceURL absoluteString], [extractURL absoluteString], type, nil], nil]];
                 [self unzip:command];
             } else {
@@ -224,12 +233,12 @@
 }
 
 - (void) URLSession:(NSURLSession*)session task:(NSURLSessionTask*)task didCompleteWithError:(NSError *)error {
-    
+
     ContentSyncTask* sTask = [self findSyncDataByDownloadTask:(NSURLSessionDownloadTask*)task];
-    
+
     if(sTask) {
         CDVPluginResult* pluginResult = nil;
-        
+
         if(error == nil) {
             double progress = (double)task.countOfBytesReceived / (double)task.countOfBytesExpectedToReceive;
             NSLog(@"Task: %@ completed successfully", task);
@@ -262,15 +271,15 @@
 - (void)unzip:(CDVInvokedUrlCommand*)command {
     __weak ContentSync* weakSelf = self;
     __block NSString* callbackId = command.callbackId;
-    
+
     [self.commandDelegate runInBackground:^{
         CDVPluginResult* pluginResult = nil;
-        
+
         NSURL* sourceURL = [NSURL URLWithString:[command argumentAtIndex:0]];
         NSURL* destinationURL = [NSURL URLWithString:[command argumentAtIndex:1]];
         NSString* type = [command argumentAtIndex:2 withDefault:@"replace"];
         BOOL overwrite = [type isEqualToString:@"replace"];
-        
+
         @try {
             NSError *error;
             if(![SSZipArchive unzipFileAtPath:[sourceURL path] toDestination:[destinationURL path] overwrite:overwrite password:nil error:&error delegate:weakSelf]) {
@@ -278,6 +287,10 @@
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:UNZIP_ERR];
             } else {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+                // clean up zip archive
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                [fileManager removeItemAtURL:sourceURL error:NULL];
+
             }
         }
         @catch (NSException *exception) {
@@ -285,7 +298,7 @@
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsInt:UNZIP_ERR];
         }
         [pluginResult setKeepCallbackAsBool:YES];
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:callbackId];
         });
@@ -313,8 +326,9 @@
     NSLog(@"unzipped path %@", unzippedPath);
     ContentSyncTask* sTask = [self findSyncDataByPath];
     if(sTask) {
-        // FIXME: GET RID OF THIS SHIT / Copying cordova assets
-        if([[[sTask command] argumentAtIndex:4 withDefault:@(NO)] boolValue] == YES) {
+        // FIXME: Copying cordova assets only if copyRootApp is false because why do it twice
+        if([[[sTask command] argumentAtIndex:5 withDefault:@(NO)] boolValue] == NO &&
+           [[[sTask command] argumentAtIndex:4 withDefault:@(NO)] boolValue] == YES) {
             NSLog(@"Copying Cordova Assets to %@ as requested", unzippedPath);
             if(![self copyCordovaAssets:unzippedPath]) {
                 NSLog(@"Error copying Cordova Assets");
@@ -336,35 +350,54 @@
     }
 }
 
-// TODO GET RID OF THIS
 - (BOOL) copyCordovaAssets:(NSString*)unzippedPath {
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    return [self copyCordovaAssets:unzippedPath copyRootApp:false];
+}
+
+// TODO GET RID OF THIS
+- (BOOL) copyCordovaAssets:(NSString*)unzippedPath copyRootApp:(BOOL)copyRootApp {
     NSError *errorCopy;
-    NSArray* cordovaAssets = [NSArray arrayWithObjects:@"cordova.js",@"cordova_plugins.js",@"plugins", nil];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL* destinationURL = [NSURL fileURLWithPath:unzippedPath];
+
+    if(copyRootApp == YES) {
+        // we use cordova.js as a way to find the root www/
+        NSString* root = [[[self commandDelegate] pathForResource:@"cordova.js"] stringByDeletingLastPathComponent];
+
+        NSURL* sourceURL = [NSURL fileURLWithPath:root];
+        [fileManager removeItemAtURL:destinationURL error:NULL];
+        BOOL success = [fileManager copyItemAtURL:sourceURL toURL:destinationURL error:&errorCopy];
+
+        if(!success) {
+            return NO;
+        }
+
+        return YES;
+    }
+
+    NSArray* cordovaAssets = [NSArray arrayWithObjects:@"cordova.js",@"cordova_plugins.js",@"plugins", nil];
     NSString* suffix = @"/www";
-    
+
     if([fileManager fileExistsAtPath:[unzippedPath stringByAppendingString:suffix]]) {
         destinationURL = [destinationURL URLByAppendingPathComponent:suffix];
         NSLog(@"Found %@ folder. Will copy Cordova assets to it.", suffix);
     }
-    
+
     for(NSString* asset in cordovaAssets) {
         NSURL* assetSourceURL = [NSURL fileURLWithPath:[[self commandDelegate] pathForResource:asset]];
         NSURL* assetDestinationURL = [destinationURL URLByAppendingPathComponent:[assetSourceURL lastPathComponent]];
         [fileManager removeItemAtURL:assetDestinationURL error:NULL];
         BOOL success = [fileManager copyItemAtURL:assetSourceURL toURL:assetDestinationURL error:&errorCopy];
-        
+
         if(!success) {
             return NO;
         }
     }
-    
+
     return YES;
 }
 
-- (NSURLSession*) backgroundSession {
+- (NSURLSession*) backgroundSession:(NSNumber*)timeout {
     static NSURLSession *session = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -377,8 +410,7 @@
         {
             configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:@"com.example.apple-samplecode.SimpleBackgroundTransfer.BackgroundSession"];
         }
-        configuration.timeoutIntervalForRequest = 15.0;
-        configuration.timeoutIntervalForResource = 30.0;
+        configuration.timeoutIntervalForRequest = [timeout doubleValue];
         session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     });
     return session;
