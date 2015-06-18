@@ -239,10 +239,10 @@
         "ADBMobile": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
-        "phonegap-plugin-contentsync": {
+        "com.megster.cordova.ble": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         },
-        "com.megster.cordova.ble": {
+        "phonegap-plugin-contentsync": {
             "PACKAGE_NAME": "com.adobe.phonegap.app"
         }
     },

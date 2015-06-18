@@ -55,6 +55,8 @@ namespace WPCordovaClassLib.Cordova.Commands
             public bool ChunkedMode { get; set; }
             public int Type { get; set; }
             public bool CopyCordovaAssets { get; set; }
+            public bool CopyRootApp { get; set; }
+            public int Timeout { get; set; }
             /// Server address
             public string Server { get; set; }
             /// File key
@@ -249,7 +251,13 @@ namespace WPCordovaClassLib.Cordova.Commands
                 bool.TryParse(optionStrings[4], out copyCordovaAssets);
                 downloadOptions.CopyCordovaAssets = copyCordovaAssets;
 
-                downloadOptions.CallbackId = callbackId = optionStrings[5];
+                bool copyRootApp = false;
+                bool.TryParse(optionStrings[5], out copyRootApp);
+                downloadOptions.CopyRootApp = copyRootApp;
+
+                downloadOptions.Timeout = optionStrings[6];
+
+                downloadOptions.CallbackId = callbackId = optionStrings[7];
             }
             catch (Exception)
             {

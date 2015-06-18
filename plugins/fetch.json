@@ -6,5 +6,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "phonegap-plugin-contentsync": {
+        "source": {
+            "type": "local",
+            "path": "../phonegap-plugin-contentsync"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

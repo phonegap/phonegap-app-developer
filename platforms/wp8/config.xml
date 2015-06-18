@@ -58,9 +58,6 @@
     <feature name="Insomnia">
         <param name="wp-package" value="Insomnia" />
     </feature>
-    <feature name="Sync">
-        <param name="wp-package" value="Sync" />
-    </feature>
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers
@@ -94,5 +91,8 @@
     <content src="index.html" />
     <feature name="BLE">
         <param name="wp-package" value="BLECentralPlugin" />
+    </feature>
+    <feature name="Sync">
+        <param name="wp-package" value="Sync" />
     </feature>
 </widget>

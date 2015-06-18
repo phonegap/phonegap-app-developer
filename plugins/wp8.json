@@ -85,11 +85,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Sync\"><param name=\"wp-package\" value=\"Sync\" /></feature>",
+                            "xml": "<feature name=\"BLE\"><param name=\"wp-package\" value=\"BLECentralPlugin\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"BLE\"><param name=\"wp-package\" value=\"BLECentralPlugin\" /></feature>",
+                            "xml": "<feature name=\"Sync\"><param name=\"wp-package\" value=\"Sync\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -211,10 +211,10 @@
         "ADBMobile": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
-        "phonegap-plugin-contentsync": {
+        "com.megster.cordova.ble": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         },
-        "com.megster.cordova.ble": {
+        "phonegap-plugin-contentsync": {
             "PACKAGE_NAME": "{9E0C4412-1A96-4B19-A3F6-9D0CD6906F71}"
         }
     },
