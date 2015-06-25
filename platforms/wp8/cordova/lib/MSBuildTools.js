@@ -27,9 +27,9 @@ function MSBuildTools (version, path) {
 }
 
 MSBuildTools.prototype.buildProject = function(projFile, buildType, buildarch) {
-    console.log("\nBuilding project: " + projFile);
-    console.log("\tConfiguration : " + buildType);
-    console.log("\tPlatform      : " + buildarch);
+    console.log('\nBuilding project: ' + projFile);
+    console.log('\tConfiguration : ' + buildType);
+    console.log('\tPlatform      : ' + buildarch);
 
     var args = ['/clp:NoSummary;NoItemAndPropertyList;Verbosity=minimal', '/nologo',
     '/p:Configuration=' + buildType,
@@ -40,14 +40,14 @@ MSBuildTools.prototype.buildProject = function(projFile, buildType, buildarch) {
 
 // returns full path to msbuild tools required to build the project and tools version
 module.exports.findAvailableVersion = function (searchFor32Bit) {
-    var versions = ['12.0', '4.0'];
+    var versions = ['14.0', '12.0', '4.0'];
 
     return Q.all(versions.map(function (version) {
         return checkMSBuildVersion(version, searchFor32Bit);
     }))
     .then(function (versions) {
         // select first msbuild version available, and resolve promise with it
-        var msbuildTools = versions[0] || versions[1];
+        var msbuildTools = versions[0] || versions[1] || versions[2];
         return msbuildTools ? Q.resolve(msbuildTools) : Q.reject('MSBuild tools not found');
     });
 };

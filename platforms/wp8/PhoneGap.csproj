@@ -21,7 +21,7 @@
         <SupportedCultures>en-US</SupportedCultures>
         <XapOutputs>true</XapOutputs>
         <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-        <XapFilename>CordovaAppProj_$(Configuration)_$(Platform).xap</XapFilename>
+        <XapFilename>com.adobe.phonegap.app.xap</XapFilename>
         <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
         <SilverlightAppEntry>com.adobe.phonegap.app.App</SilverlightAppEntry>
         <ValidateXaml>true</ValidateXaml>
@@ -147,19 +147,19 @@
             <DependentUpon>MainPage.xaml</DependentUpon>
         </Compile>
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Page Include="Plugins\org.apache.cordova.media-capture\AudioRecorder.xaml">
+        <Page Include="Plugins\cordova-plugin-dialogs\NotificationBox.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
         </Page>
-        <Page Include="Plugins\org.apache.cordova.media-capture\VideoRecorder.xaml">
+        <Page Include="Plugins\cordova-plugin-contacts\ContactPicker.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
         </Page>
-        <Page Include="Plugins\org.apache.cordova.contacts\ContactPicker.xaml">
+        <Page Include="Plugins\cordova-plugin-media-capture\AudioRecorder.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
         </Page>
-        <Page Include="Plugins\org.apache.cordova.dialogs\NotificationBox.xaml">
+        <Page Include="Plugins\cordova-plugin-media-capture\VideoRecorder.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
         </Page>
@@ -180,8 +180,6 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="config.xml" />
-        <Content Include="TileMedium.png" />
-        <Content Include="TileSmall.png" />
         <Content Include="www\**" />
         <Content Include="Images\appbar.back.rest.png" />
         <Content Include="Images\appbar.close.rest.png" />
@@ -236,114 +234,123 @@
         </PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.file\File.cs" />
+        <Compile Include="Plugins\nl.x-services.plugins.insomnia\Insomnia.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.file-transfer\FileTransfer.cs" />
+        <Compile Include="Plugins\com.telerik.plugins.nativepagetransitions\NativePageTransitions.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.geolocation\Geolocation.cs" />
+        <Compile Include="Plugins\com.megster.cordova.ble\BLECentralPlugin.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.globalization\Globalization.cs" />
+        <Compile Include="Plugins\cordova-plugin-console\DebugConsole.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.inappbrowser\InAppBrowser.cs" />
+        <Compile Include="Plugins\cordova-plugin-device-motion\Accelerometer.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media\Media.cs" />
+        <Compile Include="Plugins\cordova-plugin-statusbar\StatusBar.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media\AudioPlayer.cs" />
+        <Compile Include="Plugins\cordova-plugin-battery-status\Battery.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\Capture.cs" />
+        <Compile Include="Plugins\cordova-plugin-device-orientation\Compass.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\AudioCaptureTask.cs" />
-    </ItemGroup>
-    <ItemGroup />
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\AudioRecorder.xaml.cs">
-            <DependentUpon>AudioRecorder.xaml</DependentUpon>
-        </Compile>
+        <Compile Include="Plugins\cordova-plugin-geolocation\Geolocation.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\VideoCaptureTask.cs" />
-    </ItemGroup>
-    <ItemGroup />
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.media-capture\VideoRecorder.xaml.cs">
-            <DependentUpon>VideoRecorder.xaml</DependentUpon>
-        </Compile>
+        <Compile Include="Plugins\cordova-plugin-dialogs\Notification.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.network-information\NetworkStatus.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.splashscreen\SplashScreen.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.statusbar\StatusBar.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.vibration\Vibration.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.battery-status\Battery.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.camera\Camera.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.console\DebugConsole.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.contacts\Contacts.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.contacts\ContactsHelper.cs" />
-    </ItemGroup>
-    <ItemGroup />
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.contacts\ContactPicker.xaml.cs">
-            <DependentUpon>ContactPicker.xaml</DependentUpon>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.contacts\ContactPickerTask.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.device\Device.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.device-motion\Accelerometer.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.device-orientation\Compass.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.dialogs\Notification.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.dialogs\NotificationBox.xaml.cs">
+        <Compile Include="Plugins\cordova-plugin-dialogs\NotificationBox.xaml.cs">
             <DependentUpon>NotificationBox.xaml</DependentUpon>
         </Compile>
     </ItemGroup>
     <ItemGroup />
     <ItemGroup>
-        <Content Include="Plugins\org.apache.cordova.dialogs\notification-beep.wav" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\nl.x-services.plugins.insomnia\Insomnia.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Plugins\com.megster.cordova.ble\BLECentralPlugin.cs" />
+        <Content Include="Plugins\cordova-plugin-dialogs\notification-beep.wav" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Plugins\phonegap-plugin-contentsync\Sync.cs" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Plugins\phonegap-plugin-contentsync\Unzip.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-splashscreen\SplashScreen.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-splashscreen\ResolutionHelper.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-inappbrowser\InAppBrowser.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-camera\Camera.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-contacts\Contacts.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-contacts\ContactsHelper.cs" />
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-contacts\ContactPicker.xaml.cs">
+            <DependentUpon>ContactPicker.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-contacts\ContactPickerTask.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-device\Device.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-file\File.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-file-transfer\FileTransfer.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-media-capture\Capture.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-media-capture\AudioCaptureTask.cs" />
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-media-capture\AudioRecorder.xaml.cs">
+            <DependentUpon>AudioRecorder.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-media-capture\VideoCaptureTask.cs" />
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-media-capture\VideoRecorder.xaml.cs">
+            <DependentUpon>VideoRecorder.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-media\Media.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-media\AudioPlayer.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-globalization\Globalization.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-globalization\GlobalizationApiTypes.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-globalization\GlobalizationImpl.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Plugins\cordova-plugin-vibration\Vibration.cs" />
     </ItemGroup>
 </Project>

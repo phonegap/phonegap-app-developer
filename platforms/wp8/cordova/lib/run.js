@@ -27,14 +27,14 @@ var Q = require('q'),
 var ROOT = path.join(__dirname, '..', '..');
 
 module.exports.run = function (argv) {
-    if (!utils.isCordovaProject(ROOT)){
-        return Q.reject("Could not find project at " + ROOT);
+    if (!utils.isCordovaProject(ROOT)) {
+        return Q.reject('Could not find project at ' + ROOT);
     }
 
     // parse args
-    var args  = nopt({"debug": Boolean, "release": Boolean, "nobuild": Boolean,
-        "device": Boolean, "emulator": Boolean, "target": String, "archs": String},
-        {"r" : "--release"}, argv);
+    var args  = nopt({'debug': Boolean, 'release': Boolean, 'nobuild': Boolean,
+        'device': Boolean, 'emulator': Boolean, 'target': String, 'archs': String},
+        {'r' : '--release'}, argv);
 
     // Validate args
     if (args.debug && args.release) {
@@ -45,44 +45,56 @@ module.exports.run = function (argv) {
     }
 
     // Get build/deploy options
-    var buildType    = args.release ? "release" : "debug",
-        buildArchs   = args.archs ? args.archs.split(' ') : ["anycpu"],
-        deployTarget = args.target ? args.target : args.device ? "device" : "emulator";
+    var buildType    = args.release ? 'release' : 'debug',
+        buildArchs   = args.archs ? args.archs.split(' ') : ['anycpu'];
 
     // if --nobuild isn't specified then build app first
     var buildPackages = args.nobuild ? Q() : build.run(argv);
 
     return buildPackages
-    .then(function () {
-        return packages.getPackage(buildType, buildArchs[0]);
-    })
-    .then(function(builtPackage) {
-        console.log('\nDeploying package to ' + deployTarget);
-        return builtPackage.deployTo(deployTarget);
-    });
+        .then(function () {
+            return packages.getPackage(buildType, buildArchs[0]);
+        })
+        .then(function (builtPackage) {
+            // Get deploy options
+            var deployTarget = args.target ? args.target : args.device ? 'device' : 
+                args.emulator ? 'emulator' : null;
+
+            if (deployTarget) {
+                console.log('\nDeploying package to ' + deployTarget);
+                return builtPackage.deployTo(deployTarget);
+            }
+            // no deploy target specified - try device first & then emulator
+            console.log('\nTrying to deploy to device');
+            return builtPackage.deployTo('device').catch(function (error) {
+                console.log(error);
+                console.log('\nFalling back to deploy to emulator instead');
+                return builtPackage.deployTo('emulator');
+            });
+        });
 };
 
 module.exports.help = function () {
-    console.log("");
-    console.log("Usage:");
-    console.log("  run [ --device || --emulator || --target=<id> ] ");
-    console.log("      [ --debug || --release || --nobuild ]");
-    console.log("      [--archs=\"<list of architectures...>\"]");
-    console.log("    --device      : Deploys and runs the project on the connected device.");
-    console.log("    --emulator    : [DEFAULT] Deploys and runs the project on an emulator.");
-    console.log("    --target=<id> : Deploys and runs the project on the specified target.");
-    console.log("    --debug       : [DEFAULT] Builds project in debug mode.");
-    console.log("    --release     : Builds project in release mode.");
-    console.log("    --nobuild     : Ueses pre-built xap, or errors if project is not built.");
-    console.log("    --archs       : Builds project binaries for specific chip architectures.");
-    console.log("                    Deploys and runs package with first architecture specified.");
-    console.log("                    arm` and `x86` are supported for wp8");
-    console.log("Examples:");
-    console.log("    run");
-    console.log("    run --emulator");
-    console.log("    run --device");
-    console.log("    run --target=7988B8C3-3ADE-488d-BA3E-D052AC9DC710");
-    console.log("    run --device --release");
-    console.log("    run --emulator --debug");
-    console.log("");
+    console.log('');
+    console.log('Usage:');
+    console.log('  run [ --device || --emulator || --target=<id> ] ');
+    console.log('      [ --debug || --release || --nobuild ]');
+    console.log('      [--archs=\"<list of architectures...>\"]');
+    console.log('    --device      : Deploys and runs the project on the connected device.');
+    console.log('    --emulator    : [DEFAULT] Deploys and runs the project on an emulator.');
+    console.log('    --target=<id> : Deploys and runs the project on the specified target.');
+    console.log('    --debug       : [DEFAULT] Builds project in debug mode.');
+    console.log('    --release     : Builds project in release mode.');
+    console.log('    --nobuild     : Ueses pre-built xap, or errors if project is not built.');
+    console.log('    --archs       : Builds project binaries for specific chip architectures.');
+    console.log('                    Deploys and runs package with first architecture specified.');
+    console.log('                    arm` and `x86` are supported for wp8');
+    console.log('Examples:');
+    console.log('    run');
+    console.log('    run --emulator');
+    console.log('    run --device');
+    console.log('    run --target=7988B8C3-3ADE-488d-BA3E-D052AC9DC710');
+    console.log('    run --device --release');
+    console.log('    run --emulator --debug');
+    console.log('');
 };

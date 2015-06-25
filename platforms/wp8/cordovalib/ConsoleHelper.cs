@@ -11,6 +11,18 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+/************************************************************************
+    This class is intended to supply the minimum expected browser behavior 
+    for console.log|warn|info ...
+    js code that is loaded in a minimal cordova application running on a device 
+    or emulator will output console.log calls to Visual Studio's output window 
+    when run from Visual Studio.
+    
+    For more advanced/complete console logging functions, 
+    look at cordova-plugin-console.
+************************************************************************/
+
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System;
@@ -38,21 +50,34 @@ namespace WPCordovaClassLib.CordovaLib
             {
             }
 
-            if (!hasListener)
-            {
-                PhoneApplicationService.Current.Closing += OnServiceClosing;
-                hasListener = true;
-            }
-
-
-            string script = @"(function(win) {
-        function exec(msg) { window.external.Notify('ConsoleLog/' + msg); }
+            string script = 
+    @"(function(win) {
+        function stringify() { 
+            // Convert arguments to strings and concat them with comma.
+            return Array.prototype.map.call( arguments, function argumentToString( argument ) { 
+                        // Return primitives as string.
+                        if( typeof argument === 'string' || typeof argument === 'number' ) {
+                            return argument;
+                        }
+                        if( typeof argument === 'function' ) {
+                            return argument.toString();
+                        }
+                        // Convert complex arguments to JSON.
+                        try {
+                            return JSON.stringify( argument );
+                        } catch( ignored ) {
+                            return argument.toString();
+                        }
+                    } )
+                        .join( ',' ); 
+        }
+        function exec() { window.external.Notify( 'ConsoleLog/' + stringify.apply( null, arguments ) ); }
         var cons = win.console = win.console || {};
         cons.log = exec;
         cons.debug = cons.debug || cons.log;
-        cons.info = cons.info   || function(msg) { exec('INFO:' + msg ); };     
-        cons.warn = cons.warn   || function(msg) { exec('WARN:' + msg ); };
-        cons.error = cons.error || function(msg) { exec('ERROR:' + msg ); };
+        cons.info = cons.info   || function() { exec( 'INFO:' + stringify.apply( null, arguments ) ); };
+        cons.warn = cons.warn   || function() { exec( 'WARN:' + stringify.apply( null, arguments ) ); };
+        cons.error = cons.error || function() { exec( 'ERROR:' + stringify.apply( null, arguments ) ); };
     })(window);";
 
             Browser.InvokeScript("eval", new string[] { script });
@@ -71,15 +96,6 @@ namespace WPCordovaClassLib.CordovaLib
             }
         }
 
-        public void DetachHandler()
-        {
-            if (hasListener)
-            {
-                PhoneApplicationService.Current.Closing -= OnServiceClosing;
-                hasListener = false;
-            }
-        }
-
         public bool HandleCommand(string commandStr)
         {
             string output = commandStr.Substring("ConsoleLog/".Length);
@@ -94,6 +110,16 @@ namespace WPCordovaClassLib.CordovaLib
                 file.Close();
             }
             return true;
+        }
+
+        public void AttachNativeHandlers()
+        {
+            PhoneApplicationService.Current.Closing += OnServiceClosing;
+        }
+
+        public void DetachNativeHandlers()
+        {
+            PhoneApplicationService.Current.Closing -= OnServiceClosing;
         }
 
     }

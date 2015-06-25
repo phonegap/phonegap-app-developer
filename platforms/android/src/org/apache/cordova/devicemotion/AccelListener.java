@@ -48,7 +48,7 @@ public class AccelListener extends CordovaPlugin implements SensorEventListener 
     public static int STARTING = 1;
     public static int RUNNING = 2;
     public static int ERROR_FAILED_TO_START = 3;
-   
+
     private float x,y,z;                                // most recent acceleration values
     private long timestamp;                         // time of most recent value
     private int status;                                 // status of listener
@@ -136,12 +136,13 @@ public class AccelListener extends CordovaPlugin implements SensorEventListener 
     //
     /**
      * Start listening for acceleration sensor.
-     * 
+     *
      * @return          status of listener
     */
     private int start() {
-        // If already starting or running, then just return
+        // If already starting or running, then restart timeout and return
         if ((this.status == AccelListener.RUNNING) || (this.status == AccelListener.STARTING)) {
+            startTimeout();
             return this.status;
         }
 
@@ -153,20 +154,29 @@ public class AccelListener extends CordovaPlugin implements SensorEventListener 
         // If found, then register as listener
         if ((list != null) && (list.size() > 0)) {
           this.mSensor = list.get(0);
-          this.sensorManager.registerListener(this, this.mSensor, SensorManager.SENSOR_DELAY_UI);
-          this.setStatus(AccelListener.STARTING);
+          if (this.sensorManager.registerListener(this, this.mSensor, SensorManager.SENSOR_DELAY_UI)) {
+              this.setStatus(AccelListener.STARTING);
+          } else {
+              this.setStatus(AccelListener.ERROR_FAILED_TO_START);
+              this.fail(AccelListener.ERROR_FAILED_TO_START, "Device sensor returned an error.");
+              return this.status;
+          };
+
         } else {
           this.setStatus(AccelListener.ERROR_FAILED_TO_START);
           this.fail(AccelListener.ERROR_FAILED_TO_START, "No sensors found to register accelerometer listening to.");
           return this.status;
         }
 
+        startTimeout();
+
+        return this.status;
+    }
+    private void startTimeout() {
         // Set a timeout callback on the main thread.
         stopTimeout();
         mainHandler = new Handler(Looper.getMainLooper());
         mainHandler.postDelayed(mainRunnable, 2000);
-
-        return this.status;
     }
     private void stopTimeout() {
         if(mainHandler!=null){
@@ -186,14 +196,15 @@ public class AccelListener extends CordovaPlugin implements SensorEventListener 
     }
 
     /**
-     * Returns an error if the sensor hasn't started.
+     * Returns latest cached position if the sensor hasn't returned newer value.
      *
      * Called two seconds after starting the listener.
      */
     private void timeout() {
         if (this.status == AccelListener.STARTING) {
-            this.setStatus(AccelListener.ERROR_FAILED_TO_START);
-            this.fail(AccelListener.ERROR_FAILED_TO_START, "Accelerometer could not be started.");
+            // call win with latest cached position
+            this.timestamp = System.currentTimeMillis();
+            this.win();
         }
     }
 

@@ -17,6 +17,8 @@
        under the License.
 */
 
+/* jshint sub:true */
+
 var Q     = require('Q'),
     path  = require('path'),
     nopt  = require('nopt'),
@@ -29,7 +31,7 @@ var ROOT = path.join(__dirname, '..', '..');
 
 function parseAndValidateArgs(argv) {
     // parse and validate args
-    args = nopt({'debug': Boolean, 'release': Boolean, 'archs': [String]}, {'-r': '--release'}, argv);
+    var args = nopt({'debug': Boolean, 'release': Boolean, 'archs': [String]}, {'-r': '--release'}, argv);
     // Validate args
     if (args.debug && args.release) {
         return Q.reject('Only one of "debug"/"release" options should be specified');
@@ -43,19 +45,19 @@ function parseAndValidateArgs(argv) {
 
 // help/usage function
 module.exports.help = function () {
-    console.log("");
-    console.log("Usage: build [ --debug | --release ] [--archs=\"<list of architectures...>\"]");
-    console.log("    --help    : Displays this dialog.");
-    console.log("    --debug   : Cleans and builds project in debug mode.");
-    console.log("    --release : Cleans and builds project in release mode.");
-    console.log("    --release : Cleans and builds project in release mode.");
-    console.log("    --archs   : Builds project binaries for specific chip architectures. `arm` and `x86` are supported for wp8");
-    console.log("examples:");
-    console.log("    build ");
-    console.log("    build --debug");
-    console.log("    build --release");
-    console.log("    build --release --archs=\"arm x86\"");
-    console.log("");
+    console.log('');
+    console.log('Usage: build [ --debug | --release ] [--archs="<list of architectures...>"]');
+    console.log('    --help    : Displays this dialog.');
+    console.log('    --debug   : Cleans and builds project in debug mode.');
+    console.log('    --release : Cleans and builds project in release mode.');
+    console.log('    --release : Cleans and builds project in release mode.');
+    console.log('    --archs   : Builds project binaries for specific chip architectures. `arm` and `x86` are supported for wp8');
+    console.log('examples:');
+    console.log('    build ');
+    console.log('    build --debug');
+    console.log('    build --release');
+    console.log('    build --release --archs="arm x86"');
+    console.log('');
 };
 
 // builds cordova-windows application with parameters provided.
@@ -68,7 +70,7 @@ module.exports.run = function (argv) {
     return parseAndValidateArgs(argv)
     .then(function (buildopts) {
         // WP8 requires x86 version of MSBuild, CB-6732
-        var is64bitSystem = process.env["PROCESSOR_ARCHITECTURE"] != 'x86';
+        var is64bitSystem = process.env['PROCESSOR_ARCHITECTURE'] != 'x86';
 
         // Get available msbuild tools
         return MSBuildTools.findAvailableVersion(is64bitSystem)
@@ -77,8 +79,8 @@ module.exports.run = function (argv) {
             // chain promises each after previous with reduce function
             return buildopts.buildArchs.reduce(function (promise, buildarch) {
                 return promise.then(function () {
-                    buildarch = buildarch == "anycpu" ? "any cpu" : buildarch;
-                    // serach for first solution file found
+                    buildarch = buildarch == 'anycpu' ? 'any cpu' : buildarch;
+                    // search for first solution file found
                     // this is performed due to solution file can be renamed in create
                     var solutionFiles = shell.ls(path.join(ROOT, '*.sln'));
                     if (solutionFiles && solutionFiles[0]) {

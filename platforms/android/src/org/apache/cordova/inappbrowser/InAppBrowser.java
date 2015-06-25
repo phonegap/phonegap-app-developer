@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import org.apache.cordova.inappbrowser.InAppBrowserDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.Browser;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -54,10 +55,13 @@ import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.LOG;
+import org.apache.cordova.PluginManager;
 import org.apache.cordova.PluginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
@@ -71,23 +75,25 @@ public class InAppBrowser extends CordovaPlugin {
     // private static final String BLANK = "_blank";
     private static final String EXIT_EVENT = "exit";
     private static final String LOCATION = "location";
+    private static final String ZOOM = "zoom";
     private static final String HIDDEN = "hidden";
     private static final String LOAD_START_EVENT = "loadstart";
     private static final String LOAD_STOP_EVENT = "loadstop";
     private static final String LOAD_ERROR_EVENT = "loaderror";
-    private static final String CLOSE_BUTTON_CAPTION = "closebuttoncaption";
     private static final String CLEAR_ALL_CACHE = "clearcache";
     private static final String CLEAR_SESSION_CACHE = "clearsessioncache";
+    private static final String HARDWARE_BACK_BUTTON = "hardwareback";
 
     private InAppBrowserDialog dialog;
     private WebView inAppWebView;
     private EditText edittext;
     private CallbackContext callbackContext;
     private boolean showLocationBar = true;
+    private boolean showZoomControls = true;
     private boolean openWindowHidden = false;
-    private String buttonLabel = "Done";
     private boolean clearAllCache= false;
     private boolean clearSessionCache=false;
+    private boolean hadwareBackButton=true;
 
     /**
      * Executes the request and returns PluginResult.
@@ -117,9 +123,37 @@ public class InAppBrowser extends CordovaPlugin {
                     // SELF
                     if (SELF.equals(target)) {
                         Log.d(LOG_TAG, "in self");
+                        /* This code exists for compatibility between 3.x and 4.x versions of Cordova.
+                         * Previously the Config class had a static method, isUrlWhitelisted(). That
+                         * responsibility has been moved to the plugins, with an aggregating method in
+                         * PluginManager.
+                         */
+                        Boolean shouldAllowNavigation = null;
+                        if (url.startsWith("javascript:")) {
+                            shouldAllowNavigation = true;
+                        }
+                        if (shouldAllowNavigation == null) {
+                            try {
+                                Method iuw = Config.class.getMethod("isUrlWhiteListed", String.class);
+                                shouldAllowNavigation = (Boolean)iuw.invoke(null, url);
+                            } catch (NoSuchMethodException e) {
+                            } catch (IllegalAccessException e) {
+                            } catch (InvocationTargetException e) {
+                            }
+                        }
+                        if (shouldAllowNavigation == null) {
+                            try {
+                                Method gpm = webView.getClass().getMethod("getPluginManager");
+                                PluginManager pm = (PluginManager)gpm.invoke(webView);
+                                Method san = pm.getClass().getMethod("shouldAllowNavigation", String.class);
+                                shouldAllowNavigation = (Boolean)san.invoke(pm, url);
+                            } catch (NoSuchMethodException e) {
+                            } catch (IllegalAccessException e) {
+                            } catch (InvocationTargetException e) {
+                            }
+                        }
                         // load in webview
-                        if (url.startsWith("file://") || url.startsWith("javascript:") 
-                                || Config.isUrlWhiteListed(url)) {
+                        if (Boolean.TRUE.equals(shouldAllowNavigation)) {
                             Log.d(LOG_TAG, "loading in webview");
                             webView.loadUrl(url);
                         }
@@ -287,12 +321,8 @@ public class InAppBrowser extends CordovaPlugin {
                 option = new StringTokenizer(features.nextToken(), "=");
                 if (option.hasMoreElements()) {
                     String key = option.nextToken();
-                    if (key.equalsIgnoreCase(CLOSE_BUTTON_CAPTION)) {
-                        this.buttonLabel = option.nextToken();
-                    } else {
-                        Boolean value = option.nextToken().equals("no") ? Boolean.FALSE : Boolean.TRUE;
-                        map.put(key, value);
-                    }
+                    Boolean value = option.nextToken().equals("no") ? Boolean.FALSE : Boolean.TRUE;
+                    map.put(key, value);
                 }
             }
             return map;
@@ -318,6 +348,7 @@ public class InAppBrowser extends CordovaPlugin {
             } else {
                 intent.setData(uri);
             }
+			intent.putExtra(Browser.EXTRA_APPLICATION_ID, cordova.getActivity().getPackageName());
             this.cordova.getActivity().startActivity(intent);
             return "";
         } catch (android.content.ActivityNotFoundException e) {
@@ -366,10 +397,26 @@ public class InAppBrowser extends CordovaPlugin {
     /**
      * Checks to see if it is possible to go back one page in history, then does so.
      */
-    private void goBack() {
+    public void goBack() {
         if (this.inAppWebView.canGoBack()) {
             this.inAppWebView.goBack();
         }
+    }
+
+    /**
+     * Can the web browser go back?
+     * @return boolean
+     */
+    public boolean canGoBack() {
+        return this.inAppWebView.canGoBack();
+    }
+
+    /**
+     * Has the user set the hardware back button to go back
+     * @return boolean
+     */
+    public boolean hardwareBack() {
+        return hadwareBackButton;
     }
 
     /**
@@ -408,6 +455,15 @@ public class InAppBrowser extends CordovaPlugin {
         return this.showLocationBar;
     }
 
+    /**
+     * Should we show the zoom controls?
+     *
+     * @return boolean
+     */
+    private boolean getShowZoomControls() {
+        return this.showZoomControls;
+    }
+
     private InAppBrowser getInAppBrowser(){
         return this;
     }
@@ -421,15 +477,24 @@ public class InAppBrowser extends CordovaPlugin {
     public String showWebPage(final String url, HashMap<String, Boolean> features) {
         // Determine if we should hide the location bar.
         showLocationBar = true;
+        showZoomControls = true;
         openWindowHidden = false;
         if (features != null) {
             Boolean show = features.get(LOCATION);
             if (show != null) {
                 showLocationBar = show.booleanValue();
             }
+            Boolean zoom = features.get(ZOOM);
+            if (zoom != null) {
+                showZoomControls = zoom.booleanValue();
+            }            
             Boolean hidden = features.get(HIDDEN);
             if (hidden != null) {
                 openWindowHidden = hidden.booleanValue();
+            }
+            Boolean hardwareBack = features.get(HARDWARE_BACK_BUTTON);
+            if (hardwareBack != null) {
+                hadwareBackButton = hardwareBack.booleanValue();
             }
             Boolean cache = features.get(CLEAR_ALL_CACHE);
             if (cache != null) {
@@ -460,6 +525,7 @@ public class InAppBrowser extends CordovaPlugin {
                 return value;
             }
 
+            @SuppressLint("NewApi")
             public void run() {
                 // Let's create the main dialog
                 dialog = new InAppBrowserDialog(cordova.getActivity(), android.R.style.Theme_NoTitleBar);
@@ -495,9 +561,6 @@ public class InAppBrowser extends CordovaPlugin {
                 back.setLayoutParams(backLayoutParams);
                 back.setContentDescription("Back Button");
                 back.setId(2);
-                /*
-                back.setText("<");
-                */
                 Resources activityRes = cordova.getActivity().getResources();
                 int backResId = activityRes.getIdentifier("ic_action_previous_item", "drawable", cordova.getActivity().getPackageName());
                 Drawable backIcon = activityRes.getDrawable(backResId);
@@ -522,7 +585,6 @@ public class InAppBrowser extends CordovaPlugin {
                 forward.setLayoutParams(forwardLayoutParams);
                 forward.setContentDescription("Forward Button");
                 forward.setId(3);
-                //forward.setText(">");
                 int fwdResId = activityRes.getIdentifier("ic_action_next_item", "drawable", cordova.getActivity().getPackageName());
                 Drawable fwdIcon = activityRes.getDrawable(fwdResId);
                 if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
@@ -562,14 +624,13 @@ public class InAppBrowser extends CordovaPlugin {
                     }
                 });
 
-                // Close button
+                // Close/Done button
                 Button close = new Button(cordova.getActivity());
                 RelativeLayout.LayoutParams closeLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                 closeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 close.setLayoutParams(closeLayoutParams);
                 forward.setContentDescription("Close Button");
                 close.setId(5);
-                //close.setText(buttonLabel);
                 int closeResId = activityRes.getIdentifier("ic_action_remove", "drawable", cordova.getActivity().getPackageName());
                 Drawable closeIcon = activityRes.getDrawable(closeResId);
                 if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN)
@@ -595,7 +656,7 @@ public class InAppBrowser extends CordovaPlugin {
                 WebSettings settings = inAppWebView.getSettings();
                 settings.setJavaScriptEnabled(true);
                 settings.setJavaScriptCanOpenWindowsAutomatically(true);
-                settings.setBuiltInZoomControls(true);
+                settings.setBuiltInZoomControls(getShowZoomControls());
                 settings.setPluginState(android.webkit.WebSettings.PluginState.ON);
 
                 //Toggle whether this is enabled or not!
@@ -650,7 +711,7 @@ public class InAppBrowser extends CordovaPlugin {
                 // the goal of openhidden is to load the url and not display it
                 // Show() needs to be called to cause the URL to be loaded
                 if(openWindowHidden) {
-                	dialog.hide();
+                    dialog.hide();
                 }
             }
         };
@@ -683,8 +744,6 @@ public class InAppBrowser extends CordovaPlugin {
             }
         }
     }
-
-
     
     /**
      * The webview client receives notifications about appView
@@ -815,7 +874,6 @@ public class InAppBrowser extends CordovaPlugin {
             } catch (JSONException ex) {
                 Log.d(LOG_TAG, "Should never happen");
             }
-        	
         }
     }
 }

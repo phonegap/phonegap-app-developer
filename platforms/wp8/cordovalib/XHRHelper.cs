@@ -34,13 +34,18 @@ namespace WPCordovaClassLib.CordovaLib
         {
             string script = @"(function(win, doc) {
 
-    var __XHRShimAliases = {};
+    if (!win.__XHRShimAliases) {
+        win.__XHRShimAliases = {};
+    }
+    else {
+        return; // already initialized, this happens when navigating to #
+    }
 
-    window.__onXHRLocalCallback = function (responseCode, responseText, reqId) {
-        if (__XHRShimAliases[reqId]){
-            var alias = __XHRShimAliases[reqId];
+    win.__onXHRLocalCallback = function (responseCode, responseText, reqId) {
+        if (win.__XHRShimAliases[reqId]){
+            var alias = win.__XHRShimAliases[reqId];
             if (alias){
-                delete __XHRShimAliases[reqId];
+                delete win.__XHRShimAliases[reqId];
                 if (responseCode == '200'){
                     alias.onResult && alias.onResult(responseText);
                     Object.defineProperty(alias, 'responseXML', {
@@ -336,6 +341,16 @@ namespace WPCordovaClassLib.CordovaLib
             }
 
             return false;
+        }
+
+        public void AttachNativeHandlers()
+        {
+            // nothing todo
+        }
+
+        public void DetachNativeHandlers()
+        {
+            // nothing to do
         }
     }
 }
