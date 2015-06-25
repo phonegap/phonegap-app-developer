@@ -5,6 +5,9 @@
 npm-debug.log
 /node_modules
 
+# PhoneGap
+/build
+
 # iOS
 platforms/ios/build/
 platforms/ios/www/
