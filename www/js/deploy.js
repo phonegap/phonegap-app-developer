@@ -140,12 +140,22 @@
      */
 
     window.phonegap.app.downloadZip = function(options) {
-        var uri = encodeURI(options.address + '/__api__/appzip');
-        var sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'replace', copyCordovaAssets: true });
+        var uri;
+        var sync;
 
-        sync.on('complete', function(data) {
-            window.location.href = data.localPath + '/www/index.html';
-        });
+        if(options.update === true) {
+            uri = encodeURI(options.address + '/__api__/update');
+            sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'merge', copyCordovaAssets: false });
+            sync.on('complete', function(data) {
+                window.location.reload();
+            });
+        } else {
+            uri = encodeURI(options.address + '/__api__/appzip');
+            sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'replace', copyCordovaAssets: true });
+            sync.on('complete', function(data) {
+                window.location.href = data.localPath + '/www/index.html';
+            });
+        }
 
         sync.on('progress', function(data) {
             if(options.onProgress) {
