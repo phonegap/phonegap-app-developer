@@ -142,18 +142,18 @@
     window.phonegap.app.downloadZip = function(options) {
         var uri;
         var sync;
-
+        var theHeaders = options.headers || null;
         if(options.update === true) {
             uri = encodeURI(options.address + '/__api__/update');
-            sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'merge', copyCordovaAssets: false });
+            sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'merge', copyCordovaAssets: false, headers: theHeaders });
             sync.on('complete', function(data) {
                 window.location.reload();
             });
         } else {
             uri = encodeURI(options.address + '/__api__/appzip');
-            sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'replace', copyCordovaAssets: true });
+            sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'replace', copyCordovaAssets: true, headers: theHeaders });
             sync.on('complete', function(data) {
-                window.location.href = data.localPath + '/www/index.html';
+                //window.location.href = data.localPath + '/www/index.html';
             });
         }
 
