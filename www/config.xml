@@ -1,11 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.adobe.phonegap.app" version="1.5.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>PhoneGap</name>
-    <description>
-        The PhoneGap Developer app is a testing utility for web developers
-        and designers using the PhoneGap framework. After installing the
-        PhoneGap Developer app you will be able to connect to your PhoneGap
-        desktop app to instantly view and test your work on the device.
+    <description>The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework. After installing this app on your device you will be able to connect it to the PhoneGap desktop app to instantly view and test your work.
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         Adobe PhoneGap Team
