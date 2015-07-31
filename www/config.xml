@@ -27,4 +27,5 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
+    <engine name="ios" spec="^3.8.0" />
 </widget>
