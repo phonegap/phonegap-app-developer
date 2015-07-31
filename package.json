@@ -10,19 +10,18 @@
     "private": "true",
     "scripts": {
         "clean": "rm -rf build",
-        "setup": "mkdir build",
-        "create": "phonegap create --link-to www/ build/app && cp resources/config.xml build/app/config.xml",
-        "cd": "cd build/app",
-        "phonegap": "npm run clean && npm run setup && npm run create && npm run cd && phonegap",
+        "setup": "npm run clean && mkdir build",
+        "create": "npm run setup && phonegap create --link-to www/ build/app",
+        "phonegap": "npm run create && cd build/app && phonegap",
         "test": "jasmine-node tests/browser",
         "less": "lessc -x resources/less/app.less > www/css/app.css"
     },
     "dependencies": {
-        "phonegap": "5.0.0-0.28.1"
     },
     "devDependencies": {
         "jasmine-node": "1.14.5",
         "less": "1.6.0",
-        "npm": "1.4.10"
+        "npm": "1.4.10",
+        "phonegap": "5.1.1-0.29.0"
     }
 }
