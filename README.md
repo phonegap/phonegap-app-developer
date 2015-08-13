@@ -1,4 +1,4 @@
-# PhoneGap Developer App [![bitHound Score][bithound-img]][bithound-url]
+# PhoneGap Developer App [![Build Status][travis-ci-img]][travis-ci-url] [![bitHound Score][bithound-img]][bithound-url]
 
 > Available in an app store near you!
 
@@ -88,6 +88,8 @@ See the [CONTRIBUTING.md][6] file for details.
 [5]: http://github.com/phonegap/phonegap-cli
 [6]: https://github.com/phonegap/phonegap-app-developer/blob/master/CONTRIBUTING.md
 [7]: http://www.windowsphone.com/en-us/store/app/phonegap-developer/5c6a2d1e-4fad-4bf8-aaf7-71380cc84fe3
+[travis-ci-img]: https://travis-ci.org/phonegap/phonegap-app-developer.svg?branch=master
+[travis-ci-url]: http://travis-ci.org/phonegap/phonegap-app-developer
 [bithound-img]: https://www.bithound.io/github/phonegap/phonegap-app-developer/badges/score.svg
 [bithound-url]: https://www.bithound.io/github/phonegap/phonegap-app-developer
 
