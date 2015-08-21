@@ -22,18 +22,18 @@ var devices = require('./device'),
 
 // help/usage function
 function help() {
-    console.log("");
-    console.log("Usage: node target-list.js  [ --emulators | --devices | --started_emulators | --all ]");
-    console.log("    --emulators         : List the possible target emulators availible.");
-    console.log("    --devices           : List the possible target devices availible. *NOT IMPLEMENTED YET*");
-    console.log("    --started_emulators : List any started emulators availible. *NOT IMPLEMENTED YET*");
-    console.log("    --all               : List all devices returned by CordovaDeploy.exe -devices ");
-    console.log("examples:");
-    console.log("    node target-list.js --emulators");
-    console.log("    node target-list.js --devices");
-    console.log("    node target-list.js --started_emulators");
-    console.log("    node target-list.js --all");
-    console.log("");
+    console.log('');
+    console.log('Usage: node target-list.js  [ --emulators | --devices | --started_emulators | --all ]');
+    console.log('    --emulators         : List the possible target emulators availible.');
+    console.log('    --devices           : List the possible target devices availible. *NOT IMPLEMENTED YET*');
+    console.log('    --started_emulators : List any started emulators availible. *NOT IMPLEMENTED YET*');
+    console.log('    --all               : List all devices returned by CordovaDeploy.exe -devices ');
+    console.log('examples:');
+    console.log('    node target-list.js --emulators');
+    console.log('    node target-list.js --devices');
+    console.log('    node target-list.js --started_emulators');
+    console.log('    node target-list.js --all');
+    console.log('');
 }
 
 // Handle help flag

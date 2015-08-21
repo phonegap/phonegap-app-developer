@@ -114,11 +114,6 @@ static NSString *stripFragment(NSString* url)
     return self;
 }
 
-- (BOOL)request:(NSURLRequest*)newRequest isFragmentIdentifierToRequest:(NSURLRequest*)originalRequest
-{
-    return [self request:newRequest isEqualToRequestAfterStrippingFragments:originalRequest];
-}
-
 - (BOOL)request:(NSURLRequest*)newRequest isEqualToRequestAfterStrippingFragments:(NSURLRequest*)originalRequest
 {
     if (originalRequest.URL && newRequest.URL) {
@@ -198,6 +193,17 @@ static NSString *stripFragment(NSString* url)
     }
 }
 
+- (BOOL)shouldLoadRequest:(NSURLRequest*)request
+{
+    NSString* scheme = [[request URL] scheme];
+
+    if ([scheme isEqualToString:@"mailto"] || [scheme isEqualToString:@"tel"]) {
+        return YES;
+    }
+
+    return [NSURLConnection canHandleRequest:request];
+}
+
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
 {
     BOOL shouldLoad = YES;
@@ -259,7 +265,7 @@ static NSString *stripFragment(NSString* url)
         } else {
             // Deny invalid URLs so that we don't get the case where we go straight from
             // webViewShouldLoad -> webViewDidFailLoad (messes up _loadCount).
-            shouldLoad = shouldLoad && [NSURLConnection canHandleRequest:request];
+            shouldLoad = shouldLoad && [self shouldLoadRequest:request];
         }
         VerboseLog(@"webView shouldLoad=%d (after) isTopLevelNavigation=%d state=%d loadCount=%d", shouldLoad, isTopLevelNavigation, _state, _loadCount);
     }
@@ -367,7 +373,11 @@ static NSString *stripFragment(NSString* url)
             break;
 
         case STATE_WAITING_FOR_LOAD_START:
-            _state = STATE_IDLE;
+            if ([error code] == NSURLErrorCancelled) {
+                _state = STATE_CANCELLED;
+            } else {
+                _state = STATE_IDLE;
+            }
             fireCallback = YES;
             break;
 

@@ -23,19 +23,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
-
-import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaResourceApi;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -43,110 +37,73 @@ import android.provider.OpenableColumns;
 
 public class ContentFilesystem extends Filesystem {
 
-	private CordovaInterface cordova;
-	private CordovaResourceApi resourceApi;
-	
-	public ContentFilesystem(String name, CordovaInterface cordova, CordovaWebView webView) {
-		this.name = name;
-		this.cordova = cordova;
+    private final Context context;
 
-		Class webViewClass = webView.getClass();
-		PluginManager pm = null;
-		try {
-			Method gpm = webViewClass.getMethod("getPluginManager");
-			pm = (PluginManager) gpm.invoke(webView);
-		} catch (NoSuchMethodException e) {
-		} catch (IllegalAccessException e) {
-		} catch (InvocationTargetException e) {
-		}
-		if (pm == null) {
-			try {
-				Field pmf = webViewClass.getField("pluginManager");
-				pm = (PluginManager)pmf.get(webView);
-			} catch (NoSuchFieldException e) {
-			} catch (IllegalAccessException e) {
-			}
-		}
-		this.resourceApi = new CordovaResourceApi(webView.getContext(), pm);
+	public ContentFilesystem(Context context, CordovaResourceApi resourceApi) {
+		super(Uri.parse("content://"), "content", resourceApi);
+        this.context = context;
 	}
-	
-	@Override
-	public JSONObject getEntryForLocalURL(LocalFilesystemURL inputURL) throws IOException {
-	    if ("/".equals(inputURL.fullPath)) {
-            try {
-                return LocalFilesystem.makeEntryForURL(inputURL, true, inputURL.URL.toString());
-            } catch (JSONException e) {
-                throw new IOException();
-            }
-	    }
 
-		// Get the cursor to validate that the file exists
-		Cursor cursor = openCursorForURL(inputURL);
-		String filePath = null;
-		try {
-			if (cursor == null || !cursor.moveToFirst()) {
-				throw new FileNotFoundException();
-			}
-			filePath = filesystemPathForCursor(cursor);
-		} finally {
-			if (cursor != null)
-				cursor.close();
-		}
-		if (filePath == null) {
-			filePath = inputURL.URL.toString();
-		} else {
-			filePath = "file://" + filePath;
-		}
-		try {
-			return makeEntryForPath(inputURL.fullPath, inputURL.filesystemName, false /*fp.isDirectory()*/, filePath);
-		} catch (JSONException e) {
-			throw new IOException();
-		}
-	}
-	
+    @Override
+    public Uri toNativeUri(LocalFilesystemURL inputURL) {
+        String authorityAndPath = inputURL.uri.getEncodedPath().substring(this.name.length() + 2);
+        if (authorityAndPath.length() < 2) {
+            return null;
+        }
+        String ret = "content://" + authorityAndPath;
+        String query = inputURL.uri.getEncodedQuery();
+        if (query != null) {
+            ret += '?' + query;
+        }
+        String frag = inputURL.uri.getEncodedFragment();
+        if (frag != null) {
+            ret += '#' + frag;
+        }
+        return Uri.parse(ret);
+    }
+
+    @Override
+    public LocalFilesystemURL toLocalUri(Uri inputURL) {
+        if (!"content".equals(inputURL.getScheme())) {
+            return null;
+        }
+        String subPath = inputURL.getEncodedPath();
+        if (subPath.length() > 0) {
+            subPath = subPath.substring(1);
+        }
+        Uri.Builder b = new Uri.Builder()
+            .scheme(LocalFilesystemURL.FILESYSTEM_PROTOCOL)
+            .authority("localhost")
+            .path(name)
+            .appendPath(inputURL.getAuthority());
+        if (subPath.length() > 0) {
+            b.appendEncodedPath(subPath);
+        }
+        Uri localUri = b.encodedQuery(inputURL.getEncodedQuery())
+            .encodedFragment(inputURL.getEncodedFragment())
+            .build();
+        return LocalFilesystemURL.parse(localUri);
+    }
+
     @Override
 	public JSONObject getFileForLocalURL(LocalFilesystemURL inputURL,
 			String fileName, JSONObject options, boolean directory) throws IOException, TypeMismatchException, JSONException {
-        if (options != null) {
-            if (options.optBoolean("create")) {
-        		throw new IOException("Cannot create content url");
-            }
-        }
-        LocalFilesystemURL requestedURL = new LocalFilesystemURL(Uri.withAppendedPath(inputURL.URL, fileName));
-        File fp = new File(this.filesystemPathForURL(requestedURL));
-        if (!fp.exists()) {
-            throw new FileNotFoundException("path does not exist");
-        }
-        if (directory) {
-            if (fp.isFile()) {
-                throw new TypeMismatchException("path doesn't exist or is file");
-            }
-        } else {
-            if (fp.isDirectory()) {
-                throw new TypeMismatchException("path doesn't exist or is directory");
-            }
-        }
-        // Return the directory
-        return makeEntryForPath(requestedURL.fullPath, requestedURL.filesystemName, directory, Uri.fromFile(fp).toString());
-
+        throw new UnsupportedOperationException("getFile() not supported for content:. Use resolveLocalFileSystemURL instead.");
 	}
 
 	@Override
 	public boolean removeFileAtLocalURL(LocalFilesystemURL inputURL)
 			throws NoModificationAllowedException {
-
-		String filePath = filesystemPathForURL(inputURL);
-		File file = new File(filePath);
+        Uri contentUri = toNativeUri(inputURL);
 		try {
-			this.cordova.getActivity().getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-					MediaStore.Images.Media.DATA + " = ?",
-					new String[] { filePath });
+            context.getContentResolver().delete(contentUri, null, null);
 		} catch (UnsupportedOperationException t) {
 			// Was seeing this on the File mobile-spec tests on 4.0.3 x86 emulator.
 			// The ContentResolver applies only when the file was registered in the
 			// first case, which is generally only the case with images.
+            throw new NoModificationAllowedException("Deleting not supported for content uri: " + contentUri);
 		}
-		return file.delete();
+        return true;
 	}
 
 	@Override
@@ -155,25 +112,29 @@ public class ContentFilesystem extends Filesystem {
 		throw new NoModificationAllowedException("Cannot remove content url");
 	}
 
-	@Override
-	public JSONArray readEntriesAtLocalURL(LocalFilesystemURL inputURL)
-			throws FileNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public LocalFilesystemURL[] listChildren(LocalFilesystemURL inputURL) throws FileNotFoundException {
+        throw new UnsupportedOperationException("readEntriesAtLocalURL() not supported for content:. Use resolveLocalFileSystemURL instead.");
+    }
 
 	@Override
 	public JSONObject getFileMetadataForLocalURL(LocalFilesystemURL inputURL) throws FileNotFoundException {
-		Integer size = null;
-		Integer lastModified = null;
-        Cursor cursor = openCursorForURL(inputURL);
+        long size = -1;
+        long lastModified = 0;
+        Uri nativeUri = toNativeUri(inputURL);
+        String mimeType = resourceApi.getMimeType(nativeUri);
+        Cursor cursor = openCursorForURL(nativeUri);
         try {
         	if (cursor != null && cursor.moveToFirst()) {
         		size = resourceSizeForCursor(cursor);
         		lastModified = lastModifiedDateForCursor(cursor);
         	} else {
-    			throw new FileNotFoundException();
+                // Some content providers don't support cursors at all!
+                CordovaResourceApi.OpenForReadResult offr = resourceApi.openForRead(nativeUri);
+    			size = offr.length;
         	}
+        } catch (IOException e) {
+            throw new FileNotFoundException();
         } finally {
         	if (cursor != null)
         		cursor.close();
@@ -182,64 +143,14 @@ public class ContentFilesystem extends Filesystem {
         JSONObject metadata = new JSONObject();
         try {
         	metadata.put("size", size);
-        	metadata.put("type", resourceApi.getMimeType(inputURL.URL));
-        	metadata.put("name", inputURL.filesystemName);
-        	metadata.put("fullPath", inputURL.fullPath);
+        	metadata.put("type", mimeType);
+        	metadata.put("name", name);
+        	metadata.put("fullPath", inputURL.path);
         	metadata.put("lastModifiedDate", lastModified);
         } catch (JSONException e) {
         	return null;
         }
         return metadata;
-	}
-
-	@Override
-	public JSONObject copyFileToURL(LocalFilesystemURL destURL, String newName,
-			Filesystem srcFs, LocalFilesystemURL srcURL, boolean move)
-                    throws IOException, InvalidModificationException, JSONException,
-                    NoModificationAllowedException, FileExistsException {
-        if (LocalFilesystem.class.isInstance(srcFs)) {
-            /* Same FS, we can shortcut with CordovaResourceApi operations */
-            // Figure out where we should be copying to
-            final LocalFilesystemURL destinationURL = makeDestinationURL(newName, srcURL, destURL);
-
-            OutputStream os = resourceApi.openOutputStream(destURL.URL);
-            CordovaResourceApi.OpenForReadResult ofrr = resourceApi.openForRead(srcURL.URL);
-            if (move && !srcFs.canRemoveFileAtLocalURL(srcURL)) {
-                throw new NoModificationAllowedException("Cannot move file at source URL");
-            }
-            try {
-                resourceApi.copyResource(ofrr, os);
-            } catch (IOException e) {
-                throw new IOException("Cannot read file at source URL");
-            }
-            if (move) {
-                srcFs.removeFileAtLocalURL(srcURL);
-            }
-            return makeEntryForURL(destinationURL, false, destinationURL.URL.toString());
-        } else {
-            // Need to copy the hard way
-            return super.copyFileToURL(destURL, newName, srcFs, srcURL, move);
-		}
-	}
-
-    
-	@Override
-    public void readFileAtURL(LocalFilesystemURL inputURL, long start, long end,
-			ReadFileCallback readFileCallback) throws IOException {
-		CordovaResourceApi.OpenForReadResult ofrr = resourceApi.openForRead(inputURL.URL);
-        if (end < 0) {
-            end = ofrr.length;
-        }
-        long numBytesToRead = end - start;
-		try {
-			if (start > 0) {
-                ofrr.inputStream.skip(start);
-			}
-            LimitedInputStream inputStream = new LimitedInputStream(ofrr.inputStream, numBytesToRead);
-            readFileCallback.handleData(inputStream, ofrr.mimeType);
-		} finally {
-            ofrr.inputStream.close();
-		}
 	}
 
 	@Override
@@ -253,39 +164,33 @@ public class ContentFilesystem extends Filesystem {
         throw new NoModificationAllowedException("Couldn't truncate file given its content URI");
 	}
 
-	protected Cursor openCursorForURL(LocalFilesystemURL url) {
-        ContentResolver contentResolver = this.cordova.getActivity().getContentResolver();
-        Cursor cursor = contentResolver.query(url.URL, null, null, null, null);
-        return cursor;
-	}
-
-	protected String filesystemPathForCursor(Cursor cursor) {
-        final String[] LOCAL_FILE_PROJECTION = { MediaStore.Images.Media.DATA };
-        int columnIndex = cursor.getColumnIndex(LOCAL_FILE_PROJECTION[0]);
-        if (columnIndex != -1) {
-            return cursor.getString(columnIndex);
+	protected Cursor openCursorForURL(Uri nativeUri) {
+        ContentResolver contentResolver = context.getContentResolver();
+        try {
+            return contentResolver.query(nativeUri, null, null, null, null);
+        } catch (UnsupportedOperationException e) {
+            return null;
         }
-        return null;
 	}
 
-	protected Integer resourceSizeForCursor(Cursor cursor) {
+	private Long resourceSizeForCursor(Cursor cursor) {
         int columnIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
         if (columnIndex != -1) {
             String sizeStr = cursor.getString(columnIndex);
             if (sizeStr != null) {
-            	return Integer.parseInt(sizeStr,10);
+            	return Long.parseLong(sizeStr);
             }
         }
         return null;
 	}
 	
-	protected Integer lastModifiedDateForCursor(Cursor cursor) {
+	protected Long lastModifiedDateForCursor(Cursor cursor) {
         final String[] LOCAL_FILE_PROJECTION = { MediaStore.MediaColumns.DATE_MODIFIED };
         int columnIndex = cursor.getColumnIndex(LOCAL_FILE_PROJECTION[0]);
         if (columnIndex != -1) {
             String dateStr = cursor.getString(columnIndex);
             if (dateStr != null) {
-            	return Integer.parseInt(dateStr,10);
+            	return Long.parseLong(dateStr);
             }
         }
         return null;
@@ -293,16 +198,8 @@ public class ContentFilesystem extends Filesystem {
 
     @Override
     public String filesystemPathForURL(LocalFilesystemURL url) {
-        Cursor cursor = openCursorForURL(url);
-        try {
-        	if (cursor != null && cursor.moveToFirst()) {
-        		return filesystemPathForCursor(cursor);
-        	}
-        } finally {
-            if (cursor != null)
-            	cursor.close();
-        }
-        return null;
+        File f = resourceApi.mapUriToFile(toNativeUri(url));
+        return f == null ? null : f.getAbsolutePath();
     }
 
 	@Override
@@ -313,15 +210,6 @@ public class ContentFilesystem extends Filesystem {
 
 	@Override
 	public boolean canRemoveFileAtLocalURL(LocalFilesystemURL inputURL) {
-		String path = filesystemPathForURL(inputURL);
-		File file = new File(path);
-		return file.exists();
+		return true;
 	}
-
-	@Override
-	OutputStream getOutputStreamForURL(LocalFilesystemURL inputURL)
-			throws IOException {
-		OutputStream os = resourceApi.openOutputStream(inputURL.URL);
-		return os;
-    }
 }

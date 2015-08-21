@@ -186,8 +186,7 @@ namespace WPCordovaClassLib.CordovaLib
         {
             get
             {
-                // TODO:
-                var res = from results in AllowedPlugins.TakeWhile(p => p.Value.isAutoLoad)
+                var res = from results in AllowedPlugins.Where(p => p.Value.isAutoLoad)
                           select results.Value.Name;
 
                 return res.ToArray<string>();

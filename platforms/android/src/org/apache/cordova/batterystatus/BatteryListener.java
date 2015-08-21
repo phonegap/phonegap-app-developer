@@ -72,7 +72,7 @@ public class BatteryListener extends CordovaPlugin {
                         updateBatteryInfo(intent);
                     }
                 };
-                cordova.getActivity().registerReceiver(this.receiver, intentFilter);
+                webView.getContext().registerReceiver(this.receiver, intentFilter);
             }
 
             // Don't return any result now, since status results will be sent when events come in from broadcast receiver
@@ -113,7 +113,7 @@ public class BatteryListener extends CordovaPlugin {
     private void removeBatteryListener() {
         if (this.receiver != null) {
             try {
-                this.cordova.getActivity().unregisterReceiver(this.receiver);
+                webView.getContext().unregisterReceiver(this.receiver);
                 this.receiver = null;
             } catch (Exception e) {
                 Log.e(LOG_TAG, "Error unregistering battery receiver: " + e.getMessage(), e);

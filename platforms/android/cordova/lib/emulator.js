@@ -19,15 +19,15 @@
        under the License.
 */
 
-var shell = require('shelljs'),
-    exec  = require('./exec'),
+/* jshint sub:true */
+
+var exec  = require('./exec'),
     Q     = require('q'),
-    path  = require('path'),
+    os    = require('os'),
     appinfo = require('./appinfo'),
     build = require('./build'),
-    ROOT  = path.join(__dirname, '..', '..'),
-    child_process = require('child_process'),
-    new_emulator = 'cordova_emulator';
+    child_process = require('child_process');
+var check_reqs = require('./check_reqs');
 
 /**
  * Returns a Promise for a list of emulator images in the form of objects
@@ -76,7 +76,7 @@ module.exports.list_images = function() {
         }
         return emulator_list;
     });
-}
+};
 
 /**
  * Will return the closest avd to the projects target
@@ -84,30 +84,30 @@ module.exports.list_images = function() {
  * Returns a promise.
  */
 module.exports.best_image = function() {
-    var project_target = this.get_target().replace('android-', '');
+    var project_target = check_reqs.get_target().replace('android-', '');
     return this.list_images()
     .then(function(images) {
         var closest = 9999;
         var best = images[0];
-        for (i in images) {
+        for (var i in images) {
             var target = images[i].target;
             if(target) {
                 var num = target.split('(API level ')[1].replace(')', '');
                 if (num == project_target) {
                     return images[i];
                 } else if (project_target - num < closest && project_target > num) {
-                    var closest = project_target - num;
+                    closest = project_target - num;
                     best = images[i];
                 }
             }
         }
         return best;
     });
-}
+};
 
 // Returns a promise.
 module.exports.list_started = function() {
-    return exec('adb devices')
+    return exec('adb devices', os.tmpdir())
     .then(function(output) {
         var response = output.split('\n');
         var started_emulator_list = [];
@@ -118,16 +118,11 @@ module.exports.list_started = function() {
         }
         return started_emulator_list;
     });
-}
-
-module.exports.get_target = function() {
-    var target = shell.grep(/target=android-[\d+]/, path.join(ROOT, 'project.properties'));
-    return target.split('=')[1].replace('\n', '').replace('\r', '').replace(' ', '');
-}
+};
 
 // Returns a promise.
 module.exports.list_targets = function() {
-    return exec('android list targets')
+    return exec('android list targets', os.tmpdir())
     .then(function(output) {
         var target_out = output.split('\n');
         var targets = [];
@@ -138,7 +133,7 @@ module.exports.list_targets = function() {
         }
         return targets;
     });
-}
+};
 
 /*
  * Starts an emulator with the given ID,
@@ -156,7 +151,7 @@ module.exports.start = function(emulator_ID) {
     .then(function(list) {
         started_emulators = list;
         num_started = started_emulators.length;
-        if (typeof emulator_ID === 'undefined') {
+        if (!emulator_ID) {
             return self.list_images()
             .then(function(emulator_list) {
                 if (emulator_list.length > 0) {
@@ -167,11 +162,11 @@ module.exports.start = function(emulator_ID) {
                         return emulator_ID;
                     });
                 } else {
-                    return Q.reject('ERROR : No emulator images (avds) found, if you would like to create an\n' +
-                        ' avd follow the instructions provided here:\n' +
-                        ' http://developer.android.com/tools/devices/index.html\n' +
-                        ' Or run \'android create avd --name <name> --target <targetID>\'\n' +
-                        ' in on the command line.');
+                    var androidCmd = check_reqs.getAbsoluteAndroidCmd();
+                    return Q.reject('ERROR : No emulator images (avds) found.\n' +
+                        '1. Download desired System Image by running: ' + androidCmd + ' sdk\n' +
+                        '2. Create an AVD by running: ' + androidCmd + ' avd\n' +
+                        'HINT: For a faster emulator, use an Intel System Image and install the HAXM device driver\n');
                 }
             });
         } else {
@@ -188,7 +183,7 @@ module.exports.start = function(emulator_ID) {
         return self.wait_for_emulator(num_started);
     }).then(function(new_started) {
         if (new_started.length > 1) {
-            for (i in new_started) {
+            for (var i in new_started) {
                 if (started_emulators.indexOf(new_started[i]) < 0) {
                     emulator_id = new_started[i];
                 }
@@ -205,12 +200,12 @@ module.exports.start = function(emulator_ID) {
         console.log('BOOT COMPLETE');
 
         //unlock screen
-        return exec('adb -s ' + emulator_id + ' shell input keyevent 82');
+        return exec('adb -s ' + emulator_id + ' shell input keyevent 82', os.tmpdir());
     }).then(function() {
         //return the new emulator id for the started emulators
         return emulator_id;
     });
-}
+};
 
 /*
  * Waits for the new emulator to apear on the started-emulator list.
@@ -228,14 +223,14 @@ module.exports.wait_for_emulator = function(num_running) {
             });
         }
     });
-}
+};
 
 /*
  * Waits for the boot animation property of the emulator to switch to 'stopped'
  */
 module.exports.wait_for_boot = function(emulator_id) {
     var self = this;
-    return exec('adb -s ' + emulator_id + ' shell getprop init.svc.bootanim')
+    return exec('adb -s ' + emulator_id + ' shell getprop init.svc.bootanim', os.tmpdir())
     .then(function(output) {
         if (output.match(/stopped/)) {
             return;
@@ -246,7 +241,7 @@ module.exports.wait_for_boot = function(emulator_id) {
             });
         }
     });
-}
+};
 
 /*
  * Create avd
@@ -260,7 +255,7 @@ module.exports.create_image = function(name, target) {
         .then(null, function(error) {
             console.error('ERROR : Failed to create emulator image : ');
             console.error(' Do you have the latest android targets including ' + target + '?');
-            console.error(create.output);
+            console.error(error);
         });
     } else {
         console.log('WARNING : Project target not found, creating avd with a different target but the project may fail to install.');
@@ -275,16 +270,9 @@ module.exports.create_image = function(name, target) {
             console.error(error);
         });
     }
-}
+};
 
-/*
- * Installs a previously built application on the emulator and launches it.
- * If no target is specified, then it picks one.
- * If no started emulators are found, error out.
- * Returns a promise.
- */
-module.exports.install = function(target, buildResults) {
-    var self = this;
+module.exports.resolveTarget = function(target) {
     return this.list_started()
     .then(function(emulator_list) {
         if (emulator_list.length < 1) {
@@ -299,30 +287,48 @@ module.exports.install = function(target, buildResults) {
 
         return build.detectArchitecture(target)
         .then(function(arch) {
-            var apk_path = build.findBestApkForArchitecture(buildResults, arch);
-            console.log('Installing app on emulator...');
-            console.log('Using apk: ' + apk_path);
-            return exec('adb -s ' + target + ' install -r "' + apk_path + '"');
+            return {target:target, arch:arch, isEmulator:true};
         });
-    }).then(function(output) {
-        if (output.match(/Failure/)) {
-            return Q.reject('Failed to install apk to emulator: ' + output);
-        }
-        return Q();
-    }, function(err) {
-        return Q.reject('Failed to install apk to emulator: ' + err);
-    }).then(function() {
-        //unlock screen
-        return exec('adb -s ' + target + ' shell input keyevent 82');
-    }).then(function() {
-        // launch the application
-        console.log('Launching application...');
-        var launchName = appinfo.getActivityName();
-        cmd = 'adb -s ' + target + ' shell am start -W -a android.intent.action.MAIN -n ' + launchName;
-        return exec(cmd);
-    }).then(function(output) {
-        console.log('LAUNCH SUCCESS');
-    }, function(err) {
-        return Q.reject('Failed to launch app on emulator: ' + err);
     });
-}
+};
+
+/*
+ * Installs a previously built application on the emulator and launches it.
+ * If no target is specified, then it picks one.
+ * If no started emulators are found, error out.
+ * Returns a promise.
+ */
+module.exports.install = function(target, buildResults) {
+    return Q().then(function() {
+        if (target && typeof target == 'object') {
+            return target;
+        }
+        return module.exports.resolveTarget(target);
+    }).then(function(resolvedTarget) {
+        var apk_path = build.findBestApkForArchitecture(buildResults, resolvedTarget.arch);
+        console.log('Installing app on emulator...');
+        console.log('Using apk: ' + apk_path);
+        return exec('adb -s ' + resolvedTarget.target + ' install -r -d "' + apk_path + '"', os.tmpdir())
+        .then(function(output) {
+            if (output.match(/Failure/)) {
+                return Q.reject('Failed to install apk to emulator: ' + output);
+            }
+            return Q();
+        }, function(err) {
+            return Q.reject('Failed to install apk to emulator: ' + err);
+        }).then(function() {
+            //unlock screen
+            return exec('adb -s ' + resolvedTarget.target + ' shell input keyevent 82', os.tmpdir());
+        }).then(function() {
+            // launch the application
+            console.log('Launching application...');
+            var launchName = appinfo.getActivityName();
+            var cmd = 'adb -s ' + resolvedTarget.target + ' shell am start -W -a android.intent.action.MAIN -n ' + launchName;
+            return exec(cmd, os.tmpdir());
+        }).then(function(output) {
+            console.log('LAUNCH SUCCESS');
+        }, function(err) {
+            return Q.reject('Failed to launch app on emulator: ' + err);
+        });
+    });
+};

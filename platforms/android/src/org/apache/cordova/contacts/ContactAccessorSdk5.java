@@ -436,7 +436,10 @@ public class ContactAccessorSdk5 extends ContactAccessor {
                     }
                     else if (mimetype.equals(ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
                             && isRequired("photos", populate)) {
-                        photos.put(photoQuery(c, contactId));
+                        JSONObject photo = photoQuery(c, contactId);
+                        if (photo != null) {
+                            photos.put(photo);
+                        }
                     }
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, e.getMessage(), e);
@@ -902,6 +905,17 @@ public class ContactAccessorSdk5 extends ContactAccessor {
             Uri person = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, (Long.valueOf(contactId)));
             Uri photoUri = Uri.withAppendedPath(person, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
             photo.put("value", photoUri.toString());
+
+            // Query photo existance
+            Cursor photoCursor = mApp.getActivity().getContentResolver().query(photoUri, new String[] {ContactsContract.Contacts.Photo.PHOTO}, null, null, null);
+            if (photoCursor == null) {
+                return null;
+            } else {
+                if (!photoCursor.moveToFirst()) {
+                    photoCursor.close();
+                    return null;
+                }
+            }
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
         }
@@ -1798,6 +1812,8 @@ public class ContactAccessorSdk5 extends ContactAccessor {
         } else {
             Log.d(LOG_TAG, "Could not find contact with ID");
         }
+
+        cursor.close();
 
         return (result > 0) ? true : false;
     }

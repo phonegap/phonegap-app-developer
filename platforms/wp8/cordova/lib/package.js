@@ -32,8 +32,8 @@ Package.prototype.deployTo = function (deployTarget) {
     var pkg = this;
     return utils.getXapDeploy()
     .then(function (xapDeploy) {
-        var getTarget = deployTarget == "device" ? Q("de") :
-            deployTarget == "emulator" ? Q("xd") : device.findDevice(deployTarget);
+        var getTarget = deployTarget == 'device' ? Q('de') :
+            deployTarget == 'emulator' ? Q('xd') : device.findDevice(deployTarget);
 
         return getTarget.then(function (target) {
             return utils.spawn(xapDeploy, ['/installlaunch', pkg.packagePath, '/targetdevice:' + target]);
