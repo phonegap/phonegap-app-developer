@@ -28,11 +28,20 @@ describe('phonegap-plugin-contentsync', function() {
             expect(execSpy).not.toHaveBeenCalled();
         });
 
-        it('should require the options.src parameter', function() {
+        it('should require the options.src parameter for merge/replace', function() {
             expect(function() {
                 options.src = undefined;
                 contentSync.sync(options);
             }).toThrow();
+            expect(execSpy).not.toHaveBeenCalled();
+        });
+
+        it('should not require the options.src parameter for local', function() {
+            expect(function() {
+                options.src = undefined;
+                options.src = "local";
+                contentSync.sync(options);
+            }).not.toThrow();
             expect(execSpy).not.toHaveBeenCalled();
         });
 
@@ -137,6 +146,75 @@ describe('phonegap-plugin-contentsync', function() {
                     options.copyCordovaAssets = true;
                     execSpy.andCallFake(function(win, fail, service, id, args) {
                         expect(args[4]).toEqual(options.copyCordovaAssets);
+                        done();
+                    });
+                    contentSync.sync(options);
+                });
+            });
+
+            describe('options.copyRootApp', function() {
+                it('should default to false', function(done) {
+                    execSpy.andCallFake(function(win, fail, service, id, args) {
+                        expect(args[5]).toEqual(false);
+                        done();
+                    });
+                    contentSync.sync(options);
+                });
+                it('should be passed as whatever we specify', function(done) {
+                    options.copyRootApp = true;
+                    execSpy.andCallFake(function(win, fail, service, id, args) {
+                        expect(args[5]).toEqual(options.copyRootApp);
+                        done();
+                    });
+                    contentSync.sync(options);
+                });
+            });
+            describe('options.timeout', function() {
+                it('should default to 15.0', function(done) {
+                    execSpy.andCallFake(function(win, fail, service, id, args) {
+                        expect(args[6]).toEqual(15.0);
+                        done();
+                    });
+                    contentSync.sync(options);
+                });
+                it('should be passed as whatever we specify', function(done) {
+                    options.timeout = 30.0;
+                    execSpy.andCallFake(function(win, fail, service, id, args) {
+                        expect(args[6]).toEqual(options.timeout);
+                        done();
+                    });
+                    contentSync.sync(options);
+                });
+            });
+            describe('options.trustHost', function() {
+                it('should default to false', function(done) {
+                    execSpy.andCallFake(function(win, fail, service, id, args) {
+                        expect(args[7]).toEqual(false);
+                        done();
+                    });
+                    contentSync.sync(options);
+                });
+                it('should be passed as whatever we specify', function(done) {
+                    options.trustHost = true;
+                    execSpy.andCallFake(function(win, fail, service, id, args) {
+                        expect(args[7]).toEqual(options.trustHost);
+                        done();
+                    });
+                    contentSync.sync(options);
+                });
+            });
+            describe('options.manifest', function() {
+                it('should default to the empty string', function(done) {
+                    execSpy.andCallFake(function(win, fail, service, id, args) {
+                        expect(args[8]).toEqual("");
+                        done();
+                    });
+                    contentSync.sync(options);
+                });
+                it('should be passed as whatever we specify', function(done) {
+                    options.manifest = "manifest.json";
+                    execSpy.andCallFake(function(win, fail, service, id, args) {
+                        expect(args[8]).toEqual(options.manifest);
                         done();
                     });
                     contentSync.sync(options);

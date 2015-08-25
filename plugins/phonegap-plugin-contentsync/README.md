@@ -57,7 +57,9 @@ Parameter | Description
 `options.headers` | `Object` _(Optional)_ Set of headers to use when requesting the remote content from `options.src`.
 `options.copyCordovaAssets` | `Boolean` _(Optional)_ Copies `cordova.js`, `cordova_plugins.js` and `plugins/` to sync'd folder. This operation happens after the source content has been cached, so it will override any existing Cordova assets. Default is `false`.
 `options.copyRootApp` | `Boolean` _(Optional)_ Copies the `www` folder to sync'd folder. This operation happens before the source content has been cached, then the source content is cached and finally it copies `cordova.js`, `cordova_plugins.js` and `plugins/` to sync'd folder to remain consistent with the installed plugins. Default is `false`.
-`options.timeout` | `Double` Request timeout. 
+`options.timeout` | `Double` _(Optional)_ Request timeout. 
+`options.trustHost` | `Boolean` _(Optional)_ Trust SSL host. Host defined in `options.src` will be trusted. Ignored if `options.src` is undefined.
+`options.manifest` | `String` _(Optional)_ If specified the `copyRootApp` functionality will use the list of files contained in the manifest file during it's initial copy. {Android only}
 
 #### Returns
 
@@ -207,6 +209,47 @@ The progress events described above also apply for these methods.
 ContentSync.PROGRESS_STATE[1] = 'Downloading the media content...';
 ```
 
+## Working with the Native File System
+
+One of the main benefits of the content sync plugin is that it does not depend on the File or FileTransfer plugins. As a result the end user should not care where the ContentSync plugin stores it's files as long as it fills the requirements that it is private and removed when it's associated app is uninstalled.
+
+However, if you do need to use the File plugin to navigate the data downloaded by ContentSync you can use the following code snippet to get a [DirectoryEntry](https://cordova.apache.org/docs/en/3.0.0/cordova_file_file.md.html#DirectoryEntry) for the synced content.
+
+```javascript
+var sync = ContentSync.sync({ src: 'http://myserver/assets/movie-1', id: 'movie-1' });
+
+sync.on('complete', function(data) {
+    window.resolveLocalFileSystemURLw("file://" + data.localPath, function(entry) {
+    	// entry is a DirectoryEntry object
+    }, function(error) {
+        console.log("Error: " + error.code);
+    }); 
+});
+```
+
+## Copy Root App
+
+The asset file system is pretty slow on Android so in order to speed up the initial copy of your app to the content sync location you can specify a manifest file on Android. The file must be in the format:
+
+```javascript
+{
+    'files': [
+        'img/logo.png',
+        'index.html',
+        'js/index.js'
+   ]
+}
+```
+
+and if the file is placed in your apps `www` folder you would invoke it via:
+
+```javascript
+var sync = ContentSync.sync({ src: 'http://myserver/assets/movie-1', id: 'movie-1', 
+        copyRootApp: true, manifest: 'manifest.json' });
+```
+
+This results in the `copyRootApp` taking about a third of the time as when a manifest file is not specified.
+
 ## Native Requirements
 
 - There should be no dependency on the existing File or FileTransfer plugins.
@@ -215,11 +258,23 @@ ContentSync.PROGRESS_STATE[1] = 'Downloading the media content...';
 - The locally compiled Cordova web assets should be copied to the cached content. This includes `cordova.js`, `cordova_plugins.js`, and `plugins/**/*`.
 - Multiple syncs should be supported at the same time.
 
-## Running Tests
+## Running Tests ( static tests against source code )
 
 ```
 npm test
 ```
+
+## Emulator Testing 
+
+The emulator tests use cordova-paramedic and the cordova-plugin-test-framework.
+To run them you will need cordova-paramedic installed.
+
+    npm install -g cordova-paramedic
+    // Then from the root of this repo
+    // test ios :
+    cordova-paramedic --platform ios --plugin .
+    // test android :
+    cordova-paramedic --platform android --plugin .
 
 ## Contributing
 

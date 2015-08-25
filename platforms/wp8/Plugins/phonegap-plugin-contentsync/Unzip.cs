@@ -115,13 +115,9 @@ namespace WPCordovaClassLib.Cordova.Commands
                                 {
                                     if(type == Merge)
                                     {
-                                        // only write file if it doesn't exist already
-                                        if (!appStorage.FileExists(destFilePath))
+                                        using (FileStream outStream = new IsolatedStorageFileStream(destFilePath, FileMode.OpenOrCreate, FileAccess.Write, appStorage))
                                         {
-                                            using (FileStream outStream = new IsolatedStorageFileStream(destFilePath, FileMode.OpenOrCreate, FileAccess.Write, appStorage))
-                                            {
-                                                WriteStreamToPath(readStream, outStream);
-                                            }
+                                            WriteStreamToPath(readStream, outStream);
                                         }
                                         FileUnzipProgress progEvt = new FileUnzipProgress(totalFiles, current++);
                                     }

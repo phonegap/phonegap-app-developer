@@ -107,7 +107,7 @@ public class Sync extends CordovaPlugin {
             final CallbackContext finalContext = callbackContext;
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-                    if (download(source, target, headers, createProgressEvent("download"), finalContext)) {
+                    if (download(source, target, headers, createProgressEvent("download"), finalContext, false)) {
                         JSONObject retval = new JSONObject();
                         try {
                             retval.put("archiveURL", target.getAbsolutePath());
@@ -190,10 +190,10 @@ public class Sync extends CordovaPlugin {
         }
 
         private int updateBytesRead(int newBytesRead) {
-          if (newBytesRead != -1) {
-            bytesRead += newBytesRead;
-          }
-          return newBytesRead;
+            if (newBytesRead != -1) {
+                bytesRead += newBytesRead;
+            }
+            return newBytesRead;
         }
 
         @Override
@@ -209,11 +209,11 @@ public class Sync extends CordovaPlugin {
         }
 
         public long getTotalRawBytesRead() {
-          return bytesRead;
+            return bytesRead;
         }
     }
 
-    private boolean  download(final String source, final File file, final JSONObject headers, final ProgressEvent progress, final CallbackContext callbackContext) {
+    private boolean download(final String source, final File file, final JSONObject headers, final ProgressEvent progress, final CallbackContext callbackContext, final boolean trustEveryone) {
         Log.d(LOG_TAG, "download " + source);
 
         if (!Patterns.WEB_URL.matcher(source).matches()) {
@@ -224,7 +224,6 @@ public class Sync extends CordovaPlugin {
         final CordovaResourceApi resourceApi = webView.getResourceApi();
         final Uri sourceUri = resourceApi.remapUri(Uri.parse(source));
 
-        final boolean trustEveryone = false;
         int uriType = CordovaResourceApi.getUriType(sourceUri);
         final boolean useHttps = uriType == CordovaResourceApi.URI_TYPE_HTTPS;
         final boolean isLocalTransfer = !useHttps && uriType != CordovaResourceApi.URI_TYPE_HTTP;
@@ -402,11 +401,13 @@ public class Sync extends CordovaPlugin {
         }
         final boolean copyCordovaAssets;
         final boolean copyRootApp = args.getBoolean(5);
+        final boolean trustEveryone = args.getBoolean(7);
         if (copyRootApp) {
             copyCordovaAssets = true;
         } else {
             copyCordovaAssets = args.getBoolean(4);
         }
+        final String manifestFile = args.getString(8);
         Log.d(LOG_TAG, "sync called with id = " + id + " and src = " + src + "!");
 
         final ProgressEvent progress = createProgressEvent(id);
@@ -435,13 +436,29 @@ public class Sync extends CordovaPlugin {
                 String type = args.optString(2, TYPE_REPLACE);
                 Log.d(LOG_TAG, "type = " + type);
                 File dir = new File(outputDirectory);
+                Log.d(LOG_TAG, "dir = " + dir.exists());
+
                 if (type.equals(TYPE_LOCAL) && !dir.exists()) {
-                    type = TYPE_REPLACE;
+                    if ("null".equals(src) && (copyRootApp || copyCordovaAssets)) {
+                        if (copyRootApp) {
+                            copyRootApp(outputDirectory, manifestFile);
+                        }
+                        if (copyCordovaAssets) {
+                            copyCordovaAssets(outputDirectory);
+                        }
+
+                    } else {
+                        type = TYPE_REPLACE;
+                    }
+                }
+
+                if (!dir.exists()) {
+                    dir.mkdirs();
                 }
 
                 if (!type.equals(TYPE_LOCAL)) {
                     // download file
-                    if (download(src, createDownloadFileLocation(id), headers, progress, callbackContext)) {
+                    if (download(src, createDownloadFileLocation(id), headers, progress, callbackContext, trustEveryone)) {
                         // update progress with zip file
                         File targetFile = progress.getTargetFile();
                         Log.d(LOG_TAG, "downloaded = " + targetFile.getAbsolutePath());
@@ -451,11 +468,7 @@ public class Sync extends CordovaPlugin {
 
                         // @TODO: Do we do this even when type is local?
                         if (copyRootApp) {
-                            try {
-                                copyAssetFileOrDir(outputDirectory, "www");
-                            } catch (IOException e) {
-                                Log.e(LOG_TAG, e.getLocalizedMessage(), e);
-                            }
+                            copyRootApp(outputDirectory, manifestFile);
                         }
 
                         // unzip
@@ -513,6 +526,7 @@ public class Sync extends CordovaPlugin {
         outputDirectory += outputDirectory.endsWith(File.separator) ? "" : File.separator;
         outputDirectory += id;
         Log.d(LOG_TAG, "output dir = " + outputDirectory);
+
         return outputDirectory;
     }
 
@@ -544,38 +558,90 @@ public class Sync extends CordovaPlugin {
         return backup;
     }
 
+    private void copyRootApp(String outputDirectory, String manifestFile) {
+        boolean wwwExists = (new File(outputDirectory, "www")).exists();
+        boolean copied = false;
+        if (manifestFile != null && !"".equals(manifestFile)) {
+            Log.d(LOG_TAG, "Manifest copy");
+            try {
+                copyRootAppByManifest(outputDirectory, manifestFile, wwwExists);
+                copied = true;
+            } catch (Exception e) {
+                Log.e(LOG_TAG, e.getLocalizedMessage(), e);
+            }
+        }
+        if (!copied) {
+            Log.d(LOG_TAG, "Long copy");
+            try {
+                copyAssetFileOrDir(outputDirectory, "www", wwwExists);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, e.getLocalizedMessage(), e);
+            }
+        }
+    }
+
+    private void copyRootAppByManifest(String outputDirectory, String manifestFile, boolean wwwExists) throws IOException, JSONException {
+        File fp = new File(outputDirectory);
+        if (!fp.exists()) {
+            fp.mkdirs();
+        }
+        InputStream is = cordova.getActivity().getAssets().open("www/" + manifestFile);
+        int size = is.available();
+        byte[] buffer = new byte[size];
+        is.read(buffer);
+        is.close();
+        JSONObject obj = new JSONObject(new String(buffer, "UTF-8"));
+        JSONArray files = obj.getJSONArray("files");
+        for (int i=0; i<files.length(); i++) {
+            Log.d(LOG_TAG, "file = " + files.getString(i));
+            copyAssetFile(outputDirectory, "www/" + files.getString(i), wwwExists);
+        }
+    }
+
     private void copyCordovaAssets(String outputDirectory) {
         try {
+            boolean wwwExists = (new File(outputDirectory, "www")).exists();
+
             // cordova.js
-            this.copyAssetFile(outputDirectory, "www/cordova.js");
+            this.copyAssetFile(outputDirectory, "www/cordova.js", wwwExists);
 
             // cordova_plugins.js
-            this.copyAssetFile(outputDirectory, "www/cordova_plugins.js");
+            this.copyAssetFile(outputDirectory, "www/cordova_plugins.js", wwwExists);
 
             // plugins folder
-            this.copyAssetFileOrDir(outputDirectory, "www/plugins");
+            this.copyAssetFileOrDir(outputDirectory, "www/plugins", wwwExists);
         } catch(IOException e) {
             Log.e(LOG_TAG, "Failed to copy asset file", e);
         }
     }
 
-    private void copyAssetFileOrDir(String outputDirectory, String path) throws IOException {
-        AssetManager assetManager = cordova.getActivity().getAssets();
-        String assets[] = null;
-        assets = assetManager.list(path);
-        if (assets.length == 0) {
-            this.copyAssetFile(outputDirectory, path);
-        } else {
-            for (String file : assets) {
-                copyAssetFileOrDir(outputDirectory, path + File.separator + file);
+    private void copyAssetFileOrDir(String outputDirectory, String path, boolean wwwExists) throws IOException {
+        if (path.contains(".")) {
+            try {
+                this.copyAssetFile(outputDirectory, path, wwwExists);
+            } catch (IOException e) {
+                copyAssetDir(outputDirectory, path, wwwExists);
             }
+        } else {
+            copyAssetDir(outputDirectory, path, wwwExists);
+        }
+    }
+
+    private void copyAssetDir(String outputDirectory, String path, boolean wwwExists) throws IOException {
+        String assets[] = cordova.getActivity().getAssets().list(path);
+        if (assets.length != 0) {
+            for (String file : assets) {
+                copyAssetFileOrDir(outputDirectory, path + File.separator + file, wwwExists);
+            }
+        } else {
+            this.copyAssetFile(outputDirectory, path, wwwExists);
         }
     }
 
     private static TrackingInputStream getInputStream(URLConnection conn) throws IOException {
         String encoding = conn.getContentEncoding();
         if (encoding != null && encoding.equalsIgnoreCase("gzip")) {
-          return new TrackingGZIPInputStream(new ExposedGZIPInputStream(conn.getInputStream()));
+            return new TrackingGZIPInputStream(new ExposedGZIPInputStream(conn.getInputStream()));
         }
         return new SimpleTrackingInputStream(conn.getInputStream());
     }
@@ -599,9 +665,9 @@ public class Sync extends CordovaPlugin {
             Method gcMethod  = iccmClass.getMethod("getCookie");
 
             cookie = (String)gcMethod.invoke(
-                        iccmClass.cast(
+                    iccmClass.cast(
                             gcmMethod.invoke(webView)
-                        ), target);
+                    ), target);
 
             gotCookie = true;
         } catch (NoSuchMethodException e) {
@@ -632,7 +698,7 @@ public class Sync extends CordovaPlugin {
                 }
             }
         } catch (JSONException e1) {
-          // No headers to be manipulated!
+            // No headers to be manipulated!
         }
     }
 
@@ -666,11 +732,11 @@ public class Sync extends CordovaPlugin {
         }
 
         public void checkClientTrusted(X509Certificate[] chain,
-                String authType) throws CertificateException {
+                                       String authType) throws CertificateException {
         }
 
         public void checkServerTrusted(X509Certificate[] chain,
-                String authType) throws CertificateException {
+                                       String authType) throws CertificateException {
         }
     } };
 
@@ -777,8 +843,8 @@ public class Sync extends CordovaPlugin {
                 }
 
                 if (ze.isDirectory()) {
-                   File dir = new File(outputDirectory + compressedName);
-                   dir.mkdirs();
+                    File dir = new File(outputDirectory + compressedName);
+                    dir.mkdirs();
                 } else {
                     File file = new File(outputDirectory + compressedName);
                     file.getParentFile().mkdirs();
@@ -909,15 +975,15 @@ public class Sync extends CordovaPlugin {
     private void copyFolder(File src, File dest) throws IOException{
         if(src.isDirectory()) {
             if(!dest.exists()){
-               dest.mkdir();
+                dest.mkdir();
             }
 
             //list all the directory contents
             String files[] = src.list();
 
             for (String file : files) {
-               //recursive copy
-               copyFolder(new File(src, file), new File(dest, file));
+                //recursive copy
+                copyFolder(new File(src, file), new File(dest, file));
             }
 
         } else {
@@ -926,13 +992,23 @@ public class Sync extends CordovaPlugin {
         }
     }
 
-    private void copyAssetFile(String outputDirectory, String filename) throws IOException {
-        File targetDir =  new File(outputDirectory + "/" + filename.substring(0, filename.lastIndexOf("/")));
-        if (!targetDir.exists()) {
-            targetDir.mkdirs();
+    private void copyAssetFile(String outputDirectory, String filename, boolean wwwExists) throws IOException {
+        String targetFile = filename;
+        if (!wwwExists) {
+            if (targetFile.startsWith("www/")) {
+                targetFile = targetFile.substring(4,targetFile.length());
+            }
         }
 
-        copyFile(cordova.getActivity().getAssets().open(filename), new FileOutputStream(new File(outputDirectory, filename)));
+        int lastIndex = targetFile.lastIndexOf("/");
+        if (lastIndex > 0) {
+            File targetDir = new File(outputDirectory + "/" + targetFile.substring(0, lastIndex));
+            if (!targetDir.exists()) {
+                targetDir.mkdirs();
+            }
+        }
+
+        copyFile(cordova.getActivity().getAssets().open(filename), new FileOutputStream(new File(outputDirectory, targetFile)));
     }
 
     private void copyFile(InputStream in, OutputStream out) throws IOException {
@@ -941,7 +1017,7 @@ public class Sync extends CordovaPlugin {
         int length;
         //copy the file content in bytes
         while ((length = in.read(buffer)) > 0){
-               out.write(buffer, 0, length);
+            out.write(buffer, 0, length);
         }
 
         in.close();
