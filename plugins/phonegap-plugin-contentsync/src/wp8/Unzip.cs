@@ -113,23 +113,11 @@ namespace WPCordovaClassLib.Cordova.Commands
                             {
                                 if (readStream != null)
                                 {
-                                    if(type == Merge)
+                                    using (FileStream outStream = new IsolatedStorageFileStream(destFilePath, FileMode.Create, FileAccess.Write, appStorage))
                                     {
-                                        using (FileStream outStream = new IsolatedStorageFileStream(destFilePath, FileMode.OpenOrCreate, FileAccess.Write, appStorage))
-                                        {
-                                            WriteStreamToPath(readStream, outStream);
-                                        }
+                                        WriteStreamToPath(readStream, outStream);
                                         FileUnzipProgress progEvt = new FileUnzipProgress(totalFiles, current++);
                                     }
-                                    else
-                                    {
-                                        using (FileStream outStream = new IsolatedStorageFileStream(destFilePath, FileMode.OpenOrCreate, FileAccess.Write, appStorage))
-                                        {
-                                            WriteStreamToPath(readStream, outStream);
-                                            FileUnzipProgress progEvt = new FileUnzipProgress(totalFiles, current++);
-                                        }
-                                    }
-
                                 }
                             }
                         }

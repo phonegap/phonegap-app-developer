@@ -57,6 +57,7 @@ namespace WPCordovaClassLib.Cordova.Commands
             public bool CopyCordovaAssets { get; set; }
             public bool CopyRootApp { get; set; }
             public int Timeout { get; set; }
+            public string Manifest { get; set; }
             /// Server address
             public string Server { get; set; }
             /// File key
@@ -229,9 +230,6 @@ namespace WPCordovaClassLib.Cordova.Commands
                 downloadOptions = new TransferOptions();
                 downloadOptions.Url = optionStrings[0];
 
-                bool trustAll = false;
-                downloadOptions.TrustAllHosts = trustAll;
-
                 downloadOptions.Id = optionStrings[1];
 
                 downloadOptions.FilePath = "content_sync/downloads/" + downloadOptions.Id;
@@ -257,7 +255,13 @@ namespace WPCordovaClassLib.Cordova.Commands
 
                 downloadOptions.Timeout = Convert.ToInt32(optionStrings[6]);
 
-                downloadOptions.CallbackId = callbackId = optionStrings[7];
+                bool trustAll = false;
+                bool.TryParse(optionStrings[7], out trustAll);
+                downloadOptions.TrustAllHosts = trustAll;
+
+                downloadOptions.Manifest = optionStrings[8];
+
+                downloadOptions.CallbackId = callbackId = optionStrings[optionStrings.Length-1];
             }
             catch (Exception)
             {
