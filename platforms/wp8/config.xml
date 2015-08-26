@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.adobe.phonegap.app" version="1.5.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.adobe.phonegap.app" version="1.5.5" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="File">
         <param name="wp-package" value="File" />
     </feature>
@@ -61,12 +61,11 @@
     <feature name="BLE">
         <param name="wp-package" value="BLECentralPlugin" />
     </feature>
+    <feature name="Sync">
+        <param name="wp-package" value="Sync" />
+    </feature>
     <name>PhoneGap</name>
-    <description>
-        The PhoneGap Developer app is a testing utility for web developers
-        and designers using the PhoneGap framework. After installing the
-        PhoneGap Developer app you will be able to connect to your PhoneGap
-        desktop app to instantly view and test your work on the device.
+    <description>The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework. After installing this app on your device you will be able to connect it to the PhoneGap desktop app to instantly view and test your work.
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         Adobe PhoneGap Team
@@ -92,7 +91,4 @@
     <preference name="WebViewBounce" value="false" />
     <access origin="*" />
     <content src="index.html" />
-    <feature name="Sync">
-        <param name="wp-package" value="Sync" />
-    </feature>
 </widget>
