@@ -12,7 +12,7 @@
         "clean": "rm -rf build",
         "setup": "npm run clean && mkdir build",
         "create": "npm run setup && phonegap create --link-to www/ build/app",
-        "phonegap": "npm run create && cd build/app && phonegap",
+        "phonegap": "npm run create && cd build/app && phonegap --verbose",
         "test": "jasmine-node tests/browser",
         "less": "lessc -x resources/less/app.less > www/css/app.css"
     },
@@ -22,6 +22,6 @@
         "jasmine-node": "1.14.5",
         "less": "1.6.0",
         "npm": "1.4.10",
-        "phonegap": "5.1.1-0.29.0"
+        "phonegap": "5.2.2"
     }
 }
