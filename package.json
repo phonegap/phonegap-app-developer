@@ -9,12 +9,10 @@
     "preferGlobal": "false",
     "private": "true",
     "scripts": {
-        "clean": "rm -rf build",
-        "setup": "npm run clean && mkdir build",
-        "create-app": "phonegap create --link-to www/ build/app",
-        "create-config": "cp config.xml build/app/config.xml",
-        "create": "npm run setup && npm run create-app && npm run create-config",
-        "phonegap": "npm run create && cd build/app && phonegap --verbose",
+        "clean": "rm -rf platforms/ plugins/",
+        "setup": "npm run clean && npm run setup-directories",
+        "setup-directories": "mkdir -p platforms/ plugins/ hooks/",
+        "phonegap": "npm run setup && phonegap --verbose",
         "test": "jasmine-node tests/browser",
         "less": "lessc -x resources/less/app.less > www/css/app.css"
     },

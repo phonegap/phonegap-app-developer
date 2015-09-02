@@ -5,36 +5,9 @@
 npm-debug.log
 /node_modules
 
-# PhoneGap
-/build
-
-# iOS
-platforms/ios/build/
-platforms/ios/www/
-platforms/ios/cordova/console.log
-*.xcuserdatad
-*.xcworkspace
-
-# android
-platforms/android/assets/www
-platforms/android/bin
-platforms/android/gen
-platforms/android/local.properties
-platforms/android/ant-build
-platforms/android/ant-gen
-platforms/android/CordovaLib/ant-build
-platforms/android/CordovaLib/ant-gen
-platforms/android/CordovaLib/bin
-platforms/android/CordovaLib/gen
-platforms/android/CordovaLib/local.properties
-
-# wp8
-platforms/wp8/bin
-platforms/wp8/obj
-platforms/wp8/www
-platforms/wp8/.staging
-platforms/wp8/*.suo
-platforms/wp8/*.csproj.user
+# Cordova
+/platforms
+/plugins
 
 # res
 resources/signing
