@@ -10,8 +10,11 @@
     <author email="support@phonegap.com" href="http://phonegap.com">
         Adobe PhoneGap Team
     </author>
+    <preference name="Orientation" value="default" />
+    <platform name="ios">
+        <preference name="Orientation" value="all" />
+    </platform>
     <preference name="permissions" value="none" />
-    <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="false" />
     <preference name="webviewbounce" value="true" />
