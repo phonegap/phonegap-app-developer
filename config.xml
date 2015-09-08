@@ -49,7 +49,7 @@
     <plugin name="cordova-plugin-inappbrowser" spec="~1.0.0" />
     <plugin name="cordova-plugin-media" spec="~1.0.0" />
     <plugin name="cordova-plugin-media-capture" spec="~1.0.0" />
-    <plugin name="cordova-plugin-splashscreen" spec="~2.0.0" />
+    <plugin name="cordova-plugin-splashscreen" spec="~2.1.0" />
     <plugin name="cordova-plugin-statusbar" spec="~1.0.0" />
     <plugin name="cordova-plugin-vibration" spec="~1.0.0" />
     <plugin name="phonegap-plugin-contentsync" spec="~1.1.3" />
@@ -58,6 +58,6 @@
     <plugin name="nl.x-services.plugins.insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git#:." />
     <plugin name="com.megster.cordova.ble" spec="~0.1.9" />
     <engine name="android" spec="4.1.1" />
-    <engine name="wp8" spec="3.8.1" />
     <engine name="ios" spec="~3.9.1" />
+    <engine name="wp8" spec="~3.8.1" />
 </widget>
