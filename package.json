@@ -9,9 +9,9 @@
     "preferGlobal": "false",
     "private": "true",
     "scripts": {
-        "clean": "rm -rf platforms/ plugins/",
+        "clean": "node ./resources/script/clean.js",
         "setup": "npm run clean && npm run setup-directories",
-        "setup-directories": "mkdir -p platforms/ plugins/ hooks/",
+        "setup-directories": "node ./resources/script/setup-directories.js",
         "phonegap": "npm run setup && phonegap --verbose",
         "test": "jasmine-node tests/browser",
         "less": "lessc -x resources/less/app.less > www/css/app.css"
@@ -19,6 +19,8 @@
     "dependencies": {
     },
     "devDependencies": {
+        "app-root-path": "1.0.0",
+        "fs-extra": "0.24.0",
         "jasmine-node": "1.14.5",
         "less": "1.6.0",
         "npm": "1.4.10",
