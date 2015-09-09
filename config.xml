@@ -73,14 +73,15 @@
     <engine name="wp8" spec="~3.8.1" />
     <engine name="ios" spec="~3.9.1" />
     <platform name="android">
-        <icon src="resources/android/icon-36.png" density="ldpi" />
-        <icon src="resources/android/icon-48.png" density="mdpi" />
-        <icon src="resources/android/icon-72.png" density="hdpi" />
-        <icon src="resources/android/icon-96.png" density="xhdpi" />
+        <icon src="resources/icon/android/icon-96.png" />
+        <icon density="ldpi" src="resources/icon/android/icon-36.png" />
+        <icon density="mdpi" src="resources/icon/android/icon-48.png" />
+        <icon density="hdpi" src="resources/icon/android/icon-72.png" />
+        <icon density="xhdpi" src="resources/icon/android/icon-96.png" />
     </platform>
     <platform name="wp8">
-        <icon src="resources/icon/wp8/ApplicationIcon.png" width="110" height="110" />
-        <icon src="resources/icon/wp8/TileMedium.png" width="202" height="202" />
-        <icon src="resources/icon/wp8/TileSmall.png" width="110" height="110" />
+        <icon height="110" src="resources/icon/wp8/ApplicationIcon.png" width="110" />
+        <icon height="202" src="resources/icon/wp8/TileMedium.png" width="202" />
+        <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
 </widget>
