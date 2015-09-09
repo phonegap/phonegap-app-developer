@@ -73,7 +73,7 @@
     <engine name="wp8" spec="~3.8.1" />
     <engine name="ios" spec="~3.9.1" />
     <platform name="android">
-        <icon src="resources/icon/android/icon-96.png" />
+        <preference name="SplashScreenDelay" value="0" />
         <icon density="ldpi" src="resources/icon/android/icon-36.png" />
         <icon density="mdpi" src="resources/icon/android/icon-48.png" />
         <icon density="hdpi" src="resources/icon/android/icon-72.png" />
