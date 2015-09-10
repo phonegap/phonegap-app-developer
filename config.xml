@@ -58,6 +58,21 @@
     <plugin name="nl.x-services.plugins.insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git#:." />
     <plugin name="com.megster.cordova.ble" spec="~0.1.9" />
     <platform name="ios">
+        <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
+        <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
+        <icon height="72" src="resources/icon/ios/icon-72.png" width="72" />
+        <icon height="144" src="resources/icon/ios/icon-72@2x.png" width="144" />
+        <icon height="60" src="resources/icon/ios/icon-60.png" width="60" />
+        <icon height="120" src="resources/icon/ios/icon-60@2x.png" width="120" />
+        <icon height="180" src="resources/icon/ios/icon-60@3x.png" width="180" />
+        <icon height="50" src="resources/icon/ios/icon-50.png" width="50" />
+        <icon height="100" src="resources/icon/ios/icon-50@2x.png" width="100" />
+        <icon height="40" src="resources/icon/ios/icon-40.png" width="40" />
+        <icon height="80" src="resources/icon/ios/icon-40@2x.png" width="80" />
+        <icon height="57" src="resources/icon/ios/icon.png" width="57" />
+        <icon height="114" src="resources/icon/ios/icon@2x.png" width="114" />
+        <icon height="29" src="resources/icon/ios/icon-small.png" width="29" />
+        <icon height="58" src="resources/icon/ios/icon-small@2x.png" width="58" />
         <splash height="480" src="resources/splash/ios/Default~iphone.png" width="320" />
         <splash height="960" src="resources/splash/ios/Default@2x~iphone.png" width="640" />
         <splash height="1024" src="resources/splash/ios/Default-Portrait~ipad.png" width="768" />
@@ -71,7 +86,6 @@
     </platform>
     <engine name="android" spec="4.1.1" />
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="ios" spec="~3.9.1" />
     <platform name="android">
         <preference name="SplashScreenDelay" value="0" />
         <icon density="ldpi" src="resources/icon/android/icon-36.png" />
@@ -84,4 +98,5 @@
         <icon height="202" src="resources/icon/wp8/TileMedium.png" width="202" />
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
+    <engine name="ios" spec="~3.9.1" />
 </widget>
