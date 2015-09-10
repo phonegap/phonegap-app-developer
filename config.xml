@@ -57,7 +57,19 @@
     <plugin name="ADBMobile" spec="https://github.com/Adobe-Marketing-Cloud/mobile-services#0482f9cedf90c98a8d4b07219ece1933b2e46a60" />
     <plugin name="nl.x-services.plugins.insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git#:." />
     <plugin name="com.megster.cordova.ble" spec="~0.1.9" />
+    <platform name="ios">
+        <splash height="480" src="resources/splash/ios/Default~iphone.png" width="320" />
+        <splash height="960" src="resources/splash/ios/Default@2x~iphone.png" width="640" />
+        <splash height="1024" src="resources/splash/ios/Default-Portrait~ipad.png" width="768" />
+        <splash height="2048" src="resources/splash/ios/Default-Portrait@2x~ipad.png" width="1536" />
+        <splash height="768" src="resources/splash/ios/Default-Landscape~ipad.png" width="1024" />
+        <splash height="1536" src="resources/splash/ios/Default-Landscape@2x~ipad.png" width="2048" />
+        <splash height="1136" src="resources/splash/ios/Default-568h@2x~iphone.png" width="640" />
+        <splash height="1334" src="resources/splash/ios/Default-667h.png" width="750" />
+        <splash height="2208" src="resources/splash/ios/Default-736h.png" width="1242" />
+        <splash height="1242" src="resources/splash/ios/Default-Landscape-736h.png" width="2208" />
+    </platform>
     <engine name="android" spec="4.1.1" />
-    <engine name="ios" spec="~3.9.1" />
     <engine name="wp8" spec="~3.8.1" />
+    <engine name="ios" spec="~3.9.1" />
 </widget>
