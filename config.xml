@@ -2,10 +2,7 @@
 <widget id="com.adobe.phonegap.app" version="1.5.5" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>PhoneGap</name>
     <description>
-        The PhoneGap Developer app is a testing utility for web developers
-        and designers using the PhoneGap framework. After installing this
-        app on your device you will be able to connect it to the PhoneGap
-        desktop app to instantly view and test your work.
+        The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework. After installing this app on your device you will be able to connect it to the PhoneGap desktop app to instantly view and test your work
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         Adobe PhoneGap Team
@@ -85,7 +82,6 @@
         <splash height="1242" src="resources/splash/ios/Default-Landscape-736h.png" width="2208" />
     </platform>
     <engine name="android" spec="4.1.1" />
-    <engine name="wp8" spec="~3.8.1" />
     <platform name="android">
         <preference name="SplashScreenDelay" value="0" />
         <icon density="ldpi" src="resources/icon/android/icon-36.png" />
@@ -94,9 +90,10 @@
         <icon density="xhdpi" src="resources/icon/android/icon-96.png" />
     </platform>
     <platform name="wp8">
-        <icon height="110" src="resources/icon/wp8/ApplicationIcon.png" width="110" />
-        <icon height="202" src="resources/icon/wp8/TileMedium.png" width="202" />
+        <icon height="99" src="resources/icon/wp8/ApplicationIcon.png" width="99" />
+        <icon height="159" src="resources/icon/wp8/TileMedium.png" width="159" />
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="ios" spec="~3.9.1" />
+    <engine name="wp8" spec="~3.8.1" />
 </widget>
