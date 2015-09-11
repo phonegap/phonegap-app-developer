@@ -93,6 +93,7 @@
         <icon height="99" src="resources/icon/wp8/ApplicationIcon.png" width="99" />
         <icon height="159" src="resources/icon/wp8/TileMedium.png" width="159" />
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
+        <splash height="1280" src="resources/splash/wp8/SplashScreenImage.jpg" width="768" />
     </platform>
     <engine name="ios" spec="~3.9.1" />
     <engine name="wp8" spec="~3.8.1" />
