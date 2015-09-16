@@ -25,16 +25,26 @@ For more information, see [app.phonegap.com][3].
 
 ### Compile and Run the Application
 
+PhoneGap has been added as a dependency so you can update to a specific version
+by changing the version in `package.json`. We also use `npm run` scripts to compile
+and run the application. This allows the app's `platforms/` and `plugins/` directories
+to be removed and rebuilt each time, ensuring a consistent build using the correct
+Cordova, platform, and plugin versions.
+
     $ npm install
     $ npm install -g phonegap@3.4.0-0.20.0
-    $ phonegap run ios
-    $ phonegap run android
-    $ phonegap run wp8
+    $ npm run -- phonegap run ios
+    $ npm run -- phonegap run android
 
 For developers wishing to use the platform SDKs (Xcode, Eclipse, Visual Studio),
 please build once with the CLI to correctly populate the platform assets:
 
-    $ phonegap build <platform>
+    $ npm run -- phonegap build <platform>
+
+Due to a Windows npm scripts bug, the `--` does not work. Therefore we have created
+run script that will build Windows Phone 8 so it can run in Visual Studio.
+
+    $ npm run phonegap-wp8
 
 ### Running the Tests
 
@@ -49,9 +59,13 @@ to add functional tests for the app logic.
 
 You can run the local tests with:
 
-    $ phonegap run android --test
-    $ phonegap run ios --test
-    $ phonegap run wp8 --test
+    $ npm run -- phonegap run android --test
+    $ npm run -- phonegap run ios --test
+
+Again for Windows, we have a run script that will build the app so it can run in
+Visual Studio.
+
+    $ npm run phonegap-wp8-test
 
 #### Test the Served Application
 
