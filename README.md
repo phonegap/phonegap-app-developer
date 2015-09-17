@@ -41,7 +41,7 @@ please build once with the CLI to correctly populate the platform assets:
 
     $ npm run -- phonegap build <platform>
 
-Due to a Windows npm scripts bug, the `--` does not work. Therefore we have created
+Due to a Windows Phone npm scripts bug, the `--` does not work. Therefore we have created
 run script that will build Windows Phone 8 so it can run in Visual Studio.
 
     $ npm run phonegap-wp8
@@ -62,7 +62,7 @@ You can run the local tests with:
     $ npm run -- phonegap run android --test
     $ npm run -- phonegap run ios --test
 
-Again for Windows, we have a run script that will build the app so it can run in
+Again for Windows Phone, we have a run script that will build the app so it can run in
 Visual Studio.
 
     $ npm run phonegap-wp8-test
