@@ -13,7 +13,7 @@
         "setup": "npm run clean && npm run setup-directories",
         "setup-directories": "node ./resources/script/setup-directories.js",
         "phonegap": "npm run setup && phonegap --verbose",
-        "phonegap-wp8": "npm run setup && phonegap --verbose build wp8 && config-wp8",
+        "phonegap-wp8": "npm run setup && phonegap --verbose build wp8 && npm run config-wp8",
         "phonegap-wp8-test": "npm run setup && phonegap --verbose build wp8 --test",
         "config-wp8" : "node ./resources/script/config-wp8.js",
         "test": "jasmine-node tests/browser",
