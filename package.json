@@ -10,14 +10,15 @@
     "private": "true",
     "scripts": {
         "clean": "node ./resources/script/clean.js",
-        "setup": "npm run clean && npm run setup-directories",
-        "setup-directories": "node ./resources/script/setup-directories.js",
+        "config-wp8" : "node ./resources/script/config-wp8.js",
+        "less": "lessc -x resources/less/app.less > www/css/app.css",
         "phonegap": "npm run setup && phonegap --verbose",
         "phonegap-wp8": "npm run setup && phonegap --verbose build wp8 && npm run config-wp8",
         "phonegap-wp8-test": "npm run setup && phonegap --verbose build wp8 --test",
-        "config-wp8" : "node ./resources/script/config-wp8.js",
-        "test": "jasmine-node tests/browser",
-        "less": "lessc -x resources/less/app.less > www/css/app.css"
+        "release-wp8" : "npm run -- phonegap-wp8 && phonegap compile wp8 --release --verbose",
+        "setup": "npm run clean && npm run setup-directories",
+        "setup-directories": "node ./resources/script/setup-directories.js",
+        "test": "jasmine-node tests/browser"
     },
     "dependencies": {
     },
