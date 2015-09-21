@@ -15,8 +15,9 @@
         "phonegap": "npm run setup && phonegap --verbose",
         "phonegap-wp8": "npm run setup && phonegap --verbose build wp8 && npm run config-wp8",
         "phonegap-wp8-test": "npm run setup && phonegap --verbose build wp8 --test",
-        "release-android" : "npm run setup && phonegap build android --verbose --release --buildConfig=./resources/signing/android/build-config.json",
-        "release-wp8" : "npm run -- phonegap-wp8 && phonegap compile wp8 --release --verbose",
+        "release-android": "npm run setup && phonegap build android --verbose --release --buildConfig=./resources/signing/android/build-config.json",
+        "release-ios": "npm run setup && phonegap build ios --verbose --release --buildConfig=./resources/signing/ios/build-config.json",
+        "release-wp8": "npm run -- phonegap-wp8 && phonegap compile wp8 --release --verbose",
         "setup": "npm run clean && npm run setup-directories",
         "setup-directories": "node ./resources/script/setup-directories.js",
         "test": "jasmine-node tests/browser"
