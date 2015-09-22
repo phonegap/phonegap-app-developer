@@ -24,16 +24,38 @@ For more information, see [Developer App Reference Guide][3] on the PhoneGap Doc
 
 ## Development
 
-### Compile and Run the Application
+### Setup
 
-PhoneGap has been added as a dependency so you can update to a specific version
-by changing the version in `package.json`. We also use `npm run` scripts to compile
-and run the application. This allows the app's `platforms/` and `plugins/` directories
-to be removed and rebuilt each time, ensuring a consistent build using the correct
-Cordova, platform, and plugin versions.
+The repository includes everything required to compile the app. You can get
+setup by:
 
+    $ git clone https://github.com/phonegap/phonegap-app-developer.git
+    $ cd phonegap-app-developer/
     $ npm install
-    $ npm install -g phonegap@3.4.0-0.20.0
+
+### Compile and Run
+
+The app bundles the `phonegap` npm module as a dependency. This means that
+there is no need for a global installation of `phonegap` or `cordova`.
+By editing the `package.json`, you can specify the exact version of `phonegap`
+to compile the project.
+
+Since a global install of the `phonegap` module is not required, we use
+`npm run` scripts to compile and run the application. This allows the app's
+`platforms/` and `plugins/` directories to be removed and rebuilt each time,
+ensuring a consistent build using the correct PhoneGap, Cordova, platform,
+and plugin versions.
+
+The command structure is:
+
+    $ npm run -- phonegap <command> [args]
+
+For example, you can check the version of `phonegap`:
+
+    $ npm run -- phonegap --version
+
+You can compile and run iOS or Android:
+
     $ npm run -- phonegap run ios
     $ npm run -- phonegap run android
 
@@ -42,8 +64,8 @@ please build once with the CLI to correctly populate the platform assets:
 
     $ npm run -- phonegap build <platform>
 
-Due to a Windows Phone npm scripts bug, the `--` does not work. Therefore we have created
-run script that will build Windows Phone 8 so it can run in Visual Studio.
+Due to a Windows npm bug, the `--` does not work. Therefore we have created
+run script that will build Windows Phone 8, so it can run in Visual Studio.
 
     $ npm run phonegap-wp8
 
@@ -92,7 +114,26 @@ On your first run of the tests, you may see some modified files. This is expecte
 because the test runner invoked by `--test` modifies certain files to support
 our app's configuration.
 
-### Commits, Tags, and Releases
+### Releases
+
+Releases are also generated using the npm scripts:
+
+    $ npm run release-android
+    $ npm run release-ios
+    $ npm run release-wp
+
+In order to properly code-sign Android and iOS, you must setup the signing key.
+This is accomplished by cloning the signing key repository and sym-linking each
+platform directory with the PhoneGap Developer App repository:
+
+    # in your development directory
+    $ git clone https://github.com/phonegap/phonegap-app-developer-keys.git
+
+    $ cd path/to/phonegap-app-developer/
+    $ ln -s /path/to/phonegap-app-developer-keys/keys/ios resources/signing/ios
+    $ ln -s /path/to/phonegap-app-developer-keys/keys/android resources/signing/android
+
+### Contributing, Commits, and Tags
 
 See the [CONTRIBUTING.md][6] file for details.
 
