@@ -9,7 +9,7 @@ using the PhoneGap framework. After installing the PhoneGap Developer app you
 can connect to your PhoneGap desktop app to instantly view and test your project
 on the device.
 
-For more information, see [app.phonegap.com][3].
+For more information, see [Developer App Reference Guide][3] on the PhoneGap Docs.
 
 ## Download
 
@@ -19,6 +19,7 @@ For more information, see [app.phonegap.com][3].
 
 ## Documentation
 
+- [Developer App Reference Guide](http://docs.phonegap.com/references/developer-app/)
 - [FAQ](https://github.com/phonegap/phonegap-app-developer/blob/master/FAQ.md)
 
 ## Development
@@ -97,7 +98,7 @@ See the [CONTRIBUTING.md][6] file for details.
 
 [1]: https://play.google.com/store/apps/details?id=com.adobe.phonegap.app
 [2]: https://itunes.apple.com/app/id843536693
-[3]: http://app.phonegap.com
+[3]: http://docs.phonegap.com/references/developer-app/
 [4]: http://github.com/phonegap/connect-phonegap
 [5]: http://github.com/phonegap/phonegap-cli
 [6]: https://github.com/phonegap/phonegap-app-developer/blob/master/CONTRIBUTING.md
