@@ -55,16 +55,6 @@ Replace `1.0.0` with the previous version:
 
 Copy and paste the output to `CHANGELOG.md`
 
-## iOS Release Build
-
-- $ cordova build ios
-- Build and test the app on a device
-- Project -> Archive
-- Window -> Organizer -> Archive
-- Select the latest archive with the correct version
-- Select Distribute -> Ad Hoc -> Select AppStore Adobe Systems provisioning profile
-- Export to res/release/ios/PhoneGap-x.x.x-appstore.ipa
-
 ## iOS Submission
 
 - itunesconnect.apple.com
@@ -76,33 +66,6 @@ Copy and paste the output to `CHANGELOG.md`
 - Select PhoneGap with the correct version number
 - Select Choose
 - Select Send
-
-## Android Release Build
-
-- clone phonegap-app-developer-keys
-- cd phonegap-app-developer/
-- ln -s path/to/phonegap-app-developer-keys/keys/android resources/signing/android
-- $ cordova build android --release
-- cp platforms/android/ant-build/PhoneGap-release.apk resources/release/android/PhoneGap-x.x.x-release.apk
-
-## Windows Phone Release Build
-
-- cd phonegap-app-developer/
-- cordova build wp8 --release
-- cp platforms/wp8/Bin/Release/com.adobe.phonegap.app.xap resources/release/wp8/phonegap-x.x.x.xap
-
-or
-
-- cd phonegap-app-developer/
-- cordova build wp8 # to populate the native code
-- Update WMAppManifest.xml
-  - <App Author="Adobe PhoneGap Team" />
-  - <App Publisher="Adobe" />
-  - <App Title="PhoneGap Developer" />
-- open platforms/wp8/PhoneGap.sln
-- Select "Release"
-- Select from menu Build -> Build Solution
-- cp platforms/wp8/Bin/Release/com.adobe.phonegap.app.xap resources/release/wp8/phonegap-x.x.x.xap
 
 ## Windows Phone Submission
 
@@ -127,5 +90,5 @@ or
 - Press Submit
 - Clean up the downloaded GitHub zip file
 
-  [issue-url]: https://github.com/phonegap/phonegap-app-developer/issues
-  [filter-url]: https://github.com/phonegap/phonegap-app-developer/issues?labels=discussion&page=1&state=open
+[issue-url]: https://github.com/phonegap/phonegap-app-developer/issues
+[filter-url]: https://github.com/phonegap/phonegap-app-developer/issues?labels=discussion&page=1&state=open
