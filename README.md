@@ -114,6 +114,25 @@ On your first run of the tests, you may see some modified files. This is expecte
 because the test runner invoked by `--test` modifies certain files to support
 our app's configuration.
 
+### Adding Custom Plugins
+
+If you're a developer interested in creating your own custom build of the
+PhoneGap Developer App, that this section is for you!
+
+Since the PhoneGap Developer app bundles `phonegap` as a npm dependency and
+treats the `platforms/` and `plugins/` as artifacts, you'll find that it is very
+easy to add your own plugins and alter other aspects of the app.
+
+First, [Setup](#user-content-setup) the project on your local system.
+
+Second, edit the `config.xml` to add a custom plugin, change a preference, or
+configure the app's name.
+
+Third, follow the [Compile and Run](#user-content-compile-and-run) section to
+get the app onto your device.
+
+If you run into any problems, feel free to [submit an issue](https://github.com/phonegap/phonegap-app-developer/issues).
+
 ### Releases
 
 Releases are also generated using the npm scripts:
