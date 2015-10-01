@@ -1,3 +1,7 @@
 machine:
   node:
     version: 4.0.0
+
+general:
+  artifacts:
+    - "/home/ubuntu/phonegap-app-developer/platforms/android/build/outputs/apk/"
