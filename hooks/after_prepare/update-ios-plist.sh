@@ -17,7 +17,6 @@ cat << EOF |
 Add :NSAppTransportSecurity dict
 Add :NSAppTransportSecurity:NSAllowsArbitraryLoads bool YES
 Add :UIRequiresFullScreen bool YES
-Delete :CFBundleResourceSpecification
 EOF
 while read line
 do
