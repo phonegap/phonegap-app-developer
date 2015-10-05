@@ -20,4 +20,4 @@ build: off
 
 artifacts:
   - path: phonegap-app-developer\platforms\wp8\Bin\Release\CordovaAppProj_Release_AnyCPU.xap
-  - name: phonegap-x.x.x.xap
+    name: phonegap-x.x.x.xap
