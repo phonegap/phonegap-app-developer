@@ -48,21 +48,21 @@ and plugin versions.
 
 The command structure is:
 
-    $ npm run -- phonegap <command> [args]
+    $ npm run phonegap -- <command> [args]
 
 For example, you can check the version of `phonegap`:
 
-    $ npm run -- phonegap --version
+    $ npm run phonegap -- --version
 
 You can compile and run iOS or Android:
 
-    $ npm run -- phonegap run ios
-    $ npm run -- phonegap run android
+    $ npm run phonegap -- run ios
+    $ npm run phonegap -- run android
 
 For developers wishing to use the platform SDKs (Xcode, Eclipse, Visual Studio),
 please build once with the CLI to correctly populate the platform assets:
 
-    $ npm run -- phonegap build <platform>
+    $ npm run phonegap -- build <platform>
 
 Due to a Windows npm bug, the `--` does not work. Therefore we have created
 run script that will build Windows Phone 8, so it can run in Visual Studio.
@@ -82,8 +82,8 @@ to add functional tests for the app logic.
 
 You can run the local tests with:
 
-    $ npm run -- phonegap run android --test
-    $ npm run -- phonegap run ios --test
+    $ npm run phonegap -- run android --test
+    $ npm run phonegap -- run ios --test
 
 Again for Windows Phone, we have a run script that will build the app so it can run in
 Visual Studio.
