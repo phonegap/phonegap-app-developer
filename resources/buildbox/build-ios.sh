@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-phonegap build ios
+npm run -- release-ios

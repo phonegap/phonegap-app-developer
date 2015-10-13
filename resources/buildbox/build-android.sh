@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-phonegap build android
+npm run -- release-android
