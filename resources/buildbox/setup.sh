@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-node -v
+NODE_PATH=/Users/phonegap/.nvm/v4.2.1/bin
+$NODE_PATH/node -v
 echo "$ npm install"
-npm install
+$NODE_PATH/npm install
 
 
