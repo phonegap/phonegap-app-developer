@@ -5,3 +5,16 @@ machine:
 general:
   artifacts:
     - "/home/ubuntu/phonegap-app-developer/platforms/android/build/outputs/apk/"
+
+deployment:
+  production:
+    branch: continuous-integration
+    codedeploy:
+      phonegap-app-developer:
+        application_root: /
+        revision_type: S3
+        s3_location:
+          bucket: production-bucket
+          key_pattern: phonegap-app-developer/android/android-release-{SHORT_COMMIT}
+        region:
+        deployment_group: production-instances
