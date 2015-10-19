@@ -11,11 +11,11 @@ deployment:
     branch: continuous-integration
     codedeploy:
       phonegap-app-developer:
-        application_root: /platforms/android/build/outputs/apk/
+        application_root: /platforms/android/build/outputs/apk/android-release.apk
         region: us-east-1
         revision_location:
           revision_type: S3
           s3_location:
             bucket: ci.phonegap.com
-            key_pattern: phonegap-app-developer/android/android-release-{SHORT_COMMIT}
+            key_pattern: phonegap-app-developer/android/android-release-{SHORT_COMMIT}.zip
         deployment_group: pg-app-dg
