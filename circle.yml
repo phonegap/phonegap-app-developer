@@ -7,7 +7,7 @@ general:
     - "/home/ubuntu/phonegap-app-developer/platforms/android/build/outputs/apk/"
 
 deployment:
-  staging:
+  production:
     branch: continuous-integration
     codedeploy:
       phonegap-app-developer:
@@ -18,4 +18,3 @@ deployment:
           s3_location:
             bucket: ci.phonegap.com
             key_pattern: phonegap-app-developer/android/android-release-{SHORT_COMMIT}
-        deployment_group: pg-app-dg
