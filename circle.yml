@@ -18,4 +18,4 @@ deployment:
           s3_location:
             bucket: ci.phonegap.com
             key_pattern: phonegap-app-developer/android/android-release-{SHORT_COMMIT}
-        deployment-group: pg-app-dg
+        deployment_group: pg-app-dg
