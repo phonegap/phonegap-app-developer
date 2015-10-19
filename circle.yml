@@ -11,7 +11,7 @@ deployment:
     branch: continuous-integration
     codedeploy:
       phonegap-app-developer:
-        application_root: /
+        application_root: /platforms/android/build/outputs/apk/
         region: us-east-1
         revision_location:
           revision_type: S3
