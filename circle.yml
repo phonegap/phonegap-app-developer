@@ -7,7 +7,7 @@ general:
     - "/home/ubuntu/phonegap-app-developer/platforms/android/build/outputs/apk/"
 
 deployment:
-  production:
+  staging:
     branch: continuous-integration
     codedeploy:
       phonegap-app-developer:
