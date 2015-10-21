@@ -5,7 +5,7 @@ if [ "$CIRCLECI" != true ]; then
     exit
 fi
 
-APKLOCATION=/platforms/android/build/outputs/apk/android-release.apk
+APKLOCATION=platforms/android/build/outputs/apk/android-release.apk
 
 aws configure set aws_access_key_id $AWSACCESSKEY
 aws configure set aws_secret_access_key $AWSSECRETKEY
