@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.adobe.phonegap.app" version="1.5.6" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.adobe.phonegap.app" version="1.5.8" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>PhoneGap</name>
     <description>
         The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework. After installing this app on your device you will be able to connect it to the PhoneGap desktop app to instantly view and test your work
@@ -37,9 +37,9 @@
     <plugin name="cordova-plugin-vibration" spec="~1.0.0" />
     <plugin name="phonegap-plugin-contentsync" spec="~1.1.3" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
-    <plugin name="ADBMobile" spec="https://github.com/Adobe-Marketing-Cloud/mobile-services#0482f9cedf90c98a8d4b07219ece1933b2e46a60" />
+    <plugin name="ADBMobile" spec="https://github.com/Adobe-Marketing-Cloud/mobile-services.git#v4.6.1-Android" />
     <plugin name="nl.x-services.plugins.insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git#:." />
-    <plugin name="com.megster.cordova.ble" spec="~0.1.9" />
+    <plugin name="cordova-plugin-ble-central" spec="~1.0.1" />
     <platform name="ios">
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
@@ -80,6 +80,6 @@
         <icon height="159" src="resources/icon/wp8/TileMedium.png" width="159" />
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
-    <engine name="ios" spec="~3.9.1" />
     <engine name="wp8" spec="~3.8.1" />
+    <engine name="ios" spec="~3.9.1" />
 </widget>
