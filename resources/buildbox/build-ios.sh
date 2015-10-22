@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+pwd
 rm -rf phonegap-app-developer-keys
 ls ./resources/signing/ios
 git clone https://github.com/phonegap/phonegap-app-developer-keys
