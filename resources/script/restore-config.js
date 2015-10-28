@@ -12,7 +12,7 @@
      path = require('path');
 
 /*!
- * Create the Cordova directories that are ignored by version control.
+ * Restore config.xml after ad-hoc build has been completed
  */
 
 var projectRoot = require('app-root-path').path;
