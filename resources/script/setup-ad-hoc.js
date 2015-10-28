@@ -13,7 +13,7 @@
      path = require('path');
 
 /*!
- * Create the Cordova directories that are ignored by version control.
+ * Update config.xml for PhoneGap Nightly builds
  */
 
 var projectRoot = require('app-root-path').path;
