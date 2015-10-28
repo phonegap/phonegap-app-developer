@@ -12,4 +12,4 @@ deployment:
     commands:
       - pip install awscli
       - bash resources/circle-ci/android/aws-upload.sh
-      - npm run distribute-android-ad-hoc -- $HOCKEY_APP_TOKEN $HOCKEY_APP_ANDROID_ID $CIRCLE_SHA1
+      - node ./resources/script/hockey-app-android.js -- $HOCKEY_APP_TOKEN $HOCKEY_APP_ANDROID_ID $CIRCLE_SHA1
