@@ -26,7 +26,7 @@ fs.copy(configPath, path.join(projectRoot, 'config-backup.xml'), function(err) {
         if (err) throw err;
 
         // updating app id for nightly builds
-        data = data.replace('com.adobe.phonegap.app', 'com.phonegap.app.ad-hoc');
+        data = data.replace('com.adobe.phonegap.app', 'com.phonegap.app.adhoc');
 
         // replacing app name
         data = data.replace('<name>PhoneGap</name>', '<name>PG Nightly</name>');
