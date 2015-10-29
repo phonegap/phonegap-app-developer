@@ -20,10 +20,16 @@
  */
 
 var projectRoot = require('app-root-path').path;
-var apkPath = path.join(projectRoot, 'platforms', 'android', 'build', 'outputs', 'apk', 'android-release.apk');
+
+var buildPath;
+if (process.env.BUILDKITE) {
+    buildPath = path.join(projectRoot, 'platforms', 'ios', 'build', 'device', 'PhoneGap.ipa');
+} else if (process.env.CIRCLECI) {
+    buildPath = path.join(projectRoot, 'platforms', 'android', 'build', 'outputs', 'apk', 'android-release.apk');
+}
 
 var formData = {
-    ipa: fs.createReadStream(apkPath),
+    ipa: fs.createReadStream(buildPath),
     notes: 'GitHub Commit: ' + process.argv[4],
     notes_types: 0,
     notify: 1,
