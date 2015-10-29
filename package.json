@@ -11,7 +11,6 @@
     "scripts": {
         "clean": "node ./resources/script/clean.js",
         "config-wp8" : "node ./resources/script/config-wp8.js",
-        "distribute-android-ad-hoc": "node ./resources/script/hockey-app-android.js",
         "less": "lessc -x resources/less/app.less > www/css/app.css",
         "phonegap": "npm run setup && phonegap --verbose",
         "phonegap-wp8": "npm run setup && phonegap --verbose build wp8 && npm run config-wp8",
