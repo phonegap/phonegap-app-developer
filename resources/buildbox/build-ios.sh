@@ -3,7 +3,7 @@ npm run release-ad-hoc-ios
 
 # upload binary to S3
 
-IPALOCATION=platforms/ios/build/device/PhoneGap.ipa
+IPALOCATION=platforms/ios/build/device/PG Nightly.ipa
 
 export BUILDKITE_S3_ACCESS_KEY_ID=$AWSACCESSKEY
 export BUILDKITE_S3_SECRET_ACCESS_KEY=$AWSSECRETKEY
