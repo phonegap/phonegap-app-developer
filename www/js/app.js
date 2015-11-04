@@ -56,12 +56,15 @@ $(document).on('deviceready', function() {
         hockeyapp.start(function() {
             alert('hockey app started successfully') ;
             hockeyapp.checkForUpdate(function() {
-                alert('update available');
+                hockeyapp.feedback(function() {
+                    hockeyapp.forceCrash();
+                }, function() {
+                    alert('feedback err');
+                });
             }, function() {
                 alert('failed to get update');
             });
         }, function() {
-            alert('hockey app error');
         }, '11ef30004b8e4984af1e2fc5fa802429');
 
         navigator.splashscreen.hide();
