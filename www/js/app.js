@@ -65,7 +65,7 @@ $(document).on('deviceready', function() {
                 alert('failed to get update');
             });
         }, function() {
-        }, '11ef30004b8e4984af1e2fc5fa802429');
+        }, '1ddb1dd3bae74b83b1e04752b04b5c55');
 
         navigator.splashscreen.hide();
         $('.footer').removeClass('faded');
