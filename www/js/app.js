@@ -57,7 +57,7 @@ $(document).on('deviceready', function() {
             alert('hockey app started successfully') ;
             hockeyapp.checkForUpdate(function() {
                 hockeyapp.feedback(function() {
-                    hockeyapp.forceCrash();
+                    //hockeyapp.forceCrash();
                 }, function() {
                     alert('feedback err');
                 });
