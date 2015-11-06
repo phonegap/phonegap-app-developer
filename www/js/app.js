@@ -52,20 +52,7 @@ $(document).on('deviceready', function() {
         // allow the screen to dim when returning from the served app
         window.plugins.insomnia.allowSleepAgain();
 
-        // start hockey app
-        hockeyapp.start(function() {
-            alert('hockey app started successfully') ;
-            hockeyapp.checkForUpdate(function() {
-                hockeyapp.feedback(function() {
-                    //hockeyapp.forceCrash();
-                }, function() {
-                    alert('feedback err');
-                });
-            }, function() {
-                alert('failed to get update');
-            });
-        }, function() {
-        }, '1ddb1dd3bae74b83b1e04752b04b5c55');
+        // %HOCKEYAPP
 
         navigator.splashscreen.hide();
         $('.footer').removeClass('faded');
