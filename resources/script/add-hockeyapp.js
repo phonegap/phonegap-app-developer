@@ -4,6 +4,11 @@ var fs = require('fs');
 
 console.log('Running: Applying HockeyApp App ID for current platform');
 
+if (!(/ad-hoc/).test(process.env.npm_lifecycle_event)) {
+    console.log('Skipping: this is a release build');
+    return;
+}
+
 /*jshint multistr: true */
 var hockeyApp = "%HOCKEYAPP \n \
        hockeyapp.start(function() { \n \
