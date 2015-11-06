@@ -7,13 +7,7 @@ console.log('Running: Applying HockeyApp App ID for current platform');
 /*jshint multistr: true */
 var hockeyApp = "%HOCKEYAPP \n \
        hockeyapp.start(function() { \n \
-           alert('hockey app started successfully') ; \n \
            hockeyapp.checkForUpdate(function() { \n \
-               hockeyapp.feedback(function() { \n \
-                   //hockeyapp.forceCrash(); \n \
-               }, function() { \n \
-                   alert('feedback err'); \n \
-               }); \n \
            }, function() { \n \
                alert('failed to get update'); \n \
            }); \n \
