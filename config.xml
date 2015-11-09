@@ -42,7 +42,6 @@
     <plugin name="adobe-mobile-services" spec="^4.7.0" />
     <plugin name="nl.x-services.plugins.insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git#:." />
     <plugin name="com.megster.cordova.ble" spec="~1.0.1" />
-    <plugin name="cordova-plugin-hockeyapp" spec="~1.2.0" />
     <platform name="ios">
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
