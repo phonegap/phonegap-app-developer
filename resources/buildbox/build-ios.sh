@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-npm run release-ad-hoc-ios
+npm run adhoc-ios
 
 # upload binary to S3
 
