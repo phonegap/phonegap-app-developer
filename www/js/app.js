@@ -52,10 +52,10 @@ $(document).on('deviceready', function() {
         // allow the screen to dim when returning from the served app
         window.plugins.insomnia.allowSleepAgain();
 
-        // %HOCKEYAPP
-
         navigator.splashscreen.hide();
         $('.footer').removeClass('faded');
+
+        // %HOCKEYAPP
 
         // Load configuration
         window.phonegap.app.config.load(function(data) {
