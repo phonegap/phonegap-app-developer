@@ -28,14 +28,17 @@ if (process.env.BUILDKITE) {
     buildPath = path.join(projectRoot, 'platforms', 'android', 'build', 'outputs', 'apk', 'android-release.apk');
 }
 
+// parameters passed to HockeyApp
 var formData = {
     ipa: fs.createReadStream(buildPath),
+    mandatory:1,
     notes: 'GitHub Commit: ' + process.argv[4],
     notes_types: 0,
     notify: 1,
     status: 2
 };
 
+// form the HTTP request
 var options = {
     formData: formData,
     headers: {
