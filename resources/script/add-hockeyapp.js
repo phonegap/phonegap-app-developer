@@ -4,7 +4,7 @@ var fs = require('fs');
 
 console.log('Running: Applying HockeyApp App ID for current platform');
 
-if (!(/ad-hoc/).test(process.env.npm_lifecycle_event)) {
+if (!(/adhoc/).test(process.env.npm_lifecycle_event)) {
     console.log('Skipping: this is a release build');
     return;
 }
