@@ -31,6 +31,7 @@ if (process.env.BUILDKITE) {
 // parameters passed to HockeyApp
 var formData = {
     ipa: fs.createReadStream(buildPath),
+    mandatory: 1,
     notes: 'GitHub Commit: ' + process.argv[4],
     notes_types: 0,
     notify: 1,
