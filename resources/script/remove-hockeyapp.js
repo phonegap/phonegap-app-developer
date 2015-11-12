@@ -18,7 +18,7 @@ fs.readFile(appDest, 'utf8', function(err, data) {
         result = data.replace(/%HOCKEYAPP([\s\S]*?)(%ENDHOCKEYAPP)/, '%HOCKEYAPP');
     } else {
         console.log('Exiting: no HockeyApp code to remove');
-        process.exit(0);
+        return
     }
 
     // write back to app.js

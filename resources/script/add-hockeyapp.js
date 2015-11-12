@@ -6,7 +6,7 @@ console.log('Running: Applying HockeyApp App ID for current platform');
 
 if (!(/adhoc/).test(process.env.npm_lifecycle_event)) {
     console.log('Skipping: this is a release build');
-    process.exit(0);
+    return
 }
 
 /*jshint multistr: true */
