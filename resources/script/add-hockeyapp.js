@@ -6,7 +6,7 @@ console.log('Running: Applying HockeyApp App ID for current platform');
 
 if (!(/adhoc/).test(process.env.npm_lifecycle_event)) {
     console.log('Skipping: this is a release build');
-    return;
+    process.exit(0);
 }
 
 /*jshint multistr: true */
@@ -32,9 +32,9 @@ fs.readFile(appDest, 'utf8', function(err, data) {
     // insert HockeyApp App ID based on platform
     var result = '';
     if ((/%HOCKEYAPP/).test(data)) {
-        if (process.env.CORDOVA_PLATFORMS == 'android') {
+        if ((/android/).test(process.env.npm_lifecycle_event)) {
             hockeyApp = hockeyApp.replace(/HOCKEY_APP_ID/, '\'1a16c6d33328462da1b4bdf0d1854da0\'');
-        } else if (process.env.CORDOVA_PLATFORMS == 'ios') {
+        } else if ((/ios/).test(process.env.npm_lifecycle_event)) {
             hockeyApp = hockeyApp.replace(/HOCKEY_APP_ID/, '\'1ddb1dd3bae74b83b1e04752b04b5c55\'');
         }
 
