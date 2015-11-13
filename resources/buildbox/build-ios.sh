@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-if ["$(git rev-parse HEAD)" != "$(git rev-parse $(git describe --abbrev=0 --tags))"]; then
+
+if [ "$(git rev-parse HEAD)" != "$(git rev-parse $(git describe --abbrev=0 --tags))" ]; then
+    echo "Building adhoc release"
     npm run adhoc-ios
     IPALOCATION="platforms/ios/build/device/PG Nightly.ipa"
 
     # upload binary to HockeyApp
     node ./resources/script/hockey-app.js $HOCKEY_APP_TOKEN $HOCKEY_APP_IOS_ID $BUILDKITE_COMMIT
 else
+    echo "Building Appstore release"
     npm run release-ios
     IPALOCATION="platforms/ios/build/device/PhoneGap.ipa"
 fi
