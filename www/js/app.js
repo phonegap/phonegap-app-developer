@@ -125,6 +125,18 @@ function pulsingMessage( msg ) {
     $('.visor').addClass('pulse');
 }
 
+function alternatingPulsingMessage( msg1, msg2 ) {
+    return setInterval(function() {
+        var currentMsg = $('.visor label').text();
+        newMsg = (currentMsg === msg1.toUpperCase()) ? msg2 : msg1;
+        pulsingMessage(newMsg);
+    }, 1500);
+}
+
+function clearAlternatingPulsingMessage(timer) {
+    clearInterval(timer);
+}
+
 /*---------------------------------------------------
     UI - Form
 ---------------------------------------------------*/
@@ -141,7 +153,8 @@ function buildSubmit() {
 }
 
 function onBuildSubmitSuccess() {
-    updateMessage( 'Downloading...' );
+    var msgTimer = alternatingPulsingMessage( 'Downloading...', 'Tap to cancel' );
+    listenForCancel();
 
     // update config data
     config.URL = document.URL;
@@ -156,12 +169,15 @@ function onBuildSubmitSuccess() {
                 address: getAddress(),
                 onProgress: function(data) {
                     if(data.status === 2) {
+                        clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Extracting...');
-                    }else if(data.status === 3) {
+                    } else if(data.status === 3) {
+                        clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Success!');
                     }
                 },
                 onDownloadError: function(e) {
+                    clearAlternatingPulsingMessage(msgTimer);
                     onBuildSubmitError('Download Error!');
                     var errorString = 'Unable to download archive from the server.\n\n';
                     if(e)
@@ -189,6 +205,10 @@ function onBuildSubmitSuccess() {
                             function() {}
                         );
                     }, 4000);
+                },
+                onCancel: function(e) {
+                    clearAlternatingPulsingMessage(msgTimer);
+                    onUserCancel();
                 }
             });
         }, 1000 );
@@ -197,6 +217,7 @@ function onBuildSubmitSuccess() {
 
 function onBuildSubmitError(message) {
     errorMessage('Error!');
+    removeListenerForCancel();
     setTimeout(function() {
         message = message || 'Timed out!';
         errorMessage(message);
@@ -207,6 +228,30 @@ function onBuildSubmitError(message) {
         updateMessage('');
         openBot();
     }, 3500);
+}
+
+function listenForCancel(onCancel) {
+    removeListenerForCancel(); // make sure we aren't multiple-binding
+    $('#bot').on('touchend', function(e) {
+        console.log('triggering...');
+        $(document).trigger('cancelSync');
+    });
+}
+
+function removeListenerForCancel() {
+    $('#bot').off('touchend');
+}
+
+function onUserCancel() {
+    var message = 'Cancelled';
+    removeListenerForCancel();
+    errorMessage(message);
+
+    setTimeout(function() {
+        $('.monitor').removeClass('alert');
+        updateMessage('');
+        openBot();
+    }, 500);
 }
 
 function getAddressField() {
