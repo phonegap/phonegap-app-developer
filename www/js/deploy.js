@@ -171,6 +171,19 @@
             }
             console.log("download error " + e);
         });
+
+        document.addEventListener('cancelSync', function(e) {
+            sync.cancel();
+        });
+
+        sync.on('cancel', function(e) {
+            if (options.onCancel) {
+                setTimeout(function() {
+                    options.onCancel(e);
+                }, 10);
+            }
+            console.log("download cancelled by user");
+        });
     };
 
 })();
