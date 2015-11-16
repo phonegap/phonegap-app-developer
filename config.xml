@@ -19,24 +19,25 @@
     <preference name="DisallowOverscroll" value="true" />
     <access origin="*" />
     <content src="index.html" />
-    <plugin name="cordova-plugin-battery-status" spec="~1.0.0" />
-    <plugin name="cordova-plugin-camera" spec="~1.0.0" />
-    <plugin name="cordova-plugin-console" spec="~1.0.0" />
-    <plugin name="cordova-plugin-contacts" spec="~1.0.0" />
-    <plugin name="cordova-plugin-device" spec="~1.0.0" />
-    <plugin name="cordova-plugin-device-motion" spec="~1.0.0" />
-    <plugin name="cordova-plugin-device-orientation" spec="~1.0.0" />
-    <plugin name="cordova-plugin-dialogs" spec="~1.0.0" />
-    <plugin name="cordova-plugin-file" spec="~2.0.0" />
-    <plugin name="cordova-plugin-file-transfer" spec="~1.0.0" />
-    <plugin name="cordova-plugin-geolocation" spec="~1.0.0" />
-    <plugin name="cordova-plugin-globalization" spec="~1.0.0" />
-    <plugin name="cordova-plugin-inappbrowser" spec="~1.0.0" />
-    <plugin name="cordova-plugin-media" spec="~1.0.0" />
-    <plugin name="cordova-plugin-media-capture" spec="~1.0.0" />
+    <plugin name="cordova-plugin-battery-status" spec="~1.1.0" />
+    <plugin name="cordova-plugin-camera" spec="~1.2.0" />
+    <plugin name="cordova-plugin-console" spec="~1.0.1" />
+    <plugin name="cordova-plugin-contacts" spec="~1.1.0" />
+    <plugin name="cordova-plugin-device" spec="~1.0.1" />
+    <plugin name="cordova-plugin-device-motion" spec="~1.1.1" />
+    <plugin name="cordova-plugin-device-orientation" spec="~1.0.1" />
+    <plugin name="cordova-plugin-dialogs" spec="~1.1.1" />
+    <plugin name="cordova-plugin-file" spec="~3.0.0" />
+    <plugin name="cordova-plugin-file-transfer" spec="~1.3.0" />
+    <plugin name="cordova-plugin-geolocation" spec="~1.0.1" />
+    <plugin name="cordova-plugin-globalization" spec="~1.0.1" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~1.0.1" />
+    <plugin name="cordova-plugin-media" spec="~1.0.1" />
+    <plugin name="cordova-plugin-media-capture" spec="~1.0.1" />
+    <plugin name="cordova-plugin-network-information" spec="~1.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="~2.1.0" />
-    <plugin name="cordova-plugin-statusbar" spec="~1.0.0" />
-    <plugin name="cordova-plugin-vibration" spec="~1.0.0" />
+    <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
+    <plugin name="cordova-plugin-vibration" spec="~1.2.0" />
     <plugin name="phonegap-plugin-contentsync" spec="~1.1.3" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     <plugin name="adobe-mobile-services" spec="^4.7.0" />
@@ -69,7 +70,6 @@
         <splash height="2208" src="resources/splash/ios/Default-736h.png" width="1242" />
         <splash height="1242" src="resources/splash/ios/Default-Landscape-736h.png" width="2208" />
     </platform>
-    <engine name="android" spec="4.1.1" />
     <platform name="android">
         <preference name="SplashScreenDelay" value="0" />
         <icon density="ldpi" src="resources/icon/android/icon-36.png" />
@@ -83,5 +83,6 @@
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="ios" spec="~3.9.1" />
+    <engine name="ios" spec="~3.9.2" />
+    <engine name="android" spec="~4.1.1" />
 </widget>
