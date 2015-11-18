@@ -38,7 +38,7 @@
     <plugin name="cordova-plugin-splashscreen" spec="~2.1.0" />
     <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
     <plugin name="cordova-plugin-vibration" spec="~1.2.0" />
-    <plugin name="phonegap-plugin-contentsync" spec="~1.1.3" />
+    <plugin name="phonegap-plugin-contentsync" spec="~1.2.2" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     <plugin name="adobe-mobile-services" spec="^4.7.0" />
     <plugin name="nl.x-services.plugins.insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git#:." />
