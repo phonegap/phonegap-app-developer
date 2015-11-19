@@ -89,6 +89,7 @@ $(document).on('deviceready', function() {
                 $('.visor .eye').addClass('hidden');
             }, 3350 );
         });
+
     }, 350);
 });
 

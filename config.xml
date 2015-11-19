@@ -41,6 +41,7 @@
     <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
     <plugin name="cordova-plugin-vibration" spec="~1.2.0" />
     <plugin name="phonegap-plugin-contentsync" spec="~1.2.2" />
+    <plugin name="phonegap-plugin-push" spec="~1.5.3" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     <plugin name="adobe-mobile-services" spec="^4.7.0" />
     <plugin name="nl.x-services.plugins.insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git#:." />
@@ -85,6 +86,6 @@
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="ios" spec="~3.9.2" />
     <engine name="android" spec="~4.1.1" />
+    <engine name="ios" spec="~3.9.2" />
 </widget>
