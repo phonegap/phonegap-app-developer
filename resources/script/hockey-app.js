@@ -30,8 +30,6 @@ if (process.env.BUILDKITE) {
     buildPath = path.join(projectRoot, 'platforms', 'wp8', 'Bin', 'Release', 'CordovaAppProj_Release_AnyCPU_new.xap');
 }
 
-console.log(buildPath);
-
 // parameters passed to HockeyApp
 var formData = {
     ipa: fs.createReadStream(buildPath),
@@ -52,7 +50,6 @@ var options = {
 };
 
 request.post(options, function(err, response, body) {
-    console.log('posted hockey app');
     if (err) {
         console.log('Error uploading to HockeyApp');
         console.log('More info: <', err.message, '>');
