@@ -22,7 +22,6 @@
 var projectRoot = require('app-root-path').path;
 
 var buildPath;
-console.log(process.env);
 if (process.env.BUILDKITE) {
     buildPath = path.join(projectRoot, 'platforms', 'ios', 'build', 'device', 'PG Nightly.ipa');
 } else if (process.env.CIRCLECI) {
@@ -30,6 +29,8 @@ if (process.env.BUILDKITE) {
 } else if(process.env.APPVEYOR) {
     buildPath = path.join(projectRoot, 'platforms', 'wp8', 'Bin', 'Release', 'CordovaAppProj_Release_AnyCPU_new.xap');
 }
+
+console.log(buildPath);
 
 // parameters passed to HockeyApp
 var formData = {
@@ -51,6 +52,7 @@ var options = {
 };
 
 request.post(options, function(err, response, body) {
+    console.log('posted hockey app');
     if (err) {
         console.log('Error uploading to HockeyApp');
         console.log('More info: <', err.message, '>');
