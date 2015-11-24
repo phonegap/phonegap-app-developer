@@ -22,6 +22,7 @@
 var projectRoot = require('app-root-path').path;
 
 var buildPath;
+console.log(process.env);
 if (process.env.BUILDKITE) {
     buildPath = path.join(projectRoot, 'platforms', 'ios', 'build', 'device', 'PG Nightly.ipa');
 } else if (process.env.CIRCLECI) {
