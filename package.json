@@ -35,7 +35,7 @@
         "jasmine-node": "1.14.5",
         "less": "1.6.0",
         "npm": "1.4.10",
-        "phonegap": "5.2.2",
+        "phonegap": "5.3.9",
         "request": "2.65.0",
         "xml2js": "0.4.12"
     }
