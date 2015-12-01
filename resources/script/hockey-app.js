@@ -52,7 +52,6 @@ var options = {
 console.log('Uploading to HockeyApp...');
 request.post(options, function(err, response, body) {
     console.log('Uploaded to HockeyApp with status code: ' + response.statusCode);
-    console.log(response);
     if (err) {
         console.log('Error uploading to HockeyApp');
         console.log('More info: <', err.message, '>');
