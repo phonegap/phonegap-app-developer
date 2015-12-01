@@ -49,9 +49,10 @@ var options = {
     url: 'https://rink.hockeyapp.net/api/2/apps/' + process.argv[3] + '/app_versions/upload'
 };
 
-console.log('Uploading to HockeyApp../');
+console.log('Uploading to HockeyApp...');
 request.post(options, function(err, response, body) {
-    console.log('Uploaded to HockeyApp with status: ' + response.statusCode);
+    console.log('Uploaded to HockeyApp with status code: ' + response.statusCode);
+    console.log(response);
     if (err) {
         console.log('Error uploading to HockeyApp');
         console.log('More info: <', err.message, '>');
