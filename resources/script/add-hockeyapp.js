@@ -33,9 +33,9 @@ fs.readFile(appDest, 'utf8', function(err, data) {
     var result = '';
     if ((/%HOCKEYAPP/).test(data)) {
         if ((/android/).test(process.env.npm_lifecycle_event)) {
-            hockeyApp = hockeyApp.replace(/HOCKEY_APP_ID/, '\'1a16c6d33328462da1b4bdf0d1854da0\'');
+            hockeyApp = hockeyApp.replace(/HOCKEY_APP_ID/, '\'6591d00aa8fb4dfdb2cdca79f1d79650\'');
         } else if ((/ios/).test(process.env.npm_lifecycle_event)) {
-            hockeyApp = hockeyApp.replace(/HOCKEY_APP_ID/, '\'1ddb1dd3bae74b83b1e04752b04b5c55\'');
+            hockeyApp = hockeyApp.replace(/HOCKEY_APP_ID/, '\'ab4f4cd2ab5045708c0b4ee0b9e2fe39\'');
         }else {
             hockeyApp = '';
         }
