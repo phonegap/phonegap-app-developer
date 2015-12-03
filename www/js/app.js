@@ -282,6 +282,29 @@ function getAddress(path) {
 }
 
 /*---------------------------------------------------
+    Google Analytics Helper
+---------------------------------------------------*/
+
+function postToGA() {
+    var trackingID = 'UA-94271-34';
+    var anonClientId = '12345';
+    var eventCategory = 'test category';
+    var eventAction = 'test action';
+    var eventLabel = 'test label';
+
+    var gaURL = 'https://www.google-analytics.com/collect?';
+    gaURL += 'v=1';
+    gaURL += '&tid=' + trackingID;
+    gaURL += '&cid=' + anonClientId;
+    gaURL += '&t=event';
+    gaURL += '&ec=' + eventCategory; //required for event
+    gaURL += '&ea=' + eventAction; //required for event
+    gaURL += '&el=' + eventLabel;
+
+    $.ajax({type: 'GET', url: gaURL });
+}
+
+/*---------------------------------------------------
     Browser - Quirks
 ---------------------------------------------------*/
 
@@ -302,5 +325,4 @@ function supportBrowserQuirks() {
         document.body.appendChild(element);
     }
 }
-
 })();
