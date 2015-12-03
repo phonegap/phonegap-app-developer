@@ -32,6 +32,7 @@ $().ready(function() {
 
     // On input de-selection, restore backup if there is no content.
     $('#address').on('blur', function() {
+        window.phonegap.app.analytic.logEvent('interaction', 'ip change');
         var $address = $('#address'),
             whitespaceRegex = /^\s*$/;
 
@@ -46,6 +47,8 @@ $().ready(function() {
 });
 
 $(document).on('deviceready', function() {
+    window.phonegap.app.analytic.logEvent('success', 'deviceready');
+
     // Add slight delay to allow DOM rendering to finish.
     // Avoids flicker on slower devices.
     setTimeout(function() {
@@ -167,13 +170,18 @@ function onBuildSubmitSuccess() {
         window.plugins.insomnia.keepAwake();
 
         setTimeout( function() {
+            window.phonegap.app.analytic.logEvent('interaction', 'connection attempt');
             window.phonegap.app.downloadZip({
                 address: getAddress(),
                 onProgress: function(data) {
-                    if(data.status === 2) {
+                    if(data.status === 1) {
+                        window.phonegap.app.analytic.logEvent('success', 'connection success');
+                    } else if(data.status === 2) {
+                        window.phonegap.app.analytic.logEvent('success', 'extracting app');
                         clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Extracting...');
                     } else if(data.status === 3) {
+                        window.phonegap.app.analytic.logEvent('success', 'opening app');
                         clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Success!');
                     }
@@ -189,14 +197,17 @@ function onBuildSubmitSuccess() {
 
                         if(e === 1)
                         {
+                            window.phonegap.app.analytic.logEvent('error', 'invalid url');
                             errorString += 'Please enter a valid url to connect to.';
                         }
                         else if(e === 2)
                         {
+                            window.phonegap.app.analytic.logEvent('error', 'unable to connect');
                             errorString += 'Unable to properly connect to the server.';
                         }
                         else if(e === 3)
                         {
+                            window.phonegap.app.analytic.logEvent('error', 'unable to unzip');
                             errorString += 'Unable to properly unzip the archive.';
                         }
                     }
@@ -209,6 +220,7 @@ function onBuildSubmitSuccess() {
                     }, 4000);
                 },
                 onCancel: function(e) {
+                    window.phonegap.app.analytic.logEvent('interaction', 'canceled');
                     clearAlternatingPulsingMessage(msgTimer);
                     onUserCancel();
                 }
@@ -279,29 +291,6 @@ function getAddress(path) {
     }
 
     return address;
-}
-
-/*---------------------------------------------------
-    Google Analytics Helper
----------------------------------------------------*/
-
-function postToGA() {
-    var trackingID = 'UA-94271-34';
-    var anonClientId = '12345';
-    var eventCategory = 'test category';
-    var eventAction = 'test action';
-    var eventLabel = 'test label';
-
-    var gaURL = 'https://www.google-analytics.com/collect?';
-    gaURL += 'v=1';
-    gaURL += '&tid=' + trackingID;
-    gaURL += '&cid=' + anonClientId;
-    gaURL += '&t=event';
-    gaURL += '&ec=' + eventCategory; //required for event
-    gaURL += '&ea=' + eventAction; //required for event
-    gaURL += '&el=' + eventLabel;
-
-    $.ajax({type: 'GET', url: gaURL });
 }
 
 /*---------------------------------------------------
