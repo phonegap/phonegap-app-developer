@@ -11,7 +11,10 @@
      * Configuration.
      */
 
-    if (!window.phonegap.app.analytic) window.phonegap.app.analytic = {};
+    if (!window.phonegap.app.analytic) {
+        window.phonegap.app.analytic = {};
+        window.phonegap.app.analytic.optIn = true;
+    }
 
     /**
      * Send Event information to Google Analytics
@@ -22,7 +25,7 @@
      *   - `label` {string} misc. info about the Event.
      */
 
-    window.phonegap.app.analytic.logEvent = function (category, action, label){
+    window.phonegap.app.analytic.logEvent = function (category, action, label) {
         var eventInfo = {
             v : 1,                                                  // version
             tid : 'UA-94271-34',                                    // tracking id
@@ -33,7 +36,7 @@
             el : (typeof label != 'undefined' ? label : '')         // event label
         };
 
-        sendEvent(eventInfo);
+        if(window.phonegap.app.analytic.optIn) sendEvent(eventInfo);
     };
 
     /*!
