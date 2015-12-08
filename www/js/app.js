@@ -175,7 +175,7 @@ function onBuildSubmitSuccess() {
         window.plugins.insomnia.keepAwake();
 
         setTimeout( function() {
-            window.phonegap.app.analytic.logEvent('connection', 'submit', getAddress());
+            window.phonegap.app.analytic.logEvent('connection', 'submit');
             window.phonegap.app.downloadZip({
                 address: getAddress(),
                 onProgress: function(data) {
