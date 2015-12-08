@@ -13,8 +13,28 @@
 
     if (!window.phonegap.app.analytic) {
         window.phonegap.app.analytic = {};
-        window.phonegap.app.analytic.optIn = true;
     }
+
+    /**
+     * Ask user to ask if they want to opt in to analytics or not
+     *
+     * Options:
+     *   - `config` {object} the config object that holds app config data.
+     */
+
+    window.phonegap.app.analytic.askPermission = function(config) {
+        function onConfirm(buttonIndex) {
+            config.optIn = (buttonIndex === 0) ? true : false;
+            config.askedToOptIn = true;
+            window.phonegap.app.config.save(config, function() {});
+        }
+
+        navigator.notification.confirm(
+            'Would you like to opt in to analytics?',
+            onConfirm,
+            'Opt In to Analytics',
+            ['Yes', 'No'] );
+    };
 
     /**
      * Send Event information to Google Analytics
@@ -36,7 +56,7 @@
             el : (typeof label != 'undefined' ? label : '')         // event label
         };
 
-        if(window.phonegap.app.analytic.optIn) sendEvent(eventInfo);
+        if(window.phonegap.app.config.optIn) sendEvent(eventInfo);
     };
 
     /*!

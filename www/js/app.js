@@ -64,6 +64,12 @@ $(document).on('deviceready', function() {
             // store the config data
             config = data;
 
+            // ask user to opt in to analytic if they haven't done so before
+            if (!config.askedToOptIn) {
+                console.log('asking user to opt in');
+                window.phonegap.app.analytic.askPermission(config);
+            }
+
             // load server address
             if (config.address) {
                 $('#address').val(config.address);
