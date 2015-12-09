@@ -29,7 +29,7 @@ function updateTestSuite(dir) {
     //
     // we do this because we want to ensure our config is setup correctly.
     var config = {
-        www: path.join(dir.www, 'config.xml'),
+        www: path.join(process.cwd(), 'config.xml'),
         test: path.join(dir.test, 'config.xml')
     };
 
