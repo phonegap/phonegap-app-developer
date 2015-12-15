@@ -41,13 +41,25 @@ $().ready(function() {
         $address.attr('currentValue', '');
     });
 
+    // Allow user to opt in/out of analytics
+    $('#analytic-display').on('touchstart', function() {
+        var currentStatus = $('#analytic-display .text').text();
+        // toggle permission status on click
+        if(currentStatus == 'Disabled') {
+            window.phonegap.app.analytic.setPermission(config, true);
+            $('#analytic-display .text').text('Enabled');
+        } else if (currentStatus == 'Enabled') {
+            window.phonegap.app.analytic.setPermission(config, false);
+            $('#analytic-display .text').text('Disabled');
+        }
+
+    });
+
     // Work around CSS browser issues.
     supportBrowserQuirks();
 });
 
 $(document).on('deviceready', function() {
-    window.phonegap.app.analytic.logEvent('startup', 'deviceready');
-
     // Add slight delay to allow DOM rendering to finish.
     // Avoids flicker on slower devices.
     setTimeout(function() {
@@ -64,11 +76,9 @@ $(document).on('deviceready', function() {
             // store the config data
             config = data;
 
-            // ask user to opt in to analytic if they haven't done so before
-            if (!config.askedToOptIn) {
-                console.log('asking user to opt in');
-                window.phonegap.app.analytic.askPermission(config);
-            }
+            // load analytics permission value
+            $('#analytic-display .text').text(window.phonegap.app.analytic.getPermissionStatus(config));
+            window.phonegap.app.analytic.logEvent(config, 'startup', 'deviceready');
 
             // load server address
             if (config.address) {
@@ -175,18 +185,18 @@ function onBuildSubmitSuccess() {
         window.plugins.insomnia.keepAwake();
 
         setTimeout( function() {
-            window.phonegap.app.analytic.logEvent('connection', 'submit');
+            window.phonegap.app.analytic.logEvent(config, 'connection', 'submit');
             window.phonegap.app.downloadZip({
                 address: getAddress(),
                 onProgress: function(data) {
                     if(data.status === 1) {
-                        window.phonegap.app.analytic.logEvent('connection', 'download');
+                        window.phonegap.app.analytic.logEvent(config, 'connection', 'download');
                     } else if(data.status === 2) {
-                        window.phonegap.app.analytic.logEvent('connection', 'extract');
+                        window.phonegap.app.analytic.logEvent(config, 'connection', 'extract');
                         clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Extracting...');
                     } else if(data.status === 3) {
-                        window.phonegap.app.analytic.logEvent('connection', 'success');
+                        window.phonegap.app.analytic.logEvent(config, 'connection', 'success');
                         clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Success!');
                     }
@@ -202,17 +212,17 @@ function onBuildSubmitSuccess() {
 
                         if(e === 1)
                         {
-                            window.phonegap.app.analytic.logEvent('connection', 'failure', 'invalid url');
+                            window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'invalid url');
                             errorString += 'Please enter a valid url to connect to.';
                         }
                         else if(e === 2)
                         {
-                            window.phonegap.app.analytic.logEvent('connection', 'failure', 'unable to connect');
+                            window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'unable to connect');
                             errorString += 'Unable to properly connect to the server.';
                         }
                         else if(e === 3)
                         {
-                            window.phonegap.app.analytic.logEvent('connection', 'failure', 'unable to unzip');
+                            window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'unable to unzip');
                             errorString += 'Unable to properly unzip the archive.';
                         }
                     }
@@ -225,7 +235,7 @@ function onBuildSubmitSuccess() {
                     }, 4000);
                 },
                 onCancel: function(e) {
-                    window.phonegap.app.analytic.logEvent('connection', 'canceled');
+                    window.phonegap.app.analytic.logEvent(config, 'connection', 'canceled');
                     clearAlternatingPulsingMessage(msgTimer);
                     onUserCancel();
                 }

@@ -28,7 +28,6 @@
             // load defaults
             config.address = config.address || '127.0.0.1:3000';
             config.optIn = config.optIn || false;
-            config.askedToOptIn = config.askedToOptIn || false;
             callback(config);
         });
     };

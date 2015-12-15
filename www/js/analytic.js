@@ -16,36 +16,38 @@
     }
 
     /**
-     * Ask user to ask if they want to opt in to analytics or not
+     * Enabled or disable analytics
      *
      * Options:
-     *   - `config` {object} the config object that holds app config data.
+     *   - `config` {object} config object that holds the app's data
+     *   - `permissionVal` {boolean} optIn value
      */
 
-    window.phonegap.app.analytic.askPermission = function(config) {
-        function onConfirm(buttonIndex) {
-            config.optIn = (buttonIndex === 0) ? true : false;
-            config.askedToOptIn = true;
-            window.phonegap.app.config.save(config, function() {});
-        }
+     window.phonegap.app.analytic.setPermission = function(config, permissionVal) {
+        config.optIn = permissionVal;
+        window.phonegap.app.config.save(config, function() {});
+    };
 
-        navigator.notification.confirm(
-            'Would you like to opt in to analytics?',
-            onConfirm,
-            'Opt In to Analytics',
-            ['Yes', 'No'] );
+    /**
+     * Get the text status of the permission
+     *   - `config` {object} config object that holds the app's data
+     */
+
+     window.phonegap.app.analytic.getPermissionStatus = function(config) {
+        return (config.optIn) ? 'Enabled' : 'Disabled';
     };
 
     /**
      * Send Event information to Google Analytics
      *
      * Options:
+     *   - `config` {object} config object that holds the app's data
      *   - `category` {string} is the type of Event.
      *   - `action` {string} is the specific instance of the Event.
      *   - `label` {string} misc. info about the Event.
      */
 
-    window.phonegap.app.analytic.logEvent = function (category, action, label) {
+    window.phonegap.app.analytic.logEvent = function (config, category, action, label) {
         var eventInfo = {
             v : 1,                                                  // version
             tid : 'UA-94271-34',                                    // tracking id
@@ -56,7 +58,7 @@
             el : (typeof label != 'undefined' ? label : '')         // event label
         };
 
-        if(window.phonegap.app.config.optIn) sendEvent(eventInfo);
+        if(config.optIn) sendEvent(eventInfo);
     };
 
     /*!
