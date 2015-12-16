@@ -42,17 +42,9 @@ $().ready(function() {
     });
 
     // Allow user to opt in/out of analytics
-    $('#analytic-display').on('touchstart', function() {
-        var currentStatus = $('#analytic-display .text').text();
-        // toggle permission status on click
-        if(currentStatus == 'Disabled') {
-            window.phonegap.app.analytic.setPermission(config, true);
-            $('#analytic-display .text').text('Enabled');
-        } else if (currentStatus == 'Enabled') {
-            window.phonegap.app.analytic.setPermission(config, false);
-            $('#analytic-display .text').text('Disabled');
-        }
-
+    $('#analytic-checkbox').on('change', function(data) {
+        window.phonegap.app.analytic.setPermission(config, $('#analytic-checkbox').prop('checked'));
+        console.log(window.phonegap.app.analytic.getPermissionStatus(config));
     });
 
     // Work around CSS browser issues.
@@ -77,7 +69,7 @@ $(document).on('deviceready', function() {
             config = data;
 
             // load analytics permission value
-            $('#analytic-display .text').text(window.phonegap.app.analytic.getPermissionStatus(config));
+            $('#analytic-checkbox').prop('checked', window.phonegap.app.analytic.getPermissionStatus(config));
             window.phonegap.app.analytic.logEvent(config, 'startup', 'deviceready');
 
             // load server address
