@@ -34,7 +34,7 @@
      */
 
      window.phonegap.app.analytic.getPermissionStatus = function(config) {
-        return (config.optIn) ? 'Enabled' : 'Disabled';
+        return config.optIn;
     };
 
     /**
