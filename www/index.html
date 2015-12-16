@@ -43,7 +43,7 @@
                 <div class="footer faded">
                     <p>
                         Share usage data
-                        <input type="checkbox" id="cb4" class="tgl tgl-light" />
+                        <input type="checkbox" id="analytics-checkbox" class="tgl tgl-light" />
                         <label for="cb4" class="tgl-btn"></label>
                     </p>
                     <a href="http://www.adobe.com/misc/terms.html" target="_system">Terms</a>
@@ -55,66 +55,6 @@
 
         </div>
     </div>
-
-    <style type="text/css">
-.tgl {
-  display: none;
-}
-.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn {
-  box-sizing: border-box;
-}
-.tgl::-moz-selection, .tgl:after::-moz-selection, .tgl:before::-moz-selection, .tgl *::-moz-selection, .tgl *:after::-moz-selection, .tgl *:before::-moz-selection, .tgl + .tgl-btn::-moz-selection {
-  background: none;
-}
-.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-btn::selection {
-  background: none;
-}
-.tgl + .tgl-btn {
-  outline: 0;
-  display: inline-block;
-  width: 2em;
-  height: 1em;
-  position: relative;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-}
-.tgl + .tgl-btn:after, .tgl + .tgl-btn:before {
-  position: relative;
-  display: block;
-  content: "";
-  width: 50%;
-  height: 100%;
-}
-.tgl + .tgl-btn:after {
-  left: 0;
-}
-.tgl + .tgl-btn:before {
-  display: none;
-}
-.tgl:checked + .tgl-btn:after {
-  left: 50%;
-}
-
-.tgl-light + .tgl-btn {
-      background: #7f8284;
-        border-radius: 2em;
-          padding: 2px;
-            -webkit-transition: all .4s ease;
-              transition: all .4s ease;
-}
-.tgl-light + .tgl-btn:after {
-      border-radius: 50%;
-        background: #fff;
-          -webkit-transition: all .2s ease;
-            transition: all .2s ease;
-}
-.tgl-light:checked + .tgl-btn {
-      background: #afdeed;
-}
-    </style>
     <script src="cordova.js"></script>
     <script src="js/zepto.min.js"></script>
     <script src="js/app.js"></script>

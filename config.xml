@@ -83,6 +83,6 @@
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="android" spec="~4.1.1" />
     <engine name="ios" spec="~3.9.2" />
+    <engine name="android" spec="~4.1.1" />
 </widget>
