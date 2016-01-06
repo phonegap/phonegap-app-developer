@@ -4,6 +4,11 @@ var fs = require('fs');
 
 console.log('Running: Removing HockeyApp from app.js');
 
+if (!(/adhoc/).test(process.env.npm_lifecycle_event)) {
+    console.log('skipping: this is not an adhoc build');
+    return;
+}
+
 var appDest = 'www/js/app.js';
 fs.readFile(appDest, 'utf8', function(err, data) {
     if (err) {
@@ -18,7 +23,7 @@ fs.readFile(appDest, 'utf8', function(err, data) {
         result = data.replace(/%HOCKEYAPP([\s\S]*?)(%ENDHOCKEYAPP)/, '%HOCKEYAPP');
     } else {
         console.log('Exiting: no HockeyApp code to remove');
-        return
+        return;
     }
 
     // write back to app.js
