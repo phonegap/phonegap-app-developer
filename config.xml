@@ -8,7 +8,9 @@
         Adobe PhoneGap Team
     </author>
     <hook src="resources/script/add-hockeyapp.js" type="before_build" />
+    <hook src="resources/script/production-analytics.js" type="before_build" />
     <hook src="resources/script/remove-hockeyapp.js" type="after_compile" />
+    <hook src="resources/script/restore-analytics.js" type="after_compile" />
     <preference name="Orientation" value="default" />
     <platform name="ios">
         <preference name="Orientation" value="all" />
