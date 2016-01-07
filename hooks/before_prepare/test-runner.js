@@ -8,6 +8,7 @@ if (/--test[s]?/.test(process.env.CORDOVA_CMDLINE)) {
         path = require('path');
 
     var dir = {
+        root: process.cwd(),
         www: path.join(process.cwd(), 'www'),
         test: path.join(process.cwd(), 'tests/www'),
         backup: path.join(process.cwd(), 'www-backup')
@@ -29,12 +30,12 @@ function updateTestSuite(dir) {
     //
     // we do this because we want to ensure our config is setup correctly.
     var config = {
-        www: path.join(dir.www, 'config.xml'),
+        app: path.join(dir.root, 'config.xml'),
         test: path.join(dir.test, 'config.xml')
     };
 
     // [#119] cannot use streams because of async issues on Windows
-    fs.writeFileSync(config.test, fs.readFileSync(config.www));
+    fs.writeFileSync(config.test, fs.readFileSync(config.app));
 
     // 2. Hide Splash Screen after test suite loads
     //
