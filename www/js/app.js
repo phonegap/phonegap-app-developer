@@ -168,6 +168,10 @@ function onBuildSubmitSuccess() {
     var msgTimer = alternatingPulsingMessage( 'Downloading...', 'Tap to cancel' );
     listenForCancel();
 
+    // variables to ensure we only send one unique analytic event
+    var analyticDownloadToggle = false;
+    var analyticExtractToggle = false;
+
     // update config data
     config.URL = document.URL;
     config.address = getAddressField();
@@ -182,9 +186,16 @@ function onBuildSubmitSuccess() {
                 address: getAddress(),
                 onProgress: function(data) {
                     if(data.status === 1) {
-                        window.phonegap.app.analytic.logEvent(config, 'connection', 'download');
+                        if(!analyticDownloadToggle) {
+                            window.phonegap.app.analytic.logEvent(config, 'connection', 'download');
+                            analyticDownloadToggle = true;
+                        }
                     } else if(data.status === 2) {
-                        window.phonegap.app.analytic.logEvent(config, 'connection', 'extract');
+                        if(!analyticExtractToggle) {
+                            window.phonegap.app.analytic.logEvent(config, 'connection', 'extract');
+                            analyticExtractToggle = true;
+                        }
+
                         clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Extracting...');
                     } else if(data.status === 3) {
