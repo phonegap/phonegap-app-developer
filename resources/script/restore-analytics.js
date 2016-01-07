@@ -25,6 +25,9 @@ fs.readFile(analytics, 'utf8', function(err, data) {
     var result = '';
     if ((productionID).test(data)) {
         result = data.replace(productionID, devID);
+    } else {
+        console.log('Exiting: unable to find analytics id to replace');
+        process.exit(1);
     }
 
     // write back to analytic.js
