@@ -22,20 +22,18 @@ fs.readFile(analytics, 'utf8', function(err, data) {
     }
 
     // insert dev ID
-    var result = '';
     if ((productionID).test(data)) {
-        result = data.replace(productionID, devID);
+        data = data.replace(productionID, devID);
+
+        // write back to analytic.js
+        fs.writeFile(analytics, result, 'utf8', function(err) {
+            if (err) {
+                console.log('Error writing to analytic.js');
+                console.log('More info: <', err.message, '>');
+                process.exit(1);
+            }
+        });
     } else {
         console.log('Exiting: unable to find analytics id to replace');
-        process.exit(1);
     }
-
-    // write back to analytic.js
-    fs.writeFile(analytics, result, 'utf8', function(err) {
-        if (err) {
-            console.log('Error writing to analytic.js');
-            console.log('More info: <', err.message, '>');
-            process.exit(1);
-        }
-    });
 });
