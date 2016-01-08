@@ -26,7 +26,7 @@ fs.readFile(analytics, 'utf8', function(err, data) {
         data = data.replace(productionID, devID);
 
         // write back to analytic.js
-        fs.writeFile(analytics, result, 'utf8', function(err) {
+        fs.writeFile(analytics, data, 'utf8', function(err) {
             if (err) {
                 console.log('Error writing to analytic.js');
                 console.log('More info: <', err.message, '>');
