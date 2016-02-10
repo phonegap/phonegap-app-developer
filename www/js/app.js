@@ -193,85 +193,91 @@
         // don't allow the screen to dim when serving an app
             window.plugins.insomnia.keepAwake();
 
-            setTimeout(function () {
-                analyticInfo = window.phonegap.app.analytic.basicGELF();
-                analyticInfo.short_message = 'connection submit';
-                window.phonegap.app.analytic.logEvent(config, analyticInfo);
+            if (getAddress().match('adobe.ly')) {
+                var addy = getAddress();
+                window.location.href = addy;
+            } else {
 
-                window.phonegap.app.downloadZip({
-                    address: getAddress(),
-                    onProgress: function (data) {
-                        if (data.status === 1) {
-                            if (!analyticDownloadToggle) {
-                                analyticInfo = window.phonegap.app.analytic.basicGELF();
-                                analyticInfo.short_message = 'connection download';
-                                window.phonegap.app.analytic.logEvent(config, analyticInfo);
-                                analyticDownloadToggle = true;
-                            }
-                        } else if (data.status === 2) {
-                            if (!analyticExtractToggle) {
-                                analyticInfo = window.phonegap.app.analytic.basicGELF();
-                                analyticInfo.short_message = 'connection extract';
-                                window.phonegap.app.analytic.logEvent(config, analyticInfo);
-                                analyticExtractToggle = true;
-                            }
+                setTimeout(function () {
+                    analyticInfo = window.phonegap.app.analytic.basicGELF();
+                    analyticInfo.short_message = 'connection submit';
+                    window.phonegap.app.analytic.logEvent(config, analyticInfo);
 
+                    window.phonegap.app.downloadZip({
+                        address: getAddress(),
+                        onProgress: function (data) {
+                            if (data.status === 1) {
+                                if (!analyticDownloadToggle) {
+                                    analyticInfo = window.phonegap.app.analytic.basicGELF();
+                                    analyticInfo.short_message = 'connection download';
+                                    window.phonegap.app.analytic.logEvent(config, analyticInfo);
+                                    analyticDownloadToggle = true;
+                                }
+                            } else if (data.status === 2) {
+                                if (!analyticExtractToggle) {
+                                    analyticInfo = window.phonegap.app.analytic.basicGELF();
+                                    analyticInfo.short_message = 'connection extract';
+                                    window.phonegap.app.analytic.logEvent(config, analyticInfo);
+                                    analyticExtractToggle = true;
+                                }
+
+                                clearAlternatingPulsingMessage(msgTimer);
+                                updateMessage('Extracting...');
+                            } else if (data.status === 3) {
+                                analyticInfo = window.phonegap.app.analytic.basicGELF();
+                                analyticInfo.short_message = 'connection success';
+                                window.phonegap.app.analytic.logEvent(config, analyticInfo);
+                                clearAlternatingPulsingMessage(msgTimer);
+                                updateMessage('Success!');
+                            }
+                        },
+                        onDownloadError: function (e) {
                             clearAlternatingPulsingMessage(msgTimer);
-                            updateMessage('Extracting...');
-                        } else if (data.status === 3) {
+                            onBuildSubmitError('Download Error!');
+                            var errorString = 'Unable to download archive from the server.\n\n';
+
+                            if (e) {
+                            // fix for wp8 since it returns an object as opposed to just an int
+                                if (e.code) e.type = e.code;
+
+                                if (e.type === 1) {
+                                    analyticInfo = window.phonegap.app.analytic.basicGELF();
+                                    analyticInfo.short_message = 'connection failure';
+                                    analyticInfo._error_msg = 'invalid url';
+                                    window.phonegap.app.analytic.logEvent(config, analyticInfo);
+                                    errorString += 'Please enter a valid url to connect to.';
+                                } else if (e.type === 2) {
+                                    analyticInfo = window.phonegap.app.analytic.basicGELF();
+                                    analyticInfo.short_message = 'connection failure';
+                                    analyticInfo._error_msg = 'unable to connect';
+                                    window.phonegap.app.analytic.logEvent(config, analyticInfo);
+                                    errorString += 'Unable to properly connect to the server.';
+                                } else if (e.type === 3) {
+                                    analyticInfo = window.phonegap.app.analytic.basicGELF();
+                                    analyticInfo.short_message = 'connection failure';
+                                    analyticInfo._error_msg = 'unable to unzip';
+                                    window.phonegap.app.analytic.logEvent(config, analyticInfo);
+                                    errorString += 'Unable to properly unzip the archive.';
+                                }
+                            }
+
+                            setTimeout(function () {
+                                navigator.notification.alert(
+                                    errorString,
+                                    function () {}
+                                );
+                            }, 4000);
+                        },
+                        onCancel: function (e) {
                             analyticInfo = window.phonegap.app.analytic.basicGELF();
-                            analyticInfo.short_message = 'connection success';
+                            analyticInfo.short_message = 'connection canceled';
                             window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             clearAlternatingPulsingMessage(msgTimer);
-                            updateMessage('Success!');
+                            onUserCancel();
                         }
-                    },
-                    onDownloadError: function (e) {
-                        clearAlternatingPulsingMessage(msgTimer);
-                        onBuildSubmitError('Download Error!');
-                        var errorString = 'Unable to download archive from the server.\n\n';
-
-                        if (e) {
-                        // fix for wp8 since it returns an object as opposed to just an int
-                            if (e.code) e.type = e.code;
-
-                            if (e.type === 1) {
-                                analyticInfo = window.phonegap.app.analytic.basicGELF();
-                                analyticInfo.short_message = 'connection failure';
-                                analyticInfo._error_msg = 'invalid url';
-                                window.phonegap.app.analytic.logEvent(config, analyticInfo);
-                                errorString += 'Please enter a valid url to connect to.';
-                            } else if (e.type === 2) {
-                                analyticInfo = window.phonegap.app.analytic.basicGELF();
-                                analyticInfo.short_message = 'connection failure';
-                                analyticInfo._error_msg = 'unable to connect';
-                                window.phonegap.app.analytic.logEvent(config, analyticInfo);
-                                errorString += 'Unable to properly connect to the server.';
-                            } else if (e.type === 3) {
-                                analyticInfo = window.phonegap.app.analytic.basicGELF();
-                                analyticInfo.short_message = 'connection failure';
-                                analyticInfo._error_msg = 'unable to unzip';
-                                window.phonegap.app.analytic.logEvent(config, analyticInfo);
-                                errorString += 'Unable to properly unzip the archive.';
-                            }
-                        }
-
-                        setTimeout(function () {
-                            navigator.notification.alert(
-                                errorString,
-                                function () {}
-                            );
-                        }, 4000);
-                    },
-                    onCancel: function (e) {
-                        analyticInfo = window.phonegap.app.analytic.basicGELF();
-                        analyticInfo.short_message = 'connection canceled';
-                        window.phonegap.app.analytic.logEvent(config, analyticInfo);
-                        clearAlternatingPulsingMessage(msgTimer);
-                        onUserCancel();
-                    }
-                });
-            }, 1000);
+                    });
+                }, 1000);
+            }
         });
     }
 
