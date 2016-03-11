@@ -80,11 +80,12 @@
         <icon density="xhdpi" src="resources/icon/android/icon-96.png" />
     </platform>
     <platform name="wp8">
+        <preference name="Orientation" value="default" />
         <icon height="99" src="resources/icon/wp8/ApplicationIcon.png" width="99" />
         <icon height="159" src="resources/icon/wp8/TileMedium.png" width="159" />
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="android" spec="~5.0.0" />
     <engine name="ios" spec="~4.0.1" />
+    <engine name="android" spec="~5.0.0" />
 </widget>
