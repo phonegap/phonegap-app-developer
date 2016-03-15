@@ -40,7 +40,7 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.0.0" />
     <plugin name="cordova-plugin-vibration" spec="~2.0.0" />
     <plugin name="phonegap-plugin-contentsync" spec="~1.2.3" />
-    <plugin name="phonegap-plugin-push" spec="~1.5.3" />
+    <plugin name="phonegap-plugin-push" spec="~1.6.0" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     <plugin name="cordova-plugin-insomnia" spec="~4.0.1" />
     <plugin name="cordova-plugin-ble-central" spec="~1.0.4" />
