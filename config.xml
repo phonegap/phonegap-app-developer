@@ -46,6 +46,7 @@
     <plugin name="phonegap-plugin-push" spec="~1.6.3">
         <variable name="SENDER_ID" value="85075801930" />
     </plugin>
+    <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/Wikitude/wikitude-cordova-plugin.git" />
     <platform name="ios">
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
@@ -74,6 +75,7 @@
         <splash height="1242" src="resources/splash/ios/Default-Landscape-736h.png" width="2208" />
     </platform>
     <platform name="android">
+        <preference name="android-minSdkVersion" value="15" />
         <preference name="Orientation" value="default" />
         <preference name="SplashScreenDelay" value="0" />
         <icon density="ldpi" src="resources/icon/android/icon-36.png" />
