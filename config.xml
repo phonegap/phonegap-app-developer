@@ -40,10 +40,12 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.0.0" />
     <plugin name="cordova-plugin-vibration" spec="~2.0.0" />
     <plugin name="phonegap-plugin-contentsync" spec="~1.2.3" />
-    <plugin name="phonegap-plugin-push" spec="~1.6.0" />
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     <plugin name="cordova-plugin-insomnia" spec="~4.0.1" />
     <plugin name="cordova-plugin-ble-central" spec="~1.0.4" />
+    <plugin name="phonegap-plugin-push" spec="~1.6.0">
+        <variable name="SENDER_ID" value="85075801930" />
+    </plugin>
     <platform name="ios">
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
