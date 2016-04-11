@@ -117,11 +117,13 @@ our app's configuration.
 ### Adding Custom Plugins
 
 If you're a developer interested in creating your own custom build of the
-PhoneGap Developer App, that this section is for you!
+PhoneGap Developer App, then this section is for you!
 
 Since the PhoneGap Developer app bundles `phonegap` as a npm dependency and
 treats the `platforms/` and `plugins/` as artifacts, you'll find that it is very
 easy to add your own plugins and alter other aspects of the app.
+
+You may visit the [PhoneGap docs](http://docs.phonegap.com/references/developer-app/custom-build/ios/) for a more in-depth guide or follow the steps below.
 
 First, [Setup](#user-content-setup) the project on your local system.
 
