@@ -126,7 +126,12 @@ easy to add your own plugins and alter other aspects of the app.
 First, [Setup](#user-content-setup) the project on your local system.
 
 Second, edit the `config.xml` to add a custom plugin, change a preference, or
-configure the app's name.
+configure the app's name. You should also change the app's id to your own
+unique app bundle id:
+
+    <?xml version='1.0' encoding='utf-8'?>
+    <widget id="org.mycompany.phonegap.app" version="1.6.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+
 
 Third, follow the [Compile and Run](#user-content-compile-and-run) section to
 get the app onto your device.
