@@ -20,7 +20,8 @@ For more information, see [Developer App Reference Guide][3] on the PhoneGap Doc
 ## Documentation
 
 - [Developer App Reference Guide](http://docs.phonegap.com/references/developer-app/)
-- [FAQ](https://github.com/phonegap/phonegap-app-developer/blob/master/FAQ.md)
+- [FAQ/Troubleshooting](http://docs.phonegap.com/references/developer-app/troubleshoot-faq/)
+- [Unable to Connect or Download from Server](http://docs.phonegap.com/references/developer-app/troubleshoot-faq/#phonegap-developer-app-is-unable-to-download-from-the-server)
 
 ## Development
 
