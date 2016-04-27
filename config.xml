@@ -43,7 +43,7 @@
     <plugin name="cordova-plugin-whitelist" spec="~1.0.0" />
     <plugin name="cordova-plugin-insomnia" spec="~4.0.1" />
     <plugin name="cordova-plugin-ble-central" spec="~1.0.4" />
-    <plugin name="phonegap-plugin-push" spec="~1.6.0">
+    <plugin name="phonegap-plugin-push" spec="~1.6.3">
         <variable name="SENDER_ID" value="85075801930" />
     </plugin>
     <platform name="ios">
@@ -88,6 +88,6 @@
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="android" spec="~5.0.0" />
     <engine name="ios" spec="~4.1.1" />
+    <engine name="android" spec="~5.0.0" />
 </widget>
