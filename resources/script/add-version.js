@@ -12,7 +12,7 @@ var indexFilePath = path.join(__dirname, '../../www/index.html');
 var parseString = xml2js.parseString;
 
 var fsError = function(err) {
-  console.log('Error reading config.xml');
+  console.log('Error reading file');
   console.log('More info: <', err.message, '>');
   process.exit(1);
 }
