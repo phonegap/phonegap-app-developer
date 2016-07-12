@@ -28,8 +28,8 @@ fs.readFile(configFilePath, 'utf-8', function(err, data) {
     }
 
     var version = result.widget.$.version;
-    var name = result.widget.name[0];
-    var versionText = '<!-- %PHONEGAP_APP_VERSION_START% -->' + version + ' ' + name + '<!-- %PHONEGAP_APP_VERSION_END% -->';
+    var id = result.widget.$.id;
+    var versionText = '<!-- %PHONEGAP_APP_VERSION_START% -->' + id + ' : ' + version + '<!-- %PHONEGAP_APP_VERSION_END% -->';
     
     fs.readFile(indexFilePath, 'utf-8', function(err, indexData) {
       if(err) {
