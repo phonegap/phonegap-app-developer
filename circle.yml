@@ -2,6 +2,10 @@ machine:
   node:
     version: 4.0.0
 
+dependencies:
+  pre:
+    - echo y | android update sdk --no-ui --filter "extra"
+
 general:
   artifacts:
     - "/home/ubuntu/phonegap-app-developer/platforms/android/build/outputs/apk/"
