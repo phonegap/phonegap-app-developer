@@ -49,6 +49,7 @@
         <variable name="SENDER_ID" value="85075801930" />
     </plugin>
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="~6.0.1" />
     <platform name="ios">
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
@@ -92,6 +93,6 @@
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="ios" spec="~4.1.1" />
     <engine name="android" spec="~5.0.0" />
+    <engine name="ios" spec="~4.1.1" />
 </widget>
