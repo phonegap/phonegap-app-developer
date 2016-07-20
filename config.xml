@@ -50,6 +50,7 @@
     </plugin>
     <plugin name="cordova-plugin-socialsharing" spec="~5.0.0" />
     <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git#nocam" />
+    <plugin name="phonegap-mobile-accessibility" spec="~1.0.4" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
     <platform name="ios">
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
