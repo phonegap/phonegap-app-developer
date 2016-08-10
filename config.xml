@@ -48,7 +48,7 @@
     <plugin name="phonegap-plugin-push" spec="~1.6.3">
         <variable name="SENDER_ID" value="85075801930" />
     </plugin>
-    <plugin name="cordova-plugin-socialsharing" spec="~5.0.0" />
+    <plugin name="cordova-plugin-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin" />
     <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git#nocam" />
     <plugin name="phonegap-plugin-mobile-accessibility" spec="~1.0.4" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
