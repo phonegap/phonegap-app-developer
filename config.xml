@@ -53,6 +53,7 @@
     <plugin name="phonegap-plugin-mobile-accessibility" spec="~1.0.4" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
     <platform name="ios">
+        <icon height="167" src="resources/icon/ios/icon-83.5.png" width="167" />
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
         <icon height="72" src="resources/icon/ios/icon-72.png" width="72" />
@@ -64,10 +65,12 @@
         <icon height="100" src="resources/icon/ios/icon-50@2x.png" width="100" />
         <icon height="40" src="resources/icon/ios/icon-40.png" width="40" />
         <icon height="80" src="resources/icon/ios/icon-40@2x.png" width="80" />
+        <icon height="120" src="resources/icon/ios/icon-40@3x.png" width="120" />
         <icon height="57" src="resources/icon/ios/icon.png" width="57" />
         <icon height="114" src="resources/icon/ios/icon@2x.png" width="114" />
         <icon height="29" src="resources/icon/ios/icon-small.png" width="29" />
         <icon height="58" src="resources/icon/ios/icon-small@2x.png" width="58" />
+        <icon height="87" src="resources/icon/ios/icon-small@3x.png" width="87" />
         <splash height="480" src="resources/splash/ios/Default~iphone.png" width="320" />
         <splash height="960" src="resources/splash/ios/Default@2x~iphone.png" width="640" />
         <splash height="1024" src="resources/splash/ios/Default-Portrait~ipad.png" width="768" />
