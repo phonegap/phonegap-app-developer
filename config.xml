@@ -53,7 +53,7 @@
     <plugin name="phonegap-plugin-mobile-accessibility" spec="~1.0.4" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
     <platform name="ios">
-        <icon height="167" src="resources/icon/ios/icon-83.5.png" width="167" />
+        <icon height="167" src="resources/icon/ios/icon-83.5@2x.png" width="167" />
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
         <icon height="72" src="resources/icon/ios/icon-72.png" width="72" />
