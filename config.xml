@@ -13,13 +13,11 @@
     <hook src="resources/script/remove-hockeyapp.js" type="after_compile" />
     <hook src="resources/script/restore-analytics.js" type="after_compile" />
     <hook src="resources/script/remove-version.js" type="after_compile" />
-    <platform name="ios">
-        <preference name="Orientation" value="all" />
-    </platform>
+
     <preference name="StatusBarStyle" value="default" />
     <preference name="ShowSplashScreenSpinner" value="false" />
-    <preference name="AutoHideSplashScreen" value="false" />
     <preference name="DisallowOverscroll" value="true" />
+
     <access origin="*" />
     <content src="index.html" />
     <plugin name="cordova-plugin-battery-status" spec="~1.2.0" />
@@ -52,7 +50,10 @@
     <plugin name="phonegap-plugin-barcodescanner" spec="~6.0.2" />
     <plugin name="phonegap-plugin-mobile-accessibility" spec="~1.0.4" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
+
     <platform name="ios">
+        <preference name="Orientation" value="all" />
+        <preference name="AutoHideSplashScreen" value="false" />
         <icon height="167" src="resources/icon/ios/icon-83.5@2x.png" width="167" />
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
@@ -92,6 +93,7 @@
         <icon density="xhdpi" src="resources/icon/android/icon-96.png" />
     </platform>
     <platform name="wp8">
+        <preference name="AutoHideSplashScreen" value="false" />
         <preference name="Orientation" value="default" />
         <icon height="99" src="resources/icon/wp8/ApplicationIcon.png" width="99" />
         <icon height="159" src="resources/icon/wp8/TileMedium.png" width="159" />
