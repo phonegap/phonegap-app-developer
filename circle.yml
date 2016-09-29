@@ -12,7 +12,7 @@ general:
 
   branches:
     ignore:
-      - /v2.0.0-dev-*/
+      - /v2.0.0-dev-[a-zA-Z0-9]*/
 
 deployment:
   production:
