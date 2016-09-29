@@ -10,6 +10,10 @@ general:
   artifacts:
     - "/home/ubuntu/phonegap-app-developer/platforms/android/build/outputs/apk/"
 
+  branches:
+    ignore:
+      - /v2.0.0-dev-*/
+
 deployment:
   production:
     branch: [continuous-integration, dev]
