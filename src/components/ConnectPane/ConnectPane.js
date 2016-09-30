@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 
-import { Button, TextInput } from 'phonegap-topcoat-react';
+import { Button, TextInput } from 'topcoat-preact';
 
 import './index.less';
 

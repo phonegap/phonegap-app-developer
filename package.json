@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "history": "^4.2.0",
-    "phonegap-topcoat-react": "file:///Users/twilliam/src/phonegap/phonegap-topcoat-react",
     "preact": "^6.0.2",
     "preact-compat": "^3.4.2",
     "preact-transition-group": "^1.1.0",
-    "react-animated-views": "file:///Users/twilliam/src/phonegap/react-animated-views",
-    "react-router": "^2.8.1"
+    "react-animated-views": "git+https://github.com/devgeeks/react-animated-views.git",
+    "react-router": "^2.8.1",
+    "topcoat-preact": "git+https://github.com/phonegap/topcoat-preact.git"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import animateView from 'react-animated-views';
-import { TabBar } from 'phonegap-topcoat-react';
+import { TabBar } from 'topcoat-preact';
 
 import MainHeader from 'components/MainHeader';
 
