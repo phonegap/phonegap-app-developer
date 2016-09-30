@@ -10,9 +10,15 @@ import {
 import styles from './index.less';
 
 const MainHeader = (props, state) => (
-  <NavigationBar>
+  <NavigationBar className={ styles.mainHeader }>
     <NavigationBarItem quarter left>
-      <IconButton />
+      <IconButton
+        quiet
+        title="settings"
+        clickHandler={ () => props.handleIconButtonClick('settings') }
+      >
+        <span className={ styles.settingsButton } />
+      </IconButton>
     </NavigationBarItem>
     <NavigationBarItem half center>
       <NavigationBarTitle>
@@ -20,7 +26,13 @@ const MainHeader = (props, state) => (
       </NavigationBarTitle>
     </NavigationBarItem>
     <NavigationBarItem quarter right>
-      <IconButton />
+      <IconButton
+        quiet
+        title="Help"
+        clickHandler={ () => props.handleIconButtonClick('help') }
+      >
+        <span className={ styles.helpButton } />
+      </IconButton>
     </NavigationBarItem>
   </NavigationBar>
 );

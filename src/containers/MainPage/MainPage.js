@@ -23,7 +23,6 @@ class MainPage extends Component {
         <TabBar
           name="app-load-options"
           clickHandler={ tab => this.handleTabBarButtonClick(tab) }
-          onTouchEnd={ tab => this.handleTabBarButtonClick(tab) }
         >
           <span key="connect">Connect</span>
           <span key="saved">Saved Projects</span>
