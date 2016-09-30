@@ -20,6 +20,7 @@
     "preact-compat": "^3.4.2",
     "preact-transition-group": "^1.1.0",
     "react-animated-views": "git+https://github.com/devgeeks/react-animated-views.git",
+    "react-fastclick": "^2.1.2",
     "react-router": "^2.8.1",
     "topcoat-preact": "git+https://github.com/phonegap/topcoat-preact.git"
   },

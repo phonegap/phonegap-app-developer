@@ -2,6 +2,8 @@
 // import 'isomorphic-fetch';
 import { options, h, render } from 'preact';
 import { hashHistory, Route, Router, Redirect } from 'react-router';
+// Attempt to circumvent the 300ms delay
+import 'react-fastclick';
 
 import './topcoat-mobile-light.min.css';
 import './index.less';

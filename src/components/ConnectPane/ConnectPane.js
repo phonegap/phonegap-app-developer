@@ -4,9 +4,8 @@ import { Button, TextInput } from 'topcoat-preact';
 
 import styles from './index.less';
 
-let connectURL;
 // TODO This might be refactored to just accept children
-class ConnectPane extends Component {
+export default class ConnectPane extends Component {
   render() {
     return (
       <div className={ styles.connectPane }>
@@ -40,5 +39,3 @@ class ConnectPane extends Component {
     );
   }
 }
-
-export default ConnectPane;

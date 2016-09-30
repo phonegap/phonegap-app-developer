@@ -1,18 +1,20 @@
 import { h, Component } from 'preact';
 import animateView from 'react-animated-views';
 import { TabBar } from 'topcoat-preact';
+import TransitionGroup from 'preact-transition-group';
 
 import MainHeader from 'components/MainHeader';
 
 class MainPage extends Component {
 
+  // @TODO revove the lint disable when this method actually does something
   handleIconButtonClick(buttonName) { // eslint-disable-line class-methods-use-this
     console.log(`${buttonName} icon button clicked`);
   }
 
   handleTabBarButtonClick(tab) {
-    const { router } = this.context;
-    router.push(`/main/${tab}`);
+    const { push } = this.props;
+    push(`/main/${tab}`);
     console.log(`${tab} tab clicked`);
   }
 
@@ -28,7 +30,9 @@ class MainPage extends Component {
           <span key="saved">Saved Projects</span>
         </TabBar>
         { /* Nested route: the children are the containers for each tab */ }
-        { this.props.children }
+        <TransitionGroup className="transitiongroup">
+          { this.props.children }
+        </TransitionGroup>
       </div>
     );
   }

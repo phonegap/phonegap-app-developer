@@ -1,7 +1,11 @@
-import { cloneElement, h } from 'preact';
+import { cloneElement, h, Component } from 'preact';
 import { Children } from 'preact-compat';
 import TransitionGroup from 'preact-transition-group';
 
+/**
+ * This component is simply the renderer for the children that are to be
+ *   animated via react-animated-views
+ */
 const Root = (props, state) => {
   const {
     location: { pathname: key, action: direction },

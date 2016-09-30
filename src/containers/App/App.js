@@ -7,18 +7,18 @@ import ConnectTab from 'containers/ConnectTab';
 import SavedTab from 'containers/SavedTab';
 
 // This needs to be a class to keep HMR working
-class App extends Component { // eslint-disable-line react/prefer-stateless-function
+export default class App extends Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <Router history={ hashHistory }>
-        <Route path="main" component={ MainPage }>
-          <Route path="connect" component={ ConnectTab } />
-          <Route path="saved" component={ SavedTab } />
+        <Route component={ Root }>
+          <Route path="main" component={ MainPage }>
+            <Route path="connect" component={ ConnectTab } />
+            <Route path="saved" component={ SavedTab } />
+          </Route>
         </Route>
         <Redirect from="/" to="/main/connect" />
       </Router>
     );
   }
 }
-
-export default App;

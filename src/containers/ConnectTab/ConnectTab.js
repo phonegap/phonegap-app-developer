@@ -26,12 +26,11 @@ class ConnectTab extends Component {
 
   handleButtonClick(button, data) {
     console.log(`${button} button clicked`);
-    let address;
 
     switch (button) {
       case 'scan':
         scanQRCode((result) => {
-          address = cleanAddress(result.text);
+          const address = cleanAddress(result.text);
           this.setState({ data: address });
           connectToServer(this.state.data);
         },
@@ -40,9 +39,12 @@ class ConnectTab extends Component {
         });
         break;
       case 'connect':
-        address = cleanAddress(data);
-        this.setState({ data: address });
-        connectToServer(address);
+        {
+          // block scope for address
+          const address = cleanAddress(data);
+          this.setState({ data: address });
+          connectToServer(address);
+        }
         break;
       default:
         console.log(button);
@@ -59,7 +61,7 @@ class ConnectTab extends Component {
       <ConnectPane
         connectURL={ this.state.data }
         handleButtonClick={ (button, data) => this.handleButtonClick(button, data) }
-        handleOnChange={ this.handleTextChange }
+        handleOnChange={ e => this.handleTextChange(e) }
       />
     );
   }
