@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "history": "^4.2.0",
-    "preact": "^6.0.2",
+    "preact": "^6.2.0",
     "preact-compat": "^3.4.2",
     "preact-transition-group": "^1.1.0",
     "react-animated-views": "git+https://github.com/devgeeks/react-animated-views.git",
