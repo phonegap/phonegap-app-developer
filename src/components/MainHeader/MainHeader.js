@@ -13,6 +13,7 @@ const MainHeader = (props, state) => (
   <NavigationBar className={ styles.mainHeader }>
     <NavigationBarItem quarter left>
       <IconButton
+        aria-label="Settings"
         quiet
         title="settings"
         clickHandler={ () => props.handleIconButtonClick('settings') }
@@ -27,6 +28,7 @@ const MainHeader = (props, state) => (
     </NavigationBarItem>
     <NavigationBarItem quarter right>
       <IconButton
+        aria-label="Help"
         quiet
         title="Help"
         clickHandler={ () => props.handleIconButtonClick('help') }

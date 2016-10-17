@@ -1,7 +1,7 @@
 // import 'lie';
 // import 'isomorphic-fetch';
 import { options, h, render } from 'preact';
-import { hashHistory, Route, Router, Redirect } from 'react-router';
+import { IntlProvider } from 'react-intl';
 // Attempt to circumvent the 300ms delay
 import 'react-fastclick';
 
@@ -16,7 +16,11 @@ function init() {
   window.navigator && window.navigator.splashscreen && window.navigator.splashscreen.hide();
   const App = require('./containers/App').default; // eslint-disable-line global-require
 
-  root = render(<App />, document.getElementById('application'), root);
+  root = render(
+    <IntlProvider locale="en"><App /></IntlProvider>,
+    document.getElementById('application'),
+    root
+  );
 }
 
 if (!window.cordova) {

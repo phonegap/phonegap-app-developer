@@ -14,7 +14,7 @@
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0,
     "react/jsx-filename-extension": 0,
-    "no-unused-expressions": [2, { "allowShortCircuit": true }]
+    "no-unused-expressions": [0, { "allowShortCircuit": true }]
   },
   "env": {
       "node": true,

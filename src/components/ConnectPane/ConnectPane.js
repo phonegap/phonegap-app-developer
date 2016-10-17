@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { FormattedMessage } from 'react-intl';
 
 import { Button, TextInput } from 'topcoat-preact';
 
@@ -10,16 +11,27 @@ export default class ConnectPane extends Component {
     return (
       <div className={ styles.connectPane }>
         <Button
+          aria-label="Scan QR Code"
           full
           clickHandler={ () => this.props.handleButtonClick('scan') }
         >
           <img src="assets/img/ic_fullscreen_black_24px.svg" alt="scan icon" />
-          <span> Scan a QR Code</span>
+          <FormattedMessage
+            id="scan-a-qr-code-button"
+            defaultMessage={ 'Scan a QR Code' }
+          />
         </Button>
         <div className={ styles.orSpacer }>
-          - or -
+          <FormattedMessage
+            id="or-spacer"
+            defaultMessage={ '- or -' }
+          />
         </div>
-        <label htmlFor="connectURL">Enter server address
+        <label htmlFor="connectURL">
+          <FormattedMessage
+            id="enter-server-address"
+            defaultMessage={ 'Enter server address' }
+          />
           <TextInput
             name="connectURL"
             value={ this.props.connectURL }
@@ -29,11 +41,15 @@ export default class ConnectPane extends Component {
           />
         </label>
         <Button
+          aria-label="Connect"
           full
           cta
           clickHandler={ () => this.props.handleButtonClick('connect', this.connectURL.input.value) }
         >
-          Connect
+          <FormattedMessage
+            id="connect-buton"
+            defaultMessage={ 'Connect' }
+          />
         </Button>
       </div>
     );
