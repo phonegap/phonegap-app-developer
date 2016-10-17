@@ -4,7 +4,7 @@ import { hashHistory, Redirect, Router, Route } from 'react-router';
 import Root from 'containers/Root';
 import MainPage from 'containers/MainPage';
 import ConnectTab from 'containers/ConnectTab';
-import SavedTab from 'containers/SavedTab';
+import CloudTab from 'containers/CloudTab';
 
 // This needs to be a class to keep HMR working
 export default class App extends Component { // eslint-disable-line react/prefer-stateless-function
@@ -14,7 +14,7 @@ export default class App extends Component { // eslint-disable-line react/prefer
         <Route component={ Root }>
           <Route path="main" component={ MainPage }>
             <Route path="connect" component={ ConnectTab } />
-            <Route path="saved" component={ SavedTab } />
+            <Route path="saved" component={ CloudTab } />
           </Route>
         </Route>
         <Redirect from="/" to="/main/connect" />

@@ -1,8 +1,8 @@
 import { h, Component } from 'preact';
 
-import SavedPane from 'components/SavedPane';
+import CloudPane from 'components/CloudPane';
 
-class SavedTab extends Component {
+class CloudTab extends Component {
   // There _will_ be a button here at some point...
   // @TODO revove the lint disable when this method actually does something
   handleButtonClick(button) { // eslint-disable-line class-methods-use-this
@@ -11,9 +11,9 @@ class SavedTab extends Component {
 
   render() {
     return (
-      <SavedPane handleButtonClick={ this.handleButtonClick } />
+      <CloudPane handleButtonClick={ this.handleButtonClick } />
     );
   }
 }
 
-export default SavedTab;
+export default CloudTab;

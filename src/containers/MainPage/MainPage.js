@@ -23,11 +23,12 @@ class MainPage extends Component {
       <div className="page">
         <MainHeader handleIconButtonClick={ this.handleIconButtonClick } />
         <TabBar
+          full
           name="app-load-options"
           clickHandler={ tab => this.handleTabBarButtonClick(tab) }
         >
           <span key="connect">Connect</span>
-          <span key="saved">Saved Projects</span>
+          <span key="saved">Cloud</span>
         </TabBar>
         { /* Nested route: the children are the containers for each tab */ }
         <TransitionGroup className="transitiongroup">

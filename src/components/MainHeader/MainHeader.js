@@ -22,9 +22,7 @@ const MainHeader = (props, state) => (
       </IconButton>
     </NavigationBarItem>
     <NavigationBarItem half center>
-      <NavigationBarTitle>
-        PhoneGap
-      </NavigationBarTitle>
+      PhoneGap
     </NavigationBarItem>
     <NavigationBarItem quarter right>
       <IconButton
