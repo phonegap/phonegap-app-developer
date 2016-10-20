@@ -13,26 +13,26 @@ function connectToServer(address) {
 class ConnectTab extends Component {
   constructor() {
     super();
-    this.state.data = {};
+    this.state.url = '';
   }
 
   componentDidMount() {
     // load in last saved address
     load((loaded) => {
       const addr = loaded.address;
-      this.setState({ data: addr });
+      this.setState({ url: addr });
     });
   }
 
-  handleButtonClick(button, data) {
+  handleButtonClick(button) {
     console.log(`${button} button clicked`);
 
     switch (button) {
       case 'scan':
         scanQRCode((result) => {
           const address = cleanAddress(result.text);
-          this.setState({ data: address });
-          connectToServer(this.state.data);
+          this.setState({ url: address });
+          connectToServer(this.state.url);
         },
         (error) => {
           navigator.notification.alert(`Unable to scan: ${error}`);
@@ -41,8 +41,8 @@ class ConnectTab extends Component {
       case 'connect':
         {
           // block scope for address
-          const address = cleanAddress(data);
-          this.setState({ data: address });
+          const address = cleanAddress(this.state.url);
+          this.setState({ url: address });
           connectToServer(address);
         }
         break;
@@ -51,17 +51,19 @@ class ConnectTab extends Component {
     }
   }
 
-  handleTextChange(e) {
-    this.setState({ data: e.target.value });
+  handleTextChange(e, { newValue, method }) {
+    this.setState({ url: newValue });
   }
 
   render() {
-    // TODO other handlers like those for the combobox will be passed as well
+    // @TODO other handlers like those for the combobox will be passed as well
     return (
       <ConnectPane
-        connectURL={ this.state.data }
-        handleButtonClick={ (button, data) => this.handleButtonClick(button, data) }
-        handleOnChange={ e => this.handleTextChange(e) }
+        connectURL={ this.state.url }
+        handleButtonClick={ button => this.handleButtonClick(button) }
+        handleOnChange={
+          (e, autosuggestData) => this.handleTextChange(e, autosuggestData)
+        }
       />
     );
   }

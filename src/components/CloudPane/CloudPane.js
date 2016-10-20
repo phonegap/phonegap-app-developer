@@ -4,7 +4,7 @@ import { Button } from 'topcoat-preact';
 
 import styles from './index.less';
 
-// TODO This will probably be refactored to accept children
+// @TODO This will probably be refactored to accept children
 const CloudPane = (props, state) => (
   <div className={ styles.cloudPane }>
     <p>

@@ -3,7 +3,7 @@
 import { options, h, render } from 'preact';
 import { IntlProvider } from 'react-intl';
 // Attempt to circumvent the 300ms delay
-import 'react-fastclick';
+//import 'react-fastclick';
 
 import './topcoat-mobile-light.min.css';
 import './index.less';
@@ -32,19 +32,7 @@ if (!window.cordova) {
 }
 
 if (module.hot) {
-  // optional: mute HMR/WDS logs
-  const log = console.log;
-  const logs = [];
-  console.log = (t, ...args) => {
-    if (typeof t === 'string' && t.match(/^\[(HMR|WDS)\]/)) {
-      if (t.match(/(up to date|err)/i)) logs.push(t.replace(/^.*?\]\s*/m, ''), ...args);
-    } else {
-      log.call(console, t, ...args);
-    }
-  };
-  const flushLogs = () => console.log(`%c🚀 ${logs.splice(0, logs.length).join(' ')}`, 'color:#888;');
   module.hot.accept('./containers/App', () => requestAnimationFrame(() => {
-    flushLogs();
     init();
   }));
 }

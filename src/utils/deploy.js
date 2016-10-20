@@ -75,6 +75,7 @@ export const load = (callback) => {
     const config = parseAsJSON(localStorage.getItem('config.json') || '{}');
 
     // load defaults
+    config.last5addresses = config.last5addresses || [];
     config.address = config.address || '127.0.0.1:3000';
     config.optIn = config.optIn || false;
     callback(config);
@@ -83,6 +84,7 @@ export const load = (callback) => {
       const config = parseAsJSON(text);
 
       // load defaults
+      config.last5addresses = config.last5addresses || [];
       config.address = config.address || '127.0.0.1:3000';
       config.optIn = config.optIn || false;
       callback(config);
@@ -91,10 +93,9 @@ export const load = (callback) => {
 };
 
 export const save = (data, callback) => {
-  console.log(data);
   if (typeof cordova === 'undefined') {
     // use localStorage fallback
-    localStorage.setItem('config.json', data);
+    localStorage.setItem('config.json', JSON.stringify(data));
     callback();
   } else {
     saveFile('config.json', data, () => {

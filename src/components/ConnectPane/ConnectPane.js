@@ -5,8 +5,18 @@ import { Button, ComboBox, TextInput } from 'topcoat-preact';
 
 import styles from './index.less';
 
-// TODO This might be refactored to just accept children
+// @TODO This might be refactored to just accept children
 export default class ConnectPane extends Component {
+
+  // @TODO these should come from the config
+  suggestions = [
+    {
+      value: '192.168.1.1:3000',
+    },
+    {
+      value: '192.168.1.6:3000',
+    },
+  ];
 
   render() {
     const { connectURL, handleButtonClick, handleOnChange } = this.props;
@@ -35,6 +45,18 @@ export default class ConnectPane extends Component {
             id="enter-server-address"
             defaultMessage={ 'Enter server address' }
           />
+          <ComboBox
+            value={ connectURL }
+            suggestions={ this.suggestions }
+            changeHandler={ handleOnChange }
+            placeholder="192.168.1.1:3000"
+            full
+            inputProps={ {
+              name: 'connectUrl',
+            } }
+            focusInputOnSuggestionClick={ false }
+          />
+          {/*
           <TextInput
             name="connectURL"
             value={ connectURL }
@@ -42,12 +64,13 @@ export default class ConnectPane extends Component {
             ref={ (node) => { this.connectURL = node; } }
             full
           />
+          */}
         </label>
         <Button
           aria-label="Connect"
           full
           cta
-          clickHandler={ () => handleButtonClick('connect', this.connectURL.input.value) }
+          clickHandler={ () => handleButtonClick('connect', '') }
         >
           <FormattedMessage
             id="connect-buton"
