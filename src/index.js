@@ -2,11 +2,14 @@
 // import 'isomorphic-fetch';
 import { options, h, render } from 'preact';
 import { IntlProvider } from 'react-intl';
-// Attempt to circumvent the 300ms delay
-//import 'react-fastclick';
 
 import './topcoat-mobile-light.min.css';
 import './index.less';
+
+if (!window.Intl) {
+  require('intl'); // eslint-disable-line global-require
+  require('intl/locale-data/jsonp/en'); // eslint-disable-line global-require
+}
 
 options.debounceRendering = f => f();
 options.syncComponentUpdates = true;
