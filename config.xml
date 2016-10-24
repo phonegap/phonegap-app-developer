@@ -34,7 +34,7 @@
     <plugin name="cordova-plugin-dialogs" spec="~1.3.0" />
     <plugin name="cordova-plugin-file" spec="~4.3.0" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.0" />
-    <plugin name="cordova-plugin-geolocation" spec="~2.3.0">
+    <plugin name="cordova-plugin-geolocation" spec="https://github.com/apache/cordova-plugin-geolocation/">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="Geolocation used for development purposes" />
     </plugin>
     <plugin name="cordova-plugin-globalization" spec="~1.0.4" />
