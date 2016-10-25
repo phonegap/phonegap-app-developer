@@ -13,11 +13,9 @@
     <hook src="resources/script/remove-hockeyapp.js" type="after_compile" />
     <hook src="resources/script/restore-analytics.js" type="after_compile" />
     <hook src="resources/script/remove-version.js" type="after_compile" />
-
     <preference name="StatusBarStyle" value="default" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="DisallowOverscroll" value="true" />
-
     <access origin="*" />
     <content src="index.html" />
     <plugin name="cordova-plugin-battery-status" spec="~1.2.0" />
@@ -54,8 +52,7 @@
     <plugin name="cordova-plugin-ble-central" spec="https://github.com/timkim/cordova-plugin-ble-central.git#bluetoothUsage">
         <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Bluetooth development purposes" />
     </plugin>
-
-    <plugin name="phonegap-plugin-push" spec="~1.8.3">
+    <plugin name="phonegap-plugin-push" spec="https://github.com/timkim/phonegap-plugin-push.git">
         <variable name="SENDER_ID" value="85075801930" />
     </plugin>
     <plugin name="cordova-plugin-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin" />
@@ -64,7 +61,6 @@
     </plugin>
     <plugin name="phonegap-plugin-mobile-accessibility" spec="~1.0.4" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
-
     <platform name="ios">
         <preference name="Orientation" value="all" />
         <preference name="AutoHideSplashScreen" value="false" />
@@ -114,6 +110,6 @@
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="ios" spec="~4.2.1" />
     <engine name="android" spec="~5.0.0" />
+    <engine name="ios" spec="~4.2.1" />
 </widget>
