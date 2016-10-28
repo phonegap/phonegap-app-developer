@@ -26,9 +26,9 @@
     <plugin name="cordova-plugin-contacts" spec="~2.2.0">
         <variable name="CONTACTS_USAGE_DESCRIPTION" value="Contacts used for development purposes" />
     </plugin>
-    <plugin name="cordova-pluginice" spec="~1.1.3" />
-    <plugin name="cordova-pluginice-motion" spec="~1.2.2" />
-    <plugin name="cordova-pluginice-orientation" spec="~1.0.4" />
+    <plugin name="cordova-plugin-device" spec="~1.1.3" />
+    <plugin name="cordova-plugin-device-motion" spec="~1.2.2" />
+    <plugin name="cordova-plugin-device-orientation" spec="~1.0.4" />
     <plugin name="cordova-plugin-dialogs" spec="~1.3.0" />
     <plugin name="cordova-plugin-file" spec="~4.3.0" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.0" />
