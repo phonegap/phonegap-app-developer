@@ -48,6 +48,7 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.2.0" />
     <plugin name="cordova-plugin-vibration" spec="~2.1.2" />
     <plugin name="phonegap-plugin-contentsync" spec="~1.2.5" />
+    <plugin name="cordova-plugin-whitelist" spec="~1.3.0" />
     <plugin name="cordova-plugin-insomnia" spec="~4.2.0" />
     <plugin name="cordova-plugin-ble-central" spec="https://github.com/timkim/cordova-plugin-ble-central.git#bluetoothUsage">
         <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Bluetooth development purposes" />
