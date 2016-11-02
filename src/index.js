@@ -39,6 +39,8 @@ if (!window.cordova) {
 }
 
 if (module.hot) {
+  require('preact/devtools'); // eslint-disable-line global-require
+
   module.hot.accept('./containers/App', () => requestAnimationFrame(() => {
     init();
   }));

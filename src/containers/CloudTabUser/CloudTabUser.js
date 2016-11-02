@@ -1,7 +1,8 @@
 import { h, Component } from 'preact';
-import { connect } from 'preact-redux';
 
-class CloudTab extends Component {
+import CloudUserPane from 'components/CloudUserPane';
+
+class CloudTabLogin extends Component {
   // There _will_ be a button here at some point...
   // @TODO revove the lint disable when this method actually does something
   handleButtonClick(button) { // eslint-disable-line class-methods-use-this
@@ -10,13 +11,9 @@ class CloudTab extends Component {
 
   render() {
     return (
-      <div>{ this.props.children }</div>
+      <CloudUserPane handleButtonClick={ this.handleButtonClick } />
     );
   }
 }
 
-function mapStateToProps(state) {
-  return { ...state };
-}
-
-export default connect(mapStateToProps)(CloudTab);
+export default CloudTabLogin;

@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { connect } from 'preact-redux';
 import { save, load, scanQRCode, downloadZip, cleanAddress } from 'utils/deploy';
 
 import ConnectPane from 'components/ConnectPane';
@@ -69,4 +70,8 @@ class ConnectTab extends Component {
   }
 }
 
-export default ConnectTab;
+function mapStateToProps(state) {
+  return { ...state };
+}
+
+export default connect(mapStateToProps)(ConnectTab);

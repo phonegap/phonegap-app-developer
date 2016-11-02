@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import animateView from 'react-animated-views';
 import { TabBar } from 'topcoat-preact';
 import TransitionGroup from 'preact-transition-group';
+import { connect } from 'preact-redux';
 
 import MainHeader from 'components/MainHeader';
 
@@ -28,7 +29,7 @@ class MainPage extends Component {
           clickHandler={ tab => this.handleTabBarButtonClick(tab) }
         >
           <span key="connect">Connect</span>
-          <span key="saved">Cloud</span>
+          <span key="cloud">Cloud</span>
         </TabBar>
         { /* Nested route: the children are the containers for each tab */ }
         <TransitionGroup className="transitiongroup">
@@ -39,4 +40,8 @@ class MainPage extends Component {
   }
 }
 
-export default animateView(MainPage);
+function mapStateToProps(state) {
+  return { ...state };
+}
+
+export default animateView(connect(mapStateToProps)(MainPage));
