@@ -56,15 +56,6 @@ export default class ConnectPane extends Component {
             } }
             focusInputOnSuggestionClick={ false }
           />
-          {/*
-          <TextInput
-            name="connectURL"
-            value={ connectURL }
-            onChange={ e => handleOnChange(e) }
-            ref={ (node) => { this.connectURL = node; } }
-            full
-          />
-          */}
         </label>
         <Button
           aria-label="Connect"

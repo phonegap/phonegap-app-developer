@@ -4,6 +4,10 @@ import { options, h, render } from 'preact';
 import { IntlProvider } from 'react-intl';
 
 import './topcoat-mobile-light.min.css';
+
+import 'adobe-mobile-ui/css/button-mobile.css'; // eslint-disable-line import/imports-first
+import 'adobe-mobile-ui/css/select-mobile.css'; // eslint-disable-line import/imports-first
+
 import './index.less';
 
 if (!window.Intl) {
