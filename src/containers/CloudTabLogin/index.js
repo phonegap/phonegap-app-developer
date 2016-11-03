@@ -1,3 +1,1 @@
-import CloudTabLogin from './CloudTabLogin';
-
-export default CloudTabLogin;
+export default from './CloudTabLogin';

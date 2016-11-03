@@ -1,3 +1,1 @@
-import CloudTabUser from './CloudTabUser';
-
-export default CloudTabUser;
+export default from './CloudTabUser';

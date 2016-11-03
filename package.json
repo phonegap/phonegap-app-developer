@@ -12,8 +12,9 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server -d --inline --hot --progress",
     "build": "cross-env NODE_ENV=production webpack -p --progress",
     "prebuild": "mkdirp www/assets && ncp src/assets www/assets",
-    "lint": "eslint {src,test}",
-    "test": "NODE_ENV=production NODE_PATH=$NODE_PATH:$PWD/src mocha \"./src/**/*_test.js\" --compilers js:babel-core/register,css:css-null-compiler.js --recursive --require ./tests/setup.js"
+    "lint": "eslint --ignore-pattern src/assets {src,test}",
+    "test": "NODE_ENV=production NODE_PATH=$NODE_PATH:$PWD/src mocha \"./src/**/*_test.js\" --compilers js:babel-core/register,css:css-null-compiler.js --recursive --require ./tests/setup.js",
+    "test:watch": "npm test -- --watch"
   },
   "dependencies": {
     "adobe-mobile-ui": "git+https://github.com/phonegap/adobe-mobile-ui.git",

@@ -1,3 +1,1 @@
-import CloudUserPane from './CloudUserPane';
-
-export default CloudUserPane;
+export default from './CloudUserPane';
