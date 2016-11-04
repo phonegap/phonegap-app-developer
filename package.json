@@ -27,6 +27,7 @@
     "react-animated-views": "git+https://github.com/devgeeks/react-animated-views.git",
     "react-intl": "^2.1.5",
     "react-router": "^2.8.1",
+    "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "topcoat-preact": "git+https://github.com/phonegap/topcoat-preact.git"

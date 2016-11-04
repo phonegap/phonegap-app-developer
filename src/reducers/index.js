@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 
 function placeHolder(state = {}, action) {
   switch (action.type) {
@@ -9,6 +10,7 @@ function placeHolder(state = {}, action) {
 
 const rootReducer = combineReducers({
   placeHolder,
+  routing: routerReducer,
 });
 
 export default rootReducer;
