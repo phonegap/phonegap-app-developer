@@ -1,12 +1,25 @@
-export function pgbLogin() {
+export function pgbLoginRequested() {
   return {
-    type: 'PGB_LOGIN',
+    type: 'PGB_LOGIN_REQUESTED',
   };
 }
 
-export function pgbLogout(session) {
+export function pgbLoginReceived(accessToken) {
   return {
-    type: 'PGB_LOGOUT',
-    session,
+    type: 'PGB_LOGIN_RECEIVED',
+    accessToken,
+  };
+}
+
+export function pgbLogoutRequested(accessToken) {
+  return {
+    type: 'PGB_LOGOUT_REQUESTED',
+    accessToken,
+  };
+}
+
+export function pgbLogoutReceived() {
+  return {
+    type: 'PGB_LOGOUT_RECEIVED',
   };
 }
