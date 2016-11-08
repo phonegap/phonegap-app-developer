@@ -1,4 +1,8 @@
 .modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   visibility: hidden;
   opacity: 0.01;
   transform: scale(0.98,0.98);
@@ -18,7 +22,13 @@
     opacity: 1;
   }
 
-  p, .center {
-    text-align: center;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span, img {
+      padding: 0 2px;
+    }
   }
 }

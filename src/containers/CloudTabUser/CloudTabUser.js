@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { Button } from 'topcoat-preact';
 
 import Modal from 'containers/Modal';
 import CloudUserPane from 'components/CloudUserPane';
@@ -32,6 +33,10 @@ class CloudTabLogin extends Component {
             onDismiss={ () => this.handleModalDismiss() }
           >
             <p>This is a modal. Close it below.</p>
+            <Button clickHandler={ () => this.handleModalDismiss() }>
+              <img src="assets/img/S_Close_24_N.svg" alt="close" />
+              <span>Cancel</span>
+            </Button>
           </ModalPane>
         </Modal>
       </CloudUserPane>

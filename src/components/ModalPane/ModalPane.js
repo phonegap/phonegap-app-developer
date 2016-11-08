@@ -6,12 +6,9 @@ import styles from './index.less';
 
 console.log(styles);
 
-const ModalPane = ({ children, modal, onDismiss, open }, state) => (
+const ModalPane = ({ children, modal, open }, state) => (
   <div className={ `${styles.modal} ${open ? styles.open : ''}` }>
     { children }
-    <div className={ styles.center }>
-      <Button clickHandler={ e => onDismiss() }>Close</Button>
-    </div>
   </div>
 );
 

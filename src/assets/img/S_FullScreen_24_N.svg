@@ -1,0 +1,21 @@
+<svg id="S_FullScreen_24_N" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #707070;
+      }
+
+      .cls-2 {
+        fill-rule: evenodd;
+      }
+
+      
+    </style>
+  </defs>
+  <title>S_FullScreen_24_N</title>
+  <rect class="cls-1" x="5" y="6" width="14" height="12"/>
+  <polygon class="cls-2" points="21 17 21 20 18 20 18 22 23 22 23 17 21 17"/>
+  <polygon class="cls-2" points="3 20 3 17 1 17 1 22 6 22 6 20 3 20"/>
+  <polygon class="cls-2" points="18 2 18 4 21 4 21 7 23 7 23 2 18 2"/>
+  <polygon class="cls-2" points="3 4 6 4 6 2 1 2 1 7 3 7 3 4"/>
+  </svg>

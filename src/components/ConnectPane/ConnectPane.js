@@ -28,7 +28,7 @@ export default class ConnectPane extends Component {
           full
           clickHandler={ () => handleButtonClick('scan') }
         >
-          <img src="assets/img/ic_fullscreen_black_24px.svg" alt="scan icon" />
+          <img src="assets/img/S_FullScreen_24_N.svg" alt="scan icon" />
           <FormattedMessage
             id="scan-a-qr-code-button"
             defaultMessage={ 'Scan a QR Code' }
