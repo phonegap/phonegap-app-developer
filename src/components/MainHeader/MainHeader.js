@@ -1,7 +1,6 @@
 import { h } from 'preact';
 
 import {
-  IconButton,
   NavigationBar,
   NavigationBarItem,
   NavigationBarTitle,
@@ -9,32 +8,22 @@ import {
 
 import styles from './index.less';
 
-const MainHeader = (props, state) => (
-  <NavigationBar className={ styles.mainHeader }>
-    <NavigationBarItem quarter left>
-      <IconButton
-        aria-label="Settings"
-        quiet
-        title="settings"
-        clickHandler={ () => props.handleIconButtonClick('settings') }
-      >
-        <span className={ styles.settingsButton } />
-      </IconButton>
-    </NavigationBarItem>
-    <NavigationBarItem half center>
-      PhoneGap
-    </NavigationBarItem>
-    <NavigationBarItem quarter right>
-      <IconButton
-        aria-label="Help"
-        quiet
-        title="Help"
-        clickHandler={ () => props.handleIconButtonClick('help') }
-      >
-        <span className={ styles.helpButton } />
-      </IconButton>
-    </NavigationBarItem>
-  </NavigationBar>
-);
+const MainHeader = (props, state) => {
+  const { leftButton, rightButton, title = 'PhoneGap' } = props;
+
+  return (
+    <NavigationBar className={ styles.mainHeader }>
+      <NavigationBarItem quarter left>
+        { leftButton }
+      </NavigationBarItem>
+      <NavigationBarItem half center>
+        { title }
+      </NavigationBarItem>
+      <NavigationBarItem quarter right>
+        { rightButton }
+      </NavigationBarItem>
+    </NavigationBar>
+  );
+};
 
 export default MainHeader;

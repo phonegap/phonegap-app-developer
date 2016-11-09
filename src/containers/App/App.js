@@ -5,6 +5,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import Root from 'containers/Root';
 import MainPage from 'containers/MainPage';
+import SettingsPage from 'containers/SettingsPage';
 import ConnectTab from 'containers/ConnectTab';
 import CloudTab from 'containers/CloudTab';
 import CloudTabLogin from 'containers/CloudTabLogin';
@@ -30,6 +31,7 @@ export default class App extends Component { // eslint-disable-line react/prefer
                 <IndexRedirect to="login" />
               </Route>
             </Route>
+            <Route path="settings" component={ SettingsPage } />
             <IndexRedirect to="main/connect" />
           </Route>
         </Router>

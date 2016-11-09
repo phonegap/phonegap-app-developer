@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import animateView from 'react-animated-views';
-import { TabBar } from 'topcoat-preact';
+import { IconButton, TabBar } from 'topcoat-preact';
 import TransitionGroup from 'preact-transition-group';
 import { connect } from 'preact-redux';
 
@@ -11,6 +11,8 @@ class MainPage extends Component {
   // @TODO revove the lint disable when this method actually does something
   handleIconButtonClick(buttonName) { // eslint-disable-line class-methods-use-this
     console.log(`${buttonName} icon button clicked`);
+    const { push } = this.props;
+    push(`/${buttonName}`, 'slideUp');
   }
 
   handleTabBarButtonClick(tab) {
@@ -20,9 +22,49 @@ class MainPage extends Component {
   }
 
   render() {
+    const { style } = this.props;
+    const leftButton = (
+      <IconButton
+        aria-label="Settings"
+        quiet
+        title="settings"
+        clickHandler={ () => this.handleIconButtonClick('settings') }
+      >
+        <span
+          style={ {
+            width: '100%',
+            height: '100%',
+            display: 'block',
+            background: 'url(assets/img/S_Settings_24_N.svg) center center no-repeat',
+          } }
+        />
+      </IconButton>
+    );
+    const rightButton = (
+      <IconButton
+        aria-label="Help"
+        quiet
+        title="Help"
+        clickHandler={ () => this.handleIconButtonClick('help') }
+      >
+        <span
+          style={ {
+            width: '100%',
+            height: '100%',
+            display: 'block',
+            background: 'url(assets/img/S_Help_24_N.svg) center center no-repeat',
+          } }
+        />
+      </IconButton>
+    );
+
     return (
-      <div className="page">
-        <MainHeader handleIconButtonClick={ this.handleIconButtonClick } />
+      <div className="page" style={ style }>
+        <MainHeader
+          leftButton={ leftButton }
+          rightButton={ rightButton }
+          title="PhoneGap"
+        />
         <TabBar
           full
           name="app-load-options"
