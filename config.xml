@@ -96,4 +96,5 @@
     <engine name="wp8" spec="~3.8.1" />
     <engine name="ios" spec="~4.1.1" />
     <engine name="android" spec="~5.0.0" />
+    <plugin name="phonegap-plugin-pgb-oauth" spec="https://github.com/wildabeast/phonegap-plugin-pgb-oauth.git#0.3.2" />
 </widget>

@@ -1,5 +1,7 @@
 import { h, Component } from 'preact';
+import { connect } from 'preact-redux'
 import { hashHistory } from 'react-router';
+import * as pgbActions from 'actions/pgbSessionActions';
 
 import CloudLoginPane from 'components/CloudLoginPane';
 
@@ -8,16 +10,17 @@ class CloudTabLogin extends Component {
   // @TODO revove the lint disable when this method actually does something
   handleLoginButtonClick(button) { // eslint-disable-line class-methods-use-this
     console.log(`${button} clicked`);
-    hashHistory.replace('/main/cloud/user/1');
+
+    this.props.dispatch(pgbActions.login());
   }
 
   render() {
     return (
       <CloudLoginPane
-        handleLoginButtonClick={ this.handleLoginButtonClick }
+        handleLoginButtonClick={ this.handleLoginButtonClick.bind(this) }
       />
     );
   }
 }
 
-export default CloudTabLogin;
+export default connect()(CloudTabLogin)
