@@ -4,12 +4,17 @@ import { connect } from 'preact-redux';
 
 import {
   IconButton,
+  List,
+  ListContainer,
+  ListHeader,
+  ListItem,
   NavigationBar,
   NavigationBarItem,
   NavigationBarTitle,
 } from 'topcoat-preact';
 
 import MainHeader from 'components/MainHeader';
+import SettingsPane from 'components/SettingsPane';
 
 class SettingsPage extends Component {
   someFunctionToShutESLintUp() {
@@ -53,6 +58,7 @@ class SettingsPage extends Component {
           rightButton={ rightButton }
           title="Settings"
         />
+        <SettingsPane />
       </div>
     );
   }
