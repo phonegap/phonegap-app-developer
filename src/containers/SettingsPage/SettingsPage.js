@@ -24,7 +24,12 @@ class SettingsPage extends Component {
   handleIconButtonClick(buttonName) { // eslint-disable-line class-methods-use-this
     console.log(`${buttonName} icon button clicked`);
     const { pop } = this.props;
-    pop();
+    pop('slideUp');
+  }
+
+  handleListItemClick(path) {
+    const { push } = this.props;
+    push(path, 'slideLeft');
   }
 
   render() {
@@ -58,7 +63,7 @@ class SettingsPage extends Component {
           rightButton={ rightButton }
           title="Settings"
         />
-        <SettingsPane />
+        <SettingsPane itemClickHandler={ path => this.handleListItemClick(path) } />
       </div>
     );
   }

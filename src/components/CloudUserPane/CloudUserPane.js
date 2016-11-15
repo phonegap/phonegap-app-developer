@@ -23,4 +23,3 @@ const CloudUserPane = (props, state) => (
 );
 
 export default CloudUserPane;
-
