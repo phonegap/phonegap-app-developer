@@ -1,4 +1,5 @@
-import { h, Component } from 'preact';
+import { cloneElement, h, Component } from 'preact';
+import { Children } from 'preact-compat';
 import animateView from 'react-animated-views';
 import { IconButton, TabBar } from 'topcoat-preact';
 import TransitionGroup from 'preact-transition-group';
@@ -7,7 +8,6 @@ import { connect } from 'preact-redux';
 import MainHeader from 'components/MainHeader';
 
 class MainPage extends Component {
-
   // @TODO revove the lint disable when this method actually does something
   handleIconButtonClick(buttonName) { // eslint-disable-line class-methods-use-this
     console.log(`${buttonName} icon button clicked`);
@@ -18,11 +18,19 @@ class MainPage extends Component {
   handleTabBarButtonClick(tab) {
     const { push } = this.props;
     push(`/main/${tab}`);
-    console.log(`${tab} tab clicked`);
+    console.log(`${tab} tab clicked (function complete)`);
   }
 
-  render() {
-    const { style } = this.props;
+  render(props, state) {
+    const {
+      style,
+      location: { pathname: key, action: direction },
+    } = props;
+
+    const childProps = {
+      key,
+      direction: direction.toLowerCase(),
+    };
     const leftButton = (
       <IconButton
         aria-label="Settings"
@@ -58,6 +66,8 @@ class MainPage extends Component {
       </IconButton>
     );
 
+    // Determine which tab is selected
+    const pathArray = key.split('/');
     return (
       <div className="page" style={ style }>
         <MainHeader
@@ -70,12 +80,12 @@ class MainPage extends Component {
           name="app-load-options"
           clickHandler={ tab => this.handleTabBarButtonClick(tab) }
         >
-          <span key="connect">Connect</span>
-          <span key="cloud">Cloud</span>
+          <span key="connect" selected={ pathArray.indexOf('connect') > -1 }>Connect</span>
+          <span key="cloud" selected={ pathArray.indexOf('cloud') > -1 }>Cloud</span>
         </TabBar>
         { /* Nested route: the children are the containers for each tab */ }
         <TransitionGroup className="transitiongroup">
-          { this.props.children }
+          { cloneElement(Children.only(this.props.children), childProps) }
         </TransitionGroup>
       </div>
     );
