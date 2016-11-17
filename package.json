@@ -26,6 +26,7 @@
     "preact-redux": "^1.2.0",
     "preact-transition-group": "^1.1.0",
     "react-animated-views": "git+https://github.com/devgeeks/react-animated-views.git",
+    "react-fastclick-alt": "^1.1.1",
     "react-intl": "^2.1.5",
     "react-router": "^2.8.1",
     "react-router-redux": "^4.0.7",

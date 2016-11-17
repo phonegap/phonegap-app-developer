@@ -1,5 +1,6 @@
 import { options, h, render } from 'preact';
 import { IntlProvider } from 'react-intl';
+import FastClick from 'react-fastclick-alt';
 
 import './topcoat-mobile-light.min.css';
 
@@ -22,7 +23,7 @@ function init() {
   const App = require('./containers/App').default; // eslint-disable-line global-require
 
   root = render(
-    <IntlProvider locale="en"><App /></IntlProvider>,
+    <FastClick><IntlProvider locale="en"><App /></IntlProvider></FastClick>,
     document.getElementById('application'),
     root
   );
