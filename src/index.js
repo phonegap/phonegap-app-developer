@@ -1,5 +1,3 @@
-// import 'lie';
-// import 'isomorphic-fetch';
 import { options, h, render } from 'preact';
 import { IntlProvider } from 'react-intl';
 

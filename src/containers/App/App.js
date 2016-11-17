@@ -6,8 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import Root from 'containers/Root';
 import MainPage from 'containers/MainPage';
 import SettingsPage from 'containers/SettingsPage';
-import TermsOfServicePage from 'containers/TermsOfServicePage';
-import PrivacyPolicyPage from 'containers/PrivacyPolicyPage';
+import SettingsMenuOverlayPage from 'containers/SettingsMenuOverlayPage';
 import ConnectTab from 'containers/ConnectTab';
 import CloudTab from 'containers/CloudTab';
 import CloudTabLogin from 'containers/CloudTabLogin';
@@ -34,8 +33,7 @@ export default class App extends Component { // eslint-disable-line react/prefer
               </Route>
             </Route>
             <Route path="settings" component={ SettingsPage } />
-            <Route path="terms" component={ TermsOfServicePage } />
-            <Route path="privacy" component={ PrivacyPolicyPage } />
+            <Route path="settings/menu" component={ SettingsMenuOverlayPage } />
             <IndexRedirect to="main/connect" />
           </Route>
         </Router>

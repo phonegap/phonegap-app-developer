@@ -2,12 +2,21 @@ import { h, Component } from 'preact';
 import animateView from 'react-animated-views';
 import { connect } from 'preact-redux';
 
-import { IconButton } from 'topcoat-preact';
+import {
+  IconButton,
+  List,
+  ListContainer,
+  ListHeader,
+  ListItem,
+  NavigationBar,
+  NavigationBarItem,
+  NavigationBarTitle,
+} from 'topcoat-preact';
 
 import MainHeader from 'components/MainHeader';
-import PrivacyPolicyPane from 'components/PrivacyPolicyPane';
+import SettingsMenuOverlayPane from 'components/SettingsMenuOverlayPane';
 
-class PrivacyPollicyPage extends Component {
+class SettingsMenuOverlayPage extends Component {
   handleIconButtonClick() {
     const { pop } = this.props;
     pop('slideLeft');
@@ -15,6 +24,7 @@ class PrivacyPollicyPage extends Component {
 
   render() {
     const { style } = this.props;
+
     const backButton = (
       <IconButton
         aria-label="Help"
@@ -41,9 +51,9 @@ class PrivacyPollicyPage extends Component {
         <MainHeader
           leftButton={ backButton }
           rightButton={ rightButton }
-          title="Privacy Policy"
+          title="Menu Overlay Trigger"
         />
-        <PrivacyPolicyPane />
+        <SettingsMenuOverlayPane />
       </div>
     );
   }
@@ -53,4 +63,5 @@ function mapStateToProps(state) {
   return { ...state };
 }
 
-export default animateView(connect(mapStateToProps)(PrivacyPollicyPage));
+export default animateView(connect(mapStateToProps)(SettingsMenuOverlayPage));
+

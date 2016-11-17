@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import {
   Button,
   List,
@@ -18,7 +18,7 @@ const SettingsPane = (props, state) => {
       <List>
         <ListHeader />
         <ListContainer>
-          <ListItem>
+          <ListItem clickHandler={ () => itemClickHandler('/settings/menu') }>
             <div className={ styles.chevronItem }>
               Menu overlay trigger
             </div>
@@ -44,12 +44,12 @@ const SettingsPane = (props, state) => {
               <Switch checked />
             </div>
           </ListItem>
-          <ListItem clickHandler={ () => itemClickHandler('/terms') }>
+          <ListItem clickHandler={ () => window.open('http://www.adobe.com/special/misc/terms.html') }>
             <div className={ styles.chevronItem }>
               Terms of service
             </div>
           </ListItem>
-          <ListItem clickHandler={ () => itemClickHandler('/privacy') }>
+          <ListItem clickHandler={ () => window.open('http://www.adobe.com/special/misc/privacy.html') }>
             <div className={ styles.chevronItem }>
               Privacy policy
             </div>
