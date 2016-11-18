@@ -8,7 +8,9 @@ function connectToServer(address) {
   console.log(address);
   const config = { address };
   save(config, () => console.log(`Saved server address ${address}`));
-  downloadZip(config);
+  DeveloperMode.addHostAddress(address);
+  DeveloperMode.setCurrentHostAddress(address);
+  DeveloperMode.deploy.downloadZip(config);
 }
 
 class ConnectTab extends Component {
