@@ -1,4 +1,7 @@
-import fetch from 'isomorphic-fetch'
+/*global cordova*/
+/*global PhonegapBuildOauth*/
+
+import fetch from 'isomorphic-fetch';
 
 export function pgbLoginRequested() {
   return {
@@ -15,7 +18,7 @@ export function pgbLoginReceived(accessToken) {
 
 export function pgbLogoutRequested(accessToken) {
   return {
-    type: 'PGB_LOGOUT_REQUESTED'
+    type: 'PGB_LOGOUT_REQUESTED',
   };
 }
 
@@ -38,120 +41,120 @@ export function pgbAppsReceived(apps) {
   };
 }
 
-export function login() {
-
-  return function(dispatch) {
-
-    dispatch(pgbLoginRequested());
-
-    // stub for in browser dev
-    if (cordova.platformId == "browser") {
-      return simulateLogin(dispatch);
-    }
-
-    getClientID()
-    .then(showAuthWindow)
-    .then(handleAuth)
-    .then(access_token => {
-      dispatch(pgbLoginReceived(access_token));
-      dispatch(pgbAppsRequested());
-      return access_token;
-    }).then(fetchApps)
-    .then(function(apps) {
-      dispatch(pgbAppsReceived(apps));
-    })
-  }
+function simulateFetchApps(dispatch) {
+  setTimeout(() => {
+    fetch('assets/fakeapps.json')
+    .then(response =>
+      response.json().then((apps) => {
+        console.log(apps);
+        dispatch(pgbAppsReceived(apps));
+      })
+    );
+  }, 2000);
 }
 
 // stub for in browser dev
 function simulateLogin(dispatch) {
-  setTimeout(function() {
-    dispatch(pgbLoginReceived("1234"));
+  setTimeout(() => {
+    dispatch(pgbLoginReceived('1234'));
     dispatch(pgbAppsRequested());
     simulateFetchApps(dispatch);
   }, 2000);
 }
 
-function simulateFetchApps(dispatch) {
-  setTimeout(function() {
-    fetch("assets/fakeapps.json")
-    .then(response => {
-      return response.json().then(apps => {
-        console.log(apps);
-        dispatch(pgbAppsReceived(apps));
-      });
-    })
-  }, 2000)
-}
-
 function getClientID() {
   return new Promise((resolve, reject) => {
-    PhonegapBuildOauth.getClientID(function(id) {
+    PhonegapBuildOauth.getClientID((id) => {
       resolve(id);
     });
-  })
+  });
 }
 
-function showAuthWindow(client_id) {
-  let authWindow = cordova.InAppBrowser.open(
-    "https://build.phonegap.com/authorize?client_id=" + client_id, 
-    "_blank", 
-    "clearcache=yes,location=no"
+function getQueryString(url) {
+  const a = url.slice((url.indexOf('?') + 1)).split('&');
+  if (a === '') return {};
+  const b = {};
+  a.forEach((i) => {
+    const p = i.split('=', 2);
+    if (p.length === 1) {
+      b[p[0]] = '';
+    } else {
+      b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, ' '));
+    }
+  });
+  return b;
+}
+
+function showAuthWindow(clientID) {
+  const authWindow = cordova.InAppBrowser.open(
+    `https://build.phonegap.com/authorize?client_id=${clientID}`,
+    '_blank',
+    'clearcache=yes,location=no'
   );
 
   return new Promise((resolve, reject) => {
-    authWindow.addEventListener('loadstart', function(e) {
-      let url = e.url;
+    authWindow.addEventListener('loadstart', (e) => {
+      const url = e.url;
       if (url.match(/^(https?:\/\/)phonegap\.com\/?\?(code|error)=[a-zA-Z0-9_]*$/)) {
-        console.log('Callback url found.')
-        let qs = getQueryString(url);
-        if (qs['code'] || qs['error']) {
+        console.log('Callback url found.');
+        const qs = getQueryString(url);
+        if (qs.code || qs.error) {
           authWindow.close();
-          resolve(qs['code'], qs['error']);
+          resolve(qs.code, qs.error);
         }
       }
     });
-  })
+  });
 }
 
-function handleAuth(auth_code, err) {
+function handleAuth(authCode, err) {
   return new Promise((resolve, reject) => {
-    if (auth_code) {
-      PhonegapBuildOauth.authorizeByCode(auth_code, function(a) {
-        resolve(a.access_token)
-      }, function(a) {
-        console.log("Auth failure: " + a.message);
+    if (authCode) {
+      PhonegapBuildOauth.authorizeByCode(authCode, (a) => {
+        resolve(a.accessToken);
+      }, (a) => {
+        console.log(`Auth failure: ${a.message}`);
         alert('Login failed', 'Error');
         reject();
       });
     } else if (err) {
-      console.log("Auth failure: " + err);
+      console.log(`Auth failure: ${err}`);
       alert('Login failed', 'Error');
       reject();
     }
-  })
+  });
 }
 
-function fetchApps(access_token) {
-  return (fetch("https://build.phonegap.com/api/v1/apps?access_token=" + access_token)
-  .then(response => {
-    return response.json().then(json => {
-      console.log(json.apps.length + " apps found");
+function fetchApps(accessToken) {
+  return (fetch(`https://build.phonegap.com/api/v1/apps?access_token=${accessToken}`)
+  .then(response =>
+    response.json().then((json) => {
+      console.log(`${json.apps.length} apps found`);
       return json.apps;
-    });
-  }));
+    })
+  ));
 }
 
-function getQueryString(url) {
-    let a = url.slice((url.indexOf('?') + 1)).split('&')
-    if (a == "") return {};
-    let b = {};
-    a.forEach(i => {
-      let p = i.split('=', 2);
-      if (p.length == 1)
-          b[p[0]] = "";
-      else
-          b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+export function login() {
+  return (dispatch) => {
+    dispatch(pgbLoginRequested());
+
+    // stub for in browser dev
+    if (cordova.platformId === 'browser') {
+      return simulateLogin(dispatch);
+    }
+
+    return getClientID()
+    .then(showAuthWindow)
+    .then(handleAuth)
+    .then((accessToken) => {
+      dispatch(pgbLoginReceived(accessToken));
+      dispatch(pgbAppsRequested());
+      return accessToken;
+    })
+    .then(fetchApps)
+    .then((apps) => {
+      dispatch(pgbAppsReceived(apps));
     });
-    return b;
+  };
 }

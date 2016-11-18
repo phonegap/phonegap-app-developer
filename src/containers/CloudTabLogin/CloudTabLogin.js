@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { connect } from 'preact-redux'
+import { connect } from 'preact-redux';
 import { hashHistory } from 'react-router';
 import * as pgbActions from 'actions/pgbSessionActions';
 
@@ -23,4 +23,4 @@ class CloudTabLogin extends Component {
   }
 }
 
-export default connect()(CloudTabLogin)
+export default connect()(CloudTabLogin);
