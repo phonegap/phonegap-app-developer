@@ -18,7 +18,7 @@ class MainPage extends Component {
   handleTabBarButtonClick(tab) {
     const { push } = this.props;
     push(`/main/${tab}`);
-    console.log(`${tab} tab clicked (function complete)`);
+    console.log(`${tab} tab clicked`);
   }
 
   render(props, state) {
