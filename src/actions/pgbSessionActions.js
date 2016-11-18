@@ -44,6 +44,11 @@ export function login() {
 
     dispatch(pgbLoginRequested());
 
+    // stub for in browser dev
+    if (cordova.platformId == "browser") {
+      return simulateLogin(dispatch);
+    }
+
     getClientID()
     .then(showAuthWindow)
     .then(handleAuth)
@@ -56,6 +61,27 @@ export function login() {
       dispatch(pgbAppsReceived(apps));
     })
   }
+}
+
+// stub for in browser dev
+function simulateLogin(dispatch) {
+  setTimeout(function() {
+    dispatch(pgbLoginReceived("1234"));
+    dispatch(pgbAppsRequested());
+    simulateFetchApps(dispatch);
+  }, 2000);
+}
+
+function simulateFetchApps(dispatch) {
+  setTimeout(function() {
+    fetch("assets/fakeapps.json")
+    .then(response => {
+      return response.json().then(apps => {
+        console.log(apps);
+        dispatch(pgbAppsReceived(apps));
+      });
+    })
+  }, 2000)
 }
 
 function getClientID() {
