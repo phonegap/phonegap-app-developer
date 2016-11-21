@@ -28,11 +28,13 @@ export default class ConnectPane extends Component {
           full
           clickHandler={ () => handleButtonClick('scan') }
         >
-          <img src="assets/img/S_FullScreen_24_N.svg" alt="scan icon" />
-          <FormattedMessage
-            id="scan-a-qr-code-button"
-            defaultMessage={ 'Scan a QR Code' }
-          />
+          <span>
+            <img src="assets/img/S_FullScreen_24_N.svg" alt="scan icon" />
+            <FormattedMessage
+              id="scan-a-qr-code-button"
+              defaultMessage={ 'Scan a QR Code' }
+            />
+          </span>
         </Button>
         <div className={ styles.orSpacer }>
           <FormattedMessage
@@ -63,10 +65,12 @@ export default class ConnectPane extends Component {
           cta
           clickHandler={ () => handleButtonClick('connect', '') }
         >
-          <FormattedMessage
-            id="connect-buton"
-            defaultMessage={ 'Connect' }
-          />
+          <span>
+            <FormattedMessage
+              id="connect-buton"
+              defaultMessage={ 'Connect' }
+            />
+          </span>
         </Button>
       </div>
     );
