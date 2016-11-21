@@ -15,8 +15,8 @@ if (!window.Intl) {
   require('intl/locale-data/jsonp/en'); // eslint-disable-line global-require
 }
 
-options.debounceRendering = f => f();
-options.syncComponentUpdates = true;
+// options.debounceRendering = f => f();
+// options.syncComponentUpdates = true;
 
 let root;
 function init() {

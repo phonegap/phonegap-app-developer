@@ -17,7 +17,7 @@ const MainHeader = (props, state) => {
         { leftButton }
       </NavigationBarItem>
       <NavigationBarItem half center>
-        <strong>{ title }</strong>
+        <strong className={ styles.title }>{ title }</strong>
       </NavigationBarItem>
       <NavigationBarItem quarter right>
         { rightButton }
