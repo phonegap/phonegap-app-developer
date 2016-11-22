@@ -111,7 +111,7 @@ function handleAuth(authCode, err) {
   return new Promise((resolve, reject) => {
     if (authCode) {
       PhonegapBuildOauth.authorizeByCode(authCode, (a) => {
-        resolve(a.accessToken);
+        resolve(a.access_token);
       }, (a) => {
         console.log(`Auth failure: ${a.message}`);
         alert('Login failed', 'Error');
