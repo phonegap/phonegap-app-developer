@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-function pbg(state = {
+function pgb(state = {
   loading: false,
   apps: {
     apps: [],
@@ -44,7 +44,7 @@ function pbg(state = {
 }
 
 const rootReducer = combineReducers({
-  pbg,
+  pgb,
   routing: routerReducer,
 });
 

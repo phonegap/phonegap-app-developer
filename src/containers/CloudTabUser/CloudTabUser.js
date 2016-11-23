@@ -1,35 +1,49 @@
 import { h, Component } from 'preact';
+import { connect } from 'preact-redux';
 import { Button } from 'topcoat-preact';
 
 import Modal from 'containers/Modal';
-import CloudUserPane from 'components/CloudUserPane';
 import ModalPane from 'components/ModalPane';
+import CloudUserPane from 'components/CloudUserPane';
 
-class CloudTabLogin extends Component {
+class CloudTabUser extends Component {
   constructor() {
     super();
-    this.state.isModalOpen = false;
+    this.state = {
+      ...this.state,
+      isModalOpen: false,
+    };
   }
 
-  // @TODO revove the lint disable when this method actually does something
+  componentWillMount() {
+    const { pgb: { loading } } = this.props;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { pgb: { loading } } = nextProps;
+  }
+
   handleModalDismiss() {
     this.setState({ isModalOpen: false });
     console.log('modal dismissed');
   }
 
-  // There _will_ be a button here at some point...
-  // @TODO revove the lint disable when this method actually does something
   handleButtonClick(button, e) {
     this.setState({ isModalOpen: true });
     console.log(`${button} clicked`);
   }
 
-  render() {
+  render(props, state) {
+    const { pgb: { loading, apps: { apps } } } = props;
     return (
-      <CloudUserPane handleButtonClick={ (button, e) => this.handleButtonClick(button, e) }>
+      <CloudUserPane
+        handleButtonClick={ (button, e) => this.handleButtonClick(button, e) }
+        loading={ loading }
+        apps={ apps }
+      >
         <Modal>
           <ModalPane
-            open={ this.state.isModalOpen }
+            open={ state.isModalOpen }
             onDismiss={ () => this.handleModalDismiss() }
           >
             <p>This is a modal. Close it below.</p>
@@ -44,4 +58,11 @@ class CloudTabLogin extends Component {
   }
 }
 
-export default CloudTabLogin;
+function mapStateToProps(state) {
+  const { pgb } = state;
+  return {
+    pgb,
+  };
+}
+
+export default connect(mapStateToProps)(CloudTabUser);
