@@ -20,7 +20,8 @@
     "adobe-mobile-ui": "git+https://github.com/phonegap/adobe-mobile-ui.git",
     "history": "^4.2.0",
     "intl": "^1.2.5",
-    "preact": "^6.4.0",
+    "isomorphic-fetch": "^2.2.0",
+    "preact": "^7.0.3",
     "preact-compat": "^3.9.1",
     "preact-portal": "^1.1.1",
     "preact-redux": "^1.2.0",
@@ -32,8 +33,7 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
-    "topcoat-preact": "git+https://github.com/phonegap/topcoat-preact.git",
-    "isomorphic-fetch":"^2.2.0"
+    "topcoat-preact": "git+https://github.com/phonegap/topcoat-preact.git"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

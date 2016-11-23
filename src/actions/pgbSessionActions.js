@@ -140,7 +140,7 @@ export function login() {
     dispatch(pgbLoginRequested());
 
     // stub for in browser dev
-    if (cordova.platformId === 'browser') {
+    if (typeof cordova === 'undefined' || cordova.platformId === 'browser') {
       return simulateLogin(dispatch);
     }
 
