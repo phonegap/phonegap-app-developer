@@ -30,7 +30,7 @@ export function pgbLogoutReceived() {
 
 export function pgbAppsRequested() {
   return {
-    type: 'PGB_REQUEST_APPS',
+    type: 'PGB_APPS_REQUESTED',
   };
 }
 

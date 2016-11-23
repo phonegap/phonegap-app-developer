@@ -1,26 +1,50 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-function pgbReducer(state = {}, action) {
+function pbg(state = {
+  loading: false,
+  apps: {
+    apps: [],
+  },
+}, action) {
   //console.log(action.type);
   switch (action.type) {
-    case 'PGB_LOGIN_RECEIVED':
+    case 'PGB_LOGIN_REQUESTED':
+      console.log('PGB_LOGIN_REQUESTED');
       return {
         ...state,
-        access_token: action.access_token,
+        loading: true,
+      };
+    case 'PGB_LOGIN_RECEIVED':
+      console.log('PGB_LOGIN_RECEIVED');
+      return {
+        ...state,
+        loading: false,
+        accessToken: action.accessToken,
+      };
+    case 'PGB_APPS_REQUESTED':
+      console.log('PGB_APPS_REQUESTED');
+      return {
+        ...state,
+        loading: true,
       };
     case 'PGB_APPS_RECEIVED':
+      console.log('PGB_APPS_RECEIVED');
       return {
         ...state,
+        loading: false,
         apps: action.apps,
       };
     default:
+      if (action.type.indexOf('PGB_') > -1) {
+        console.log('Uncaught action: ', action.type);
+      }
       return state;
   }
 }
 
 const rootReducer = combineReducers({
-  pgbReducer,
+  pbg,
   routing: routerReducer,
 });
 
