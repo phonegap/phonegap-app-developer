@@ -19,7 +19,7 @@ class CloudTabLogin extends Component {
       isLoadingModalOpen: loading,
     });
     if (accessToken) {
-      hashHistory.replace(`/main/cloud/user/${accessToken}`);
+      hashHistory.replace('/main/cloud/user');
     }
   }
 
@@ -29,7 +29,7 @@ class CloudTabLogin extends Component {
       isLoadingModalOpen: loading,
     });
     if (accessToken) {
-      hashHistory.replace(`/main/cloud/user/${accessToken}`);
+      hashHistory.replace('/main/cloud/user');
     }
   }
 
