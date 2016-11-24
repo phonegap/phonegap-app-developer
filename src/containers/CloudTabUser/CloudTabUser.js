@@ -5,6 +5,7 @@ import { Button } from 'topcoat-preact';
 import Modal from 'containers/Modal';
 import ModalPane from 'components/ModalPane';
 import CloudUserPane from 'components/CloudUserPane';
+import { pgbAppsRequested, fetchApps } from 'actions/pgbSessionActions';
 
 class CloudTabUser extends Component {
   constructor() {
@@ -16,11 +17,15 @@ class CloudTabUser extends Component {
   }
 
   componentWillMount() {
-    const { pgb: { loading } } = this.props;
+    const { dispatch, pgb: { apps, loading, accessToken } } = this.props;
+    if (!apps) {
+      dispatch(pgbAppsRequested());
+    }
+    dispatch(fetchApps(accessToken));
   }
 
   componentWillReceiveProps(nextProps) {
-    const { pgb: { loading } } = nextProps;
+    const { pgb: { apps, loading } } = nextProps;
   }
 
   handleModalDismiss() {
@@ -34,12 +39,12 @@ class CloudTabUser extends Component {
   }
 
   render(props, state) {
-    const { pgb: { loading, apps: { apps } } } = props;
+    const { pgb: { loading, apps } } = props;
     return (
       <CloudUserPane
         handleButtonClick={ (button, e) => this.handleButtonClick(button, e) }
         loading={ loading }
-        apps={ apps }
+        apps={ apps && apps.apps }
       >
         <Modal>
           <ModalPane

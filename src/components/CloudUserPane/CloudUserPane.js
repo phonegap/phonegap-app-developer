@@ -6,6 +6,7 @@ import styles from './index.less';
 
 // @TODO This will probably be refactored to accept children
 const CloudUserPane = (props, state) => {
+  //const { apps, loading } = props;
   const { apps, loading } = props;
   const emptyState = (
     <span>
@@ -22,19 +23,37 @@ const CloudUserPane = (props, state) => {
       <p>Visit build.phonegap.com to create your own apps.</p>
     </span>
   );
+  // @TODO Facebook style placeholder rectangles UX here
   const loadingState = (
     <span>
       <p>Loading apps...</p>
     </span>
   );
-  const appsList = !apps.length ? emptyState : (
+  const errorState = (
     <span>
-      <p>Apps List Goes Here</p>
+      <p>Error loading apps</p>
     </span>
   );
+  const appsList = (
+    <span>
+      <p>&lt; <em>Apps List Goes Here</em> &gt;</p>
+    </span>
+  );
+
+  let content = <div />; // default
+  if (loading) {
+    content = loadingState;
+  } else if (apps && !apps.length) {
+    content = emptyState;
+  } else if (apps) {
+    content = appsList;
+  } else if (!loading && !apps) {
+    content = errorState;
+  }
+
   return (
     <div className={ styles.cloudUserPane }>
-      { loading ? loadingState : appsList }
+      { content }
       { props.children }
     </div>
   );

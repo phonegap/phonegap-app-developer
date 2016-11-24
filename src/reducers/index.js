@@ -3,9 +3,6 @@ import { routerReducer } from 'react-router-redux';
 
 function pgb(state = {
   loading: false,
-  apps: {
-    apps: [],
-  },
 }, action) {
   //console.log(action.type);
   switch (action.type) {
