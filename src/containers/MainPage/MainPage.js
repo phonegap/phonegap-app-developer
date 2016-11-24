@@ -66,6 +66,13 @@ class MainPage extends Component {
       </IconButton>
     );
 
+    const title = (
+      <span>
+        <img src="./assets/img/PhoneGap-Symbol-Black.svg" alt="Logo" />
+        <span>PhoneGap</span>
+      </span>
+    );
+
     // Determine which tab is selected
     const pathArray = key.split('/');
     return (
@@ -73,7 +80,7 @@ class MainPage extends Component {
         <MainHeader
           leftButton={ leftButton }
           rightButton={ rightButton }
-          title="PhoneGap"
+          title={ title }
         />
         <TabBar
           full
