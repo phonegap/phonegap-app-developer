@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
+import { hashHistory } from 'react-router';
 import { Button } from 'topcoat-preact';
 
 import Modal from 'containers/Modal';
@@ -18,6 +19,10 @@ class CloudTabUser extends Component {
 
   componentWillMount() {
     const { dispatch, pgb: { apps, loading, accessToken } } = this.props;
+    if (!accessToken) {
+      hashHistory.replace('/main/cloud/login');
+      return;
+    }
     if (!apps) {
       dispatch(pgbAppsRequested());
     }
