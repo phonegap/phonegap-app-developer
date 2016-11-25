@@ -3,6 +3,8 @@
 
 import fetch from 'isomorphic-fetch';
 
+const apiHost = 'https://build.phonegap.com';
+
 function simulateFetchApps() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -16,11 +18,10 @@ function simulateFetchApps() {
   });
 }
 
-// stub for in browser dev
 function simulateLogin() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('1234');
+      resolve('AmandaHugnkiss');
     }, 2000);
   });
 }
@@ -50,7 +51,7 @@ function getQueryString(url) {
 
 function showAuthWindow(clientID) {
   const authWindow = cordova.InAppBrowser.open(
-    `https://build.phonegap.com/authorize?client_id=${clientID}`,
+    `${apiHost}/authorize?client_id=${clientID}`,
     '_blank',
     'clearcache=yes,location=no'
   );
@@ -96,7 +97,7 @@ export function fetchApps(accessToken) {
     return simulateFetchApps();
   }
 
-  return (fetch(`https://build.phonegap.com/api/v1/apps?access_token=${accessToken}`)
+  return (fetch(`${apiHost}/api/v1/apps?access_token=${accessToken}`)
   .then(response =>
     response.json().then(json => json.apps)
   ));
@@ -110,4 +111,18 @@ export function login() {
   return getClientID()
   .then(showAuthWindow)
   .then(handleAuth);
+}
+
+export function createSampleApp(accessToken) {
+  const json = JSON.stringify({
+    create_method: 'remote_repo',
+    repo: 'https://github.com/phonegap/phonegap-app-star-track.git',
+  });
+  return (fetch(`${apiHost}/api/v1/apps?access_token=${accessToken}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: `data=${json}`,
+  }));
 }

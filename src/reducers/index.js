@@ -32,6 +32,18 @@ function pgb(state = {
         loading: false,
         apps: action.apps,
       };
+    case 'PGB_CREATE_APP_REQUESTED':
+      console.log('PGB_CREATE_APP_REQUESTED');
+      return {
+        ...state,
+        loading: true,
+      };
+    case 'PGB_CREATE_APP_RECEIVED':
+      console.log('PGB_CREATE_APP_RECEIVED');
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       if (action.type.indexOf('PGB_') > -1) {
         console.log('Uncaught action: ', action.type);

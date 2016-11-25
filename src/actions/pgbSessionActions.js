@@ -38,6 +38,19 @@ export function pgbAppsReceived(apps) {
   };
 }
 
+export function pgbCreateAppRequested() {
+  return {
+    type: 'PGB_CREATE_APP_REQUESTED',
+  };
+}
+
+export function pgbCreateAppReceived(app) {
+  return {
+    type: 'PGB_CREATE_APP_RECEIVED',
+    app,
+  };
+}
+
 export function fetchApps(accessToken) {
   return (dispatch) => {
     dispatch(pgbAppsRequested());
@@ -57,6 +70,17 @@ export function login() {
     return pgb.login()
     .then((accessToken) => {
       dispatch(pgbLoginReceived(accessToken));
+    });
+  };
+}
+
+export function createSampleApp(accessToken) {
+  return (dispatch) => {
+    dispatch(pgbCreateAppRequested());
+
+    return pgb.createSampleApp(accessToken)
+    .then((app) => {
+      dispatch(pgbCreateAppReceived(app));
     });
   };
 }
