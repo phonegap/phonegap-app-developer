@@ -17,6 +17,7 @@ const CloudLoginPane = (props, state) => (
     >
       Sign in with Adobe ID
     </Button>
+    { props.children }
   </div>
 );
 

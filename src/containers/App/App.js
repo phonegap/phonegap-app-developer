@@ -27,7 +27,7 @@ export default class App extends Component { // eslint-disable-line react/prefer
             <Route path="main" component={ MainPage }>
               <Route path="connect" component={ ConnectTab } />
               <Route path="cloud" component={ CloudTab }>
-                <Route path="user/:userID" component={ CloudTabUser } />
+                <Route path="user" component={ CloudTabUser } />
                 <Route path="login" component={ CloudTabLogin } />
                 <IndexRedirect to="login" />
               </Route>

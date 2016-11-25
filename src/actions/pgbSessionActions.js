@@ -57,8 +57,8 @@ function simulateFetchApps(dispatch) {
 function simulateLogin(dispatch) {
   setTimeout(() => {
     dispatch(pgbLoginReceived('1234'));
-    dispatch(pgbAppsRequested());
-    simulateFetchApps(dispatch);
+    //dispatch(pgbAppsRequested());
+    //simulateFetchApps(dispatch);
   }, 2000);
 }
 
@@ -125,14 +125,21 @@ function handleAuth(authCode, err) {
   });
 }
 
-function fetchApps(accessToken) {
-  return (fetch(`https://build.phonegap.com/api/v1/apps?access_token=${accessToken}`)
-  .then(response =>
-    response.json().then((json) => {
-      console.log(`${json.apps.length} apps found`);
-      return json.apps;
-    })
-  ));
+export function fetchApps(accessToken) {
+  return (dispatch) => {
+    // stub for in browser dev
+    if (typeof cordova === 'undefined' || cordova.platformId === 'browser') {
+      return simulateFetchApps(dispatch);
+    }
+
+    return (fetch(`https://build.phonegap.com/api/v1/apps?access_token=${accessToken}`)
+    .then(response =>
+      response.json().then((json) => {
+        console.log(`${json.apps.length} apps found`);
+        return json.apps;
+      })
+    ));
+  };
 }
 
 export function login() {
@@ -151,10 +158,10 @@ export function login() {
       dispatch(pgbLoginReceived(accessToken));
       dispatch(pgbAppsRequested());
       return accessToken;
-    })
-    .then(fetchApps)
-    .then((apps) => {
-      dispatch(pgbAppsReceived(apps));
+    //})
+    //.then(fetchApps)
+    //.then((apps) => {
+      //dispatch(pgbAppsReceived(apps));
     });
   };
 }
