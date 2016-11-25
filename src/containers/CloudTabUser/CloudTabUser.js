@@ -44,7 +44,7 @@ class CloudTabUser extends Component {
       <CloudUserPane
         handleButtonClick={ (button, e) => this.handleButtonClick(button, e) }
         loading={ loading }
-        apps={ apps && apps.apps }
+        apps={ apps }
       >
         <Modal>
           <ModalPane

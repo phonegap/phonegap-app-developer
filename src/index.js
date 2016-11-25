@@ -16,7 +16,7 @@ if (!window.Intl) {
 }
 
 // options.debounceRendering = f => f();
-// options.syncComponentUpdates = true;
+options.syncComponentUpdates = true;
 
 let root;
 function init() {

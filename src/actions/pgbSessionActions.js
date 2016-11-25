@@ -45,9 +45,9 @@ function simulateFetchApps(dispatch) {
   setTimeout(() => {
     fetch('assets/fakeapps.json')
     .then(response =>
-      response.json().then((apps) => {
-        console.log(apps);
-        dispatch(pgbAppsReceived(apps));
+      response.json().then((json) => {
+        console.log(`${json.apps.length} apps found`);
+        dispatch(pgbAppsReceived(json.apps));
       })
     );
   }, 2000);
@@ -136,6 +136,7 @@ export function fetchApps(accessToken) {
     .then(response =>
       response.json().then((json) => {
         console.log(`${json.apps.length} apps found`);
+        dispatch(pgbAppsReceived(json.apps));
         return json.apps;
       })
     ));
