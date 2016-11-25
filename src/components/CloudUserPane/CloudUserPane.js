@@ -1,11 +1,15 @@
 import { h } from 'preact';
 
-import { Button } from 'topcoat-preact';
+import { Button, List, ListContainer, ListItem } from 'topcoat-preact';
 
 import styles from './index.less';
 
 // @TODO This will probably be refactored to accept children
 const CloudUserPane = (props, state) => {
+  const handleAppListItemClick = (app) => {
+    console.log('handleAppListItemClick', app);
+  };
+
   //const { apps, loading } = props;
   const { apps, loading } = props;
   const emptyState = (
@@ -34,11 +38,6 @@ const CloudUserPane = (props, state) => {
       <p>Error loading apps</p>
     </span>
   );
-  const appsList = (
-    <span>
-      <p>&lt; <em>Apps List Goes Here</em> &gt;</p>
-    </span>
-  );
 
   let content = <div />; // default
   if (loading) {
@@ -46,7 +45,12 @@ const CloudUserPane = (props, state) => {
   } else if (apps && !apps.length) {
     content = emptyState;
   } else if (apps) {
-    content = appsList;
+    const items = apps.map(app =>
+      <ListItem clickHandler={ () => handleAppListItemClick(app) }>{app.title}</ListItem>
+    );
+    content = (
+      <List><ListContainer>{items}</ListContainer></List>
+    );
   } else if (!loading && !apps) {
     content = errorState;
   }

@@ -24,9 +24,8 @@ class CloudTabUser extends Component {
       return;
     }
     if (!apps) {
-      dispatch(pgbAppsRequested());
+      dispatch(fetchApps(accessToken));
     }
-    dispatch(fetchApps(accessToken));
   }
 
   componentWillReceiveProps(nextProps) {
