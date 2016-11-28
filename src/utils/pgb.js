@@ -4,6 +4,7 @@
 import fetch from 'isomorphic-fetch';
 
 const apiHost = 'https://build.phonegap.com';
+const persistLogin = false;
 
 function simulateFetchApps() {
   return new Promise((resolve, reject) => {
@@ -78,6 +79,7 @@ function handleAuth(authCode, err) {
   return new Promise((resolve, reject) => {
     if (authCode) {
       PhonegapBuildOauth.authorizeByCode(authCode, (a) => {
+        window.localStorage.setItem('access_token', a.access_token);
         resolve(a.access_token);
       }, (a) => {
         console.log(`Auth failure: ${a.message}`);
@@ -106,6 +108,13 @@ export function fetchApps(accessToken) {
 export function login() {
   if (typeof cordova === 'undefined' || cordova.platformId === 'browser') {
     return simulateLogin();
+  }
+
+  const accessToken = window.localStorage.getItem('access_token');
+  if (persistLogin && accessToken) {
+    return new Promise((resolve, reject) => {
+      resolve(accessToken);
+    });
   }
 
   return getClientID()
