@@ -11,3 +11,4 @@ npm-debug.log
 
 # res
 resources/signing
+resources/release
