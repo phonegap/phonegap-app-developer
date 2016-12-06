@@ -2,6 +2,8 @@ import { h } from 'preact';
 
 import { Button, List, ListContainer, ListItem } from 'topcoat-preact';
 
+import CloudAppsList from 'components/CloudAppsList';
+
 import styles from './index.less';
 
 // @TODO This will probably be refactored to accept children
@@ -45,11 +47,9 @@ const CloudUserPane = (props, state) => {
   } else if (apps && !apps.length) {
     content = emptyState;
   } else if (apps) {
-    const items = apps.map(app =>
-      <ListItem clickHandler={ () => handleAppListItemClick(app) }>{app.title}</ListItem>
-    );
+    const items = <CloudAppsList clickHandler={ handleAppListItemClick } apps={ apps } />;
     content = (
-      <List><ListContainer>{items}</ListContainer></List>
+      <List>{ items }</List>
     );
   } else if (!loading && !apps) {
     content = errorState;
