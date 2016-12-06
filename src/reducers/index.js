@@ -44,6 +44,19 @@ function pgb(state = {
         ...state,
         loading: false,
       };
+    case 'PGB_PLUGIN_ANALYSIS_REQUESTED':
+      console.log('PGB_PLUGIN_ANALYSIS_REQUESTED');
+      return {
+        ...state,
+        loading: true,
+      };
+    case 'PGB_PLUGIN_ANALYSIS_RECEIVED':
+      console.log('PGB_PLUGIN_ANALYSIS_RECEIVED', action);
+      return {
+        ...state,
+        loading: false,
+        plugins: action.plugins,
+      };
     default:
       if (action.type.indexOf('PGB_') > -1) {
         console.log('Uncaught action: ', action.type);

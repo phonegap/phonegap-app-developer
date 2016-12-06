@@ -6,7 +6,7 @@ import { Button } from 'topcoat-preact';
 import Modal from 'containers/Modal';
 import ModalPane from 'components/ModalPane';
 import CloudUserPane from 'components/CloudUserPane';
-import { pgbAppsRequested, fetchApps, createSampleApp } from 'actions/pgbSessionActions';
+import { pgbAppsRequested, fetchApps, createSampleApp, analyzePlugins } from 'actions/pgbSessionActions';
 
 class CloudTabUser extends Component {
   constructor() {
@@ -46,6 +46,12 @@ class CloudTabUser extends Component {
     .then(() => dispatch(fetchApps(this.props.pgb.accessToken)));
   }
 
+  handleAppListItemClick = (app) => {
+    const { dispatch } = this.props;
+    console.log('handleAppListItemClick', app);
+    // dispatch(analyzePlugins(app.id, this.props.pgb.accessToken));
+  };
+
   render(props, state) {
     const { pgb: { loading, apps } } = props;
     return (
@@ -53,6 +59,7 @@ class CloudTabUser extends Component {
         handleButtonClick={ (button, e) => this.handleButtonClick(button, e) }
         loading={ loading }
         apps={ apps }
+        handleAppListItemClick={ app => this.handleAppListItemClick(app) }
       >
         <Modal>
           <ModalPane

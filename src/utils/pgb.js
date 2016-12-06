@@ -82,13 +82,11 @@ function handleAuth(authCode, err) {
         window.localStorage.setItem('access_token', a.access_token);
         resolve(a.access_token);
       }, (a) => {
-        console.log(`Auth failure: ${a.message}`);
-        alert('Login failed', 'Error');
+        console.log(`Authentication failure (${a.message})`);
         reject();
       });
     } else if (err) {
-      console.log(`Auth failure: ${err}`);
-      alert('Login failed', 'Error');
+      console.log(`Authentication failure: ${err}`);
       reject();
     }
   });
@@ -135,3 +133,61 @@ export function createSampleApp(accessToken) {
     body: `data=${json}`,
   }));
 }
+
+// Expects 3 part versioning, but 3rd part (patch) is ignored
+function versionCompare(v1, v2) {
+  const v1parts = v1.split('.');
+  const v2parts = v2.split('.');
+
+  while (v1parts.length < v2parts.length) v1parts.push('0');
+  while (v2parts.length < v1parts.length) v2parts.push('0');
+
+  if (v1parts[0] !== v2parts[0]) {
+    return 'major-mismatch';
+  } else if (v1parts[1] !== v2parts[1]) {
+    return 'minor-mismatch';
+  } else {
+    return 'match';
+  }
+}
+
+function checkPlugins(remotePlugins) {
+  if (typeof remotePlugins === 'undefined') {
+    return null;
+  }
+
+  const pluginList = [];
+  const availablePlugins = cordova.require('cordova/plugin_list').metadata;
+
+  remotePlugins.forEach((p) => {
+    const remoteVersion = p.version.replace(/^~/, '');
+    const localVersion = availablePlugins[p.name];
+
+    const plugin = {
+      id: p.name,
+      remoteVersion,
+      localVersion,
+    };
+
+    if (typeof localVersion === 'undefined') {
+      plugin.state = 'missing';
+    } else {
+      plugin.state = versionCompare(localVersion, remoteVersion);
+    }
+
+    pluginList.push(plugin);
+  });
+
+  return pluginList;
+}
+
+export function analyzePlugins(appID, accessToken) {
+  return (fetch(`${apiHost}/api/v1/apps/${appID}/plugins?access_token=${accessToken}`)
+  .then(response =>
+    response.json().then(json => json.plugins)
+  )
+  .then(plugins =>
+    checkPlugins(plugins)
+  ));
+}
+
