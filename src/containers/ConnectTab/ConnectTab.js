@@ -7,7 +7,7 @@ import ConnectPane from 'components/ConnectPane';
 function connectToServer(address) {
   console.log(address);
   const config = { address };
-  save(config, () => console.log(`Saved server address ${address}`));
+
   DeveloperMode.addHostAddress(address, function() {
       DeveloperMode.setCurrentHostAddress(address, function() {
           DeveloperMode.deploy.downloadZip(config);
@@ -22,10 +22,10 @@ class ConnectTab extends Component {
   }
 
   componentDidMount() {
+    var that = this;
     // load in last saved address
-    load((loaded) => {
-      const addr = loaded.address;
-      this.setState({ url: addr });
+    DeveloperMode.on('load', function() {
+      that.setState({ url: DeveloperMode.getCurrentHostAddress() });
     });
   }
 

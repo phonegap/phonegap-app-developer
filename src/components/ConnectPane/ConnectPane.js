@@ -18,9 +18,18 @@ export default class ConnectPane extends Component {
     },
   ];
 
+  componentDidMount() {
+    var that = this;
+    DeveloperMode.on('load', function() {
+      that.suggestions = DeveloperMode.getHostAddresses().map(function(addr){
+        var addrObj = { 'value' : addr };
+        return addrObj;
+      });
+    });
+  }
+
   render() {
     const { connectURL, handleButtonClick, handleOnChange } = this.props;
-
     return (
       <div className={ styles.connectPane }>
         <Button
