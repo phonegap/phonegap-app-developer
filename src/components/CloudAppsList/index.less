@@ -1,11 +1,12 @@
 .appsList {
   padding: 0;
   list-style: none;
+}
 
-  a {
-    color: blue;
-    text-decoration: underline;
-  }
+.appTitle {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .appsListItem {
@@ -13,23 +14,33 @@
   margin-left: 16px;
   list-style: none;
   border-bottom: 1px solid #333333;
+
+  a {
+    color: blue;
+    text-decoration: underline;
+  }
 }
 
 .media {
   padding: 8px;
   padding-left: 0;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .mediaFigure {
   margin-right: 1em;
-  width: 32px;
-  height: 32px;
+  max-width: 48px;
+  max-height: 48px;
   padding: 4px 0;
 }
 
 .mediaBody {
   flex: 1;
   padding: 4px;
+  min-width: 0;
+}
+
+.playButton {
+  background: url(assets/img/ic_play_circle_outline_black_24px.svg) center center no-repeat;
 }

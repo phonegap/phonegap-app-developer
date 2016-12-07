@@ -12,6 +12,12 @@ const CloudUserPane = (props, state) => {
     console.log('handleAppListItemClick', app);
   };
 
+  const handlePlayButtonClick = (event, app) => {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log(`Play button clicked for ${app.title}`);
+  };
+
   //const { apps, loading } = props;
   const { apps, loading } = props;
   const emptyState = (
@@ -47,7 +53,12 @@ const CloudUserPane = (props, state) => {
   } else if (apps && !apps.length) {
     content = emptyState;
   } else if (apps) {
-    const items = <CloudAppsList clickHandler={ handleAppListItemClick } apps={ apps } />;
+    const items = (
+      <CloudAppsList
+        clickHandler={ handleAppListItemClick }
+        playButtonHandler={ handlePlayButtonClick }
+        apps={ apps }
+      />);
     content = (
       <List>{ items }</List>
     );

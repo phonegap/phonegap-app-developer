@@ -1,21 +1,44 @@
 import { h } from 'preact';
-import { ListContainer, ListItem } from 'topcoat-preact';
+import { IconButton, ListContainer, ListItem } from 'topcoat-preact';
 
 import styles from './index.less';
 
 // @TODO This will probably be refactored to accept children
 const CloudAppsList = (props, state) => {
-  const { apps, clickHandler } = props;
+  const { apps, clickHandler, playButtonHandler } = props;
   console.log(apps);
   const appsList = apps.map(app => (
     <ListItem className={ styles.appsListItem } clickHandler={ () => clickHandler(app) }>
       <div className={ styles.media }>
-        <img className={ styles.mediaFigure } src={ app.icon.link } alt="" />
+        <img
+          className={ styles.mediaFigure }
+          src={ app.icon.link }
+          style={ {
+            width: `${!app.icon.link ? '48px' : 'auto'}`,
+            height: `${!app.icon.link ? '48px' : 'auto'}`,
+          } }
+          alt={ `${app.title} icon` }
+        />
         <div className={ styles.mediaBody }>
-          <div><strong>{ app.title }</strong></div>
+          <div className={ styles.appTitle }><strong>{ app.title }</strong></div>
           <div>{ `v${app.version}` }</div>
-          <a href="#">Details</a>
+          <a>Details</a>
         </div>
+        <IconButton
+          aria-label="Play"
+          quiet
+          title="play"
+          clickHandler={ e => playButtonHandler(e, app) }
+        >
+          <span
+            style={ {
+              width: '100%',
+              height: '100%',
+              display: 'block',
+              background: 'url(assets/img/ic_play_circle_outline_black_24px.svg) center center no-repeat',
+            } }
+          />
+        </IconButton>
       </div>
     </ListItem>
   ));
