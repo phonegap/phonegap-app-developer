@@ -10,15 +10,13 @@ const CloudAppsList = (props, state) => {
   const appsList = apps.map(app => (
     <ListItem className={ styles.appsListItem } clickHandler={ () => clickHandler(app) }>
       <div className={ styles.media }>
-        <img
-          className={ styles.mediaFigure }
-          src={ app.icon.link }
-          style={ {
-            width: `${!app.icon.link ? '48px' : 'auto'}`,
-            height: `${!app.icon.link ? '48px' : 'auto'}`,
-          } }
-          alt={ `${app.title} icon` }
-        />
+        <div className={ styles.mediaFigure }>
+          <img
+            className={ styles.mediaFigureImg }
+            src={ app.icon.link }
+            alt={ `${app.title} icon` }
+          />
+        </div>
         <div className={ styles.mediaBody }>
           <div className={ styles.appTitle }><strong>{ app.title }</strong></div>
           <div>{ `v${app.version}` }</div>
