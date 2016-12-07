@@ -2,6 +2,7 @@
 /*global PhonegapBuildOauth*/
 
 import fetch from 'isomorphic-fetch';
+import semver from 'semver';
 
 const apiHost = 'https://build.phonegap.com';
 const persistLogin = false;
@@ -134,23 +135,6 @@ export function createSampleApp(accessToken) {
   }));
 }
 
-// Expects 3 part versioning, but 3rd part (patch) is ignored
-function versionCompare(v1, v2) {
-  const v1parts = v1.split('.');
-  const v2parts = v2.split('.');
-
-  while (v1parts.length < v2parts.length) v1parts.push('0');
-  while (v2parts.length < v1parts.length) v2parts.push('0');
-
-  if (v1parts[0] !== v2parts[0]) {
-    return 'major-mismatch';
-  } else if (v1parts[1] !== v2parts[1]) {
-    return 'minor-mismatch';
-  } else {
-    return 'match';
-  }
-}
-
 function checkPlugins(remotePlugins) {
   if (typeof remotePlugins === 'undefined') {
     return null;
@@ -172,7 +156,12 @@ function checkPlugins(remotePlugins) {
     if (typeof localVersion === 'undefined') {
       plugin.state = 'missing';
     } else {
-      plugin.state = versionCompare(localVersion, remoteVersion);
+      try {
+        plugin.state = semver.diff(remoteVersion, localVersion) || 'match';
+      } catch (ex) {
+        console.log(`Semver: ${ex.message}`);
+        plugin.state = 'major';
+      }
     }
 
     pluginList.push(plugin);
