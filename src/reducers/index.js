@@ -57,6 +57,13 @@ function pgb(state = {
         loading: false,
         plugins: action.plugins,
       };
+    case 'PGB_CHECK_PHONEGAP_VERSION':
+      console.log('PGB_CHECK_PHONEGAP_VERSION', action);
+      return {
+        ...state,
+        loading: false,
+        result: action.state,
+      };
     default:
       if (action.type.indexOf('PGB_') > -1) {
         console.log('Uncaught action: ', action.type);

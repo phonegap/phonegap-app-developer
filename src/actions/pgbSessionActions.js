@@ -64,6 +64,13 @@ export function pgbPluginAnalysisReceived(plugins) {
   };
 }
 
+export function pgbCheckPhonegapVersion(state) {
+  return {
+    type: 'PGB_CHECK_PHONEGAP_VERSION',
+    state,
+  };
+}
+
 export function fetchApps(accessToken) {
   return (dispatch) => {
     dispatch(pgbAppsRequested());
@@ -73,6 +80,13 @@ export function fetchApps(accessToken) {
       console.log(`${apps.length} apps found`);
       dispatch(pgbAppsReceived(apps));
     });
+  };
+}
+
+export function checkPhonegapVersion(app) {
+  return (dispatch) => {
+    const result = pgb.checkPhonegapVersion(app);
+    return dispatch(pgbCheckPhonegapVersion(result));
   };
 }
 
