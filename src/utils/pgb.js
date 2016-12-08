@@ -1,5 +1,6 @@
 /*global cordova*/
 /*global PhonegapBuildOauth*/
+/*global device*/
 
 import fetch from 'isomorphic-fetch';
 import semver from 'semver';
@@ -168,6 +169,18 @@ function checkPlugins(remotePlugins) {
   });
 
   return pluginList;
+}
+
+export function checkPhonegapVersion(app) {
+  const platform = device.platform.toLowerCase().replace('windows', 'winphone');
+  const remoteVersion = app.phonegap_versions[platform];
+
+  try {
+    return semver.diff(remoteVersion, cordova.version) || 'match';
+  } catch (ex) {
+    console.log(`Semver: ${ex.message}`);
+    return 'major';
+  }
 }
 
 export function analyzePlugins(appID, accessToken) {

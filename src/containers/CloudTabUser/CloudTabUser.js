@@ -6,7 +6,7 @@ import { Button } from 'topcoat-preact';
 import Modal from 'containers/Modal';
 import ModalPane from 'components/ModalPane';
 import CloudUserPane from 'components/CloudUserPane';
-import { pgbAppsRequested, fetchApps, createSampleApp, analyzePlugins } from 'actions/pgbSessionActions';
+import { pgbAppsRequested, fetchApps, createSampleApp, analyzePlugins, checkPhonegapVersion } from 'actions/pgbSessionActions';
 
 class CloudTabUser extends Component {
   constructor() {
@@ -50,6 +50,7 @@ class CloudTabUser extends Component {
     const { dispatch } = this.props;
     console.log('handleAppListItemClick', app);
     // dispatch(analyzePlugins(app.id, this.props.pgb.accessToken));
+    // dispatch(checkPhonegapVersion(app));
   };
 
   render(props, state) {
