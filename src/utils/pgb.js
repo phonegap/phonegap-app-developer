@@ -2,6 +2,7 @@
 /*global PhonegapBuildOauth*/
 
 import fetch from 'isomorphic-fetch';
+import semver from 'semver';
 
 const apiHost = 'https://build.phonegap.com';
 const persistLogin = false;
@@ -82,13 +83,11 @@ function handleAuth(authCode, err) {
         window.localStorage.setItem('access_token', a.access_token);
         resolve(a.access_token);
       }, (a) => {
-        console.log(`Auth failure: ${a.message}`);
-        alert('Login failed', 'Error');
+        console.log(`Authentication failure (${a.message})`);
         reject();
       });
     } else if (err) {
-      console.log(`Auth failure: ${err}`);
-      alert('Login failed', 'Error');
+      console.log(`Authentication failure: ${err}`);
       reject();
     }
   });
@@ -135,3 +134,49 @@ export function createSampleApp(accessToken) {
     body: `data=${json}`,
   }));
 }
+
+function checkPlugins(remotePlugins) {
+  if (typeof remotePlugins === 'undefined') {
+    return null;
+  }
+
+  const pluginList = [];
+  const availablePlugins = cordova.require('cordova/plugin_list').metadata;
+
+  remotePlugins.forEach((p) => {
+    const remoteVersion = p.version.replace(/^~/, '');
+    const localVersion = availablePlugins[p.name];
+
+    const plugin = {
+      id: p.name,
+      remoteVersion,
+      localVersion,
+    };
+
+    if (typeof localVersion === 'undefined') {
+      plugin.state = 'missing';
+    } else {
+      try {
+        plugin.state = semver.diff(remoteVersion, localVersion) || 'match';
+      } catch (ex) {
+        console.log(`Semver: ${ex.message}`);
+        plugin.state = 'major';
+      }
+    }
+
+    pluginList.push(plugin);
+  });
+
+  return pluginList;
+}
+
+export function analyzePlugins(appID, accessToken) {
+  return (fetch(`${apiHost}/api/v1/apps/${appID}/plugins?access_token=${accessToken}`)
+  .then(response =>
+    response.json().then(json => json.plugins)
+  )
+  .then(plugins =>
+    checkPlugins(plugins)
+  ));
+}
+
