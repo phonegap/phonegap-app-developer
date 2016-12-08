@@ -15,7 +15,6 @@ describe('pgb session actions', () => {
   it('should create a PGB_LOGOUT_REQUESTED action with an access_token', () => {
     const expectedAction = {
       type: 'PGB_LOGOUT_REQUESTED',
-      accessToken: mockAccessToken,
     };
     expect(actions.pgbLogoutRequested(mockAccessToken)).toEqual(expectedAction);
   });
