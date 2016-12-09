@@ -5,7 +5,7 @@ import FastClick from 'react-fastclick-alt';
 import './topcoat-mobile-light.min.css';
 
 import 'adobe-mobile-ui/css/button-mobile.css'; // eslint-disable-line import/imports-first
-import 'adobe-mobile-ui/css/select-mobile.css'; // eslint-disable-line import/imports-first
+import 'adobe-mobile-ui/css/combobox-mobile.css'; // eslint-disable-line import/imports-first
 import 'adobe-mobile-ui/css/tab-bar-mobile.css'; // eslint-disable-line import/imports-first
 
 import './index.less';
