@@ -23,7 +23,7 @@ function init() {
   window.navigator && window.navigator.splashscreen && window.navigator.splashscreen.hide();
 
   // check to see if hockey app is installed and run update command if needed
-  if(hockeyapp) {
+  if(typeof hockeyapp !== 'undefined') {
     // conditionally set this by platform
     const hockeyID = 'ab4f4cd2ab5045708c0b4ee0b9e2fe39';
 
