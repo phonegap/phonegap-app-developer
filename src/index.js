@@ -21,6 +21,21 @@ options.syncComponentUpdates = true;
 let root;
 function init() {
   window.navigator && window.navigator.splashscreen && window.navigator.splashscreen.hide();
+
+  // check to see if hockey app is installed and run update command if needed
+  if(hockeyapp) {
+    // conditionally set this by platform
+    const hockeyID = 'ab4f4cd2ab5045708c0b4ee0b9e2fe39';
+
+    hockeyapp.start(function() {
+       hockeyapp.checkForUpdate(function() {
+       }, function() {
+           alert('failed to get update');
+       });
+      }, function() {
+    }, hockeyID);
+  }
+
   const App = require('./containers/App').default; // eslint-disable-line global-require
 
   root = render(
