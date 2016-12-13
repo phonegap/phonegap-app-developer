@@ -6,7 +6,6 @@ import fetch from 'isomorphic-fetch';
 import semver from 'semver';
 
 const apiHost = 'https://build.phonegap.com';
-const persistLogin = false;
 
 function simulateFetchApps() {
   return new Promise((resolve, reject) => {
@@ -105,13 +104,17 @@ export function fetchApps(accessToken) {
   ));
 }
 
+export function logout() {
+  window.localStorage.removeItem('access_token');
+}
+
 export function login() {
   if (typeof cordova === 'undefined' || cordova.platformId === 'browser') {
     return simulateLogin();
   }
 
   const accessToken = window.localStorage.getItem('access_token');
-  if (persistLogin && accessToken) {
+  if (accessToken) {
     return new Promise((resolve, reject) => {
       resolve(accessToken);
     });

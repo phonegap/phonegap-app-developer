@@ -3,6 +3,7 @@ import { routerReducer } from 'react-router-redux';
 
 function pgb(state = {
   loading: false,
+  accessToken: window.localStorage.getItem('access_token'),
 }, action) {
   //console.log(action.type);
   switch (action.type) {
@@ -51,18 +52,25 @@ function pgb(state = {
         loading: true,
       };
     case 'PGB_PLUGIN_ANALYSIS_RECEIVED':
-      console.log('PGB_PLUGIN_ANALYSIS_RECEIVED', action);
+      console.log('PGB_PLUGIN_ANALYSIS_RECEIVED');
       return {
         ...state,
         loading: false,
         plugins: action.plugins,
       };
     case 'PGB_CHECK_PHONEGAP_VERSION':
-      console.log('PGB_CHECK_PHONEGAP_VERSION', action);
+      console.log('PGB_CHECK_PHONEGAP_VERSION');
       return {
         ...state,
         loading: false,
         result: action.state,
+      };
+    case 'PGB_LOGGED_OUT':
+      console.log('PGB_LOGGED_OUT');
+      return {
+        ...state,
+        accessToken: null,
+        apps: null,
       };
     default:
       if (action.type.indexOf('PGB_') > -1) {

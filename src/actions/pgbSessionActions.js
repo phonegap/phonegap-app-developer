@@ -13,15 +13,9 @@ export function pgbLoginReceived(accessToken) {
   };
 }
 
-export function pgbLogoutRequested(accessToken) {
+export function pgbLoggedOut(accessToken) {
   return {
-    type: 'PGB_LOGOUT_REQUESTED',
-  };
-}
-
-export function pgbLogoutReceived() {
-  return {
-    type: 'PGB_LOGOUT_RECEIVED',
+    type: 'PGB_LOGGED_OUT',
   };
 }
 
@@ -98,6 +92,13 @@ export function login() {
     .then((accessToken) => {
       dispatch(pgbLoginReceived(accessToken));
     });
+  };
+}
+
+export function logout() {
+  return (dispatch) => {
+    pgb.logout();
+    return dispatch(pgbLoggedOut());
   };
 }
 
