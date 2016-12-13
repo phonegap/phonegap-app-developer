@@ -11,7 +11,7 @@ import {
 import styles from './index.less';
 
 const SettingsPane = (props, state) => {
-  const { itemClickHandler } = props;
+  const { itemClickHandler, dispatch } = props;
 
   return (
     <div className={ styles.settingsPane }>
@@ -57,7 +57,7 @@ const SettingsPane = (props, state) => {
         </ListContainer>
       </List>
       <div className={ styles.padded10px }>
-        <Button full>Sign out of PhoneGapBuild</Button>
+        <Button clickHandler={ () => itemClickHandler('signout') } full>Sign out of PhoneGapBuild</Button>
       </div>
     </div>
   );

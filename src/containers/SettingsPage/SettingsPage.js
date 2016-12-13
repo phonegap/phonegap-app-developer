@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import animateView from 'react-animated-views';
 import { connect } from 'preact-redux';
+import { logout } from 'actions/pgbSessionActions';
 
 import {
   IconButton,
@@ -28,6 +29,9 @@ class SettingsPage extends Component {
   }
 
   handleListItemClick(path) {
+    if (path === 'signout') {
+      this.props.dispatch(logout());
+    }
     const { push } = this.props;
     push(path, 'slideLeft');
   }
