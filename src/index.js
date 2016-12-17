@@ -1,3 +1,4 @@
+/* global hockeyapp */
 import { options, h, render } from 'preact';
 import { IntlProvider } from 'react-intl';
 import FastClick from 'react-fastclick-alt';
