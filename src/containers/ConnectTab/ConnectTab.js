@@ -1,3 +1,5 @@
+/* global DeveloperMode */
+
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { save, load, scanQRCode, downloadZip, cleanAddress } from 'utils/deploy';
@@ -8,10 +10,10 @@ function connectToServer(address) {
   console.log(address);
   const config = { address };
 
-  DeveloperMode.addHostAddress(address, function() {
-      DeveloperMode.setCurrentHostAddress(address, function() {
-          DeveloperMode.deploy.downloadZip(config);
-      });
+  DeveloperMode.addHostAddress(address, () => {
+    DeveloperMode.setCurrentHostAddress(address, () => {
+      DeveloperMode.deploy.downloadZip(config);
+    });
   });
 }
 
@@ -22,9 +24,9 @@ class ConnectTab extends Component {
   }
 
   componentDidMount() {
-    var that = this;
+    const that = this;
     // load in last saved address
-    DeveloperMode.on('load', function() {
+    DeveloperMode.on('load', () => {
       that.setState({ url: DeveloperMode.getCurrentHostAddress() });
     });
   }

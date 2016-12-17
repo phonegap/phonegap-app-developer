@@ -1,3 +1,5 @@
+/* global DeveloperMode */
+
 import { h, Component } from 'preact';
 import { FormattedMessage } from 'react-intl';
 
@@ -8,6 +10,16 @@ import styles from './index.less';
 // @TODO This might be refactored to just accept children
 export default class ConnectPane extends Component {
 
+  componentDidMount() {
+    const that = this;
+    DeveloperMode.on('load', () => {
+      that.suggestions = DeveloperMode.getHostAddresses().map((addr) => {
+        const addrObj = { value: addr };
+        return addrObj;
+      });
+    });
+  }
+
   // @TODO these should come from the config
   suggestions = [
     {
@@ -17,16 +29,6 @@ export default class ConnectPane extends Component {
       value: '192.168.1.6:3000',
     },
   ];
-
-  componentDidMount() {
-    var that = this;
-    DeveloperMode.on('load', function() {
-      that.suggestions = DeveloperMode.getHostAddresses().map(function(addr){
-        var addrObj = { 'value' : addr };
-        return addrObj;
-      });
-    });
-  }
 
   render() {
     const { connectURL, handleButtonClick, handleOnChange } = this.props;
