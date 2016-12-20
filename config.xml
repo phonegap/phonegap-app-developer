@@ -56,7 +56,7 @@
     <plugin name="phonegap-plugin-push" spec="https://github.com/timkim/phonegap-plugin-push.git">
         <variable name="SENDER_ID" value="85075801930" />
     </plugin>
-    <plugin name="cordova-plugin-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin" />
     <plugin name="phonegap-plugin-barcodescanner" spec="~6.0.2">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
     </plugin>
