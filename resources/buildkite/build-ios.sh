@@ -2,6 +2,10 @@
 set -eo pipefail
 
 if [ "$(git rev-parse HEAD)" != "$(git rev-parse $(git describe --abbrev=0 --tags))" ]; then
+
+    echo "enabling spawn debug"
+    node ./resources/script/spawn-debug.js
+
     echo "Building adhoc release"
     npm run adhoc-ios
     IPALOCATION="platforms/ios/build/device/PG Nightly.ipa"
