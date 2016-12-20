@@ -72,6 +72,17 @@ function pgb(state = {
         accessToken: null,
         apps: null,
       };
+    case 'PGB_APP_ZIP_URL_REQUESTED':
+      console.log('PGB_APP_ZIP_URL_REQUESTED');
+      return {
+        ...state,
+      };
+    case 'PGB_APP_ZIP_URL_RECEIVED':
+      console.log('PGB_APP_ZIP_URL_RECEIVED', action.url);
+      return {
+        ...state,
+        url: action.url,
+      };
     default:
       if (action.type.indexOf('PGB_') > -1) {
         console.log('Uncaught action: ', action.type);

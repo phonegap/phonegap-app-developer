@@ -1,6 +1,7 @@
 /*global cordova*/
 /*global PhonegapBuildOauth*/
 /*global device*/
+/*global ContentSync*/
 
 import fetch from 'isomorphic-fetch';
 import semver from 'semver';
@@ -193,6 +194,54 @@ export function analyzePlugins(appID, accessToken) {
   )
   .then(plugins =>
     checkPlugins(plugins)
+  ));
+}
+
+
+function loadApp(appID, src) {
+  return new Promise((resolve, reject) => {
+    console.log(`Loading app ${appID}`);
+    const sync = ContentSync.sync({
+      src,
+      id: `${appID}`,
+      copyCordovaAssets: true,
+      validateSrc: false,
+    });
+
+    sync.on('error', (e) => {
+      console.log('Sync failure');
+      console.log(e);
+      reject();
+    });
+
+    sync.on('progress', (data) => {
+      console.log(`progress: ${data.progress}`);
+      // resolve??
+    });
+
+    sync.on('complete', (data) => {
+      console.log('sync complete', data);
+      window.resolveLocalFileSystemURL(`file://${data.localPath}/index.html`, () => {
+        console.log(`Found file://${data.localPath}/index.html, loading it`);
+        window.location.href = `file://${data.localPath}/index.html`;
+        resolve();
+      }, () => {
+        console.log(`Didn't find file://${data.localPath}/index.html, trying nested www`);
+        window.location.href = `file://${data.localPath}/www/index.html`;
+        resolve();
+      });
+    });
+  });
+}
+
+export function fetchAppZipUrl(appID, accessToken) {
+  console.log(`fetching app ${appID}`);
+
+  return (fetch(`${apiHost}/api/v1/apps/${appID}/www?access_token=${accessToken}`)
+  .then(response =>
+    response.json().then(json => json.www_url)
+  ).then(url =>
+    loadApp(appID, url)
   ));
 }
 
