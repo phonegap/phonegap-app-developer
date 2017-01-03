@@ -6,7 +6,6 @@ import styles from './index.less';
 // @TODO This will probably be refactored to accept children
 const CloudAppsList = (props, state) => {
   const { apps, clickHandler, playButtonHandler } = props;
-  console.log(apps);
   const appsList = apps.map(app => (
     <ListItem className={ styles.appsListItem } clickHandler={ () => clickHandler(app) }>
       <div className={ styles.media }>

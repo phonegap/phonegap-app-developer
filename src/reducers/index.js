@@ -32,6 +32,11 @@ function pgb(state = {
         ...state,
         loading: false,
         apps: action.apps,
+        appsById: action.apps.reduce((a, b) => {
+          const c = a;
+          c[b.id] = b;
+          return c;
+        }, {}),
       };
     case 'PGB_CREATE_APP_REQUESTED':
       console.log('PGB_CREATE_APP_REQUESTED');

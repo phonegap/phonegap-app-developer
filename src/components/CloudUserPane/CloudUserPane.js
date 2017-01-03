@@ -9,6 +9,7 @@ import styles from './index.less';
 // @TODO This will probably be refactored to accept children
 const CloudUserPane = (props, state) => {
   const handleAppListItemClick = (app) => {
+    console.log(props);
     console.log('handleAppListItemClick', app);
   };
 
@@ -55,7 +56,7 @@ const CloudUserPane = (props, state) => {
   } else if (apps) {
     const items = (
       <CloudAppsList
-        clickHandler={ handleAppListItemClick }
+        clickHandler={ props.handleAppListItemClick }
         playButtonHandler={ handlePlayButtonClick }
         apps={ apps }
       />);

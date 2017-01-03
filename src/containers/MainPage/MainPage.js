@@ -25,11 +25,13 @@ class MainPage extends Component {
     const {
       style,
       location: { pathname: key, action: direction },
+      push,
     } = props;
 
     const childProps = {
       key,
       direction: direction.toLowerCase(),
+      push,
     };
     const leftButton = (
       <IconButton

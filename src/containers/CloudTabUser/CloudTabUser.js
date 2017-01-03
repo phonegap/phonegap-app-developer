@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import animateView from 'react-animated-views';
 import { connect } from 'preact-redux';
 import { hashHistory } from 'react-router';
 import { Button } from 'topcoat-preact';
@@ -18,6 +19,7 @@ class CloudTabUser extends Component {
   }
 
   componentWillMount() {
+    console.log(this.props);
     const { dispatch, pgb: { apps, loading, accessToken } } = this.props;
     if (!accessToken) {
       hashHistory.replace('/main/cloud/login');
@@ -47,8 +49,9 @@ class CloudTabUser extends Component {
   }
 
   handleAppListItemClick = (app) => {
-    const { dispatch } = this.props;
+    const { dispatch, push } = this.props;
     console.log('handleAppListItemClick', app);
+    push(`/appDetail/${app.id}`, 'slideLeft');
     // dispatch(analyzePlugins(app.id, this.props.pgb.accessToken));
     // dispatch(checkPhonegapVersion(app));
     // dispatch(fetchAppZipUrl(app.id, this.props.pgb.accessToken));
