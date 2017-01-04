@@ -21,6 +21,3 @@ platforms
 logs
 *.log
 npm-debug.log*
-
-# res
-resources/signing
