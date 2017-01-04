@@ -12,10 +12,10 @@ describe('pgb session actions', () => {
     };
     expect(actions.pgbLoginRequested()).toEqual(expectedAction);
   });
-  it('should create a PGB_LOGOUT_REQUESTED action with an access_token', () => {
+  it('should create a PGB_LOGGED_OUT action with an access_token', () => {
     const expectedAction = {
-      type: 'PGB_LOGOUT_REQUESTED',
+      type: 'PGB_LOGGED_OUT',
     };
-    expect(actions.pgbLogoutRequested(mockAccessToken)).toEqual(expectedAction);
+    expect(actions.pgbLoggedOut()).toEqual(expectedAction);
   });
 });

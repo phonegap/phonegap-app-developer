@@ -13,7 +13,7 @@ export function pgbLoginReceived(accessToken) {
   };
 }
 
-export function pgbLoggedOut(accessToken) {
+export function pgbLoggedOut() {
   return {
     type: 'PGB_LOGGED_OUT',
   };
