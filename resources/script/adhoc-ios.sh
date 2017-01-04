@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -eo pipefail
+
 echo "Running: npm run build"
 npm run build
 
