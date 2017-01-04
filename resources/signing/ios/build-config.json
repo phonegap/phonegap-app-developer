@@ -2,8 +2,8 @@
      "ios": {
          "debug": {
              "codeSignIdentitiy": "iPhone Developer",
-             "provisioningProfile": "c93a018f-6d8a-4da8-b484-dcc2b97e1b57"
-             "developmentTeam": "D42HQMA488",
+             "provisioningProfile": "c93a018f-6d8a-4da8-b484-dcc2b97e1b57",
+             "developmentTeam": "D42HQMA488"
          },
          "release": {
              "codeSignIdentitiy": "iPhone Distribution",
