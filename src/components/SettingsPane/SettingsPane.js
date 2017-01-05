@@ -16,7 +16,6 @@ const SettingsPane = (props, state) => {
   return (
     <div className={ styles.settingsPane }>
       <List>
-        <ListHeader />
         <ListContainer>
           <ListItem clickHandler={ () => itemClickHandler('/settings/menu') }>
             <div className={ styles.chevronItem }>
@@ -24,19 +23,22 @@ const SettingsPane = (props, state) => {
             </div>
           </ListItem>
         </ListContainer>
-        <ListHeader />
+      </List>
+      <List>
         <ListContainer>
           <ListItem>
             Clear server history
           </ListItem>
         </ListContainer>
-        <ListHeader />
+      </List>
+      <List>
         <ListContainer>
           <ListItem>
             App version
           </ListItem>
         </ListContainer>
-        <ListHeader />
+      </List>
+      <List>
         <ListContainer>
           <ListItem>
             <div className={ styles.item }>

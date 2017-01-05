@@ -3,11 +3,13 @@ import { options, h, render } from 'preact';
 import { IntlProvider } from 'react-intl';
 import FastClick from 'react-fastclick-alt';
 
-import './topcoat-mobile-light.min.css';
-
+import 'adobe-mobile-ui/css/root-mobile.css'; // eslint-disable-line import/imports-first
 import 'adobe-mobile-ui/css/button-mobile.css'; // eslint-disable-line import/imports-first
 import 'adobe-mobile-ui/css/combobox-mobile.css'; // eslint-disable-line import/imports-first
 import 'adobe-mobile-ui/css/tab-bar-mobile.css'; // eslint-disable-line import/imports-first
+import 'adobe-mobile-ui/css/icon-button-mobile.css'; // eslint-disable-line import/imports-first
+import 'adobe-mobile-ui/css/list-mobile.css'; // eslint-disable-line import/imports-first
+import 'adobe-mobile-ui/css/navigation-bar-mobile.css'; // eslint-disable-line import/imports-first
 
 import './index.less';
 

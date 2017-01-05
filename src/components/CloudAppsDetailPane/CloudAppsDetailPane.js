@@ -14,7 +14,9 @@ const CloudAppsDetailPane = (props, state) => {
     <div className={ styles.cloudAppsDetail }>
       <div className={ styles.header }>
         <div className={ styles.infoContainer }>
-          <img src={ app.icon.link } alt="icon" className={ styles.icon } />
+          <div className={ styles.iconContainer }>
+            <img src={ app.icon.link } alt="icon" className={ styles.icon } />
+          </div>
           <div>{ app.title }</div>
           <div>{ `v${app.version}` }</div>
         </div>
