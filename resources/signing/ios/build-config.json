@@ -1,12 +1,10 @@
 {
      "ios": {
          "debug": {
-             "codeSignIdentitiy": "iPhone Developer",
-             "provisioningProfile": "c93a018f-6d8a-4da8-b484-dcc2b97e1b57",
              "developmentTeam": "D42HQMA488"
          },
          "release": {
-             "codeSignIdentitiy": "iPhone Distribution",
+             "codeSignIdentity": "iPhone Distribution",
              "provisioningProfile": "a4d2f334-1550-44c5-bda2-8c51b3be7577"
          }
      }
