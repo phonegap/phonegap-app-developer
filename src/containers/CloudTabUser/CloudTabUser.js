@@ -48,14 +48,14 @@ class CloudTabUser extends Component {
     .then(() => dispatch(fetchApps(this.props.pgb.accessToken)));
   }
 
-  handleAppListItemClick = (app) => {
+  handleAppListItemClick(app) {
     const { dispatch, push } = this.props;
     console.log('handleAppListItemClick', app);
     push(`/appDetail/${app.id}`, 'slideLeft');
     // dispatch(analyzePlugins(app.id, this.props.pgb.accessToken));
     // dispatch(checkPhonegapVersion(app));
     // dispatch(fetchAppZipUrl(app.id, this.props.pgb.accessToken));
-  };
+  }
 
   render(props, state) {
     const { pgb: { loading, apps } } = props;

@@ -4,11 +4,7 @@ import { IconButton, Button } from 'topcoat-preact';
 import styles from './index.less';
 
 const CloudAppsDetailPane = (props, state) => {
-  const { app } = props;
-
-  const playButtonHandler = (e) => {
-    console.log(app);
-  };
+  const { app, handlePlayButtonClick } = props;
 
   return (
     <div className={ styles.cloudAppsDetail }>
@@ -25,7 +21,7 @@ const CloudAppsDetailPane = (props, state) => {
             aria-label="Play"
             quiet
             title="play"
-            clickHandler={ e => playButtonHandler(e) }
+            clickHandler={ e => handlePlayButtonClick(app, e) }
           >
             <span
               style={ {

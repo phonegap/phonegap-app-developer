@@ -43,12 +43,17 @@ class CloudAppsDetail extends Component {
     //.then(() => dispatch(fetchApps(this.props.pgb.accessToken)));
   //}
 
+  handlePlayButtonClick(app, e) {
+    const { dispatch, pgb: { accessToken } } = this.props;
+    console.log(`${app.title} play button clicked`);
+    // dispatch(fetchAppZipUrl(app.id, accessToken));
+  }
+
   //handleAppListItemClick = (app) => {
     //const { dispatch } = this.props;
     //console.log('handleAppListItemClick', app);
     //// dispatch(analyzePlugins(app.id, this.props.pgb.accessToken));
     //// dispatch(checkPhonegapVersion(app));
-    //// dispatch(fetchAppZipUrl(app.id, this.props.pgb.accessToken));
   //};
 
   handleIconButtonClick() {
@@ -88,7 +93,10 @@ class CloudAppsDetail extends Component {
           rightButton={ rightButton }
           title="Details"
         />
-        <CloudAppsDetailPane app={ app } />
+        <CloudAppsDetailPane
+          handlePlayButtonClick={ (application, e) => this.handlePlayButtonClick(application, e) }
+          app={ app }
+        />
       </div>
     );
   }
