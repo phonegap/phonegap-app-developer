@@ -6,17 +6,16 @@
     margin: 20px 0;
   }
 
-  input {
-    margin: 10px 0;
-  }
-
   label > span {
     text-align: left;
   }
 
-  :global(.full),
-  :global(.topcoat-combobox__container) {
-    width: 100%;
+  button {
+    margin: 10px 0 0 0;
+
+    &:global(.full) {
+      width: 100%;
+    }
   }
 
   button > span {
@@ -27,5 +26,11 @@
     span, img {
       padding: 0 2px;
     }
+  }
+
+  :global(.topcoat-combobox__container) > input,
+  :global(.topcoat-combobox__container) {
+    width: 100%;
+    z-index: 2;
   }
 }
