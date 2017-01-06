@@ -12,7 +12,7 @@ general:
 
 deployment:
   production:
-    branch: [continuous-integration, dev]
+    branch: [continuous-integration, dev, v2.0.0-dev-preact]
     commands:
       - pip install awscli
       - bash resources/circle-ci/android/aws-upload.sh
