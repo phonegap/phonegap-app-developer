@@ -11,9 +11,8 @@ import styles from './index.less';
 export default class ConnectPane extends Component {
 
   componentDidMount() {
-    const that = this;
     DeveloperMode.on('load', () => {
-      that.suggestions = DeveloperMode.getHostAddresses().map((addr) => {
+      this.suggestions = DeveloperMode.getHostAddresses().map((addr) => {
         const addrObj = { value: addr };
         return addrObj;
       });
