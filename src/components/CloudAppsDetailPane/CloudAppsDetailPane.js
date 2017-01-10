@@ -19,7 +19,6 @@ const CloudAppsDetailPane = (props, state) => {
         <div className={ styles.playButtonContainer }>
           <IconButton
             aria-label="Play"
-            quiet
             title="play"
             clickHandler={ e => handlePlayButtonClick(app, e) }
           >
@@ -33,6 +32,34 @@ const CloudAppsDetailPane = (props, state) => {
             />
           </IconButton>
         </div>
+      </div>
+      <div className={ styles.phoneGapVersionContainer }>
+        <div className={ styles.phoneGapVersion }>
+          <span>PhoneGap Version:</span>
+          <span>{ app.phonegap_version }</span>
+        </div>
+      </div>
+      <div className={ styles.pluginCompatibilityContainer }>
+        <Button
+          aria-label="Check Plugin Compatibility"
+          full
+          clickHandler={ () => {} }
+          title="Check Plugin Compatibility"
+        >
+          Check Plugin Compatibility
+        </Button>
+        <p>Attempts to determine if the PhoneGap Developer App includes the
+          required plugins to run your app.</p>
+      </div>
+      <div className={ styles.installContainer }>
+        <Button
+          aria-label="Install"
+          full
+          clickHandler={ () => {} }
+          title="Install"
+        >
+          Install
+        </Button>
       </div>
     </div>
   );

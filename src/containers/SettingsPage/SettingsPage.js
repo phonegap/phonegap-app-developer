@@ -45,7 +45,6 @@ class SettingsPage extends Component {
     const rightButton = (
       <IconButton
         aria-label="Help"
-        quiet
         title="Help"
         clickHandler={ () => this.handleIconButtonClick('close') }
       >

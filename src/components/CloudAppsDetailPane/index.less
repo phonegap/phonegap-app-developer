@@ -1,11 +1,15 @@
 .cloudAppsDetail {
   position: absolute;
-  top: 70px;
+  top: 48px;
   right: 0;
   bottom: 0;
   left: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+
+  :global(.full) {
+    width: 100%;
+  }
 }
 
 .header {
@@ -39,4 +43,20 @@
     width: 48px;
     height: 48px;
   }
+}
+
+.header,
+.phoneGapVersionContainer,
+.pluginCompatibilityContainer,
+.installContainer {
+  margin-top: 1px;
+  padding: 10px;
+  box-shadow: 0 1px #e9ecf1;
+  background: #ffffff;
+}
+
+.phoneGapVersion {
+  display: flex;
+  justify-content: space-around;
+  font-weight: bold;
 }

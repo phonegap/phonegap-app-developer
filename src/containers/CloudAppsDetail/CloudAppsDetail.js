@@ -9,7 +9,14 @@ import ModalPane from 'components/ModalPane';
 import CloudAppsDetailPane from 'components/CloudAppsDetailPane';
 import MainHeader from 'components/MainHeader';
 import SettingsPane from 'components/SettingsPane';
-import { pgbAppsRequested, fetchApps, createSampleApp, analyzePlugins, checkPhonegapVersion, fetchAppZipUrl } from 'actions/pgbSessionActions';
+import {
+  pgbAppsRequested,
+  fetchApps,
+  createSampleApp,
+  analyzePlugins,
+  checkPhonegapVersion,
+  fetchAppZipUrl,
+} from 'actions/pgbSessionActions';
 
 class CloudAppsDetail extends Component {
   constructor() {
@@ -21,8 +28,7 @@ class CloudAppsDetail extends Component {
   }
 
   componentDidMount() {
-    // @TODO - fetch app by its appId
-    const { dispatch, pgb: { apps, loading, accessToken } } = this.props;
+    const { pgb: { accessToken } } = this.props;
     if (!accessToken) {
       hashHistory.replace('/main/cloud');
       return;
@@ -33,15 +39,6 @@ class CloudAppsDetail extends Component {
     this.setState({ isModalOpen: false });
     console.log('modal dismissed');
   }
-
-  //handleButtonClick(button, e) {
-    //console.log(`${button} clicked`);
-    //const { dispatch } = this.props;
-    ////this.setState({ isModalOpen: true });
-    //this.setState({ loading: true });
-    //dispatch(createSampleApp(this.props.pgb.accessToken))
-    //.then(() => dispatch(fetchApps(this.props.pgb.accessToken)));
-  //}
 
   handlePlayButtonClick(app, e) {
     const { dispatch, pgb: { accessToken } } = this.props;
@@ -56,7 +53,7 @@ class CloudAppsDetail extends Component {
     //// dispatch(checkPhonegapVersion(app));
   //};
 
-  handleIconButtonClick() {
+  handleBackIconButtonClick() {
     const { pop } = this.props;
     pop('slideLeft');
   }
@@ -68,9 +65,8 @@ class CloudAppsDetail extends Component {
     const backButton = (
       <IconButton
         aria-label="Back"
-        quiet
         title="Back"
-        clickHandler={ () => this.handleIconButtonClick() }
+        clickHandler={ () => this.handleBackIconButtonClick() }
       >
         <span
           style={ {

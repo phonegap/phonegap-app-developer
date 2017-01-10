@@ -28,7 +28,6 @@ class SettingsMenuOverlayPage extends Component {
     const backButton = (
       <IconButton
         aria-label="Back"
-        quiet
         title="Back"
         clickHandler={ () => this.handleIconButtonClick() }
       >

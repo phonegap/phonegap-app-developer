@@ -23,7 +23,6 @@ const CloudAppsList = (props, state) => {
         </div>
         <IconButton
           aria-label="Play"
-          quiet
           title="play"
           clickHandler={ e => playButtonHandler(e, app) }
         >

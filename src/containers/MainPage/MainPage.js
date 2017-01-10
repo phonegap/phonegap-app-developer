@@ -36,7 +36,6 @@ class MainPage extends Component {
     const leftButton = (
       <IconButton
         aria-label="Settings"
-        quiet
         title="settings"
         clickHandler={ () => this.handleIconButtonClick('settings') }
       >
@@ -53,7 +52,6 @@ class MainPage extends Component {
     const rightButton = (
       <IconButton
         aria-label="Help"
-        quiet
         title="Help"
         clickHandler={ () => this.handleIconButtonClick('help') }
       >

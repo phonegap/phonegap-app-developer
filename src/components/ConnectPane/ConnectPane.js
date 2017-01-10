@@ -39,14 +39,14 @@ export default class ConnectPane extends Component {
         <div className={ styles.orSpacer }>
           <FormattedMessage
             id="or-spacer"
-            defaultMessage={ '- or -' }
+            defaultMessage={ 'or' }
           />
         </div>
         <label htmlFor="connectURL">
-          <FormattedMessage
+          <div><FormattedMessage
             id="enter-server-address"
-            defaultMessage={ 'Enter server address' }
-          />
+            defaultMessage={ 'Enter Server Address' }
+          /></div>
           <ComboBox
             value={ connectURL }
             suggestions={ this.suggestions }
