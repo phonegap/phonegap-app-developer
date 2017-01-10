@@ -58,7 +58,7 @@ const SettingsPane = (props, state) => {
           </ListItem>
         </ListContainer>
       </List>
-      <div className={ styles.padded10px }>
+      <div className={ styles.logoutButtonContainer }>
         <Button clickHandler={ () => itemClickHandler('signout') } full>Sign out of PhoneGapBuild</Button>
       </div>
     </div>
