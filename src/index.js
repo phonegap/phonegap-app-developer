@@ -34,8 +34,10 @@ function init() {
 
     hockeyapp.start(() => {
       hockeyapp.checkForUpdate(() => {
+        alert('Update available from HockeyApp');
       }, () => {
         // failed to get update
+        alert('Unable to get the update from HockeyApp');
       });
     }, () => {
     }, hockeyID);
