@@ -28,7 +28,13 @@ class CloudAppsDetail extends Component {
   }
 
   componentDidMount() {
-    const { pgb: { accessToken } } = this.props;
+    const {
+      dispatch,
+      pgb: { accessToken, appsById, semverResult },
+      params: { appId },
+    } = this.props;
+    const app = appsById[appId];
+    dispatch(checkPhonegapVersion(app));
     if (!accessToken) {
       hashHistory.replace('/main/cloud');
       return;
@@ -43,15 +49,13 @@ class CloudAppsDetail extends Component {
   handlePlayButtonClick(app, e) {
     const { dispatch, pgb: { accessToken } } = this.props;
     console.log(`${app.title} play button clicked`);
-    // dispatch(fetchAppZipUrl(app.id, accessToken));
+    dispatch(fetchAppZipUrl(app.id, accessToken));
   }
 
-  //handleAppListItemClick = (app) => {
-    //const { dispatch } = this.props;
-    //console.log('handleAppListItemClick', app);
-    //// dispatch(analyzePlugins(app.id, this.props.pgb.accessToken));
-    //// dispatch(checkPhonegapVersion(app));
-  //};
+  handlePluginCompatibilityClick(app, e) {
+    const { dispatch, pgb: { accessToken } } = this.props;
+    dispatch(analyzePlugins(app.id, accessToken));
+  }
 
   handleBackIconButtonClick() {
     const { pop } = this.props;
@@ -59,7 +63,7 @@ class CloudAppsDetail extends Component {
   }
 
   render(props, state) {
-    const { style, pgb: { loading, appsById }, params: { appId } } = props;
+    const { style, pgb: { loading, appsById, semverResult }, params: { appId } } = props;
     const app = appsById[appId];
 
     const backButton = (
@@ -91,7 +95,11 @@ class CloudAppsDetail extends Component {
         />
         <CloudAppsDetailPane
           handlePlayButtonClick={ (application, e) => this.handlePlayButtonClick(application, e) }
+          handlePluginCompatibilityClick={
+            (application, e) => this.handlePluginCompatibilityClick(application, e)
+          }
           app={ app }
+          semverResult={ semverResult }
         />
       </div>
     );

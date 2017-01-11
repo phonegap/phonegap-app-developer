@@ -68,7 +68,7 @@ function pgb(state = {
       return {
         ...state,
         loading: false,
-        result: action.state,
+        semverResult: action.state,
       };
     case 'PGB_LOGGED_OUT':
       console.log('PGB_LOGGED_OUT');
