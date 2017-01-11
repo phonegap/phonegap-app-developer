@@ -54,6 +54,10 @@ const CloudAppsDetailPane = (props, state) => {
           <span> {` PhoneGap Version: ${app.phonegap_versions[platform]} (${app.phonegap_version})` }</span>
         </div>
       </div>
+      <div className={ styles.buildStatusContainer }>
+        <span>Build Status:</span>
+        <span>{ app.status[platform] }</span>
+      </div>
       <div className={ styles.pluginCompatibilityContainer }>
         <Button
           aria-label="Check Plugin Compatibility"
@@ -63,8 +67,8 @@ const CloudAppsDetailPane = (props, state) => {
         >
           Check Plugin Compatibility
         </Button>
-        <p>Attempts to determine if the PhoneGap Developer App includes the
-          required plugins to run your app.</p>
+        <p><small>Attempts to determine if the PhoneGap Developer App includes the
+            required plugins to run your app.</small></p>
       </div>
       <div className={ styles.installContainer }>
         <Button
@@ -75,6 +79,8 @@ const CloudAppsDetailPane = (props, state) => {
         >
           Install
         </Button>
+        <p><small>Download the app binary and install your app as a standalone
+          application (if available).</small></p>
       </div>
     </div>
   );

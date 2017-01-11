@@ -3,6 +3,8 @@ import { options, h, render } from 'preact';
 import { IntlProvider } from 'react-intl';
 import FastClick from 'react-fastclick-alt';
 
+import 'source-sans-pro/source-sans-pro.css';
+
 import 'adobe-mobile-ui/css/root-mobile.css'; // eslint-disable-line import/imports-first
 import 'adobe-mobile-ui/css/button-mobile.css'; // eslint-disable-line import/imports-first
 import 'adobe-mobile-ui/css/combobox-mobile.css'; // eslint-disable-line import/imports-first

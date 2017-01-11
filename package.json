@@ -24,7 +24,7 @@
     "intl": "^1.2.5",
     "isomorphic-fetch": "^2.2.0",
     "preact": "^7.1.0",
-    "preact-compat": "^3.9.4",
+    "preact-compat": "^3.10.0",
     "preact-portal": "^1.1.1",
     "preact-redux": "^1.2.0",
     "preact-transition-group": "^1.1.0",
@@ -36,6 +36,7 @@
     "redux": "^3.6.0",
     "redux-thunk": "^2.1.0",
     "semver": "^5.3.0",
+    "source-sans-pro": "^2.0.10",
     "topcoat-preact": "git+https://github.com/phonegap/topcoat-preact.git"
   },
   "devDependencies": {
