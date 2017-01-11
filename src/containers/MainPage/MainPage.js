@@ -68,8 +68,7 @@ class MainPage extends Component {
 
     const title = (
       <span>
-        <img src="./assets/img/PhoneGap-Symbol-Black.svg" alt="Logo" />
-        <span>PhoneGap</span>
+        <span>PhoneGap Developer</span>
       </span>
     );
 
