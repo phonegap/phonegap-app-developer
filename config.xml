@@ -9,7 +9,6 @@
     </author>
     <platform name="ios">
         <preference name="Orientation" value="all" />
-        <preference name="StatusBarOverlaysWebView" value="false" />
     </platform>
     <preference name="StatusBarStyle" value="default" />
     <preference name="ShowSplashScreenSpinner" value="false" />

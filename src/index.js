@@ -39,6 +39,12 @@ function init() {
     }, hockeyID);
   }
 
+  let platform = 'browser';
+  if (window.device && window.device.platform) {
+    platform = window.device.platform.toLowerCase();
+  }
+  document.body.className = platform;
+
   const App = require('./containers/App').default; // eslint-disable-line global-require
 
   root = render(
