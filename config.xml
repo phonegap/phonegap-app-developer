@@ -46,6 +46,7 @@
     <plugin name="cordova-plugin-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin" />
     <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/timkim/phonegap-plugin-barcodescanner" />
     <plugin name="phonegap-plugin-mobile-accessibility" spec="~1.0.4" />
+    <plugin name="phonegap-plugin-developer-mode" spec="../phonegap-plugin-developer-mode" />
     <platform name="ios">
         <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
         <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
@@ -89,7 +90,7 @@
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="wp8" spec="~3.8.1" />
-    <engine name="ios" spec="~4.1.1" />
     <engine name="android" spec="~5.0.0" />
     <plugin name="phonegap-plugin-pgb-oauth" spec="https://github.com/wildabeast/phonegap-plugin-pgb-oauth.git#0.3.2" />
+    <engine name="ios" spec="~4.1.1" />
 </widget>

@@ -1,3 +1,5 @@
+/* global DeveloperMode */
+
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import { save, load, scanQRCode, downloadZip, cleanAddress } from 'utils/deploy';
@@ -7,8 +9,12 @@ import ConnectPane from 'components/ConnectPane';
 function connectToServer(address) {
   console.log(address);
   const config = { address };
-  save(config, () => console.log(`Saved server address ${address}`));
-  downloadZip(config);
+
+  DeveloperMode.addHostAddress(address, () => {
+    DeveloperMode.setCurrentHostAddress(address, () => {
+      DeveloperMode.deploy.downloadZip(config);
+    });
+  });
 }
 
 class ConnectTab extends Component {
@@ -18,10 +24,10 @@ class ConnectTab extends Component {
   }
 
   componentDidMount() {
+    const that = this;
     // load in last saved address
-    load((loaded) => {
-      const addr = loaded.address;
-      this.setState({ url: addr });
+    DeveloperMode.on('load', () => {
+      that.setState({ url: DeveloperMode.getCurrentHostAddress() });
     });
     // Bind click outside the ComboBox input to blur the input
     // @TODO Remove after fixing https://github.com/moroshko/react-autosuggest/issues/286
