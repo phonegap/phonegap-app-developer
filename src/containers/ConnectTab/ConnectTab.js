@@ -23,6 +23,19 @@ class ConnectTab extends Component {
       const addr = loaded.address;
       this.setState({ url: addr });
     });
+    // Bind click outside the ComboBox input to blur the input
+    // @TODO Remove after fixing https://github.com/moroshko/react-autosuggest/issues/286
+    document.addEventListener('click', this.blurComboBox, false);
+  }
+
+  blurComboBox(e) { // eslint-disable-line class-methods-use-this
+    if (e.target.tagName === 'INPUT') return;
+    const input = document.querySelector('.topcoat-combobox__select');
+    input && input.blur();
+  }
+
+  componentDidUnmount() {
+    document.removeEventListener('click', this.blurComboBox, false);
   }
 
   handleButtonClick(button) {
