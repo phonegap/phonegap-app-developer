@@ -45,6 +45,10 @@ Platform releases should individually tagged as:
 - 1.0.0-android-release
 - 1.0.0-ios-release
 
+## Branches
+
+Ideally, commits will land in `dev` before being merged with `master`. This makes the release process easier to manage and ensures `master` is the "version" that's in the store right now.
+
 ## Releases
 
 ### Update CHANGELOG
