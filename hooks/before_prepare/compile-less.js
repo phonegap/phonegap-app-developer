@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-var npm = require('npm');
+var npmRun = require('npm-run');
 
 console.log('compiling LESS files');
 
-npm.load(function(e) {
-    if (e) throw e;
-    npm.commands.run(['build:less'], function(e, data) {
-        if (e) throw e;
-    });
+npmRun('npm run build:less', function(e, stdout, stderr) {
+    if (e) {
+        console.error('stderr:', stderr);
+        throw e;
+    }
 });
