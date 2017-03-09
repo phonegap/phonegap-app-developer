@@ -61,13 +61,50 @@
         if(config.optIn) sendEvent(eventInfo);
     };
 
+    /**
+     * Returns if the app is production or development
+     */
+
+    function getDebugFlag() {
+        return $('#version').html().test('adhoc');
+    }
+
+    /**
+     * Returns the version of the app
+     */
+
+    function getVersion() {
+        return $('#version').html().split(':')[1].trim();
+    };
+
+    /**
+     * Returns an object for basic GELF analytic messages
+     */
+
+    function basicGELF() {
+        return {
+            "version": "1.1",
+            "host": "dev app",
+            "short_message": "",
+            "_userID": device.uuid,
+            "_platform": device.platform,
+            "_appVersion": getVersion(),
+            "_env": getDebugFlag() ? 1 : 0
+        };
+    };
+
     /*!
      * Internal function that sends the analytic info to google
      */
 
     function sendEvent(eventInfo) {
         var gaURL = 'https://www.google-analytics.com/collect?';
+        var metricsURL = 'https://metrics.phonegap.com/gelf';
+        var jsonPayload = basicGELF();
+        jsonPayload.short_message = eventInfo.ec + ' ' + eventInfo.ea;
+
         $.ajax({ type: 'GET', url: gaURL + $.param(eventInfo) });
+        $.ajax( { type: 'POST', url: metricsURL, data: JSON.stringify(jsonPayload) } );
     }
 
 })();
