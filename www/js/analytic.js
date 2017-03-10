@@ -66,7 +66,7 @@
      */
 
     function getDebugFlag() {
-        return $('#version').html().test('adhoc');
+        return /adhoc/.test($('#version').html());
     }
 
     /**
@@ -74,7 +74,7 @@
      */
 
     function getVersion() {
-        return $('#version').html().split(':')[1].trim();
+        return $('#version').html().split(':')[1].trim().split('<')[0];
     };
 
     /**
