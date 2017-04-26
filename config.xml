@@ -62,6 +62,7 @@
     </plugin>
     <plugin name="phonegap-plugin-mobile-accessibility" spec="~1.0.4" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
+    <plugin name="cordova-plugin-screen-orientation" spec="~2.0.0" />
     <platform name="ios">
         <preference name="Orientation" value="all" />
         <preference name="AutoHideSplashScreen" value="false" />
