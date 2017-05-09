@@ -111,7 +111,7 @@
         <icon height="159" src="resources/icon/wp8/TileMedium.png" width="159" />
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
-    <engine name="wp8" spec="~3.8.1" />
-    <engine name="android" spec="~5.0.0" />
-    <engine name="ios" spec="~4.3.1" />
+    <engine name="wp8" spec="~3.8.2" />
+    <engine name="ios" spec="~4.4.0" />
+    <engine name="android" spec="~6.2.3" />
 </widget>
