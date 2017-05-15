@@ -3,7 +3,7 @@ machine:
     version: 7.7.3
 
 docker:
-  image: circleci/openjdk: latest
+  - image: circleci/openjdk:latest
 
 dependencies:
   pre:
