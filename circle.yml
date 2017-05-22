@@ -14,6 +14,8 @@ dependencies:
     - if [ ! -d "/usr/local/android-sdk-linux/extras/android/m2repository/com/android/support/design/25.0.0" ]; then echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"; fi
     # google play
     - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
+    # google Repository
+    - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
 
   cache_directories:
     - /usr/local/android-sdk-linux/platforms/android-25
