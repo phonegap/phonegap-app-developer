@@ -101,7 +101,9 @@
         var gaURL = 'https://www.google-analytics.com/collect?';
         var metricsURL = 'https://metrics.phonegap.com/gelf';
         var jsonPayload = basicGELF();
-        jsonPayload.short_message = eventInfo.ec + ' ' + eventInfo.ea;
+        jsonPayload.short_message = eventInfo.ec;
+        jsonPayload.action = eventInfo.ea;
+        jsonPayload._error_msg = eventInfo.el;
 
         $.ajax({ type: 'GET', url: gaURL + $.param(eventInfo) });
         $.ajax( { type: 'POST', url: metricsURL, data: JSON.stringify(jsonPayload) } );
