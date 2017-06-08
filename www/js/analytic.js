@@ -86,7 +86,7 @@
             "version": "1.1",
             "host": "dev app",
             "short_message": "",
-            "_userID": nacl.hash(device.uuid),
+            "_userID": nacl.util.encodeBase64(nacl.hash(nacl.util.decodeUTF8(device.uuid))),
             "_platform": device.platform,
             "_appVersion": getVersion(),
             "_env": getDebugFlag() ? 1 : 0
