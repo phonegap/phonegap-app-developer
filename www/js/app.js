@@ -72,6 +72,12 @@ $(document).on('deviceready', function() {
             $('#analytic-checkbox').prop('checked', window.phonegap.app.analytic.getPermissionStatus(config));
             window.phonegap.app.analytic.logEvent(config, 'startup', 'deviceready');
 
+            //Attach window.onerror function to detect errors within the app
+            window.onerror = function(message, source, lineno, colno, error) {
+                var label = source + ' ' + lineno + ' ' + colno + ' ' + error;
+                window.phonegap.app.analytic.logEvent(config, 'errorInWinow', message, label);
+            };
+
             // load server address
             if (config.address) {
                 $('#address').val(config.address);
@@ -208,22 +214,23 @@ function onBuildSubmitSuccess() {
                     clearAlternatingPulsingMessage(msgTimer);
                     onBuildSubmitError('Download Error!');
                     var errorString = 'Unable to download archive from the server.\n\n';
+
                     if(e)
                     {
                         // fix for wp8 since it returns an object as opposed to just an int
-                        if(e.code) e = e.code;
+                        if(e.code) e.type = e.code;
 
-                        if(e === 1)
+                        if(e.type === 1)
                         {
                             window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'invalid url');
                             errorString += 'Please enter a valid url to connect to.';
                         }
-                        else if(e === 2)
+                        else if(e.type === 2)
                         {
                             window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'unable to connect');
                             errorString += 'Unable to properly connect to the server.';
                         }
-                        else if(e === 3)
+                        else if(e.type === 3)
                         {
                             window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'unable to unzip');
                             errorString += 'Unable to properly unzip the archive.';
