@@ -74,7 +74,7 @@ $(document).on('deviceready', function() {
 
             //Attach window.onerror function to detect errors within the app
             window.onerror = function(message, source, lineno, colno, error) {
-                var label = source + ' ' + lineno + ' ' + colno + ' ' + error;
+                var label = source + ' line: ' + lineno + ' col: ' + colno + '. ' + error;
                 window.phonegap.app.analytic.logEvent(config, 'errorInWinow', message, label);
             };
 
@@ -188,6 +188,7 @@ function onBuildSubmitSuccess() {
 
         setTimeout( function() {
             window.phonegap.app.analytic.logEvent(config, 'connection', 'submit');
+
             window.phonegap.app.downloadZip({
                 address: getAddress(),
                 onProgress: function(data) {
