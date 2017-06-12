@@ -107,5 +107,4 @@
         $.ajax({ type: 'GET', url: gaURL + $.param(eventInfo) });
         $.ajax( { type: 'POST', url: metricsURL, data: JSON.stringify(jsonPayload) } );
     }
-
 })();
