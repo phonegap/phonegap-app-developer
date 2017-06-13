@@ -77,7 +77,7 @@ $(document).on('deviceready', function() {
                 var analyticInfo = window.phonegap.app.analytic.basicGELF();
                 analyticInfo.short_message = 'errorInWindow';
                 analyticInfo.error_message = message;
-                analyticInfo._source = souce;
+                analyticInfo._source = source;
                 analyticInfo._line = line;
                 analyticInfo._col = col;
                 analyticInfo._error_stack = errorStack;
