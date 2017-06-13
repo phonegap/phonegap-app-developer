@@ -241,7 +241,7 @@ function onBuildSubmitSuccess() {
                         {
                             analyticInfo = window.phonegap.app.analytic.basicGELF();
                             analyticInfo.short_message = 'connection failure';
-                            analyticInfo.full_message = 'invalid url';
+                            analyticInfo._error_msg = 'invalid url';
                             window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             errorString += 'Please enter a valid url to connect to.';
                         }
@@ -249,7 +249,7 @@ function onBuildSubmitSuccess() {
                         {
                             analyticInfo = window.phonegap.app.analytic.basicGELF();
                             analyticInfo.short_message = 'connection failure';
-                            analyticInfo.full_message = 'unable to connect';
+                            analyticInfo._error_msg = 'unable to connect';
                             window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             errorString += 'Unable to properly connect to the server.';
                         }
@@ -257,7 +257,7 @@ function onBuildSubmitSuccess() {
                         {
                             analyticInfo = window.phonegap.app.analytic.basicGELF();
                             analyticInfo.short_message = 'connection failure';
-                            analyticInfo.full_message = 'unable to unzip';
+                            analyticInfo._error_msg = 'unable to unzip';
                             window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             errorString += 'Unable to properly unzip the archive.';
                         }
