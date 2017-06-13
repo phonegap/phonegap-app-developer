@@ -178,7 +178,7 @@ function buildSubmit() {
 }
 
 function onBuildSubmitSuccess() {
-    var = analyticInfo;
+    var analyticInfo;
     var msgTimer = alternatingPulsingMessage( 'Downloading...', 'Tap to cancel' );
     listenForCancel();
 
