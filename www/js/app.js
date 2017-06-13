@@ -72,10 +72,17 @@ $(document).on('deviceready', function() {
             $('#analytic-checkbox').prop('checked', window.phonegap.app.analytic.getPermissionStatus(config));
             window.phonegap.app.analytic.logEvent(config, 'startup', 'deviceready');
 
-            //Attach window.onerror function to detect errors within the app
-            window.onerror = function(message, source, lineno, colno, error) {
-                var label = source + ' line: ' + lineno + ' col: ' + colno + '. ' + error;
-                window.phonegap.app.analytic.logEvent(config, 'errorInWinow', message, label);
+            // Attach window.onerror function to detect errors within the app
+            window.onerror = function(message, source, line, col, errorStack) {
+                var analyticInfo = window.phonegap.app.analytic.basicGELF();
+                analyticInfo.short_message = 'errorInWindow';
+                analyticInfo.error_message = message;
+                analyticInfo._source = souce;
+                analyticInfo._line = line;
+                analyticInfo._col = col;
+                analyticInfo._error_stack = errorStack;
+
+                window.phonegap.app.analytic.logEvent(config, analyticInfo);
             };
 
             // load server address
@@ -171,6 +178,7 @@ function buildSubmit() {
 }
 
 function onBuildSubmitSuccess() {
+    var = analyticInfo;
     var msgTimer = alternatingPulsingMessage( 'Downloading...', 'Tap to cancel' );
     listenForCancel();
 
@@ -187,26 +195,34 @@ function onBuildSubmitSuccess() {
         window.plugins.insomnia.keepAwake();
 
         setTimeout( function() {
-            window.phonegap.app.analytic.logEvent(config, 'connection', 'submit');
+            analyticInfo = window.phonegap.app.analytic.basicGELF();
+            analyticInfo.short_message = 'connection submit';
+            window.phonegap.app.analytic.logEvent(config, analyticInfo);
 
             window.phonegap.app.downloadZip({
                 address: getAddress(),
                 onProgress: function(data) {
                     if(data.status === 1) {
                         if(!analyticDownloadToggle) {
-                            window.phonegap.app.analytic.logEvent(config, 'connection', 'download');
+                            analyticInfo = window.phonegap.app.analytic.basicGELF();
+                            analyticInfo.short_message = 'connection download';
+                            window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             analyticDownloadToggle = true;
                         }
                     } else if(data.status === 2) {
                         if(!analyticExtractToggle) {
-                            window.phonegap.app.analytic.logEvent(config, 'connection', 'extract');
+                            analyticInfo = window.phonegap.app.analytic.basicGELF();
+                            analyticInfo.short_message = 'connection extract';
+                            window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             analyticExtractToggle = true;
                         }
 
                         clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Extracting...');
                     } else if(data.status === 3) {
-                        window.phonegap.app.analytic.logEvent(config, 'connection', 'success');
+                        analyticInfo = window.phonegap.app.analytic.basicGELF();
+                        analyticInfo.short_message = 'connection success';
+                        window.phonegap.app.analytic.logEvent(config, analyticInfo);
                         clearAlternatingPulsingMessage(msgTimer);
                         updateMessage('Success!');
                     }
@@ -223,17 +239,26 @@ function onBuildSubmitSuccess() {
 
                         if(e.type === 1)
                         {
-                            window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'invalid url');
+                            analyticInfo = window.phonegap.app.analytic.basicGELF();
+                            analyticInfo.short_message = 'connection failure';
+                            analyticInfo.full_message = 'invalid url';
+                            window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             errorString += 'Please enter a valid url to connect to.';
                         }
                         else if(e.type === 2)
                         {
-                            window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'unable to connect');
+                            analyticInfo = window.phonegap.app.analytic.basicGELF();
+                            analyticInfo.short_message = 'connection failure';
+                            analyticInfo.full_message = 'unable to connect';
+                            window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             errorString += 'Unable to properly connect to the server.';
                         }
                         else if(e.type === 3)
                         {
-                            window.phonegap.app.analytic.logEvent(config, 'connection', 'failure', 'unable to unzip');
+                            analyticInfo = window.phonegap.app.analytic.basicGELF();
+                            analyticInfo.short_message = 'connection failure';
+                            analyticInfo.full_message = 'unable to unzip';
+                            window.phonegap.app.analytic.logEvent(config, analyticInfo);
                             errorString += 'Unable to properly unzip the archive.';
                         }
                     }
@@ -246,7 +271,9 @@ function onBuildSubmitSuccess() {
                     }, 4000);
                 },
                 onCancel: function(e) {
-                    window.phonegap.app.analytic.logEvent(config, 'connection', 'canceled');
+                    analyticInfo = window.phonegap.app.analytic.basicGELF();
+                    analyticInfo.short_message = 'connection canceled';
+                    window.phonegap.app.analytic.logEvent(config, analyticInfo);
                     clearAlternatingPulsingMessage(msgTimer);
                     onUserCancel();
                 }
