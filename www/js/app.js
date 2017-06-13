@@ -80,7 +80,7 @@ $(document).on('deviceready', function() {
                 analyticInfo._source = source;
                 analyticInfo._line = line;
                 analyticInfo._col = col;
-                analyticInfo._error_stack = errorStack;
+                analyticInfo._error_stack = JSON.stringify(errorStack);
 
                 window.phonegap.app.analytic.logEvent(config, analyticInfo);
             };
