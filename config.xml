@@ -26,7 +26,6 @@
     </plugin>
     <plugin name="cordova-plugin-device" spec="~1.1.6" />
     <plugin name="cordova-plugin-device-motion" spec="~1.2.5" />
-    <plugin name="cordova-plugin-device-orientation" spec="~1.0.7" />
     <plugin name="cordova-plugin-dialogs" spec="~1.3.3" />
     <plugin name="cordova-plugin-file" spec="~4.3.3" />
     <plugin name="cordova-plugin-file-transfer" spec="~1.6.3" />
