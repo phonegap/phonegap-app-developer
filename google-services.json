@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "996231231186",
+    "firebase_url": "https://fcm-pushapi-phonegap-com.firebaseio.com",
+    "project_id": "fcm-pushapi-phonegap-com",
+    "storage_bucket": "fcm-pushapi-phonegap-com.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996231231186:android:845d258a77ddcab7",
+        "android_client_info": {
+          "package_name": "com.adobe.phonegap.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996231231186-jr95lvbr36h47lh74olqcb8935it35c2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwC51I96VcZT_ss6e3iSVMSSyvemVYYa4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
