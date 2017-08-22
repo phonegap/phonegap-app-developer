@@ -7,6 +7,11 @@
     <author email="support@phonegap.com" href="http://phonegap.com">
         Adobe PhoneGap Team
     </author>
+    <hook src="resources/script/compile-less.js" type="before_prepare" />
+    <hook src="resources/script/before-test-runner.js" type="before_prepare" />
+    <hook src="resources/script/after-test-runner.js" type="after_prepare" />
+    <hook src="resources/script/copy-android-push-icon.js" type="before_build" />
+    <hook src="resources/script/copy-wp8-splash.js" type="before_build" />
     <hook src="resources/script/add-hockeyapp.js" type="before_build" />
     <hook src="resources/script/add-version.js" type="before_build" />
     <hook src="resources/script/remove-hockeyapp.js" type="after_compile" />
@@ -66,7 +71,7 @@
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
     <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="~4.4.0" />
+    <engine name="ios" spec="^4.4.0" />
     <engine name="wp8" spec="~3.8.2" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
     <plugin name="cordova-plugin-battery-status" spec="^1.2.4" />
@@ -75,6 +80,7 @@
     </plugin>
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
+        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-contacts" spec="^2.3.1">
@@ -91,7 +97,9 @@
     <plugin name="cordova-plugin-globalization" spec="^1.0.7" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.1" />
     <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
-    <plugin name="cordova-plugin-media" spec="^3.0.1" />
+    <plugin name="cordova-plugin-media" spec="^3.0.1">
+        <variable name="MICROPHONE_USAGE_DESCRIPTION" value=" " />
+    </plugin>
     <plugin name="cordova-plugin-media-capture" spec="^1.4.3">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
         <variable name="MICROPHONE_USAGE_DESCRIPTION" value="Microphone used for development purposes" />
