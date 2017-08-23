@@ -4,11 +4,6 @@ var fs = require('fs');
 
 console.log('Running: Applying HockeyApp App ID for current platform');
 
-if (!(/adhoc/).test(process.env.npm_lifecycle_event)) {
-    console.log('Skipping: this is not an adhoc build');
-    return;
-}
-
 /*jshint multistr: true */
 var hockeyApp = "%HOCKEYAPP \n \
        hockeyapp.start(function() { \n \
