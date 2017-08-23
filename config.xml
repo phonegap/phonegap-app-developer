@@ -12,9 +12,7 @@
     <hook src="resources/script/after-test-runner.js" type="after_prepare" />
     <hook src="resources/script/copy-android-push-icon.js" type="before_build" />
     <hook src="resources/script/copy-wp8-splash.js" type="before_build" />
-    <hook src="resources/script/add-hockeyapp.js" type="before_build" />
     <hook src="resources/script/add-version.js" type="before_build" />
-    <hook src="resources/script/remove-hockeyapp.js" type="after_compile" />
     <hook src="resources/script/remove-version.js" type="after_compile" />
     <preference name="StatusBarStyle" value="default" />
     <preference name="ShowSplashScreenSpinner" value="false" />
@@ -70,9 +68,6 @@
         <icon height="159" src="resources/icon/wp8/TileMedium.png" width="159" />
         <icon height="110" src="resources/icon/wp8/TileSmall.png" width="110" />
     </platform>
-    <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="^4.4.0" />
-    <engine name="wp8" spec="~3.8.2" />
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git#devApp" />
     <plugin name="cordova-plugin-battery-status" spec="^1.2.4" />
     <plugin name="cordova-plugin-ble-central" spec="^1.1.4">
@@ -118,4 +113,7 @@
     <plugin name="phonegap-plugin-contentsync" spec="^1.3.6" />
     <plugin name="phonegap-plugin-mobile-accessibility" spec="^1.0.5" />
     <plugin name="phonegap-plugin-push" spec="^2.0.0" />
+    <engine name="ios" spec="~4.4.0" />
+    <engine name="android" spec="~6.2.3" />
+    <engine name="wp8" spec="~3.8.2" />
 </widget>
