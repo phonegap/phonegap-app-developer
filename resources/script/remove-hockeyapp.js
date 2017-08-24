@@ -4,11 +4,6 @@ var fs = require('fs');
 
 console.log('Running: Removing HockeyApp from app.js');
 
-if (!(/adhoc/).test(process.env.npm_lifecycle_event)) {
-    console.log('skipping: this is not an adhoc build');
-    return;
-}
-
 var appDest = 'www/js/app.js';
 fs.readFile(appDest, 'utf8', function(err, data) {
     if (err) {
