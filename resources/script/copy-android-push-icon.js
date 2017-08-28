@@ -1,16 +1,29 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
-
 console.log('Running: Android push icon fix...');
 
-// only run script when building for WP8
-if (process.env['CORDOVA_PLATFORMS'] !== 'android') {
-    console.log('Skipping: the platform is not Android');
-    process.exit(0);
-}
+module.exports = function(context) {
+    if (context.opts.platforms.indexOf('android') < 0) {
+        console.log('Skipping: the platform is not Android');
+        return;
+    }
 
-// copy in our custom splash screen image
-var destPath = 'platforms/android/res/drawable-hdpi/pushicon.png';
-var splashPath = 'resources/icon/android/pushicon.png';
-fs.createReadStream(splashPath).pipe(fs.createWriteStream(destPath));
+    var fs = context.requireCordovaModule('fs'),
+        path = context.requireCordovaModule('path'),
+        deferral = context.requireCordovaModule('q').defer();
+
+    var destPath = path.join(context.opts.projectRoot, 'platforms/android/res/drawable-hdpi/pushicon.png');
+    var splashPath = path.join(context.opts.projectRoot, 'resources/icon/android/pushicon.png');
+
+    var readStream = fs.createReadStream(splashPath).pipe(fs.createWriteStream(destPath));
+
+    readStream.on('error', function(err) {
+        deferral.reject(err);
+    });
+
+    readStream.on('close', function() {
+        deferral.resolve();
+    });
+    
+    return deferral.promise;
+};
