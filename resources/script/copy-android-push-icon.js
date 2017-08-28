@@ -1,19 +1,20 @@
 #!/usr/bin/env node
 
-console.log('Running: Android push icon fix...');
+module.exports = function(ctx) {
 
-module.exports = function(context) {
-    if (context.opts.platforms.indexOf('android') < 0) {
+    console.log('Running: Android push icon fix...');
+
+    if (ctx.opts.platforms.indexOf('android') < 0) {
         console.log('Skipping: the platform is not Android');
         return;
     }
 
-    var fs = context.requireCordovaModule('fs'),
-        path = context.requireCordovaModule('path'),
-        deferral = context.requireCordovaModule('q').defer();
+    var fs = ctx.requireCordovaModule('fs'),
+        path = ctx.requireCordovaModule('path'),
+        deferral = ctx.requireCordovaModule('q').defer();
 
-    var destPath = path.join(context.opts.projectRoot, 'platforms/android/res/drawable-hdpi/pushicon.png');
-    var splashPath = path.join(context.opts.projectRoot, 'resources/icon/android/pushicon.png');
+    var destPath = path.join(ctx.opts.projectRoot, 'platforms/android/res/drawable-hdpi/pushicon.png');
+    var splashPath = path.join(ctx.opts.projectRoot, 'resources/icon/android/pushicon.png');
 
     var readStream = fs.createReadStream(splashPath).pipe(fs.createWriteStream(destPath));
 
