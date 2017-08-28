@@ -1,16 +1,21 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
+module.exports = function(ctx) {
 
-console.log('Running: Removing HockeyApp from app.js');
+    console.log('Running: Removing HockeyApp from app.js');
 
-var appDest = 'www/js/app.js';
-fs.readFile(appDest, 'utf8', function(err, data) {
-    if (err) {
-        console.log('Error reading app.js');
-        console.log('More info: <', err.message, '>');
-        process.exit(1);
-    }
+    var fs = ctx.requireCordovaModule('fs'),
+        path = ctx.requireCordovaModule('path'),
+        deferral = ctx.requireCordovaModule('q').defer();
+
+    // modify app.js according to current platform
+    var appDest = path.join(ctx.opts.projectRoot, 'www/js/app.js');
+    fs.readFile(appDest, 'utf8', function(err, data) {
+        if (err) {
+            console.log('Error reading app.js');
+            console.log('More info: <', err.message, '>');
+            deferral.reject(err);
+        }
 
     // delete hockeyapp code from app.js
     var result = '';
@@ -18,7 +23,7 @@ fs.readFile(appDest, 'utf8', function(err, data) {
         result = data.replace(/%HOCKEYAPP([\s\S]*?)(%ENDHOCKEYAPP)/, '%HOCKEYAPP');
     } else {
         console.log('Exiting: no HockeyApp code to remove');
-        return;
+        deferral.resolve();
     }
 
     // write back to app.js
@@ -26,7 +31,11 @@ fs.readFile(appDest, 'utf8', function(err, data) {
         if (err) {
             console.log('Error while writting to app.js');
             console.log('More info: <', err.message, '>');
-            process.exit(1);
+            deferral.reject(err);
         }
+
+        deferral.resolve();
     });
-});
+    
+    return deferral.promise;
+};
