@@ -1,10 +1,33 @@
 #!/usr/bin/env node
 
+module.exports = function(ctx) {
+    console.log('Running: Adding version and build info to index.html');
+
+    var fs = ctx.requireCordovaModule('fs'),
+        path = ctx.requireCordovaModule('path'),
+        deferral = ctx.requireCordovaModule('q').defer();
+
+    var destPath = path.join(ctx.opts.projectRoot, 'platforms/android/res/drawable-hdpi/pushicon.png');
+    var splashPath = path.join(ctx.opts.projectRoot, 'resources/icon/android/pushicon.png');
+
+    var readStream = fs.createReadStream(splashPath).pipe(fs.createWriteStream(destPath));
+
+    readStream.on('error', function(err) {
+        deferral.reject(err);
+    });
+
+    readStream.on('close', function() {
+        deferral.resolve();
+    });
+    
+    return deferral.promise;
+} ;
+
 var fs = require('fs'),
   path = require('path'),
   xml2js = require('xml2js');
 
-console.log('Running: Adding version and build info to index.html');
+
 
 /*jshint multistr: true */
 var configFilePath = path.join(__dirname, '../../config.xml');

@@ -11,8 +11,7 @@
 
 var ConfigParser = require('cordova-common').ConfigParser,
     fs = require('fs-extra'),
-    path = require('path'),
-    xml = require('cordova-common').xmlHelpers;
+    path = require('path');
 
 /*!
  * Update config.xml for PhoneGap Nightly builds
