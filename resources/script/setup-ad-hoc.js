@@ -9,8 +9,10 @@
  * Module dependencies.
  */
 
- var fs = require('fs-extra'),
-     path = require('path');
+var ConfigParser = require('cordova-common').ConfigParser,
+    fs = require('fs-extra'),
+    path = require('path'),
+    xml = require('cordova-common').xmlHelpers;
 
 /*!
  * Update config.xml for PhoneGap Nightly builds
@@ -22,15 +24,10 @@ var configPath = path.join(projectRoot, 'config.xml');
 fs.copy(configPath, path.join(projectRoot, 'config-backup.xml'), function(err) {
     if (err) throw err;
 
-    fs.readFile(configPath, 'utf8', function(err, data) {
-        if (err) throw err;
-
-        // updating app id for nightly builds
-        data = data.replace('com.adobe.phonegap.app', 'com.phonegap.app.adhoc');
-
-        // replacing app name
-        data = data.replace('<name>PhoneGap</name>', '<name>PG Nightly</name>');
-
-        fs.writeFile(configPath, data);
-    });
+    var config = new ConfigParser(configPath);
+    config.setPackageName('com.phonegap.app.adhoc');
+    config.setName('PG Nightly');
+    config.addElement('hook', {src : 'resources/script/add-hockeyapp.js', type: 'before_build'});
+    config.addElement('hook', {src : 'resources/script/remove-hockeyapp.js', type: 'after_build'});
+    config.write();
 }) ;
