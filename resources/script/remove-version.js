@@ -1,31 +1,28 @@
 #!/usr/bin/env node
 
-var fs = require('fs'),
-  path = require('path');
+module.exports = function(ctx) {
+  console.log('Running: Removing version and build info from index.html');
 
-console.log('Running: Removing version and build info from index.html');
+  var fs = ctx.requireCordovaModule('fs'),
+      path = ctx.requireCordovaModule('path'),
+      deferral = ctx.requireCordovaModule('q').defer();
 
-/*jshint multistr: true */
-var indexFilePath = path.join(__dirname, '../../www/index.html');
+  var indexPath = path.join(ctx.opts.projectRoot, 'www/index.html');
+  var versionText = '<!-- %PHONEGAP_APP_VERSION_START% -->' + '<!-- %PHONEGAP_APP_VERSION_END% -->';
 
-var fsError = function(err) {
-  console.log('Error reading file');
-  console.log('More info: <', err.message, '>');
-  process.exit(1);
-}
-
-var versionText = '<!-- %PHONEGAP_APP_VERSION_START% -->' + '<!-- %PHONEGAP_APP_VERSION_END% -->';
-
-fs.readFile(indexFilePath, 'utf-8', function(err, indexData) {
-  if(err) {
-    fsError(err)
-  }
-  
-  var updatedIndex = indexData.replace(/<!-- %PHONEGAP_APP_VERSION_START% -->([\s\S]*?)<!-- %PHONEGAP_APP_VERSION_END% -->/, '%PHONEGAP_APP_VERSION%');
-  
-  fs.writeFile(indexFilePath, updatedIndex,'utf-8', function(err) {
+  fs.readFile(indexPath, 'utf-8', function(err, indexData) {
     if(err) {
-      fsError(err)
+      deferral.reject(err);
     }
-  });
-});
+
+    var updatedIndex = indexData.replace(/<!-- %PHONEGAP_APP_VERSION_START% -->([\s\S]*?)<!-- %PHONEGAP_APP_VERSION_END% -->/, '%PHONEGAP_APP_VERSION%');
+    
+    fs.writeFile(indexPath, updatedIndex,'utf-8', function(err) {
+      if(err) {
+        deferral.reject(err);
+      }
+      deferral.resolve();
+    });
+
+    return deferral.promise;
+};

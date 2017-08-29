@@ -1,71 +1,36 @@
 #!/usr/bin/env node
 
 module.exports = function(ctx) {
-    console.log('Running: Adding version and build info to index.html');
+  console.log('Running: Adding version and build info to index.html');
 
-    var fs = ctx.requireCordovaModule('fs'),
-        path = ctx.requireCordovaModule('path'),
-        deferral = ctx.requireCordovaModule('q').defer();
+  var fs = ctx.requireCordovaModule('fs'),
+      path = ctx.requireCordovaModule('path'),
+      deferral = ctx.requireCordovaModule('q').defer(),
+      ConfigParser = ctx.requireCordovaModule('cordova-common').ConfigParser;
 
-    var destPath = path.join(ctx.opts.projectRoot, 'platforms/android/res/drawable-hdpi/pushicon.png');
-    var splashPath = path.join(ctx.opts.projectRoot, 'resources/icon/android/pushicon.png');
+  var configPath = path.join(ctx.opts.projectRoot, 'config.xml');
+  var indexPath = path.join(ctx.opts.projectRoot, 'www/index.html');
+  
+  var config = new ConfigParser(configPath);
+  var version = config.version();
+  var id = config.packageName();
 
-    var readStream = fs.createReadStream(splashPath).pipe(fs.createWriteStream(destPath));
+  var versionText = '<!-- %PHONEGAP_APP_VERSION_START% -->' + id + ' : ' + version + '<!-- %PHONEGAP_APP_VERSION_END% -->';
 
-    readStream.on('error', function(err) {
-        deferral.reject(err);
-    });
-
-    readStream.on('close', function() {
-        deferral.resolve();
-    });
-    
-    return deferral.promise;
-} ;
-
-var fs = require('fs'),
-  path = require('path'),
-  xml2js = require('xml2js');
-
-
-
-/*jshint multistr: true */
-var configFilePath = path.join(__dirname, '../../config.xml');
-var indexFilePath = path.join(__dirname, '../../www/index.html');
-var parseString = xml2js.parseString;
-
-var fsError = function(err) {
-  console.log('Error reading file');
-  console.log('More info: <', err.message, '>');
-  process.exit(1);
-}
-
-fs.readFile(configFilePath, 'utf-8', function(err, data) {
-  if (err) {
-    fsError(err)
-  }
-
-  parseString(data, function(err, result) {
+  fs.readFile(indexPath, 'utf-8', function(err, indexData) {
     if(err) {
-      fsError(err)
+      deferral.reject(err);
     }
-
-    var version = result.widget.$.version;
-    var id = result.widget.$.id;
-    var versionText = '<!-- %PHONEGAP_APP_VERSION_START% -->' + id + ' : ' + version + '<!-- %PHONEGAP_APP_VERSION_END% -->';
     
-    fs.readFile(indexFilePath, 'utf-8', function(err, indexData) {
+    var updatedIndex = indexData.replace(/%PHONEGAP_APP_VERSION%/, versionText);
+    
+    fs.writeFile(indexPath, updatedIndex,'utf-8', function(err) {
       if(err) {
-        fsError(err)
+        deferral.reject(err);
       }
-      
-      var updatedIndex = indexData.replace(/%PHONEGAP_APP_VERSION%/, versionText);
-      
-      fs.writeFile(indexFilePath, updatedIndex,'utf-8', function(err) {
-        if(err) {
-          fsError(err)
-        }
-      });
+      deferral.resolve();
     });
   });
-});
+
+  return deferral.promise;
+};
