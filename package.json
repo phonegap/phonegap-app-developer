@@ -21,8 +21,8 @@
         "release-android": "npm run build:setup && phonegap build android --verbose --release --buildConfig=./resources/signing/android/build-config.json",
         "release-ios": "npm run build:setup && phonegap build ios --verbose --device --release --buildConfig=./resources/signing/ios/build-config.json",
         "release-wp8": "npm run build:setup && phonegap --verbose build wp8 && npm run build:config-wp8 && phonegap compile wp8 --release --verbose",
-        "adhoc-android": "npm run build:setup:adhoc && phonegap plugin add cordova-plugin-hockeyapp && node ./resources/script/add-hockeyapp.js && phonegap build android --verbose --release --buildConfig=./resources/signing/android/ad-hoc/build-config.json && node ./resources/script/remove-hockeyapp.js && npm run build:config:restore",
-        "adhoc-ios": "npm run build:setup:adhoc && phonegap plugin add cordova-plugin-hockeyapp && node ./resources/script/add-hockeyapp.js && phonegap build ios --verbose --device --debug --buildConfig=./resources/signing/ios/build-config.json && node ./resources/script/remove-hockeyapp.js && npm run build:config:restore",
+        "adhoc-android": "npm run build:setup:adhoc && phonegap plugin add cordova-plugin-hockeyapp && phonegap build android --verbose --release --buildConfig=./resources/signing/android/ad-hoc/build-config.json && npm run build:config:restore",
+        "adhoc-ios": "npm run build:setup:adhoc && phonegap plugin add cordova-plugin-hockeyapp && phonegap build ios --verbose --device --debug --buildConfig=./resources/signing/ios/build-config.json && npm run build:config:restore",
         "adhoc-wp8": "npm run build:setup:adhoc && phonegap --verbose build wp8 && phonegap compile wp8 --release --verbose && npm run build:config:restore",
         "test": "jasmine-node tests/browser",
         "test-wp8": "npm run build:setup && phonegap --verbose build wp8 --test"
