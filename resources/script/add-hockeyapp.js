@@ -5,8 +5,6 @@ module.exports = function(ctx) {
       path = ctx.requireCordovaModule('path'),
       deferral = ctx.requireCordovaModule('q').defer();
 
-    });
-
     console.log('Running: Applying HockeyApp App ID for current platform');
 
     /*jshint multistr: true */
