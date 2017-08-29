@@ -23,6 +23,7 @@ module.exports = function(ctx) {
       }
       deferral.resolve();
     });
+  });
 
-    return deferral.promise;
+  return deferral.promise;
 };
