@@ -30,6 +30,7 @@
     "dependencies": {},
     "devDependencies": {
         "app-root-path": "1.0.0",
+        "cordova-common": "2.0.3",
         "fs-extra": "0.24.0",
         "jasmine-node": "1.14.5",
         "less": "2.7.1",
