@@ -36,6 +36,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996231231186:android:de2ac956dc429b60",
+        "android_client_info": {
+          "package_name": "com.phonegap.app.adhoc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996231231186-jr95lvbr36h47lh74olqcb8935it35c2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwC51I96VcZT_ss6e3iSVMSSyvemVYYa4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"
