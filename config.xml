@@ -104,6 +104,6 @@
     <plugin name="phonegap-plugin-contentsync" spec="^1.4.0" />
     <plugin name="phonegap-plugin-mobile-accessibility" spec="^1.0.5" />
     <plugin name="phonegap-plugin-push" spec="^2.0.0" />
-    <engine name="ios" spec="~4.5.0" />
+    <engine name="ios" spec="^4.5.0" />
     <engine name="android" spec="~6.2.3" />
 </widget>
