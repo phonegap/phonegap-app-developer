@@ -51,7 +51,7 @@
         <splash height="1242" src="resources/splash/ios/Default-Landscape-736h.png" width="2208" />
     </platform>
     <platform name="android">
-        <preference name="android-minSdkVersion" value="15" />
+        <preference name="android-minSdkVersion" value="19" />
         <preference name="Orientation" value="default" />
         <preference name="SplashScreenDelay" value="0" />
         <icon density="ldpi" src="resources/icon/android/icon-36.png" />
