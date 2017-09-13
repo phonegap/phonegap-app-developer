@@ -5,7 +5,11 @@ if [ "$CIRCLECI" != true ]; then
     exit
 fi
 
-APKLOCATION=platforms/android/build/outputs/apk/android-release.apk
+if [ "$(git rev-parse HEAD)" != "$(git rev-parse $(git describe --abbrev=0 --tags))" ]; then
+    APKLOCATION=platforms/android/build/outputs/apk/android-debug.apk
+else
+    APKLOCATION=platforms/android/build/outputs/apk/android-release.apk
+fi
 
 aws configure set aws_access_key_id $AWSACCESSKEY
 aws configure set aws_secret_access_key $AWSSECRETKEY
