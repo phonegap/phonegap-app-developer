@@ -23,12 +23,13 @@
         "test": "jasmine-node tests/browser"
     },
     "dependencies": {
+        "com.wikitude.phonegap.WikitudePlugin": "https://github.com/timkim/wikitude-cordova-plugin.git",
         "cordova-android": "~6.2.3",
-        "cordova-ios": "^4.4.0",
+        "cordova-ios": "^4.5.1",
         "cordova-plugin-battery-status": "^1.2.4",
         "cordova-plugin-ble-central": "^1.1.4",
         "cordova-plugin-camera": "^2.4.1",
-        "cordova-plugin-compat": "^1.1.0",
+        "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-contacts": "^2.3.1",
         "cordova-plugin-device": "^1.1.6",
         "cordova-plugin-device-motion": "^1.2.5",
@@ -53,7 +54,7 @@
         "phonegap-plugin-contentsync": "^1.4.0",
         "phonegap-plugin-mobile-accessibility": "^1.0.5",
         "phonegap-plugin-push": "^2.0.0",
-        "wikitude-plugin-phonegap-dev-app": "^7.0.0"
+        "wikitude-plugin-phonegap-dev-app": "git+https://github.com/timkim/wikitude-cordova-plugin.git"
     },
     "devDependencies": {
         "app-root-path": "1.0.0",
@@ -115,7 +116,6 @@
             "phonegap-plugin-contentsync": {},
             "phonegap-plugin-mobile-accessibility": {},
             "phonegap-plugin-push": {},
-            "wikitude-plugin-phonegap-dev-app": {},
             "com.wikitude.phonegap.WikitudePlugin": {}
         }
     }
