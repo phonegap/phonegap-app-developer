@@ -39,6 +39,7 @@
         <icon height="29" src="resources/icon/ios/icon-small.png" width="29" />
         <icon height="58" src="resources/icon/ios/icon-small@2x.png" width="58" />
         <icon height="87" src="resources/icon/ios/icon-small@3x.png" width="87" />
+        <icon height="1024" src="resources/icon/ios/icon-1024.png" width="1024" />
         <splash height="480" src="resources/splash/ios/Default~iphone.png" width="320" />
         <splash height="960" src="resources/splash/ios/Default@2x~iphone.png" width="640" />
         <splash height="1024" src="resources/splash/ios/Default-Portrait~ipad.png" width="768" />
@@ -104,6 +105,6 @@
     <plugin name="phonegap-plugin-contentsync" spec="^1.4.0" />
     <plugin name="phonegap-plugin-mobile-accessibility" spec="^1.0.5" />
     <plugin name="phonegap-plugin-push" spec="^2.0.0" />
-    <engine name="ios" spec="^4.5.0" />
+    <engine name="ios" spec="^4.5.1" />
     <engine name="android" spec="~6.2.3" />
 </widget>
