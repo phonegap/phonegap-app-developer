@@ -7,7 +7,6 @@
     <author email="support@phonegap.com" href="http://phonegap.com">
         Adobe PhoneGap Team
     </author>
-    <hook src="resources/script/compile-less.js" type="before_prepare" />
     <hook src="resources/script/before-test-runner.js" type="before_prepare" />
     <hook src="resources/script/after-test-runner.js" type="after_prepare" />
     <hook src="resources/script/copy-android-push-icon.js" type="before_build" />
