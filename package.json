@@ -25,7 +25,7 @@
     "dependencies": {
         "com.wikitude.phonegap.WikitudePlugin": "https://github.com/timkim/wikitude-cordova-plugin.git",
         "cordova-android": "~6.2.3",
-        "cordova-ios": "^4.5.1",
+        "cordova-ios": "^4.5.2",
         "cordova-plugin-battery-status": "^1.2.4",
         "cordova-plugin-ble-central": "^1.1.4",
         "cordova-plugin-camera": "^2.4.1",
