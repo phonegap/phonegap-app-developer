@@ -17,9 +17,9 @@
         "build:setup:adhoc": "npm run build:setup && node ./resources/script/setup-ad-hoc.js",
         "build:setup:directories": "node ./resources/script/setup-directories.js",
         "release-android": "npm run build:setup && phonegap build android --verbose --release --buildConfig=./resources/signing/android/build-config.json",
-        "release-ios": "npm run build:setup && phonegap platform add ios && cd platforms/ios && pod install && phonegap build ios --verbose --device --release --buildConfig=./resources/signing/ios/build-config.json",
+        "release-ios": "npm run build:setup && phonegap build ios --verbose --device --release --buildConfig=./resources/signing/ios/build-config.json",
         "adhoc-android": "npm run build:setup:adhoc && phonegap plugin add cordova-plugin-hockeyapp && phonegap build android --verbose --debug --buildConfig=./resources/signing/android/ad-hoc/build-config.json && npm run build:config:restore",
-        "adhoc-ios": "npm run build:setup:adhoc & phonegap platform add ios && phonegap plugin add cordova-plugin-hockeyapp && cd platforms/ios && pod install && phonegap build ios --verbose --device --debug --buildConfig=./resources/signing/ios/build-config.json && npm run build:config:restore",
+        "adhoc-ios": "npm run build:setup:adhoc && phonegap build ios --verbose --device --debug --buildConfig=./resources/signing/ios/build-config.json && npm run build:config:restore",
         "test": "jasmine-node tests/browser"
     },
     "dependencies": {
