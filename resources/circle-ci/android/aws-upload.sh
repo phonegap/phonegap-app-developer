@@ -14,7 +14,7 @@ elif [ -e "$release" ]; then
 	APKLOCATION="$release"
 else
 	echo 'Error: Unable to find android apk file'
-	exit
+	exit 1
 fi
 
 aws configure set aws_access_key_id $AWSACCESSKEY
