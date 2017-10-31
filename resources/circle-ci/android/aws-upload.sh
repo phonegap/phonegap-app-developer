@@ -5,10 +5,16 @@ if [ "$CIRCLECI" != true ]; then
     exit
 fi
 
-if [ "$(git rev-parse HEAD)" != "$(git rev-parse $(git describe --abbrev=0 --tags))" ]; then
-    APKLOCATION=platforms/android/build/outputs/apk/android-debug.apk
+debug="platforms/android/build/outputs/apk/android-debug.apk"
+release="platforms/android/build/outputs/apk/android-release.apk"
+
+if [ -e "$debug" ]; then
+	APKLOCATION="$debug"
+elif [ -e "$release" ]; then
+	APKLOCATION="$release"
 else
-    APKLOCATION=platforms/android/build/outputs/apk/android-release.apk
+	echo 'Error: Unable to find android apk file'
+	exit
 fi
 
 aws configure set aws_access_key_id $AWSACCESSKEY
