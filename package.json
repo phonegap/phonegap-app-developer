@@ -19,13 +19,13 @@
     "release-android": "npm run build:setup && phonegap build android --verbose --release --buildConfig=./resources/signing/android/build-config.json",
     "release-ios": "npm run build:setup && phonegap platform add ios && cd platforms/ios && pod install && phonegap build ios --verbose --device --release --buildConfig=./resources/signing/ios/build-config.json",
     "adhoc-android": "npm run build:setup:adhoc && phonegap plugin add cordova-plugin-hockeyapp && phonegap build android --verbose --debug --buildConfig=./resources/signing/android/ad-hoc/build-config.json && npm run build:config:restore",
-    "adhoc-ios": "npm run build:setup:adhoc && phonegap platform add ios && cd platforms/ios && pod install && phonegap build ios --verbose --device --debug --buildConfig=./resources/signing/ios/build-config.json && npm run build:config:restore",
+    "adhoc-ios": "npm run build:setup:adhoc && phonegap plugin add cordova-plugin-hockeyapp && phonegap platform add ios && cd platforms/ios && pod install && phonegap build ios --verbose --device --debug --buildConfig=./resources/signing/ios/build-config.json && npm run build:config:restore",
     "test": "jasmine-node tests/browser"
   },
   "dependencies": {
     "com.wikitude.phonegap.WikitudePlugin": "https://github.com/timkim/wikitude-cordova-plugin.git",
     "cordova-android": "~6.2.3",
-    "cordova-ios": "^4.5.2",
+    "cordova-ios": "^4.5.3",
     "cordova-plugin-battery-status": "^1.2.4",
     "cordova-plugin-ble-central": "^1.1.4",
     "cordova-plugin-camera": "^2.4.1",
