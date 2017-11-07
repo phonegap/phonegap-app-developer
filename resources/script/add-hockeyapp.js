@@ -9,6 +9,7 @@ module.exports = function(ctx) {
 
     /*jshint multistr: true */
     var hockeyApp = "%HOCKEYAPP \n \
+          if(hockeyapp) { \n \
            hockeyapp.start(function() { \n \
                hockeyapp.checkForUpdate(function() { \n \
                }, function() { \n \
@@ -16,7 +17,8 @@ module.exports = function(ctx) {
                }); \n \
            }, function() { \n \
            }, HOCKEY_APP_ID); \n \
-           // %ENDHOCKEYAPP";
+          } \n \
+          // %ENDHOCKEYAPP";
 
     // modify app.js according to current platform
     var appDest = path.join(ctx.opts.projectRoot, 'www/js/app.js');
