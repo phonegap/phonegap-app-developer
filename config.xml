@@ -84,10 +84,10 @@
     <plugin name="cordova-plugin-globalization" spec="^1.0.8" />
     <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
     <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
-    <plugin name="cordova-plugin-media" spec="^3.0.1">
+    <plugin name="cordova-plugin-media" spec="^4.0.0">
         <variable name="MICROPHONE_USAGE_DESCRIPTION" value=" " />
     </plugin>
-    <plugin name="cordova-plugin-media-capture" spec="^1.4.3">
+    <plugin name="cordova-plugin-media-capture" spec="^2.0.0">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
         <variable name="MICROPHONE_USAGE_DESCRIPTION" value="Microphone used for development purposes" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Photo library used for development purposes" />
@@ -103,6 +103,8 @@
     </plugin>
     <plugin name="phonegap-plugin-contentsync" spec="^1.4.1" />
     <plugin name="phonegap-plugin-mobile-accessibility" spec="^1.0.5" />
-    <plugin name="phonegap-plugin-push" spec="^2.1.0" />
+    <plugin name="phonegap-plugin-push" spec="^2.1.0">
+        <variable name="FCM_VERSION" value="11.0.1" />
+    </plugin>
     <plugin name="com.wikitude.phonegap.WikitudePlugin" spec="https://github.com/timkim/wikitude-cordova-plugin.git" />
 </widget>
