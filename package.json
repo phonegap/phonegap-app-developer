@@ -113,7 +113,9 @@
       },
       "phonegap-plugin-contentsync": {},
       "phonegap-plugin-mobile-accessibility": {},
-      "phonegap-plugin-push": {},
+      "phonegap-plugin-push": {
+        "FCM_VERSION": "11.0.1"
+      },
       "com.wikitude.phonegap.WikitudePlugin": {}
     }
   }
