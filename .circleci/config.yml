@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node:latest
       - image: circleci/android:api-26-alpha
     environment:
-    - ANDROID_HOME: '/usr/local/android-sdk-linux'
+    - ANDROID_HOME: '/opt/android/sdk'
     steps:
     - checkout
     - run:
