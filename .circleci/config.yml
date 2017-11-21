@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:7.10.0
+      - image: circleci/node:latest
       - image: circleci/android:api-26-alpha
     steps:
     - run:
