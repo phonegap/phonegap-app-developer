@@ -1,6 +1,7 @@
 version: 2
 jobs:
   build:
+    working_directory: ~/project/phonegap-app-developer
     docker:
       - image: circleci/node:latest
       - image: circleci/android:api-26-alpha
