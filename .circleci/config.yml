@@ -5,6 +5,7 @@ jobs:
       - image: circleci/node:latest
       - image: circleci/android:api-26-alpha
     steps:
+    - checkout
     - run:
         name: npm-install
-        command: 'ls'
+        command: 'npm install'
