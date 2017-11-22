@@ -13,4 +13,4 @@ jobs:
         command: 'npm install'
     - run:
         name: build-android
-        command: './resources/circle-ci/android/build-android.sh'
+        command: 'ls /opt/'
