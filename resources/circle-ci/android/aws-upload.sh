@@ -5,8 +5,8 @@ if [ "$CIRCLECI" != true ]; then
     exit
 fi
 
-debug="platforms/android/build/outputs/apk/android-debug.apk"
-release="platforms/android/build/outputs/apk/android-release.apk"
+debug="platforms/android/build/outputs/apk/debug/android-debug.apk"
+release="platforms/android/build/outputs/apk/release/android-release.apk"
 
 if [ -e "$debug" ]; then
 	APKLOCATION="$debug"
