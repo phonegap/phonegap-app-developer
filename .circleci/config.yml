@@ -24,12 +24,15 @@ jobs:
     - run:
         name: npm-install
         command: 'npm install'
-    - run:
-        name: build-android
-        command: './resources/circle-ci/android/build-android.sh'
+#    - run:
+#        name: build-android
+#        command: './resources/circle-ci/android/build-android.sh'
     - run:
         name: aws-install
         command: 'pip install awscli --upgrade --user'
+    - run:
+        name: aws-ping
+        command: 'aws --version'
     - run:
         name: upload-aws
         command: './resources/circle-ci/android/aws-upload.sh'
