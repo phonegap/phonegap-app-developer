@@ -12,6 +12,9 @@ jobs:
         command: |
           curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
           sudo apt-get install -y nodejs
+    - run:
+        name: gradle-install
+        command: 'sudo apt install gradle'
     - checkout
     - run:
         name: git-clone-phonegap-app-developer-keys
