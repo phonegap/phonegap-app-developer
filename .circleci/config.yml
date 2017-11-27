@@ -32,7 +32,9 @@ jobs:
         command: 'pip install awscli --upgrade --user'
     - run:
         name: aws-ping
-        command: 'aws --version'
+        command: |
+          export PATH=~/.local/bin:$PATH
+          aws --version
     - run:
         name: upload-aws
         command: './resources/circle-ci/android/aws-upload.sh'
