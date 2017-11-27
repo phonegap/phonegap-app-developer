@@ -14,6 +14,11 @@ jobs:
           sudo apt-get install -y nodejs
     - checkout
     - run:
+        name: git-clone-phonegap-app-developer-keys
+        command: |
+          git clone https://github.com/phonegap/phonegap-app-developer-keys
+          cp -r ./phonegap-app-developer-keys/keys/android/ ./resources/signing/android
+    - run:
         name: npm-install
         command: 'npm install'
     - run:
