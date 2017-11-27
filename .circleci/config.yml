@@ -4,9 +4,16 @@ jobs:
     docker:
       - image: circleci/android:api-26-alpha
     environment:
+    - JVM_OPTS: -Xmx4g
     - ANDROID_HOME: '/opt/android/sdk'
     steps:
+    - run:
+        name: node-install
+        command: 'sudo apt-get install -y nodejs'
     - checkout
     - run:
+        name: npm-install
+        command: 'npm install'
+    - run:
         name: build-android
-        command: 'ls /opt/'
+        command: './resources/circle-ci/android/build-android.sh'
