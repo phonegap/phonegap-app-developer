@@ -28,6 +28,9 @@ jobs:
         name: build-android
         command: './resources/circle-ci/android/build-android.sh'
     - run:
+        name: aws-install
+        command: 'pip install awscli --upgrade --user'
+    - run:
         name: upload-aws
         command: './resources/circle-ci/android/aws-upload.sh'
     - run:
