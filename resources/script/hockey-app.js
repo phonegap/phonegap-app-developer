@@ -25,7 +25,7 @@ var buildPath;
 if (process.env.BUILDKITE) {
     buildPath = path.join(projectRoot, 'platforms', 'ios', 'build', 'device', 'PG Nightly.ipa');
 } else if (process.env.CIRCLECI) {
-    buildPath = path.join(projectRoot, 'platforms', 'android', 'build', 'outputs', 'apk', 'android-debug.apk');
+    buildPath = path.join(projectRoot, 'platforms', 'android', 'build', 'outputs', 'apk', 'debug','android-debug.apk');
 } else if(process.env.APPVEYOR) {
     buildPath = path.join(projectRoot, 'platforms', 'wp8', 'Bin', 'Release', 'CordovaAppProj_Release_AnyCPU_new.xap');
 }
