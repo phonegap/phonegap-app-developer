@@ -32,13 +32,9 @@ jobs:
         command: 'pip install awscli --upgrade --user'
     - run:
         name: export-path
-        command: 'export PATH=~/.local/bin:$PATH'
-    - run:
-        name: aws-argh
-        command: 'aws --version'
-    - run:
-        name: upload-aws
-        command: './resources/circle-ci/android/aws-upload.sh'
+        command: |
+          export PATH=~/.local/bin:$PATH
+          ./resources/circle-ci/android/aws-upload.sh
     - run:
         name: upload-hockeyapp
         command: 'node ./resources/script/hockey-app.js $HOCKEY_APP_TOKEN $HOCKEY_APP_ANDROID_ID $CIRCLE_SHA1'
