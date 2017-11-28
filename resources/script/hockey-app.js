@@ -30,6 +30,8 @@ if (process.env.BUILDKITE) {
     buildPath = path.join(projectRoot, 'platforms', 'wp8', 'Bin', 'Release', 'CordovaAppProj_Release_AnyCPU_new.xap');
 }
 
+console.log('Uploading from path: ' + buildPath);
+
 // parameters passed to HockeyApp
 var formData = {
     ipa: fs.createReadStream(buildPath),
