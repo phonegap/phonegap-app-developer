@@ -29,9 +29,10 @@ jobs:
         command: './resources/circle-ci/android/build-android.sh'
     - run:
         name: aws-install
-        command: |
-          pip install awscli --upgrade --user
-          export PATH=~/.local/bin:$PATH
+        command: 'pip install awscli --upgrade --user'
+    - run:
+        name: export-path
+        command: 'export PATH=~/.local/bin:$PATH'
     - run:
         name: upload-aws
         command: './resources/circle-ci/android/aws-upload.sh'
