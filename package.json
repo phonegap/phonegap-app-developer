@@ -52,7 +52,7 @@
     "phonegap-plugin-barcodescanner": "^6.0.8",
     "phonegap-plugin-contentsync": "^1.4.1",
     "phonegap-plugin-mobile-accessibility": "^1.0.5",
-    "phonegap-plugin-push": "^2.1.0",
+    "phonegap-plugin-push": "^2.1.2",
     "wikitude-plugin-phonegap-dev-app": "git+https://github.com/timkim/wikitude-cordova-plugin.git"
   },
   "devDependencies": {
