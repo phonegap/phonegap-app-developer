@@ -47,6 +47,7 @@
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-statusbar": "^2.3.0",
     "cordova-plugin-vibration": "^2.1.6",
+    "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-x-socialsharing": "^5.2.1",
     "es6-promise-plugin": "^4.1.1",
     "phonegap-plugin-barcodescanner": "^6.0.8",
@@ -116,7 +117,8 @@
       "phonegap-plugin-push": {
         "FCM_VERSION": "11.0.1"
       },
-      "com.wikitude.phonegap.WikitudePlugin": {}
+      "com.wikitude.phonegap.WikitudePlugin": {},
+      "cordova-plugin-whitelist": {}
     }
   }
 }
