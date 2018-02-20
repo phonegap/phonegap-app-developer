@@ -80,6 +80,11 @@
      */
 
     function getVersion() {
-        return $('#version').html().split(':')[1].trim().split('<')[0];
+        var versionStringSplit = $('#version').html().split(':');
+        if( versionStringSplit.length >= 1) {
+            return 'PhoneGap Developer App'
+        } else {
+            return versionStringSplit[1].trim().split('<')[0];
+        }
     };
 })();
