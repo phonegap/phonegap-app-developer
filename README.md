@@ -30,9 +30,11 @@ For more information, see [Developer App Reference Guide][3] on the PhoneGap Doc
 The repository includes everything required to compile the app. You can get
 setup by:
 
-    $ git clone https://github.com/phonegap/phonegap-app-developer.git
-    $ cd phonegap-app-developer/
-    $ npm install
+```shellsession
+$ git clone https://github.com/phonegap/phonegap-app-developer.git
+$ cd phonegap-app-developer/
+$ npm install
+```
 
 ### Compile and Run
 
@@ -48,27 +50,32 @@ ensuring a consistent build using the correct PhoneGap, Cordova, platform,
 and plugin versions.
 
 The command structure is:
-
-    $ npm run phonegap -- <command> [args]
+```shellsession
+$ npm run phonegap -- <command> [args]
+```
 
 For example, you can check the version of `phonegap`:
-
-    $ npm run phonegap -- --version
+```shellsession
+$ npm run phonegap -- --version
+```
 
 You can compile and run iOS or Android:
-
-    $ npm run phonegap -- run ios
-    $ npm run phonegap -- run android
+```shellsession
+$ npm run phonegap -- run ios
+$ npm run phonegap -- run android
+```
 
 For developers wishing to use the platform SDKs (Xcode, Eclipse, Visual Studio),
 please build once with the CLI to correctly populate the platform assets:
-
-    $ npm run phonegap -- build <platform>
+```shellsession
+$ npm run phonegap -- build <platform>
+```
 
 Due to a Windows npm bug, the `--` does not work. Therefore we have created
 run script that will build Windows Phone 8, so it can run in Visual Studio.
-
-    $ npm run phonegap-wp8
+```shellsession
+$ npm run phonegap-wp8
+```
 
 ### Running the Tests
 
@@ -82,14 +89,16 @@ ensure that each plugin was correctly installed. Eventually, we would like
 to add functional tests for the app logic.
 
 You can run the local tests with:
-
-    $ npm run phonegap -- run android --test
-    $ npm run phonegap -- run ios --test
+```shellsession
+$ npm run phonegap -- run android --test
+$ npm run phonegap -- run ios --test
+```
 
 Again for Windows Phone, we have a run script that will build the app so it can run in
 Visual Studio.
-
-    $ npm run phonegap-wp8-test
+```shellsession
+$ npm run phonegap-wp8-test
+```
 
 #### Test the Served Application
 
@@ -99,10 +108,11 @@ and automatic tests to ensure that the server provided the correct version of
 Cordova, the plugins, and the navigation logic.
 
 You can run the served tests with:
-
-    $ cd tests/
-    $ phonegap serve
-    # now connect with the latest build of the PG App
+```shellsession
+$ cd tests/
+$ phonegap serve
+# now connect with the latest build of the PG App
+```
 
 ### Updating the Tests
 
@@ -132,9 +142,10 @@ Second, edit the `config.xml` to add a custom plugin, change a preference, or
 configure the app's name. You should also change the app's id to your own
 unique app bundle id:
 
-    <?xml version='1.0' encoding='utf-8'?>
-    <widget id="org.mycompany.phonegap.app" version="1.6.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-
+```xml
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.mycompany.phonegap.app" version="1.6.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+```
 
 Third, follow the [Compile and Run](#user-content-compile-and-run) section to
 get the app onto your device.
@@ -144,21 +155,23 @@ If you run into any problems, feel free to [submit an issue](https://github.com/
 ### Releases
 
 Releases are also generated using the npm scripts:
-
-    $ npm run release-android
-    $ npm run release-ios
-    $ npm run release-wp
+```shellsession
+$ npm run release-android
+$ npm run release-ios
+$ npm run release-wp
+```
 
 In order to properly code-sign Android and iOS, you must setup the signing key.
 This is accomplished by cloning the signing key repository and sym-linking each
 platform directory with the PhoneGap Developer App repository:
+```shellsession
+# in your development directory
+$ git clone https://github.com/phonegap/phonegap-app-developer-keys.git
 
-    # in your development directory
-    $ git clone https://github.com/phonegap/phonegap-app-developer-keys.git
-
-    $ cd path/to/phonegap-app-developer/
-    $ ln -s /path/to/phonegap-app-developer-keys/keys/ios resources/signing/ios
-    $ ln -s /path/to/phonegap-app-developer-keys/keys/android resources/signing/android
+$ cd path/to/phonegap-app-developer/
+$ ln -s /path/to/phonegap-app-developer-keys/keys/ios resources/signing/ios
+$ ln -s /path/to/phonegap-app-developer-keys/keys/android resources/signing/android
+```
 
 ### Contributing, Commits, and Tags
 
