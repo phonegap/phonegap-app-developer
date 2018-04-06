@@ -14,7 +14,6 @@ For more information, see [Developer App Reference Guide][3] on the PhoneGap Doc
 ## Download
 
 - [Android Google Play][1]
-- [Apple AppStore][2]
 - [Windows Phone store][7]
 
 ## Documentation
@@ -178,7 +177,6 @@ $ ln -s /path/to/phonegap-app-developer-keys/keys/android resources/signing/andr
 See the [CONTRIBUTING.md][6] file for details.
 
 [1]: https://play.google.com/store/apps/details?id=com.adobe.phonegap.app
-[2]: https://itunes.apple.com/app/id843536693
 [3]: http://docs.phonegap.com/references/developer-app/
 [4]: http://github.com/phonegap/connect-phonegap
 [5]: http://github.com/phonegap/phonegap-cli
