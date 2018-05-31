@@ -1,4 +1,4 @@
-# PhoneGap Developer App [![Build Status][travis-ci-img]][travis-ci-url] [![bitHound Score][bithound-img]][bithound-url]
+# PhoneGap Developer App [![Build Status][travis-ci-img]][travis-ci-url]
 
 > Available in an app store near you!
 
