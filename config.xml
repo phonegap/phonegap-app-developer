@@ -17,6 +17,8 @@
     <preference name="DisallowOverscroll" value="true" />
     <access origin="*" />
     <content src="index.html" />
+     <platform name="windows">
+    </platform>
     <platform name="ios">
         <preference name="Orientation" value="all" />
         <preference name="AutoHideSplashScreen" value="false" />
