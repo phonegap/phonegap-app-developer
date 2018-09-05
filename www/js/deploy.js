@@ -1,4 +1,6 @@
-(function() {
+(function () {
+
+    /* global LocalFileSystem, FileReader, ContentSync  */
 
     /*!
      * Create export namespace.
@@ -21,9 +23,9 @@
      *     - `data` {Object} is the configuration data
      */
 
-    window.phonegap.app.config.load = function(callback) {
-        readFile('config.json', function(e, text) {
-            config = parseAsJSON(text);
+    window.phonegap.app.config.load = function (callback) {
+        readFile('config.json', function (e, text) {
+            var config = parseAsJSON(text);
 
             // load defaults
             config.address = config.address || '127.0.0.1:3000';
@@ -40,8 +42,8 @@
      *   - `callback` {Function} is triggered on completion.
      */
 
-    window.phonegap.app.config.save = function(data, callback) {
-        saveFile('config.json', data, function(e) {
+    window.phonegap.app.config.save = function (data, callback) {
+        saveFile('config.json', data, function (e) {
             callback();
         });
     };
@@ -50,19 +52,19 @@
      * Configuration helper functions.
      */
 
-    function readFile(filepath, callback) {
+    function readFile (filepath, callback) {
         window.requestFileSystem(
             LocalFileSystem.PERSISTENT,
             0,
-            function(fileSystem) {
+            function (fileSystem) {
                 fileSystem.root.getFile(
                     filepath,
                     null,
-                    function gotFileEntry(fileEntry) {
+                    function gotFileEntry (fileEntry) {
                         fileEntry.file(
-                            function gotFile(file){
+                            function gotFile (file) {
                                 var reader = new FileReader();
-                                reader.onloadend = function(evt) {
+                                reader.onloadend = function (evt) {
                                     // #72 - Fix WP8 loading of config.json
                                     // On WP8, `evt.target.result` is returned as an object instead
                                     // of a string. Since WP8 is using a newer version of the File API
@@ -73,60 +75,60 @@
                                 };
                                 reader.readAsText(file);
                             },
-                            function(error) {
+                            function (error) {
                                 callback(error);
                             }
                         );
                     },
-                    function(error) {
+                    function (error) {
                         callback(error);
                     }
                 );
             },
-            function(error) {
+            function (error) {
                 callback(error);
             }
         );
     }
 
-    function saveFile(filepath, data, callback) {
+    function saveFile (filepath, data, callback) {
         data = (typeof data === 'string') ? data : JSON.stringify(data);
 
         window.requestFileSystem(
             LocalFileSystem.PERSISTENT,
             0,
-            function(fileSystem) {
+            function (fileSystem) {
                 fileSystem.root.getFile(
                     filepath,
                     { create: true, exclusive: false },
-                    function(fileEntry) {
+                    function (fileEntry) {
                         fileEntry.createWriter(
-                            function(writer) {
-                                writer.onwriteend = function(evt) {
+                            function (writer) {
+                                writer.onwriteend = function (evt) {
                                     callback();
                                 };
                                 writer.write(data);
                             },
-                            function(e) {
+                            function (e) {
                                 callback(e);
                             }
                         );
                     },
-                    function(e) {
+                    function (e) {
                         callback(e);
                     }
                 );
             },
-            function(e) {
+            function (e) {
                 callback(e);
             }
         );
     }
 
-    function parseAsJSON(text) {
+    function parseAsJSON (text) {
         try {
             return JSON.parse(text);
-        } catch(e) {
+        } catch (e) {
             return {};
         }
     }
@@ -139,50 +141,50 @@
      *     - `address` {String} is the server address.
      */
 
-    window.phonegap.app.downloadZip = function(options) {
+    window.phonegap.app.downloadZip = function (options) {
         var uri;
         var sync;
         var theHeaders = options.headers;
-        if(options.update === true) {
+        if (options.update === true) {
             uri = encodeURI(options.address + '/__api__/update');
             sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'merge', copyCordovaAssets: false, headers: theHeaders });
-            sync.on('complete', function(data) {
+            sync.on('complete', function (data) {
                 window.location.reload();
             });
         } else {
             uri = encodeURI(options.address + '/__api__/appzip');
             sync = ContentSync.sync({ src: uri, id: 'phonegapdevapp', type: 'replace', copyCordovaAssets: true, headers: theHeaders });
-            sync.on('complete', function(data) {
+            sync.on('complete', function (data) {
                 window.location.href = data.localPath + '/www/index.html';
             });
         }
 
-        sync.on('progress', function(data) {
-            if(options.onProgress) {
+        sync.on('progress', function (data) {
+            if (options.onProgress) {
                 options.onProgress(data);
             }
         });
 
-        sync.on('error', function(e){
+        sync.on('error', function (e) {
             if (options.onDownloadError) {
-                setTimeout(function() {
+                setTimeout(function () {
                     options.onDownloadError(e);
                 }, 10);
             }
-            console.log("download error " + e);
+            console.log('download error ' + e);
         });
 
-        document.addEventListener('cancelSync', function(e) {
+        document.addEventListener('cancelSync', function (e) {
             sync.cancel();
         });
 
-        sync.on('cancel', function(e) {
+        sync.on('cancel', function (e) {
             if (options.onCancel) {
-                setTimeout(function() {
+                setTimeout(function () {
                     options.onCancel(e);
                 }, 10);
             }
-            console.log("download cancelled by user");
+            console.log('download cancelled by user');
         });
     };
 
