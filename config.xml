@@ -63,7 +63,7 @@
         <resource-file src="google-services.json" target="google-services.json" />
     </platform>
 
-    <engine name="android" spec="~6.4.0" />
+    <engine name="android" spec="~8.1.0" />
     <engine name="ios" spec="^4.5.3" />
     <plugin name="cordova-plugin-battery-status" spec="^1.2.5" />
     <plugin name="cordova-plugin-ble-central" spec="^1.1.4">
