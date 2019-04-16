@@ -3,9 +3,9 @@
 module.exports = function(ctx) {
   console.log('Running: Removing version and build info from index.html');
 
-  var fs = ctx.requireCordovaModule('fs'),
-      path = ctx.requireCordovaModule('path'),
-      deferral = ctx.requireCordovaModule('q').defer();
+  var fs = require('fs'),
+      path = require('path'),
+      deferral = require('q').defer();
 
   var indexPath = path.join(ctx.opts.projectRoot, 'www/index.html');
   var versionText = '<!-- %PHONEGAP_APP_VERSION_START% -->' + '<!-- %PHONEGAP_APP_VERSION_END% -->';
