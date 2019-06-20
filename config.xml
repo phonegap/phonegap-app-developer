@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.adobe.phonegap.app" version="1.8.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PhoneGap</name>
+<widget id="com.casechek.phonegapdeveloper.app" version="1.8.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Casechek PhoneGap App Developer </name>
     <description>
-        The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework. After installing this app on your device you will be able to connect it to the PhoneGap desktop app to instantly view and test your work
+        Casechek build of The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework. After installing this app on your device you will be able to connect it to the PhoneGap desktop app to instantly view and test your work
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
-        Adobe PhoneGap Team
+        Adobe PhoneGap Team & Casechek
     </author>
     <hook src="resources/script/before-test-runner.js" type="before_prepare" />
     <hook src="resources/script/after-test-runner.js" type="after_prepare" />
@@ -17,7 +17,7 @@
     <preference name="DisallowOverscroll" value="true" />
     <access origin="*" />
     <content src="index.html" />
-     <platform name="windows">
+    <platform name="windows">
     </platform>
     <platform name="ios">
         <preference name="Orientation" value="all" />
