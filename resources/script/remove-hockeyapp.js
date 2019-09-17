@@ -4,9 +4,9 @@ module.exports = function(ctx) {
 
     console.log('Running: Removing HockeyApp from app.js');
 
-    var fs = ctx.requireCordovaModule('fs'),
-        path = ctx.requireCordovaModule('path'),
-        deferral = ctx.requireCordovaModule('q').defer();
+    var fs = require('fs'),
+        path = require('path'),
+        deferral = require('q').defer();
 
     // modify app.js according to current platform
     var appDest = path.join(ctx.opts.projectRoot, 'www/js/app.js');

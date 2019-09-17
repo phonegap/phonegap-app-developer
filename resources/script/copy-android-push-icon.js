@@ -9,9 +9,9 @@ module.exports = function(ctx) {
         return;
     }
 
-    var fs = ctx.requireCordovaModule('fs'),
-        path = ctx.requireCordovaModule('path'),
-        deferral = ctx.requireCordovaModule('q').defer();
+    var fs = require('fs'),
+        path = require('path'),
+        deferral = require('q').defer();
 
     var destPath = path.join(ctx.opts.projectRoot, 'platforms/android/res/drawable-hdpi/pushicon.png');
     var splashPath = path.join(ctx.opts.projectRoot, 'resources/icon/android/pushicon.png');
