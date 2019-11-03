@@ -1,113 +1,146 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.adobe.phonegap.app" version="1.8.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>PhoneGap</name>
-    <description>
-        The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework. After installing this app on your device you will be able to connect it to the PhoneGap desktop app to instantly view and test your work
-    </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        Adobe PhoneGap Team
-    </author>
-    <hook src="resources/script/before-test-runner.js" type="before_prepare" />
-    <hook src="resources/script/after-test-runner.js" type="after_prepare" />
-    <hook src="resources/script/copy-android-push-icon.js" type="before_build" />
-    <hook src="resources/script/add-version.js" type="before_build" />
-    <hook src="resources/script/remove-version.js" type="after_compile" />
-    <preference name="StatusBarStyle" value="default" />
-    <preference name="ShowSplashScreenSpinner" value="false" />
-    <preference name="DisallowOverscroll" value="true" />
-    <access origin="*" />
-    <content src="index.html" />
-     <platform name="windows">
-    </platform>
-    <platform name="ios">
-        <preference name="Orientation" value="all" />
-        <preference name="AutoHideSplashScreen" value="false" />
-        <icon height="167" src="resources/icon/ios/icon-83.5@2x.png" width="167" />
-        <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
-        <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
-        <icon height="72" src="resources/icon/ios/icon-72.png" width="72" />
-        <icon height="144" src="resources/icon/ios/icon-72@2x.png" width="144" />
-        <icon height="60" src="resources/icon/ios/icon-60.png" width="60" />
-        <icon height="120" src="resources/icon/ios/icon-60@2x.png" width="120" />
-        <icon height="180" src="resources/icon/ios/icon-60@3x.png" width="180" />
-        <icon height="50" src="resources/icon/ios/icon-50.png" width="50" />
-        <icon height="100" src="resources/icon/ios/icon-50@2x.png" width="100" />
-        <icon height="40" src="resources/icon/ios/icon-40.png" width="40" />
-        <icon height="80" src="resources/icon/ios/icon-40@2x.png" width="80" />
-        <icon height="120" src="resources/icon/ios/icon-40@3x.png" width="120" />
-        <icon height="57" src="resources/icon/ios/icon.png" width="57" />
-        <icon height="114" src="resources/icon/ios/icon@2x.png" width="114" />
-        <icon height="29" src="resources/icon/ios/icon-small.png" width="29" />
-        <icon height="58" src="resources/icon/ios/icon-small@2x.png" width="58" />
-        <icon height="87" src="resources/icon/ios/icon-small@3x.png" width="87" />
-        <icon height="1024" src="resources/icon/ios/icon-1024.png" width="1024" />
-        <splash height="480" src="resources/splash/ios/Default~iphone.png" width="320" />
-        <splash height="960" src="resources/splash/ios/Default@2x~iphone.png" width="640" />
-        <splash height="1024" src="resources/splash/ios/Default-Portrait~ipad.png" width="768" />
-        <splash height="2048" src="resources/splash/ios/Default-Portrait@2x~ipad.png" width="1536" />
-        <splash height="768" src="resources/splash/ios/Default-Landscape~ipad.png" width="1024" />
-        <splash height="1536" src="resources/splash/ios/Default-Landscape@2x~ipad.png" width="2048" />
-        <splash height="1136" src="resources/splash/ios/Default-568h@2x~iphone.png" width="640" />
-        <splash height="1334" src="resources/splash/ios/Default-667h.png" width="750" />
-        <splash height="2208" src="resources/splash/ios/Default-736h.png" width="1242" />
-        <splash height="1242" src="resources/splash/ios/Default-Landscape-736h.png" width="2208" />
-    </platform>
-    <platform name="android">
-        <preference name="android-minSdkVersion" value="19" />
-        <preference name="Orientation" value="default" />
-        <preference name="SplashScreenDelay" value="0" />
-        <icon density="ldpi" src="resources/icon/android/icon-36.png" />
-        <icon density="mdpi" src="resources/icon/android/icon-48.png" />
-        <icon density="hdpi" src="resources/icon/android/icon-72.png" />
-        <icon density="xhdpi" src="resources/icon/android/icon-96.png" />
-        <resource-file src="google-services.json" target="google-services.json" />
-    </platform>
-
-    <engine name="android" spec="~6.4.0" />
-    <engine name="ios" spec="^4.5.3" />
-    <plugin name="cordova-plugin-battery-status" spec="^1.2.5" />
-    <plugin name="cordova-plugin-ble-central" spec="^1.1.4">
-        <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Bluetooth development purposes" />
-    </plugin>
-    <plugin name="cordova-plugin-camera" spec="^3.0.0">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
-    </plugin>
-    <plugin name="cordova-plugin-device" spec="^1.1.7" />
-    <plugin name="cordova-plugin-device-motion" spec="^1.2.5" />
-    <plugin name="cordova-plugin-dialogs" spec="^1.3.4" />
-    <plugin name="cordova-plugin-file" spec="^5.0.0" />
-    <plugin name="cordova-plugin-file-transfer" spec="^1.7.0" />
-    <plugin name="cordova-plugin-geolocation" spec="^3.0.0">
-        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="Geolocation used for development purposes" />
-    </plugin>
-    <plugin name="cordova-plugin-globalization" spec="^1.0.8" />
-    <plugin name="cordova-plugin-inappbrowser" spec="^1.7.2" />
-    <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
-    <plugin name="cordova-plugin-media" spec="^4.0.0">
-        <variable name="MICROPHONE_USAGE_DESCRIPTION" value=" " />
-    </plugin>
-    <plugin name="cordova-plugin-media-capture" spec="^2.0.0">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
-        <variable name="MICROPHONE_USAGE_DESCRIPTION" value="Microphone used for development purposes" />
-        <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Photo library used for development purposes" />
-    </plugin>
-    <plugin name="cordova-plugin-network-information" spec="^1.3.4" />
-    <plugin name="cordova-plugin-screen-orientation" spec="^2.0.2" />
-    <plugin name="cordova-plugin-splashscreen" spec="^4.1.0" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.3.0" />
-    <plugin name="cordova-plugin-vibration" spec="^2.1.6" />
-    <plugin name="cordova-plugin-x-socialsharing" spec="^5.2.1" />
-    <plugin name="phonegap-plugin-barcodescanner" spec="^6.0.8">
-        <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
-    </plugin>
-    <plugin name="phonegap-plugin-contentsync" spec="^1.4.1" />
-    <plugin name="phonegap-plugin-mobile-accessibility" spec="^1.0.5" />
-    <plugin name="phonegap-plugin-push" spec="^2.1.2">
-        <variable name="FCM_VERSION" value="11.0.1" />
-    </plugin>
-    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
-
-    <allow-navigation href="*" />
-
+<widget id="com.adobe.phonegap.app" version="1.8.5" android-versionCode="108050" ios-CFBundleVersion="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+  <name short="PhoneGap">PhoneGap</name>
+  <description>The PhoneGap Developer app is a testing utility for web developers and designers using the PhoneGap framework. After installing this app on your device you will be able to connect it to the PhoneGap desktop app to instantly view and test your work</description>
+  <author email="support@phonegap.com" href="http://phonegap.com">Adobe PhoneGap Team</author>
+  <hook src="resources/script/before-test-runner.js" type="before_prepare" />
+  <hook src="resources/script/after-test-runner.js" type="after_prepare" />
+  <hook src="resources/script/copy-android-push-icon.js" type="before_build" />
+  <hook src="resources/script/add-version.js" type="before_build" />
+  <hook src="resources/script/remove-version.js" type="after_compile" />
+  <feature name="CDVWKWebViewEngine">
+    <param name="ios-package" value="CDVWKWebViewEngine" />
+  </feature>
+  <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
+  <preference name="phonegap-version" value="cli-9.0.0" />
+  <preference name="StatusBarStyle" value="default" />
+  <preference name="ShowSplashScreenSpinner" value="false" />
+  <preference name="DisallowOverscroll" value="true" />
+  <content src="index.html" />
+  <platform name="windows"></platform>
+  <platform name="ios">
+    <preference name="AutoHideSplashScreen" value="false" />
+    <icon height="167" src="resources/icon/ios/icon-83.5@2x.png" width="167" />
+    <icon height="76" src="resources/icon/ios/icon-76.png" width="76" />
+    <icon height="152" src="resources/icon/ios/icon-76@2x.png" width="152" />
+    <icon height="72" src="resources/icon/ios/icon-72.png" width="72" />
+    <icon height="144" src="resources/icon/ios/icon-72@2x.png" width="144" />
+    <icon height="60" src="resources/icon/ios/icon-60.png" width="60" />
+    <icon height="120" src="resources/icon/ios/icon-60@2x.png" width="120" />
+    <icon height="180" src="resources/icon/ios/icon-60@3x.png" width="180" />
+    <icon height="50" src="resources/icon/ios/icon-50.png" width="50" />
+    <icon height="100" src="resources/icon/ios/icon-50@2x.png" width="100" />
+    <icon height="40" src="resources/icon/ios/icon-40.png" width="40" />
+    <icon height="80" src="resources/icon/ios/icon-40@2x.png" width="80" />
+    <icon height="120" src="resources/icon/ios/icon-40@3x.png" width="120" />
+    <icon height="57" src="resources/icon/ios/icon.png" width="57" />
+    <icon height="114" src="resources/icon/ios/icon@2x.png" width="114" />
+    <icon height="29" src="resources/icon/ios/icon-small.png" width="29" />
+    <icon height="58" src="resources/icon/ios/icon-small@2x.png" width="58" />
+    <icon height="87" src="resources/icon/ios/icon-small@3x.png" width="87" />
+    <icon height="1024" src="resources/icon/ios/icon-1024.png" width="1024" />
+    <splash src="resources/splash/ios/Default@2x~iphone~anyany.png" />
+    <splash src="resources/splash/ios/Default@2x~iphone~comany.png" />
+    <splash src="resources/splash/ios/Default@2x~iphone~comcom.png" />
+    <splash src="resources/splash/ios/Default@3x~iphone~anyany.png" />
+    <splash src="resources/splash/ios/Default@3x~iphone~anycom.png" />
+    <splash src="resources/splash/ios/Default@3x~iphone~comany.png" />
+    <splash src="resources/splash/ios/Default@2x~ipad~anyany.png" />
+    <splash src="resources/splash/ios/Default@2x~ipad~comany.png" />
+  </platform>
+  <platform name="android">
+    <preference name="SplashScreenDelay" value="0" />
+    <icon density="ldpi" src="resources/icon/android/icon-36.png" />
+    <icon density="mdpi" src="resources/icon/android/icon-48.png" />
+    <icon density="hdpi" src="resources/icon/android/icon-72.png" />
+    <icon density="xhdpi" src="resources/icon/android/icon-96.png" />
+    <resource-file src="google-services.json" target="google-services.json" />
+  </platform>
+  <engine name="android" spec="https://github.com/apache/cordova-android.git#master" />
+  <engine name="ios" spec="https://github.com/apache/cordova-ios.git#master" />
+  <plugin name="cordova-plugin-wkwebview-engine" spec="https://github.com/apache/cordova-plugin-wkwebview-engine.git#master" />
+  <plugin name="cordova-plugin-battery-status" spec="https://github.com/apache/cordova-plugin-battery-status.git#master" />
+  <plugin name="cordova-plugin-ble-central" spec="https://github.com/don/cordova-plugin-ble-central.git#master">
+    <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Bluetooth development purposes" />
+  </plugin>
+  <plugin name="cordova-plugin-camera" spec="https://github.com/apache/cordova-plugin-camera.git#master">
+    <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
+    <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
+  </plugin>
+  <plugin name="cordova-plugin-device" spec="https://github.com/apache/cordova-plugin-device.git#master" />
+  <plugin name="cordova-plugin-device-motion" spec="https://github.com/apache/cordova-plugin-device-motion.git#master" />
+  <plugin name="cordova-plugin-dialogs" spec="https://github.com/apache/cordova-plugin-dialogs.git#master" />
+  <plugin name="cordova-plugin-file" spec="https://github.com/apache/cordova-plugin-file.git#master" />
+  <plugin name="cordova-plugin-file-transfer" spec="https://github.com/apache/cordova-plugin-file-transfer.git#master" />
+  <plugin name="cordova-plugin-geolocation" spec="https://github.com/apache/cordova-plugin-geolocation.git#master">
+    <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="Geolocation used for development purposes" />
+  </plugin>
+  <plugin name="cordova-plugin-globalization" spec="https://github.com/apache/cordova-plugin-globalization.git#master" />
+  <plugin name="cordova-plugin-inappbrowser" spec="https://github.com/apache/cordova-plugin-inappbrowser.git#master" />
+  <plugin name="cordova-plugin-insomnia" spec="https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git#master" />
+  <plugin name="cordova-plugin-media" spec="https://github.com/apache/cordova-plugin-media.git#master">
+    <variable name="MICROPHONE_USAGE_DESCRIPTION" value="Use micrphone for development purpose" />
+  </plugin>
+  <plugin name="cordova-plugin-media-capture" spec="https://github.com/apache/cordova-plugin-media-capture.git#master">
+    <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
+    <variable name="MICROPHONE_USAGE_DESCRIPTION" value="Microphone used for development purposes" />
+    <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Photo library used for development purposes" />
+  </plugin>
+  <plugin name="cordova-plugin-network-information" spec="https://github.com/apache/cordova-plugin-network-information.git#master" />
+  <plugin name="cordova-plugin-screen-orientation" spec="https://github.com/apache/cordova-plugin-screen-orientation.git#master" />
+  <plugin name="cordova-plugin-splashscreen" spec="https://github.com/apache/cordova-plugin-splashscreen.git#master" />
+  <plugin name="cordova-plugin-statusbar" spec="https://github.com/apache/cordova-plugin-statusbar.git#master" />
+  <plugin name="cordova-plugin-vibration" spec="https://github.com/apache/cordova-plugin-vibration.git#master" />
+  <plugin name="cordova-plugin-x-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git#master" />
+  <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/phonegap/phonegap-plugin-barcodescanner.git#master">
+    <variable name="CAMERA_USAGE_DESCRIPTION" value="Camera used for development purposes" />
+  </plugin>
+  <plugin name="phonegap-plugin-contentsync" spec="https://github.com/phonegap/phonegap-plugin-contentsync.git#master" />
+  <plugin name="phonegap-plugin-mobile-accessibility" spec="https://github.com/phonegap/phonegap-mobile-accessibility.git#master" />
+  <plugin name="phonegap-plugin-push" spec="https://github.com/phonegap/phonegap-plugin-push.git#master">
+    <variable name="FCM_VERSION" value="11.0.1" />
+  </plugin>
+  <plugin name="cordova-plugin-whitelist" spec="https://github.com/apache/cordova-plugin-whitelist.git#master" />
+  <edit-config target="NSBluetoothAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+    <string>Bluetooth development purposes</string>
+  </edit-config>
+  <edit-config target="NSBluetoothPeripheralUsageDescription" file="*-Info.plist" mode="merge">
+    <string>Bluetooth development purposes</string>
+  </edit-config>
+  <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need camera access to take pictures</string>
+  </edit-config>
+  <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need photo library access to get pictures from there</string>
+  </edit-config>
+  <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need location access to find things nearby</string>
+  </edit-config>
+  <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need photo library access to save pictures there</string>
+  </edit-config>
+  <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+    <string>Your current location will be used to find airports and hotels near you.</string>
+  </edit-config>
+  <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+    <string>Your current location will be used to find airports and hotels near you.</string>
+  </edit-config>
+  <edit-config target="NSMicrophoneUsageDescription" file="*-Info.plist" mode="merge">
+    <string>need microphone access to record sounds</string>
+  </edit-config>
+  <access origin="*" />
+  <allow-navigation href="*" />
+  <allow-intent href="http://*/*" />
+  <allow-intent href="https://*/*" />
+  <allow-intent href="tel:*" />
+  <allow-intent href="sms:*" />
+  <allow-intent href="mailto:*" />
+  <allow-intent href="geo:*" />
+  <platform name="android">
+    <allow-intent href="market:*" />
+  </platform>
+  <platform name="ios">
+    <allow-intent href="itms:*" />
+    <allow-intent href="itms-apps:*" />
+  </platform>
 </widget>
