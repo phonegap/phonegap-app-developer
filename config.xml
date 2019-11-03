@@ -38,16 +38,14 @@
     <icon height="58" src="resources/icon/ios/icon-small@2x.png" width="58" />
     <icon height="87" src="resources/icon/ios/icon-small@3x.png" width="87" />
     <icon height="1024" src="resources/icon/ios/icon-1024.png" width="1024" />
-    <splash height="480" src="resources/splash/ios/Default~iphone.png" width="320" />
-    <splash height="960" src="resources/splash/ios/Default@2x~iphone.png" width="640" />
-    <splash height="1024" src="resources/splash/ios/Default-Portrait~ipad.png" width="768" />
-    <splash height="2048" src="resources/splash/ios/Default-Portrait@2x~ipad.png" width="1536" />
-    <splash height="768" src="resources/splash/ios/Default-Landscape~ipad.png" width="1024" />
-    <splash height="1536" src="resources/splash/ios/Default-Landscape@2x~ipad.png" width="2048" />
-    <splash height="1136" src="resources/splash/ios/Default-568h@2x~iphone.png" width="640" />
-    <splash height="1334" src="resources/splash/ios/Default-667h.png" width="750" />
-    <splash height="2208" src="resources/splash/ios/Default-736h.png" width="1242" />
-    <splash height="1242" src="resources/splash/ios/Default-Landscape-736h.png" width="2208" />
+    <splash src="resources/splash/ios/Default@2x~iphone~anyany.png" />
+    <splash src="resources/splash/ios/Default@2x~iphone~comany.png" />
+    <splash src="resources/splash/ios/Default@2x~iphone~comcom.png" />
+    <splash src="resources/splash/ios/Default@3x~iphone~anyany.png" />
+    <splash src="resources/splash/ios/Default@3x~iphone~anycom.png" />
+    <splash src="resources/splash/ios/Default@3x~iphone~comany.png" />
+    <splash src="resources/splash/ios/Default@2x~ipad~anyany.png" />
+    <splash src="resources/splash/ios/Default@2x~ipad~comany.png" />
   </platform>
   <platform name="android">
     <preference name="SplashScreenDelay" value="0" />
