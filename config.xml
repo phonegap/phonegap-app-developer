@@ -107,6 +107,7 @@
         <variable name="FCM_VERSION" value="11.0.1" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="cordova-android-support-gradle-release" spec="https://github.com/dpa99c/cordova-android-support-gradle-release.git" />
 
     <allow-navigation href="*" />
 
