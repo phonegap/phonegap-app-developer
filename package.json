@@ -70,7 +70,7 @@
     "less": "2.7.1",
     "npm-run": "4.1.0",
     "phonegap": "7.1.1",
-    "request": "2.65.0",
+    "request": "2.68.0",
     "xml2js": "0.4.12"
   },
   "cordova": {
